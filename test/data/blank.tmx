@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#ff00ff" nextlayerid="5" nextobjectid="1">
+ <tileset firstgid="1" source="../../../Tiny32.tsx"/>
+ <tileset firstgid="257" source="Tiny32.tsx"/>
+ <tileset firstgid="513" source="solide.tsx"/>
+ <layer id="1" name="tile_sol" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2TQQ6AIAwEy0vkB+X/rzNGD7gpFAENMXuYIDTpZCluIrJ9TThXNWpJ7JpCfcSbLo6e0fFN8Qf7HB3R2Y941VnxHnD/KHdD3rzftNzh3lvBnTJ3Lbf1Llu8tXla91fK2ezP8uI8a7P03kTvfF8HvKX/1/ruzrpQXnp/6CWEEEIWYAdKC1pSEA4AAA==
+  </data>
+ </layer>
+ <layer id="4" name="portes" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3DsQ0AAAgDoH7p/5+4dnM3kJDcpgIAAPDDAhtJ/scQDgAA
+  </data>
+ </layer>
+ <layer id="2" name="tile_content" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACpNkZGCQJICRASF5YgFMHzlmUWI3ue7FZj+t9VDDHHT1skC2HAVxRmocwYAukK1Hgf9JsZca5pAKaGXuqL2Dw95RMApGwSgYBaNgFIyC4QoAEbn2lBAOAAA=
+  </data>
+ </layer>
+ <layer id="3" name="solide" width="30" height="30" opacity="0.3">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2OwQoAIAjFsv//6E5Ch8CyV0Rs0CndtFqKBa8n+p/F9zKunXb23lH/9I7Co+quupRd9ynmlDfd8NJ9owsAAADwKw0GY97PEA4AAA==
+  </data>
+ </layer>
+</map>
