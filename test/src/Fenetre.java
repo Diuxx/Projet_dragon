@@ -29,9 +29,13 @@ public class Fenetre extends BasicGame {
         this.container = container;
         SpriteSheet spriteSheet = new SpriteSheet("data/Tiny32.png", 32, 32);
         // chargement de la carte de jeu
-        carte = new Carte("data/blank.tmx");
+        carte = new Carte("data/dragon.tmx");
+        Point positionPersonnage = carte.getPositionPersonnage();
+        System.out.println(positionPersonnage.getX() + " y : " + positionPersonnage.getY());
+
+
         // chargement du hero
-        hero = new Hero("test", 200, 200, 100);
+        hero = new Hero("test", positionPersonnage.getX() * 32, positionPersonnage.getY() * 32, 100);
         hero.loadAnimation(spriteSheet, 6, 7,  11);
         hero.loadAnimation(spriteSheet, 6, 7,  9);
         hero.loadAnimation(spriteSheet, 6, 7,  8);

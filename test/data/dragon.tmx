@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="1">
+ <tileset firstgid="1" source="Tiny32.tsx"/>
+ <tileset firstgid="257" source="postion.tsx"/>
+ <layer id="1" name="background1" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2XMW4CQBDE+En+/8vUky4C4cXY0vbncXWPB8/P4ftG6M3rsdCb12OhN6/HQm9ej4XevB4LvXk9Fnrzeiz05vVY6M3rsdCb12OhN6/HQm9ej4XevB4LvXk9Fnrzeiz05vVY6M3rsdCb12OhN6/HQm9ej4XevB4LvXk9nqftblGPW9TjFvW4RT1uUY9b1OMW9bhFPZ6H/mv3T1/oTeux0Ju+sgf9nm91MLkYHEwuBgeTi8HB5GJwMLkYHEwuBgeTi8HB5GJwMLkYHEwuBgeTi8HB5GJwMLkYHIwuXdd1Xfef+wv9nm93MTiYXAwOJheDg8nF4GByMTiYXAwOJheDg8nF4GByMTiYXAwOJheDg8nF4GByMTi82+Wd0JvWY6E3/ZSdPpE2u0U9blGPW9TjFvW4RT1uUY9b1OO10P+7/oALvXU9Fnrreiz01vVY6K3rsdBb12Oht67HQm9dj4Xeuh4LvXU9Fnrreiz01vVY6K3rsdBb12Oht67HQm9dj4Xeuh4LvXU9Fnrreiz01vVY6K3rsdBb12Oht77a4xeMcT+AQJwAAA==
+  </data>
+ </layer>
+ <layer id="2" name="background2" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVP7WULoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBt5RKnmQJwAAA==
+  </data>
+ </layer>
+ <layer id="3" name="overground1" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVP7WULoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBt5RKnmQJwAAA==
+  </data>
+ </layer>
+ <layer id="4" name="porte" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVP7WULoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBt5RKnmQJwAAA==
+  </data>
+ </layer>
+ <layer id="5" name="solide" width="100" height="100" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVP7WULoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBt5RKnmQJwAAA==
+  </data>
+ </layer>
+ <layer id="6" name="position" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3OAQ0AAAgDoL9/aWPoJiQgAQAAAAAAAAAAAAAAAAAAgNva7QEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8MkAdJQYLUCcAAA=
+  </data>
+ </layer>
+</map>
