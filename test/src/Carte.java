@@ -14,8 +14,8 @@ public class Carte {
         return this.map;
     }
 
-    public void afficher() {
-        map.render(0, 0);
+    public void afficher(int layer) {
+        map.render(0, 0, layer);
     }
 
     public float getHerox() {
