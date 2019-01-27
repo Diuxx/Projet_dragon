@@ -9,7 +9,11 @@ public class Message {
 
     private ArrayList<String> text;
     private int posisition;
-    private final int taille = 70;
+    private final int taille = 65;
+
+    // --
+    private int MAXchar = 0;
+    private int maxLine = 0;
 
     Rectangle rect;
     // --
@@ -24,20 +28,30 @@ public class Message {
         String[] listDeChaine = text.split("#");
         for(String chaine : listDeChaine)
         {
-            this.text.add(chaine);
+            this.text.add(chaine + " (appuyez sur [w] pour continuer...)");
+            
         }
         this.posisition = 0;
     }
 
+    public void add(Message text) {
+        this.text = text.getText();
+    }
+
     // afficher un message
     public boolean afficher(Graphics g, GameContainer c, float x, float y, int espace) {
-        if(this.posisition >= this.text.size())
+        if(this.posisition >= this.text.size()) {
+            if(posisition != 0) {
+                this.text = new ArrayList<String>();
+                this.posisition = 0;
+            }
             return false; // --
+        }
 
         g.setColor(Color.white);
         rect.setBounds((int) x - (c.getWidth() / 2) + espace,
                        (int) y + (c.getHeight() / 2) - this.taille + espace,
-                    c.getWidth() - (espace + espace), this.taille);
+                    c.getWidth() - (espace + espace), this.taille - 10);
         g.fill(rect);
 
         g.setColor(Color.black);
@@ -45,11 +59,19 @@ public class Message {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean next() {
-        if(posisition < this.text.size()) {
+        if(posisition <= this.text.size()) {
             posisition = posisition + 1;
             return true;
         }
         return false;
+    }
+
+    public ArrayList<String> getText() {
+        return this.text;
     }
 }

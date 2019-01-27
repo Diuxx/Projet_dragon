@@ -1,4 +1,6 @@
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
@@ -15,11 +17,25 @@ public class Personnage {
     // information sur le personnage
     private String nom;
     private int pointDeVie;
+    private int pointDeVieActuel;
 
     // mouvement du personnage
     private float x = 0, y = 0;
     private int direction = 0;
     private boolean moving = false;
+
+    // pour permetre de changer le scénario ../:
+    public static boolean artDeEpe = false;
+    public static boolean artDuBouclier = false;
+    public static boolean artDuFeu = false;
+    public static boolean artDuVol = false;
+
+    // gestion des collisions
+    private Rectangle box;
+
+    private float futurX = 0;
+    private float futurY = 0;
+    private boolean collision = false;
 
     // --
     public Personnage(String nom, float x, float y, int pointDeVie) {
@@ -28,6 +44,7 @@ public class Personnage {
         this.y = y;
         this.pointDeVie = pointDeVie;
         this.animation = new ArrayList<Animation>();
+        box = new Rectangle(x - 16, y - 20, 32, 32);
     }
 
     public float getX() {
@@ -41,14 +58,16 @@ public class Personnage {
     // mouvement du personnage
     public void mouvement(int delta, TiledMap map) {
         if (this.moving) {
-            float futurX = this.getFuturX(delta);
-            float futurY = this.getFuturY(delta);
-            boolean collision = iscollisionLogic(map, futurX, futurY);
+            futurX = this.getFuturX(delta);
+            futurY = this.getFuturY(delta);
+
+            collision = iscollisionLogic(map, futurX, futurY);
             if(collision) {
                 this.moving = false;
             } else {
                 this.x = futurX;
                 this.y = futurY;
+                box.setBounds(futurX - 16, futurY - 20, 32, 32);
             }
         }
     }
@@ -71,6 +90,10 @@ public class Personnage {
     // affichage du personnage dans le graphique
     public void afficher(Graphics g) {
         g.drawAnimation(this.animation.get(direction + (moving ? 4 : 0)), x - 16, y - 20);
+        if(Fenetre.DEBUG) {
+            g.setColor(Color.red);
+            g.draw(this.box);
+        }
     }
 
     // collision logic
@@ -86,6 +109,10 @@ public class Personnage {
             collision = color.getAlpha() > 0;
         }
         return collision;
+    }
+
+    public Rectangle getBoundingBox() {
+        return this.box;
     }
 
     // chargement des animations pour un personnage.

@@ -4,20 +4,23 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Fenetre extends BasicGame {
 
+    public static boolean DEBUG = true;
+
+    // fenetre
     private GameContainer container;
-    private TiledMap grassMap;
 
-    private float x = 200, y = 300;
-    private int direction = 0;
-    private boolean moving = false;
-    private Animation[] animations = new Animation[8];
-
-    private float xCamera = x, yCamera = y;
+    private float xCamera = 0, yCamera = 0;
 
     // personnage contôlé par l'utilisateur.
-    private Message lesMessages;
+    private Message lesMessages; /* test */
     private Hero hero;
     private Carte carte;
+
+    // test du scénario
+    private Scenario scenario;
+
+    // test sprite
+    public static SpriteSheet spriteSheet;
 
     // --
     public Fenetre() {
@@ -27,15 +30,15 @@ public class Fenetre extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         this.container = container;
-        SpriteSheet spriteSheet = new SpriteSheet("data/Tiny32.png", 32, 32);
+        spriteSheet = new SpriteSheet("data/Tiny32.png", 32, 32);
+
+        lesMessages = new Message();
         // chargement de la carte de jeu
         carte = new Carte("data/dragon.tmx");
         Point positionPersonnage = carte.getPositionPersonnage();
-        System.out.println(positionPersonnage.getX() + " y : " + positionPersonnage.getY());
-
 
         // chargement du hero
-        hero = new Hero("test", positionPersonnage.getX() * 32, positionPersonnage.getY() * 32, 100);
+        hero = new Hero("test", positionPersonnage.getX(), positionPersonnage.getY(), 100);
         hero.loadAnimation(spriteSheet, 6, 7,  11);
         hero.loadAnimation(spriteSheet, 6, 7,  9);
         hero.loadAnimation(spriteSheet, 6, 7,  8);
@@ -45,9 +48,18 @@ public class Fenetre extends BasicGame {
         hero.loadAnimation(spriteSheet, 6, 9,  8);
         hero.loadAnimation(spriteSheet, 6, 9,  10);
 
-        lesMessages = new Message();
-        lesMessages.add("c'est un test#un autre test#et un autre autre test #ça marche vraimeent bien #Salut salut");
+        // lesMessages = new Message();
+        // lesMessages.add("c'est un test#un autre test#et un autre autre test #ça marche vraimeent bien #Salut salut");
         // [ .. next .. ]
+        // si un élement du scenario n'est pas fini alors on charge le scénario... messages de joueur pnj etc..
+        // ex :
+        if(hero.artDeEpe == false) {
+            /**
+             * On charge le scenario de l'épe par exemple
+             */
+            scenario = new Scenario(Scenario.Art.EPE, carte);
+        } /* ..etc.. */
+        hero.addPnj(scenario.getLesPnj());
     }
 
     @Override
@@ -56,11 +68,10 @@ public class Fenetre extends BasicGame {
         if (Input.KEY_ESCAPE == key) {
             container.exit();
         }
-        if(Input.KEY_N == key) {
-            lesMessages.next();
+        if(Input.KEY_W == key) {
+            if(lesMessages != null) lesMessages.next();
         }
     }
-
 
     @Override
     public void keyPressed(int key, char c) {
@@ -77,17 +88,21 @@ public class Fenetre extends BasicGame {
         carte.afficher(0);
         carte.afficher(1);
 
+        if(scenario != null) {
+            for(PersonnageNonJoueur pnj : scenario.getLesPnj()) {
+                pnj.afficher(g);
+                if(pnj.isParle()) {
+                    lesMessages.add(pnj.getDialogue());
+                    pnj.arreteDeParler();
+                }
+            }
+        }
+
         // affichage du hero
         hero.afficher(g);
 
-        lesMessages.afficher(g, container, this.xCamera, this.yCamera, 5);
-        /*g.setColor(Color.white);
-        Rectangle rect = new Rectangle((int) this.xCamera - (container.getWidth() / 2) + 5,
-                                       (int) this.yCamera + (container.getHeight() / 2) - 75,
-                                    container.getWidth() - 10, 70);
-        g.fill(rect);
-        g.setColor(Color.black);
-        g.drawString("test affichage d'un text random", rect.getX() + 5, rect.getY() + 5);*/
+        if(lesMessages != null)
+            lesMessages.afficher(g, container, this.xCamera, this.yCamera, 5);
 
         // background background
         carte.afficher(2);
@@ -103,14 +118,5 @@ public class Fenetre extends BasicGame {
         hero.mouvement(delta, carte.getMap());
         this.xCamera = hero.getX();
         this.yCamera = hero.getY();
-    }
-
-    // --
-    private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
-        Animation animation = new Animation();
-        for (int x = startX; x < endX; x++) {
-            animation.addFrame(spriteSheet.getSprite(x, y), 150);
-        }
-        return animation;
     }
 }
