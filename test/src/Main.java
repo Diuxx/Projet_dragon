@@ -1,3 +1,4 @@
+import jeu.Fenetre;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
