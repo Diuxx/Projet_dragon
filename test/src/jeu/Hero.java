@@ -1,6 +1,7 @@
 package jeu;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
@@ -20,25 +21,21 @@ public class Hero extends Personnage {
     }
 
     // seul le hero peut être contrôlé
-    public void controle(int key) {
-        // --
-        switch (key) {
-            case Input.KEY_UP:
-                super.setDirection(0);
-                super.marcher();
-                break;
-            case Input.KEY_LEFT:
-                super.setDirection(1);
-                super.marcher();
-                break;
-            case Input.KEY_DOWN:
-                super.setDirection(2);
-                super.marcher();
-                break;
-            case Input.KEY_RIGHT:
-                super.setDirection(3);
-                super.marcher();
-                break;
+    public void controle(GameContainer container) {
+        if(container.getInput().isKeyDown(Input.KEY_UP)) {
+            super.setDirection(0);
+            super.marcher();
+        } else if(container.getInput().isKeyDown(Input.KEY_LEFT)) {
+            super.setDirection(1);
+            super.marcher();
+        } else if(container.getInput().isKeyDown(Input.KEY_DOWN)) {
+            super.setDirection(2);
+            super.marcher();
+        } else if(container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+            super.setDirection(3);
+            super.marcher();
+        } else {
+            super.stop();
         }
     }
 

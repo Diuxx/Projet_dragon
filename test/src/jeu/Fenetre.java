@@ -64,7 +64,6 @@ public class Fenetre extends BasicGame {
 
     @Override
     public void keyReleased(int key, char c) {
-        hero.stop(); // arrêt du hero
         if (Input.KEY_ESCAPE == key) {
             container.exit();
         }
@@ -75,10 +74,7 @@ public class Fenetre extends BasicGame {
 
     @Override
     public void keyPressed(int key, char c) {
-        /*
-         * Gestion des Mouvements du hero par l'utilisteur
-         */
-        hero.controle(key);
+        // --
     }
 
     @Override
@@ -118,6 +114,7 @@ public class Fenetre extends BasicGame {
          * Gestion des mouvement et des collision du hero
          * Les collisions sont géré automatiquement
          */
+        hero.controle(container);
         hero.mouvement(delta, carte.getMap());
 
         for(Ennemi unEnnemi : scenario.getLesEnnemis()) {
