@@ -93,11 +93,6 @@ public class Personnage {
                 box.setBounds(futurX - centerX, futurY - centerY, this.width, this.height);
             }
         }
-        if(this.getClass().getSimpleName().equals("Ennemi")) {
-            // --
-
-
-        }
     }
 
     // changement de direction du personnage

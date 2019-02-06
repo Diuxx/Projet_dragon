@@ -90,6 +90,7 @@ public class EcranJeu extends BasicGameState {
             scenario = new Scenario(Scenario.Art.EPE, carte, hero);
         } /* ..etc.. */
         hero.addPnj(scenario.getLesPnj());
+        hero.addEnnemis(scenario.getLesEnnemis());
         hud.init(); // --
     }
 
@@ -155,6 +156,11 @@ public class EcranJeu extends BasicGameState {
         // affichage des mouvement des ennemi
         for(Ennemi unEnnemi : scenario.getLesEnnemis()) {
             unEnnemi.mouvement(delta, carte.getMap());
+            if(unEnnemi.getBoundingBox().intersects(hero.getBoundingBox()))
+            {
+                // début d'un combat
+                //System.out.println("Fight ! ");
+            }
         }
 
         /**

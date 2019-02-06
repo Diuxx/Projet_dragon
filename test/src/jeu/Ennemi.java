@@ -6,6 +6,9 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 import sys.Point;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * class jeu.Ennemi
  *
@@ -20,6 +23,7 @@ public class Ennemi extends Personnage {
     private int tempsChangerDirection;
 
     private Hero lehero; // --
+    private List<Personnage> lesPersonnages;
     private boolean mort;
 
     /**
@@ -36,6 +40,7 @@ public class Ennemi extends Personnage {
          * L'ennemi quand il est crée est vivant ! (visible)
          */
         this.mort = false;
+        lesPersonnages = new ArrayList<Personnage>();
     }
 
 
@@ -137,10 +142,10 @@ public class Ennemi extends Personnage {
 
     /**
      *
-     * @param unHero
+     * @param
      */
-    public void addTarget(Hero unHero) {
-        this.lehero = unHero;
+    public void addCollision(Personnage unPersonnage) {
+        this.lesPersonnages.add(unPersonnage);
     }
 
     /**
@@ -149,12 +154,15 @@ public class Ennemi extends Personnage {
      * @param y
      * @return
      */
-    private boolean isCollisionHero(float x, float y) {
-        boolean collision = new Rectangle(x - 16, y - 20, this.getWidth(), this.getHeight()).intersects(this.lehero.getBoundingBox());
-        System.out.println(new Rectangle(x - 16, y - 20, this.getWidth(), this.getHeight()).intersects(this.lehero.getBoundingBox()));
-        if(collision) {
-            System.out.println("Fight ?");
-            return true;
+    private boolean isCollisionPersonnage(float x, float y) {
+        for(Personnage unPersonnage : lesPersonnages) {
+            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unPersonnage.getBoundingBox());
+            if(collision) {
+
+                System.out.println("Ennemi -> Personnage");
+
+                return true;
+            }
         }
         return false;
     }
@@ -171,7 +179,7 @@ public class Ennemi extends Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        return collision || ((this.lehero != null) ? isCollisionHero( x, y) : true);
+        return collision || isCollisionPersonnage( x, y);
     }
 
 

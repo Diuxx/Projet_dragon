@@ -89,7 +89,7 @@ public class Scenario {
 
         // ennemis
         Goblin unGoblin = new Goblin(map.getPositionPersonnage(0, 255, 255), BIG_SIZE, 'n', 1);
-        unGoblin.addTarget(hero);
+        unGoblin.addCollision(hero);
         lesEnnemis.add(unGoblin);
 
         lesEnnemis.add(new Slim(map.getPositionPersonnage(255, 100, 0), LARGE_SIZE, 'v', 1000));

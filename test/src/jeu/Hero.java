@@ -18,24 +18,27 @@ import static sys.EcranJeu.spriteSheet;
 public class Hero extends Personnage {
 
     private List<PersonnageNonJoueur> lesPnj;
+    private List<Ennemi> lesEnnemis;
     private int currentXp;
     private int niveau;
     private int currentGold;
 
-    // construct
-    public Hero(String nom, float x, float y, int w, int h, int pointDeVie) {
-        super(nom, x, y, w, h, pointDeVie);
-        this.lesPnj = new ArrayList<PersonnageNonJoueur>();
-        this.currentXp = 0;
-        this.niveau = 1;
-        this.currentGold = 100;
-    }
-
+    /**
+     *
+     * @param nom
+     * @param positon
+     * @param taille
+     * @param life
+     */
     public Hero(String nom, Point positon, Taille taille, int life) {
         super(nom, positon.getX(), positon.getY(), taille.getLargeur(), taille.getLongeur(),
                 life);
         this.chargerImage();
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
+        this.lesEnnemis = new ArrayList<Ennemi>();
+        this.currentXp = 0;
+        this.niveau = 1;
+        this.currentGold = 100;
     }
 
 
@@ -69,6 +72,14 @@ public class Hero extends Personnage {
 
     /**
      *
+     * @param lesEnnemis
+     */
+    public void addEnnemis(List<Ennemi> lesEnnemis) {
+        this.lesEnnemis = lesEnnemis;
+    }
+
+    /**
+     *
      * @param x
      * @param y
      * @return
@@ -84,6 +95,19 @@ public class Hero extends Personnage {
        return false;
     }
 
+    private boolean isCollisionEnnemi(float x, float y) {
+        for(Ennemi unEnnemi : lesEnnemis) {
+            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unEnnemi.getBoundingBox());
+            if(collision) {
+                // --
+                System.out.println("Fight");
+
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean iscollisionLogic(TiledMap map, float x, float y) {
         int tileW = map.getTileWidth();
@@ -96,7 +120,7 @@ public class Hero extends Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        return collision || isCollisionPnj( x, y);
+        return collision || isCollisionPnj( x, y) || isCollisionEnnemi( x, y);
     }
 
     /**
