@@ -19,7 +19,7 @@ public class PersonnageNonJoueur extends Personnage {
      * Class constructor
      */
     public PersonnageNonJoueur(String nom, float x, float y, int w, int h) {
-        super(nom, x, y, w, h, 0);
+        super(nom, x, y, w, h, 0, 0.0f);
         this.parle = false;
     }
 
@@ -29,7 +29,7 @@ public class PersonnageNonJoueur extends Personnage {
      * @param pos
      */
     public PersonnageNonJoueur(String nom, Point pos, int w, int h) {
-        super(nom, pos, w, h, 0);
+        super(nom, pos, w, h, 0, 0.0f);
         this.parle = false;
     }
 

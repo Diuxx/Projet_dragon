@@ -1,5 +1,6 @@
 package jeu;
 
+import Bataille.Bataille;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -23,23 +24,33 @@ public class Hero extends Personnage {
     private int niveau;
     private int currentGold;
 
+    // hero information
+    private static final int HEROLIFE = 1120;
+    private static final float HEROSPEED = 0.1f;
+    private static final int HEROLEVEL = 1;
+    private static final int HEROGOLD = 100;
+
     /**
-     *
+     * Constructeur de la class Hero (projet Dragon);
      * @param nom
      * @param positon
-     * @param taille
-     * @param life
      */
-    public Hero(String nom, Point positon, Taille taille, int life) {
-        super(nom, positon.getX(), positon.getY(), taille.getLargeur(), taille.getLongeur(),
-                life);
-        this.chargerImage();
+    public Hero(String nom, Point positon) {
+        super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
         this.lesEnnemis = new ArrayList<Ennemi>();
         this.currentXp = 0;
-        this.niveau = 1;
-        this.currentGold = 100;
+        this.niveau = HEROLEVEL;
+        this.currentGold = HEROGOLD;
+        // --
+        this.chargerImage();
     }
+
+    public Hero(String save) {
+
+        super("?", 0, 0, 0, 0, 0,  HEROSPEED);
+    }
+
 
 
     // seul le hero peut être contrôlé
@@ -101,6 +112,9 @@ public class Hero extends Personnage {
             if(collision) {
                 // --
                 System.out.println("Fight");
+                EcranJeu.gameState.enterState(Bataille.ID);
+
+
 
                 return true;
             }

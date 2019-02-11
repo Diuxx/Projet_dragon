@@ -1,12 +1,10 @@
 package sys;
 
-import jeu.Carte;
+import carte.Carte;
 import jeu.Hero;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-
-import java.awt.*;
 
 /**
  * class Camera
@@ -26,6 +24,11 @@ public class Camera {
     public Camera() {
         this.x = 0;
         this.y = 0;
+    }
+
+    public Camera(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 
     /**

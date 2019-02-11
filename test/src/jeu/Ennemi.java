@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
+import sys.Direction;
 import sys.Point;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ public class Ennemi extends Personnage {
 
     // --
     private float timeSinceTrigger = 0;
-    private char direction;
+    private Direction direction;
+    private Direction directionTransition;
+
     private float x, y;
     private int tempsChangerDirection;
 
@@ -26,12 +29,15 @@ public class Ennemi extends Personnage {
     private List<Personnage> lesPersonnages;
     private boolean mort;
 
+    private boolean collid = false;
+
     /**
      * Class constructor
      */
-    public Ennemi(String nom, float x, float y, int w, int h,  int pointDeVie, char direction, int t) {
-        super(nom, x, y, w, h, pointDeVie);
-        this.direction = direction;
+    public Ennemi(String nom, float x, float y, int w, int h,
+                  int pointDeVie, Direction direction, int t, float vitesse) {
+        super(nom, x, y, w, h, pointDeVie, vitesse);
+        this.direction = this.directionTransition = direction;
         this.x = x;
         this.y = y;
         this.tempsChangerDirection = t;
@@ -41,6 +47,7 @@ public class Ennemi extends Personnage {
          */
         this.mort = false;
         lesPersonnages = new ArrayList<Personnage>();
+
     }
 
 
@@ -49,8 +56,8 @@ public class Ennemi extends Personnage {
      * @param nom
      * @param pos
      */
-    public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, char direction, int t) {
-        this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t);
+    public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse) {
+        this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse);
     }
 
 
@@ -59,62 +66,42 @@ public class Ennemi extends Personnage {
      * @param delta
      */
     public void move(int delta) {
-        switch (this.direction) {
-            case 'r':
+        switch (((this.direction != this.directionTransition) ? this.directionTransition:this.direction)) {
+            case RANDOM:
                 this.timeSinceTrigger += delta;
                 if (this.timeSinceTrigger > tempsChangerDirection) {
-                    super.moving = true;
                     super.direction = (int) (Math.random() * 4);
                     this.timeSinceTrigger = 0;
                 }
                 break;
-            case 'v':
+            case VERTICAL:
                 if (this.timeSinceTrigger < tempsChangerDirection)
                     super.direction = 2;
                 else
                     super.direction = 0;
-                this.timeSinceTrigger += delta;
-                super.moving = true;
                 break;
-            case 'h':
+            case HORIZONTAL:
                 if (this.timeSinceTrigger < tempsChangerDirection)
                     super.direction = 3;
                 else
                     super.direction = 1;
-                 this.timeSinceTrigger += delta;
-                 super.moving = true;
-                 break;
-
-            case 'n':
-                // no movement
                 break;
-
+            case IMMOBILE:
+                if(this.direction != this.directionTransition)
+                {
+                    isCollisionPersonnage(this.getX(), this.getY());
+                } // no movement
+                break;
             default:
                 break;
         }
+        this.timeSinceTrigger += delta;
+        super.moving = true;
         if (this.timeSinceTrigger > (tempsChangerDirection * 2)) {
             super.moving = false;
             super.x = this.x;
             super.y = this.y;
             this.timeSinceTrigger = 0;
-        }
-        if (super.moving) {
-            switch (this.direction) {
-                case 0:
-                    super.y -= .1f * delta;
-                    break;
-                case 1:
-                    super.x -= .1f * delta;
-                    break;
-                case 2:
-                    super.y += .1f * delta;
-                    break;
-                case 3:
-                    super.x += .1f * delta;
-                    break;
-                default:
-                    break;
-            }
         }
     }
 
@@ -156,12 +143,12 @@ public class Ennemi extends Personnage {
      */
     private boolean isCollisionPersonnage(float x, float y) {
         for(Personnage unPersonnage : lesPersonnages) {
-            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unPersonnage.getBoundingBox());
+            boolean collision = new Rectangle(x - 16, y - 20, this.getWidth(), this.getHeight()).intersects(unPersonnage.getBoundingBox());
             if(collision) {
-
                 System.out.println("Ennemi -> Personnage");
-
                 return true;
+            } else {
+                this.directionTransition = this.direction;
             }
         }
         return false;
@@ -181,8 +168,6 @@ public class Ennemi extends Personnage {
         }
         return collision || isCollisionPersonnage( x, y);
     }
-
-
 
     public boolean isMort() {
         return mort;

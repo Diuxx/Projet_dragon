@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 import sys.EcranJeu;
 import sys.Point;
+import sys.Taille;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,10 @@ public class Personnage {
     private int centerX;
     private int centerY;
 
+    // vitesse des personnages
+    private float vitesse = 0.1f;
     // --
-    public Personnage(String nom, float x, float y, int w, int h, int pointDeVie) {
+    public Personnage(String nom, float x, float y, int w, int h, int pointDeVie, float vitesse) {
         this.nom = nom;
         this.x = x;
         this.y = y;
@@ -60,15 +63,23 @@ public class Personnage {
         this.pointDeVie = pointDeVie;
         this.pointDeVieActuel = pointDeVie;
 
+        this.vitesse = vitesse;
+
         this.animation = new ArrayList<Animation>();
-        // box = new Rectangle(x - 16, y - 20, w, h);
+
         box = new Rectangle(x - this.centerX, y - this.centerY, w, h);
     }
 
     // --
-    public Personnage(String nom, Point pos, int w, int h, int pointDeVie) {
-        this(nom, pos.getX(), pos.getY(), w, h, pointDeVie);
+    public Personnage(String nom, Point pos, int w, int h, int pointDeVie, float vitesse) {
+        this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, vitesse);
     }
+
+    // --
+    public Personnage(String nom, Point pos, Taille t, int pointDeVie, float vitesse) {
+        this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse);
+    }
+
 
     public float getX() {
         return this.x;
@@ -164,10 +175,10 @@ public class Personnage {
         float futurX = this.x;
         switch (this.direction) {
             case 1:
-                futurX = this.x - .1f * delta;
+                futurX = this.x - this.vitesse * delta;
                 break;
             case 3:
-                futurX = this.x + .1f * delta;
+                futurX = this.x + this.vitesse * delta;
                 break;
         }
         return futurX;
@@ -177,10 +188,10 @@ public class Personnage {
         float futurY = this.y;
         switch (this.direction) {
             case 0:
-                futurY = this.y - .1f * delta;
+                futurY = this.y - this.vitesse * delta;
                 break;
             case 2:
-                futurY = this.y + .1f * delta;
+                futurY = this.y + this.vitesse * delta;
                 break;
         }
         return futurY;
@@ -228,5 +239,13 @@ public class Personnage {
 
     public void setPointDeVieActuel(int pointDeVieActuel) {
         this.pointDeVieActuel = pointDeVieActuel;
+    }
+
+    public float getVitesse() {
+        return vitesse;
+    }
+
+    public void setVitesse(float vitesse) {
+        this.vitesse = vitesse;
     }
 }

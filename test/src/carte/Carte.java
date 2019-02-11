@@ -1,5 +1,6 @@
-package jeu;
+package carte;
 
+import jeu.Hero;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -44,7 +45,7 @@ public class Carte {
                 tile = map.getTileImage(x, y, positionLayer);
                 if(tile != null) {
                     color = tile.getColor((int) x % map.getTileWidth(), (int) y % map.getTileHeight());
-                    System.out.println("position -> (" + x + "; " + y + ") [ " + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + "]");
+                    // System.out.println("position -> (" + x + "; " + y + ") [ " + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + "]");
 
                     if(color.getBlue() == 201 && color.getGreen() == 174 && color.getRed() == 255) {
                         position.setX(x * map.getTileWidth());
@@ -69,6 +70,8 @@ public class Carte {
         int positionLayer = map.getLayerIndex("position");
         Image tile;
         Color color;
+        System.out.print("Dragon is searching : [ " + r + ", " + g + ", " + b + "]");
+        //boolean found = false;
 
         for(int x = 0; x < this.map.getWidth(); x++) {
             for(int y = 0; y < this.map.getHeight(); y++)
@@ -77,7 +80,10 @@ public class Carte {
                 if(tile != null) {
                     color = tile.getColor((int) x % map.getTileWidth(), (int) y % map.getTileHeight());
                     if(color.getBlue() == b && color.getGreen() == g && color.getRed() == r) {
-                        System.out.println("position -> (" + x + "; " + y + ") [ " + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + "]");
+                        // System.out.println("position -> (" + x + "; " + y + ") [ " + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + "]");
+                        System.out.println(" found ! (" + x + "; " + y + ")");
+
+
                         position.setX(x * map.getTileWidth());
                         position.setY(y * map.getTileHeight()); // --
                         return position;
@@ -85,6 +91,7 @@ public class Carte {
                 }
             }
         }
+        System.out.println(" not found ! ");
         return position;
     }
 

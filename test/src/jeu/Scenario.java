@@ -1,18 +1,16 @@
 package jeu;
 
-import ennemis.Boo;
-import ennemis.Chauve;
-import ennemis.Goblin;
-import ennemis.Slim;
+import carte.Carte;
+import ennemis.*;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
+
+import retest.Dragon;
+import sys.Direction;
 import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +32,9 @@ public class Scenario {
     /**
      * Taille des monstre & Pnj
      */
-    private Taille BASIC_SIZE = new Taille(16, 16);
-    private Taille LARGE_SIZE = new Taille(32, 32);
-    private Taille BIG_SIZE = new Taille(64, 64);
+    private final Taille BASIC_SIZE = new Taille(16, 16);
+    private final Taille LARGE_SIZE = new Taille(32, 32);
+    private final Taille BIG_SIZE = new Taille(64, 64);
 
     /**
      *
@@ -76,27 +74,24 @@ public class Scenario {
         test.addDialogue("Salut Nicolas comment vas-tu ?");
         lesPnj.add(test);
 
-        PersonnageNonJoueur unAutrePnj = new PersonnageNonJoueur("pnj Nicolas", map.getPositionPersonnage(0, 1, 255), 32, 32);
-        unAutrePnj.addDialogue("Un grand mystère entours la création du monde Un grand mystère entours la création\n " +
-                                    "du monde ! tu sais..");
+        PersonnageNonJoueur unAutrePnj = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
+        unAutrePnj.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
+                                    "a subitement disparue suite à la grande révolution du monde !/n Tu sais.." +
+                                    "On a besoin que tu trouve pouquoi tout va mal depuis ce fameux jour !");
         lesPnj.add(unAutrePnj);
 
         PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
         unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
         lesPnj.add(unAutrePnjs);
 
-
-
         // ennemis
-        Goblin unGoblin = new Goblin(map.getPositionPersonnage(0, 255, 255), BIG_SIZE, 'n', 1);
-        unGoblin.addCollision(hero);
-        lesEnnemis.add(unGoblin);
-
-        lesEnnemis.add(new Slim(map.getPositionPersonnage(255, 100, 0), LARGE_SIZE, 'v', 1000));
-        lesEnnemis.add(new Chauve(map.getPositionPersonnage(255, 200, 0), LARGE_SIZE, 'h', 1000));
-        //lesEnnemis.add(new Boo(map.getPositionPersonnage(255, 255, 255), LARGE_SIZE, 'v', 1000));
-        lesEnnemis.add(new Chauve(map.getPositionPersonnage(255, 255, 255), LARGE_SIZE, 'h', 1000));
-
+        lesEnnemis.add(new Squelette(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+        lesEnnemis.add(new FireWarrior(map.getPositionPersonnage(255, 100, 0), Direction.VERTICAL));
+        lesEnnemis.add(new FireWizard(map.getPositionPersonnage(255, 100, 0), Direction.HORIZONTAL));
+        lesEnnemis.add(new Chauve(map.getPositionPersonnage(255, 200, 0), Direction.HORIZONTAL));
+        Chauve uneChauve = new Chauve(map.getPositionPersonnage(255, 200, 0), Direction.HORIZONTAL);
+        uneChauve.addCollision(hero);
+        lesEnnemis.add(uneChauve);
     }
 
     public List<Ennemi> getLesEnnemis() {
@@ -105,5 +100,33 @@ public class Scenario {
 
     public List<PersonnageNonJoueur> getLesPnj() {
         return lesPnj;
+    }
+
+    public void afficherEnnemis(Graphics g) {
+        for(Ennemi unEnnemi : this.lesEnnemis) {
+            if(!unEnnemi.isMort()) // si l'ennemi est vivant ?
+                unEnnemi.afficher(g);
+        }
+    }
+
+    public void mouvement(Carte map, int delta) {
+        // affichage des mouvement des ennemi
+        for(Ennemi unEnnemi : this.lesEnnemis) {
+            unEnnemi.mouvement(delta, map.getMap());
+            if(unEnnemi.getBoundingBox().intersects(Dragon.getLeHero().getBoundingBox()))
+            { // début d'un combat
+
+            }
+        }
+    }
+
+    public void afficherPnj(Graphics g, Message lesMessages) {
+        for(PersonnageNonJoueur pnj : this.lesPnj) {
+            pnj.afficher(g);
+            if(pnj.isParle()) {
+                lesMessages.add(pnj.getDialogue());
+                pnj.arreteDeParler();
+            }
+        }
     }
 }

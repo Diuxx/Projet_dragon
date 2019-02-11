@@ -1,8 +1,8 @@
 package ennemis;
 import jeu.Ennemi;
+import sys.Direction;
 import sys.EcranJeu;
 import sys.Point;
-import org.newdawn.slick.tiled.TiledMap;
 import sys.Taille;
 
 
@@ -13,13 +13,25 @@ import sys.Taille;
  */
 public class Goblin extends Ennemi {
 
+    private static final Taille SIZE = new Taille(32, 32);
+    private static final int TIMER = 1000;
+    private static final float VITESSE = 0.1f;
+
+    public Goblin(Point p, Direction direction) {
+        this(p.getX(), p.getY(), Goblin.SIZE, direction, Goblin.TIMER, Goblin.VITESSE);
+    }
+
     /**
      * Class constructor
      */
-    public Goblin(Point positon, Taille taille, char direction, int timer) {
-        super("Goblin", positon.getX(), positon.getY(), taille.getLargeur(), taille.getLongeur(),
-                300, direction, timer);
+    public Goblin(int x, int y, Taille taille, Direction direction, int timer, float vitesse) {
+        super("Lutin", x, y, taille.getLargeur(), taille.getLongeur(),
+                300, direction, timer, vitesse);
         this.chargerImage();
+    }
+    
+    public Goblin(Point positon, Taille taille, Direction direction, int timer, float vitesse) {
+        this(positon.getX(), positon.getY(), taille, direction, timer, vitesse);
     }
 
     private void chargerImage() {

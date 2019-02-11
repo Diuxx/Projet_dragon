@@ -1,46 +1,52 @@
 package sys;
 
+import Bataille.Bataille;
+import carte.Carte;
 import hud.Hud;
+import hud.Hud_menu;
 import jeu.*;
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import retest.Dragon;
+
+import java.io.IOException;
 
 public class EcranJeu extends BasicGameState {
 
+    private boolean updatePaused = false;
+
     /**
      * Variable de debug
-     * Modifi certain élement d'affichage dans l'environnement de jeu.
-     */
+     * Modifie certains élements d'affichage dans l'environnement */
     public static final boolean DEBUG = true;
     public static final int ID = 2;
 
     /**
-     * Gestion de le fenetre et de l'affichage
-     */
+     * Gestion de la fenetre et de l'affichage */
     private GameContainer container;
-    private StateBasedGame gameState;
+    public static StateBasedGame gameState;
 
     /**
-     * Variable de jeu et d'affichage
-     */
+     * Variable de jeu et d'affichage */
     private Message lesMessages; /* test */
-    private Hero hero;
     private Carte carte;
     private Camera camera;
 
     /**
-     * Version 0 de la class scenario / histoire du jeu.
-     */
+     * Version 0 de la class scenario / histoire du jeu. */
     private Scenario scenario;
 
     /**
-     * Feuille de style contenant les images de notre hero
-     */
+     * Feuille de style contenant les images des personnage du jeu */
     public static SpriteSheet spriteSheet;
     public static SpriteSheet spriteSheet_goblin;
+    public static SpriteSheet spriteSheet_Ennemis;
+    public static SpriteSheet spriteSheet_Dragon;
 
     private Hud hud = new Hud();
+    private Hud_menu menu = new Hud_menu();
 
     @Override
     public int getID() {
@@ -49,56 +55,43 @@ public class EcranJeu extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        /**
-         *
-         */
-        camera = new Camera();
+        // initalisation de la fenètre
         this.container = gameContainer;
         this.gameState = stateBasedGame;
 
-        /**
-         *
-         */
+        // chargement des textures
         spriteSheet = new SpriteSheet("data/Tiny32.png", 32, 32);
         spriteSheet_goblin = new SpriteSheet("data/goblin.png", 64, 64);
+        spriteSheet_Ennemis = new SpriteSheet("data/Ennemis.png", 32, 32);
+        spriteSheet_Dragon = new SpriteSheet("data/Dragon.png", 96, 96);
 
-        /**
-         *
-         */
         lesMessages = new Message();
 
-        /**
-         * chargement de la carte de jeu
-         */
+        // chargement de la carte de jeu
         carte = new Carte("data/dragon.tmx");
 
-        /**
-         * Chargement du hero de l'histoire
-         */
-        Point positionPersonnage = carte.getPositionPersonnage();
-        hero = new Hero("LPDQL", positionPersonnage, new Taille(32, 32), 1200);
+        // Chargement du hero de l'histoire
+        Point p = carte.getPositionPersonnage();
+        Dragon.setLeHero(new Hero("LPDQL", p));
 
-        // lesMessages = new jeu.Message();
-        // lesMessages.add("c'est un test#un autre test#et un autre autre test #ça marche vraimeent bien #Salut salut");
-        // [ .. next .. ]
-        // si un élement du scenario n'est pas fini alors on charge le scénario... messages de joueur pnj etc..
-        // ex :
-        if(hero.artDeEpe == false) {
-            /**
-             * On charge le scenario de l'épe par exemple
-             */
-            scenario = new Scenario(Scenario.Art.EPE, carte, hero);
+        // initialisation de la camera
+        camera = new Camera(Dragon.getLeHero().getX(), Dragon.getLeHero().getY());
+
+        // chargement de l'histoire
+        if(Dragon.getLeHero().artDeEpe == false) {
+            // scenario de l'épé
+            scenario = new Scenario(Scenario.Art.EPE, carte, Dragon.getLeHero());
         } /* ..etc.. */
-        hero.addPnj(scenario.getLesPnj());
-        hero.addEnnemis(scenario.getLesEnnemis());
+        Dragon.getLeHero().addPnj(scenario.getLesPnj());
+        Dragon.getLeHero().addEnnemis(scenario.getLesEnnemis());
         hud.init(); // --
+        menu.init(gameContainer);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException
     {
         camera.translate(graphics, gameContainer);
-        //graphics.translate(gameContainer.getWidth() / 2 - (int)this.xCamera, gameContainer.getHeight() / 2 - (int)this.yCamera);
 
         // affichage de la carte
         carte.afficher(carte.getMap().getLayerIndex("background1"));
@@ -106,67 +99,66 @@ public class EcranJeu extends BasicGameState {
 
         // affichage des personnages non joueurs et des ennemis
         if(scenario != null) {
-            for(PersonnageNonJoueur pnj : scenario.getLesPnj()) {
-                pnj.afficher(graphics);
-                if(pnj.isParle()) {
-                    lesMessages.add(pnj.getDialogue());
-                    pnj.arreteDeParler();
-                }
-            }
-            for(Ennemi unEnnemi : scenario.getLesEnnemis()) {
-                if(!unEnnemi.isMort()) // si l'ennemi est vivant ?
-                    unEnnemi.afficher(graphics);
-            }
+            scenario.afficherPnj(graphics, this.lesMessages);;
+            scenario.afficherEnnemis(graphics);
         }
 
-        /**
-         * Affichage du personnage contrôlé.
-         */
-        hero.afficher(graphics);
+        // Affichage du hero
+        Dragon.getLeHero().afficher(graphics);
 
-        /**
-         * Buffer de messages.
-         */
-        if(lesMessages != null)
+        // affichage des messages
+        if(lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
         {
-            lesMessages.afficher(graphics, gameContainer, camera.getX(), camera.getY(), 5);
+            this.setUpdatePaused(true);
+        } else {
+            if(this.isUpdatePaused())
+                this.setUpdatePaused(false);
         }
 
-
-        /**
-         * image de positionné de tel façon que le personnage/ennemi/pnj puissent passer derrière.
-         */
+        // images positionné de telle façon
+        // que les personnages/ennemis/pnjs puissent passer derrière.
         carte.afficher(carte.getMap().getLayerIndex("overground1"));
         if(DEBUG) {
             carte.afficher(carte.getMap().getLayerIndex("porte"));
         }
+        hud.render(graphics, Dragon.getLeHero());
 
-        hud.render(graphics, this.hero);
+        if(menu.isShowing()) {
+            switch(menu.render(gameContainer, graphics)) {
+                case EXITGAME:
+                    container.exit();
+                    break;
+                case BACK:
+                    menu.setShowing(false);
+                    this.setUpdatePaused(false);
+                    break;
+                case NONE:
+                    /*if(gameContainer.getInput().isKeyDown(Input.KEY_ENTER)) {
+                        menu.setShowing(true);
+                        this.setUpdatePaused(true);
+
+                        System.out.println("is paused : " + this.isUpdatePaused());
+                    }*/
+                    break;
+            }
+        }
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-        /**
-         * Gestion des mouvement et des collision du hero
-         * Les collisions sont géré automatiquement dans la class du hero
-         */
-        hero.controle(gameContainer);
-        hero.mouvement(delta, carte.getMap());
+        if(this.isUpdatePaused())
+            return;
+
+         // Gestion des mouvements et des collisions du hero
+         // Les collisions sont géré automatiquement dans la class du herp
+        Dragon.getLeHero().controle(gameContainer);
+        Dragon.getLeHero().mouvement(delta, carte.getMap());
 
         // affichage des mouvement des ennemi
-        for(Ennemi unEnnemi : scenario.getLesEnnemis()) {
-            unEnnemi.mouvement(delta, carte.getMap());
-            if(unEnnemi.getBoundingBox().intersects(hero.getBoundingBox()))
-            {
-                // début d'un combat
-                //System.out.println("Fight ! ");
-            }
-        }
+        this.scenario.mouvement(this.carte, delta);
 
-        /**
-         * mouvement de la camera
-         */
-        this.camera.update(gameContainer, this.carte, this.hero);
+        // mouvement de la camera
+        this.camera.update(gameContainer, this.carte, Dragon.getLeHero());
     }
 
     @Override
@@ -175,14 +167,25 @@ public class EcranJeu extends BasicGameState {
             if(lesMessages != null) lesMessages.next();
         }
         // Affichage du menu du jeu.
-        if(Input.KEY_ENTER == key)
-        {
-            gameState.enterState(EcranMenu.ID);
+        if(Input.KEY_ENTER == key && !menu.isShowing()) {
+            menu.setShowing(true);
+            this.setUpdatePaused(true);
+
+            System.out.println("is paused : " + this.isUpdatePaused());
         }
     }
 
     @Override
     public void keyPressed(int key, char c) {
-        // --
+
+
+    }
+
+    public boolean isUpdatePaused() {
+        return updatePaused;
+    }
+
+    public void setUpdatePaused(boolean updatePaused) {
+        this.updatePaused = updatePaused;
     }
 }

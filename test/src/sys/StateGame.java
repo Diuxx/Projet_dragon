@@ -1,6 +1,7 @@
 package sys;
 
 
+import Bataille.Bataille;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -23,5 +24,8 @@ public class StateGame extends StateBasedGame {
     public void initStatesList(GameContainer gameContainer) throws SlickException {
         addState(new EcranMenu());
         addState(new EcranJeu());
+        addState(new Bataille());
     }
+
+
 }

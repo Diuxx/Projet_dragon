@@ -2,6 +2,7 @@ package ennemis;
 
 
 import jeu.Ennemi;
+import sys.Direction;
 import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
@@ -13,15 +14,25 @@ import sys.Taille;
  */
 public class Chauve extends Ennemi {
 
-    private float vitesse;
+    private static final Taille SIZE = new Taille(32, 32);
+    private static final int TIMER = 1000;
+    private static final float VITESSE = 0.1f;
 
     /**
      * Class constructor
      */
-    public Chauve(Point positon, Taille taille, char direction, int timer) {
-        super("Chauve Souris", positon.getX(), positon.getY(), taille.getLargeur(), taille.getLongeur(),
-                150, direction, timer);
+    public Chauve(int x, int y, Taille taille, Direction direction, int timer, float vitesse) {
+        super("Chauve souris", x, y, taille.getLargeur(), taille.getLongeur(),
+                50, direction, timer, vitesse);
         this.chargerImage();
+    }
+    
+    public Chauve(Point positon, Taille taille, Direction direction, int timer, float vitesse) {
+        this(positon.getX(), positon.getY(), taille, direction, timer, vitesse);
+    }
+
+    public Chauve(Point p, Direction direction) {
+        this(p.getX(), p.getY(), Chauve.SIZE, direction, Chauve.TIMER, Chauve.VITESSE);
     }
 
     private void chargerImage() {

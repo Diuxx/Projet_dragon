@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
+import sys.Camera;
 
 import java.util.ArrayList;
 
@@ -11,11 +12,12 @@ public class Message {
 
     private ArrayList<String> text;
     private int posisition;
-    private final int taille = 65;
+    private final int taille = 80;
 
     // --
-    private int MAXchar = 80;
-    private int maxLine = 3;
+    private int MESSAGE_MAXchar = 80;
+    private int MESSAGE_MAXLINE = 3;
+    private int MESSAGE_ESPACE = 5;
 
     Rectangle rect;
     // --
@@ -31,23 +33,6 @@ public class Message {
         String[] listDeChaine = text.split("#");
         for(String chaine : listDeChaine)
         {
-            for(String uneLigne : chaine.split("/n"))
-            {
-                for(int i=0; i< (uneLigne.length() % MAXchar); i++)
-                {
-                    if(uneLigne.length() > MAXchar) {
-
-                        try {
-                            chaine = chaine.replace(uneLigne.substring(MAXchar * i, MAXchar * (i+1)), uneLigne.substring(MAXchar * i, MAXchar * (i+1)) + "/n");
-
-                            System.out.println("une ligne a été remplacé : " + chaine);
-                            System.out.println(uneLigne.substring(MAXchar * i, MAXchar * (i+1)));
-                        } catch (StringIndexOutOfBoundsException e) {
-                            // --
-                        }
-                    }
-                }
-            }
             this.text.add(chaine + " (appuyez sur [w] pour continuer...)");
         }
         this.posisition = 0;
@@ -58,20 +43,19 @@ public class Message {
     }
 
     // afficher un message
-    public boolean afficher(Graphics g, GameContainer c, float x, float y, int espace) {
-        int i = 0;
-        if(this.posisition >= this.text.size()) {
+    public boolean afficher(Graphics g, GameContainer c, Camera camera) {
+        if(this.containMessage()) {
             if(posisition != 0) {
                 this.text = new ArrayList<String>();
                 this.posisition = 0;
             }
             return false; // --
         }
-
+        int i = 0;
         g.setColor(Color.white);
-        rect.setBounds((int) x - (c.getWidth() / 2) + espace,
-                       (int) y + (c.getHeight() / 2) - this.taille + espace,
-                    c.getWidth() - (espace + espace), this.taille - 10);
+        rect.setBounds((int) camera.getX() - (c.getWidth() / 2) + MESSAGE_ESPACE,
+                       (int) camera.getY() + (c.getHeight() / 2) - this.taille + MESSAGE_ESPACE,
+                    c.getWidth() - (MESSAGE_ESPACE + MESSAGE_ESPACE), this.taille - 10);
         g.fill(rect);
 
         g.setColor(Color.black);
@@ -79,8 +63,11 @@ public class Message {
         {
             g.drawString(uneLigne, rect.getX() + 5, rect.getY() + 5 + (15 * (i++)));
         }
-        //g.drawString(this.text.get(this.posisition), rect.getX() + 5, rect.getY() + 5);
         return true;
+    }
+
+    public boolean containMessage() {
+        return (this.posisition >= this.text.size());
     }
 
     /**
