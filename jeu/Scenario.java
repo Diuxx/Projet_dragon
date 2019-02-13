@@ -76,11 +76,15 @@ public class Scenario {
         test.addDialogue("Salut Nicolas comment vas-tu ?");
         lesPnj.add(test);
 
-        PersonnageNonJoueur unAutrePnj = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
-        unAutrePnj.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
-                                    "a subitement disparue suite à la grande révolution du monde !/n Tu sais.." +
-                                    "On a besoin que tu trouve pouquoi tout va mal depuis ce fameux jour !");
-        lesPnj.add(unAutrePnj);
+               PersonnageNonJoueur PNJquiDonneEpee = new PersonnageNonJoueur("PNJ qui donne l'epee", map.getPositionPersonnage(0, 1, 255), 32, 32);
+        PNJquiDonneEpee.loadAnimation(EcranJeu.spriteSheet_PNJ, 6, 7,  4);
+        PNJquiDonneEpee.addDialogue("Salut !!");
+        lesPnj.add(PNJquiDonneEpee);
+        
+        PersonnageNonJoueur PNJServante = new PersonnageNonJoueur("PNJ Servante", map.getPositionPersonnage(0, 255, 255), 32, 32);
+        PNJServante.loadAnimation(EcranJeu.spriteSheet_PNJ, 3, 4,  4);
+        PNJServante.addDialogue("Salut !!");
+        lesPnj.add(PNJServante);
 
         PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
         unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
