@@ -44,6 +44,7 @@ public class EcranJeu extends BasicGameState {
     public static SpriteSheet spriteSheet_goblin;
     public static SpriteSheet spriteSheet_Ennemis;
     public static SpriteSheet spriteSheet_Dragon;
+    public static SpriteSheet spriteSheet_PNJ;
 
     private Hud hud = new Hud();
     private Hud_menu menu = new Hud_menu();
@@ -64,6 +65,7 @@ public class EcranJeu extends BasicGameState {
         spriteSheet_goblin = new SpriteSheet("data/goblin.png", 64, 64);
         spriteSheet_Ennemis = new SpriteSheet("data/Ennemis.png", 32, 32);
         spriteSheet_Dragon = new SpriteSheet("data/Dragon.png", 96, 96);
+        spriteSheet_PNJ = new SpriteSheet("data/PNJ.png", 32, 32);
 
         lesMessages = new Message();
 
