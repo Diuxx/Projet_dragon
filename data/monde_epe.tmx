@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="87" height="71" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="4">
+ <tileset firstgid="1" source="zelda01.tsx"/>
+ <tileset firstgid="481" source="postion_hero.tsx"/>
+ <layer id="1" name="background1" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3UwU3DQBCG0XUBgeQMHUBIHdAINAKNQCOkEdOIowxXK4oSa3P4pXcY7SdZHksr661aa49Daw+Ds+d5V/f6VPNSvavZDrpXP9e9vtasqzc194Pu1W91r+/+25v0R93rp//2Jv3FW94GNm95m9i85W1i85a3ic1b3iY2b3mb2LzlbWLzlreJzVveJjZveZvYvOVtYvOWt4nNW94mNm95m9i85W1i85a3ic1b3iY2b3mb2LzlbWLzlreJzVveJjZveZvYvOVtYvOWt4nNW94mNm95m9i85W1i85a3ic1b3iY2b3mb2LzlbWLzlreJ/e/td81Y83dmxtl5zczfObVjyd5LvtVjx7jw2U/Nb81Uczgz0+y8ZubvnNqxZO8l3+qxY1r4bF9zBBMHIm+EYAAA
+  </data>
+ </layer>
+ <layer id="2" name="background2" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3cu01DQRRF0XECjUAv0BYt8OkD7D749AF2CdwOmGSLZC3pBJNZT9bWRLPWWo+zp9nz7GXjzL7X2dvsODttnNn3PvuYfc6+Ns7s+579zM6zy8aZfXra0dOOnnb0tKO3Hb3t6G1Hbzt629Hbjt529LZ1d1jrfvZw+O9fAn+7mv/ptf9q4ma+661vm3G/7bjfdtxvO+63Hb3t6G1Hbzt629Hbjt529Lajtx297ehtR287etvR247edvS2o7cdve3obUdvO3rb0duO3nb0tqO3Hb3t6G1Hbzt629Hbjt529Lajtx297ehtR287etvR247edvS2o7cd7992vH/b8f5tx/u3AL1fAl2C+4RgAAA=
+  </data>
+ </layer>
+ <layer id="3" name="overground1" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GA5SCSjhGAAAA==
+  </data>
+ </layer>
+ <layer id="5" name="solide" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GA5SCSjhGAAAA==
+  </data>
+ </layer>
+ <layer id="6" name="position" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3OQQ0AAAgEoLN/SptYws2HkIAEAAAAAABgX9f1AAAAAAAAAAAAAAAAAAAAAAAA/hnN/vLOhGAAAA==
+  </data>
+ </layer>
+ <objectgroup id="7" name="map-teleport" width="87" height="71">
+  <object id="1" name="dragon" type="change-map" x="0" y="272" width="31" height="48"/>
+  <object id="3" name="dragon" type="position-map" x="75" y="293" width="16" height="16"/>
+ </objectgroup>
+</map>
