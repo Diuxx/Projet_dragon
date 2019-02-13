@@ -2,7 +2,7 @@ package jeu;
 
 import Bataille.Bataille;
 
-//import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theories;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
