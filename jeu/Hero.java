@@ -2,7 +2,7 @@ package jeu;
 
 import Bataille.Bataille;
 
-import org.junit.experimental.theories.Theories;
+//import org.junit.experimental.theories.Theories;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -20,6 +20,8 @@ import java.util.List;
 import static sys.EcranJeu.spriteSheet;
 
 public class Hero extends Personnage {
+
+    // commentaire nico !
 
     private List<PersonnageNonJoueur> lesPnj;
     private List<Ennemi> lesEnnemis;
