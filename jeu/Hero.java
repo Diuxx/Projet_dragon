@@ -22,6 +22,7 @@ import static sys.EcranJeu.spriteSheet;
 public class Hero extends Personnage {
 
     // commentaire nico !
+    // Ma fonctionnalité à moi
 
     private List<PersonnageNonJoueur> lesPnj;
     private List<Ennemi> lesEnnemis;
