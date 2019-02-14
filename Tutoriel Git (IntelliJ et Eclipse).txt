@@ -20,7 +20,6 @@
 
 ********** REMARQUES **********
 - Dans un premier temps et jusqu'à avoir bien en main les fonctionnalités de Git proposées par les IDE, il est conseillé à toute l'équipe de développer dans la même branche (la branche par défaut) pour éviter les conflits de code trop complexes à gérer.
-- Pour reprendre le code à partir d'un ancien commit (donc d'une version plus ancienne du code), voir les parties "Utilisation de Git"
 
 
 
