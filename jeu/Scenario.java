@@ -1,11 +1,14 @@
 package jeu;
 
+import Bataille.Bataille;
 import carte.Carte;
-import ennemis.*;
+import ennemis.Chauve;
+import ennemis.FireWarrior;
+import ennemis.FireWizard;
+import ennemis.Squelette;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-
-import retest.Dragon;
+import singleton.InterStateComm;
 import sys.Direction;
 import sys.EcranJeu;
 import sys.Point;
@@ -28,7 +31,7 @@ public class Scenario {
         EPE,
         BOUCLIER
     }
-    
+
     private Heal heal;
 
     /**
@@ -40,18 +43,24 @@ public class Scenario {
 
     /**
      *
-     * @param currentArt
-     * @param map
      * @throws SlickException
      */
-    public Scenario(Art currentArt, Carte map, Hero hero) throws SlickException {
+    public Scenario() throws SlickException {
 
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
+    }
+
+    /**
+     *
+     * @param map
+     */
+    public void charger(Carte map) {
+        Art currentArt = Scenario.Art.EPE;
 
         switch(currentArt) {
             case EPE:
-                this.chargerEpe(map, hero);
+                this.chargerEpe(map);
                 break;
         }
     }
@@ -59,62 +68,45 @@ public class Scenario {
     /**
      * Chargement du scenario de l'épé
      */
-    private void chargerEpe(Carte map, Hero hero) {
+    private void chargerEpe(Carte map) {
 
-        Point position = map.getPositionPersonnage(0, 0, 255);
-        PersonnageNonJoueur test = new PersonnageNonJoueur("pnj Paul", position, 32, 32);
+        if(map.getFileName().equals("dragon")) {
+            Point position = map.getPositionPersonnage(0, 0, 255);
+            PersonnageNonJoueur test = new PersonnageNonJoueur("pnj Paul", position, 32, 32);
 
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 4,  11);
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 4,  9);
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 4,  8);
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 4,  10);
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 6,  11);
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 6,  9);
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 6,  8);
-        test.loadAnimation(EcranJeu.spriteSheet, 3, 6,  10);
-        test.setDirection(2);
-        test.addDialogue("Salut Nicolas comment vas-tu ?");
-        lesPnj.add(test);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 11);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 9);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 8);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 10);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 11);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 9);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 8);
+            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 10);
+            test.setDirection(2);
+            test.addDialogue("Salut Nicolas comment vas-tu ?");
+            lesPnj.add(test);
 
-               PersonnageNonJoueur PNJquiDonneEpee = new PersonnageNonJoueur("PNJ qui donne l'epee", map.getPositionPersonnage(0, 1, 255), 32, 32);
-        PNJquiDonneEpee.loadAnimation(EcranJeu.spriteSheet_PNJ, 6, 7,  4);
-        PNJquiDonneEpee.addDialogue("Salut !!");
-        lesPnj.add(PNJquiDonneEpee);
-        
-        PersonnageNonJoueur PNJServante = new PersonnageNonJoueur("PNJ Servante", map.getPositionPersonnage(0, 255, 255), 32, 32);
-        PNJServante.loadAnimation(EcranJeu.spriteSheet_PNJ, 3, 4,  4);
-        PNJServante.addDialogue("Salut !!");
-        lesPnj.add(PNJServante);
+            PersonnageNonJoueur unAutrePnj = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
+            unAutrePnj.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
+                    "a subitement disparue suite à la grande révolution du monde !/n Tu sais.." +
+                    "On a besoin que tu trouve pouquoi tout va mal depuis ce fameux jour !");
+            lesPnj.add(unAutrePnj);
 
-        PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
-        unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
-        lesPnj.add(unAutrePnjs);
-        
-        
-        // heal
-        Point posHeal = map.getPositionPersonnage(185, 122, 87);
-        posHeal.setX(posHeal.getX()+8);
-        posHeal.setY(posHeal.getY()+18);
-        heal = new Heal(posHeal,new Taille(32,32));
-        
-        /*     // healing spot
-        Point healing = new Point(52,27);
-        
-        HealingSpot heal = new HealingSpot("Free Heal",healing,32,32,100);
-        
-        heals.add(heal);
-        */
-        
-        
+            PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
+            unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
+            lesPnj.add(unAutrePnjs);
 
-        // ennemis
-        lesEnnemis.add(new Squelette(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-        lesEnnemis.add(new FireWarrior(map.getPositionPersonnage(255, 100, 0), Direction.VERTICAL));
-        lesEnnemis.add(new FireWizard(map.getPositionPersonnage(255, 100, 0), Direction.HORIZONTAL));
-        lesEnnemis.add(new Chauve(map.getPositionPersonnage(255, 200, 0), Direction.HORIZONTAL));
-        Chauve uneChauve = new Chauve(map.getPositionPersonnage(255, 200, 0), Direction.HORIZONTAL);
-        uneChauve.addCollision(hero);
-        lesEnnemis.add(uneChauve);
+            // ennemis
+            lesEnnemis.add(new Squelette(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new FireWarrior(map.getPositionPersonnage(255, 100, 0), Direction.VERTICAL));
+            lesEnnemis.add(new FireWizard(map.getPositionPersonnage(255, 100, 0), Direction.HORIZONTAL));
+            lesEnnemis.add(new Chauve(map.getPositionPersonnage(255, 200, 0), Direction.HORIZONTAL));
+
+            Point posHeal = map.getPositionPersonnage(185, 122, 87);
+            posHeal.setX(posHeal.getX() + 8);
+            posHeal.setY(posHeal.getY() + 18);
+            heal = new Heal(posHeal, new Taille(32,32));
+        }
     }
 
     public List<Ennemi> getLesEnnemis() {
@@ -132,13 +124,47 @@ public class Scenario {
         }
     }
 
-    public void mouvement(Carte map, int delta) {
+    /**
+     *
+     */
+    public void resetScenario() {
+        lesEnnemis = new ArrayList<Ennemi>();
+        lesPnj = new ArrayList<PersonnageNonJoueur>();
+
+        InterStateComm.getLeHero().removePnj();
+    }
+
+    /**
+     *
+     * @param map
+     * @param delta
+     * @param lesMessages
+     */
+    public void mouvement(Carte map, int delta, Message lesMessages) {
         // affichage des mouvement des ennemi
         for(Ennemi unEnnemi : this.lesEnnemis) {
-            unEnnemi.mouvement(delta, map.getMap());
-            if(unEnnemi.getBoundingBox().intersects(Dragon.getLeHero().getBoundingBox()))
-            { // début d'un combat
+            if(unEnnemi.isMort())
+                continue;
 
+            if(unEnnemi.veutCombattre())
+            {
+                System.out.println(unEnnemi.getNom() + " veut se battre !");
+                // --
+                InterStateComm.setUnEnnemi(unEnnemi);
+
+                EcranJeu.gameState.enterState(Bataille.ID);
+                unEnnemi.seCalme();
+            }
+            unEnnemi.mouvement(delta, map.getMap());
+            if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()))
+            { // début d'un combat
+                System.out.println("intersect");
+                lesMessages.add("boo !");
+                unEnnemi.startCombat();
+                unEnnemi.setBouge(false);
+            } else {
+                if(!unEnnemi.isBouge())
+                unEnnemi.setBouge(true);
             }
         }
     }
@@ -152,15 +178,15 @@ public class Scenario {
             }
         }
     }
-    
+
     public Heal getHeals() {
 
         return heal;
 
     }
-    
+
     public void afficherHeal(Graphics g) {
-    	
-		heal.afficher(g);
-	}
+
+        heal.afficher(g);
+    }
 }

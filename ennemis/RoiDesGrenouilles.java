@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class RoiDesGrenouilles
  *
@@ -36,13 +36,13 @@ public class RoiDesGrenouilles extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  11);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  9);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  8);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  10);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  11);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  9);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  8);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  10);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  11);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  9);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  8);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  10);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  11);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  9);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  8);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  10);
     }
 }

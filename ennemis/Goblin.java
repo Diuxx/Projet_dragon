@@ -1,7 +1,6 @@
 package ennemis;
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
 
@@ -35,13 +34,13 @@ public class Goblin extends Ennemi {
     }
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 0, 1, 2);
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 0, 1, 3);
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 0, 1, 0);
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 0, 1, 1);
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 1, 7, 2);
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 1, 7, 3);
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 1, 7, 0);
-        this.loadAnimation(EcranJeu.spriteSheet_goblin, 1, 7, 1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 0, 1, 2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 0, 1, 3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 0, 1, 0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 0, 1, 1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 1, 7, 2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 1, 7, 3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 1, 7, 0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_goblin, 1, 7, 1);
     }
 }

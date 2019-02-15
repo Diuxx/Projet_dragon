@@ -16,7 +16,7 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import retest.Dragon;
+import singleton.InterStateComm;
 import sys.EcranJeu;
 
 /**
@@ -58,7 +58,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 		this.stageGame = stateBasedGame;
 		font1 = new Font("Matura MT Script Capitals", Font.PLAIN, 35);
-		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
+		font2 = new Font("Tribal InterStateComm", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
 		trueTypeFont1 = new TrueTypeFont(font1, true);
 		trueTypeFont2 = new TrueTypeFont(font2, true);
@@ -90,9 +90,9 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		graphics.drawString(this.text2, text2X, text2Y);
 		graphics.setFont(trueTypeFont2);
 		graphics.setColor(Color.white);
-		graphics.drawString("The Dragon King",
+		graphics.drawString("The InterStateComm King",
 				(int) (main.Main.gX - (main.Main.gX * 0.515)
-						- (int) (font2.getStringBounds("The Dragon King ", tTypeFont).getWidth() * 0.5)),
+						- (int) (font2.getStringBounds("The InterStateComm King ", tTypeFont).getWidth() * 0.5)),
 				(int) (main.Main.gY - (main.Main.gY * 0.98)));
 	}
 
@@ -103,7 +103,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 				&& (posY > (600 - text2Y - textheight) && posY < (600 - text2Y))) {
 			if (!inputNom.getText().equals("")) {
 				if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-					Dragon.getLeHero().setNom(inputNom.getText());
+					InterStateComm.getLeHero().setNom(inputNom.getText());
 					stageGame.enterState(EcranJeu.ID);
 				}
 				color2 = Color.red;

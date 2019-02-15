@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class Malin
  *
@@ -36,13 +36,13 @@ public class Malin extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  11);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  9);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  8);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  10);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  11);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  9);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  8);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  10);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  11);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  9);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  8);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  10);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  11);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  9);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  8);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  10);
     }
 }

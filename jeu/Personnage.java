@@ -256,4 +256,9 @@ public class Personnage {
     public void setNom(String nom) {
     	this.nom = nom;
     }
+
+    public void setPosition(Point p) {
+        this.x = p.getX();
+        this.y = p.getY();
+    }
 }

@@ -28,6 +28,10 @@ public class Hud_menu {
     private ArrayList<Button> lesBoutons;
     private int currentButton;
 
+    // --
+    // public static boolean test = false;
+    public long s = 0;
+
     public Hud_menu() {
     }
 
@@ -35,7 +39,7 @@ public class Hud_menu {
      *
      * @throws SlickException
      */
-    public void init(GameContainer gc) throws SlickException {
+    public void init(GameContainer gc) {
         hud_w = gc.getWidth() / 2;
         hud_h = gc.getHeight() / 2;
         hud_x = (gc.getWidth() / 2) - (hud_w / 2);
@@ -62,8 +66,11 @@ public class Hud_menu {
      */
     public MenuItem render(GameContainer gc, Graphics g) throws SlickException {
         g.resetTransform();
-        g.setColor(UHD_COLOR );
+        g.setColor(UHD_COLOR);
         g.fillRect(hud_x, hud_y, hud_w, hud_h);
+
+        //if(this.test == false)
+        //    this.test = true;
 
         menuUp(gc);
         if(gc.getInput().isKeyPressed(Input.KEY_DOWN)) {
@@ -78,6 +85,9 @@ public class Hud_menu {
             b.render(gc, g);
 
         if(gc.getInput().isKeyDown(Input.KEY_ENTER)) {
+
+            this.s = System.currentTimeMillis();
+
             System.out.println(lesBoutons.get(this.currentButton).getMenuItem());
             return lesBoutons.get(this.currentButton).getMenuItem();
         }
@@ -95,7 +105,9 @@ public class Hud_menu {
         }
     }
 
-
+    public long getDiff() {
+        return System.currentTimeMillis() - this.s;
+    }
 
     public boolean isShowing() {
         return showing;

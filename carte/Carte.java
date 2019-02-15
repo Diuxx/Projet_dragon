@@ -14,10 +14,14 @@ public class Carte {
      *
      */
     private TiledMap map;
+    private String dernierMap;
+
+    private String nomMap;
 
     // --
-    public Carte(String fileMap) throws SlickException  {
+    public Carte(String fileMap) throws SlickException {
         this.map = new TiledMap(fileMap);
+        this.nomMap = fileMap.split("/")[fileMap.split("/").length - 1].split("\\.")[0];
     }
 
     public TiledMap getMap() {
@@ -37,8 +41,6 @@ public class Carte {
         int positionLayer = map.getLayerIndex("position");
         Image tile;
         Color color;
-
-        System.out.println(map.getWidth() + " - " + map.getHeight());
         for(int x = 0; x < this.map.getWidth(); x++) {
             for(int y = 0; y < this.map.getHeight(); y++)
             {
@@ -70,7 +72,7 @@ public class Carte {
         int positionLayer = map.getLayerIndex("position");
         Image tile;
         Color color;
-        System.out.print("Dragon is searching : [ " + r + ", " + g + ", " + b + "]");
+        System.out.print("InterStateComm is searching : [ " + r + ", " + g + ", " + b + "]");
         //boolean found = false;
 
         for(int x = 0; x < this.map.getWidth(); x++) {
@@ -93,6 +95,20 @@ public class Carte {
         }
         System.out.println(" not found ! ");
         return position;
+    }
+
+    // --
+    public String getFileName() {
+        return this.nomMap;
+    }
+
+    /**
+     * Change la Map acctuellement chargé
+     * @param dest
+     */
+    public void changeMap(String dest) throws SlickException {
+        this.nomMap = dest.split("/")[dest.split("/").length - 1].split("\\.")[0];
+        this.map = new TiledMap(dest);
     }
 
     public float getHerox() {

@@ -3,7 +3,6 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
 
@@ -36,13 +35,13 @@ public class Chauve extends Ennemi {
     }
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 4,  15);
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 4,  13);
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 4,  12);
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 4,  14);
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 6,  15);
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 6,  13);
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 6,  12);
-        this.loadAnimation(EcranJeu.spriteSheet, 3, 6,  14);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4,  15);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4,  13);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4,  12);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4,  14);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6,  15);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6,  13);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6,  12);
+        this.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6,  14);
     }
 }

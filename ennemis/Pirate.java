@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class Pirate
  *
@@ -36,13 +36,13 @@ public class Pirate extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  15);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  13);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  12);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  14);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  15);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  13);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  12);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  14);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  15);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  13);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  12);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  14);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  15);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  13);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  12);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  14);
     }
 }

@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class Warrior
  *
@@ -36,13 +36,13 @@ public class Warrior extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  6);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  6);
     }
 }

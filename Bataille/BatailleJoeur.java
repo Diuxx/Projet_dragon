@@ -3,7 +3,7 @@ package Bataille;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 
-import retest.Dragon;
+import singleton.InterStateComm;
 
 public class BatailleJoeur {
 	private Image joueur;
@@ -23,7 +23,7 @@ public class BatailleJoeur {
 	    g.drawRect(container.getWidth() * 1 / 4 - 80, container.getHeight() / 2 - joueur.getHeight() / 2-30, 130, 20);
 	    
 	    g.setColor(new Color(255,0,0));
-	    g.fillRect(container.getWidth() * 1 / 4 - 80, container.getHeight() / 2 - joueur.getHeight() / 2-30, (Dragon.getLeHero().getPointDeVieActuel() / Dragon.getLeHero().getPointDeVie()) * 130, 20);
+	    g.fillRect(container.getWidth() * 1 / 4 - 80, container.getHeight() / 2 - joueur.getHeight() / 2-30, (InterStateComm.getLeHero().getPointDeVieActuel() / InterStateComm.getLeHero().getPointDeVie()) * 130, 20);
 	    
 	}
 	public void update(int delta) {
@@ -35,11 +35,11 @@ public class BatailleJoeur {
 	}
 	
 	public float getBarreVie() {
-		return Dragon.getLeHero().getPointDeVieActuel();
+		return InterStateComm.getLeHero().getPointDeVieActuel();
 	}
 	
 	public void setBarreVie(int degat) {
-		Dragon.getLeHero().setPointDeVieActuel(Dragon.getLeHero().getPointDeVieActuel()-degat);
+		InterStateComm.getLeHero().setPointDeVieActuel(InterStateComm.getLeHero().getPointDeVieActuel()-degat);
 	}
 	public void addAnimationListener(AnimationListener assignDamage, AnimationListener endAttack) {
 		  this.animation.addListener(500, assignDamage);

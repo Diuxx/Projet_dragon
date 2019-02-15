@@ -1,72 +1,67 @@
 package jeu;
 
-import Bataille.Bataille;
-
-import org.junit.experimental.theories.Theories;
+import Mondes.Ressources;
+import carte.Carte;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
-import sys.EcranJeu;
-import sys.InterStateComm;
 import sys.Point;
 import sys.Taille;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static sys.EcranJeu.spriteSheet;
+//import sys.EcranJeu;
+
 
 public class Hero extends Personnage {
 
-    // commentaire nico !
-    // Ma nouvelle fonctionnalité de nico
-    // Ma fonctionnalité à moi
-
     private List<PersonnageNonJoueur> lesPnj;
     private List<Ennemi> lesEnnemis;
-    private int currentXp;
+    private int experience;
     private int niveau;
     private int currentGold;
 
+    private boolean artEpee;
+    private boolean artBouclier;
+    private boolean artFeu;
+    private boolean artVoler;
+
+
     // hero information
-    private static final float HEROLIFE = 1120;
+    private static final int HEROLIFE = 1120;
     private static final float HEROSPEED = 0.1f;
-    private static final int HEROLEVEL = 1;
+    private static final int HEROLEVEL = 5;
     private static final int HEROGOLD = 500;
-	private int experience = 5;
-	private int level = 5;
-	private boolean artEpee;
-	private boolean artBouclier;
-	private boolean artFeu;
-	private boolean artVoler;
 
     /**
-     * Constructeur de la class Hero (projet Dragon);
+     * Constructeur de la class Hero (projet InterStateComm);
      * @param nom
      * @param positon
      */
     public Hero(String nom, Point positon) {
         super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
-        this.lesEnnemis = new ArrayList<Ennemi>();
-        this.currentXp = 0;
+        this.experience = 5;
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
-        // --
-        this.chargerImage();
+
         this.artEpee = true;
-        this.artBouclier=true;
+        this.artBouclier = true;
         this.artFeu = false;
         this.artVoler = false;
+        // --
+        this.chargerImage();
     }
 
     public Hero(String save) {
 
         super("?", 0, 0, 0, 0, 0,  HEROSPEED);
     }
+
 
 
     // seul le hero peut être contrôlé
@@ -97,6 +92,10 @@ public class Hero extends Personnage {
         this.lesPnj = lesPnj;
     }
 
+
+    public void removePnj() {
+        this.lesPnj = new ArrayList<PersonnageNonJoueur>();
+    }
     /**
      *
      * @param lesEnnemis
@@ -125,16 +124,32 @@ public class Hero extends Personnage {
     private boolean isCollisionEnnemi(float x, float y) {
         for(Ennemi unEnnemi : lesEnnemis) {
             boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unEnnemi.getBoundingBox());
-            if(collision && !unEnnemi.isMort()) {
+            if(collision) {
                 // --
-                System.out.println("Fight");
-                InterStateComm.setBattleEnnemy(unEnnemi);
-                EcranJeu.gameState.enterState(Bataille.ID);
-
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     *
+     */
+    public Color detectAreaChanging(Carte uneCarte) {
+        int tileW = uneCarte.getMap().getTileWidth();
+        int tileH = uneCarte.getMap().getTileHeight();
+
+        int gateLayer = uneCarte.getMap().getLayerIndex("porte");
+        Image tile = uneCarte.getMap().getTileImage((int) this.x / tileW, (int) this.y / tileH, gateLayer);
+
+        boolean collision = tile != null;
+        if(collision)
+        {
+            Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+            System.out.println(color.getRed() + "," + color.getGreen() + "," + color.getBlue());
+            return color;
+        }
+        return new Color(0, 0, 0);
     }
 
     @Override
@@ -149,29 +164,21 @@ public class Hero extends Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        return collision || isCollisionPnj( x, y) || isCollisionEnnemi( x, y);
+        return collision || isCollisionPnj( x, y)/* || isCollisionEnnemi( x, y)*/;
     }
 
     /**
      *
      */
     private void chargerImage() {
-        this.loadAnimation(spriteSheet, 6, 7,  11);
-        this.loadAnimation(spriteSheet, 6, 7,  9);
-        this.loadAnimation(spriteSheet, 6, 7,  8);
-        this.loadAnimation(spriteSheet, 6, 7,  10);
-        this.loadAnimation(spriteSheet, 6, 9,  11);
-        this.loadAnimation(spriteSheet, 6, 9,  9);
-        this.loadAnimation(spriteSheet, 6, 9,  8);
-        this.loadAnimation(spriteSheet, 6, 9,  10);
-    }
-
-    public int getCurrentXp() {
-        return currentXp;
-    }
-
-    public void setCurrentXp(int currentXp) {
-        this.currentXp = currentXp;
+        this.loadAnimation(Ressources.spriteSheet, 6, 7,  11);
+        this.loadAnimation(Ressources.spriteSheet, 6, 7,  9);
+        this.loadAnimation(Ressources.spriteSheet, 6, 7,  8);
+        this.loadAnimation(Ressources.spriteSheet, 6, 7,  10);
+        this.loadAnimation(Ressources.spriteSheet, 6, 9,  11);
+        this.loadAnimation(Ressources.spriteSheet, 6, 9,  9);
+        this.loadAnimation(Ressources.spriteSheet, 6, 9,  8);
+        this.loadAnimation(Ressources.spriteSheet, 6, 9,  10);
     }
 
     public int getNiveau() {
@@ -190,38 +197,31 @@ public class Hero extends Personnage {
         this.currentGold = currentGold;
     }
 
-	public int getExperience() {
-		return this.experience;
-	}
-	
-	public void setExperience(int experienceGagne) {
-		experience += experienceGagne;
-	}
-	
-	public int getLevel() {
-		return this.level;
-	}
-	
-	public void setLevel(int levelGagne) {
-		this.level += levelGagne;
-	}
+    public int getExperience() {
+        return this.experience;
+    }
 
-	public boolean getArtEpee() {
-		
-		return artEpee ;
-	}
+    public void setExperience(int experienceGagne) {
+        experience += experienceGagne;
+    }
 
-	public boolean getArtBouclier() {
-		
-		return artBouclier;
-	}
+    public int getLevel() {
+        return this.niveau;
+    }
 
-	public boolean getArtFeu() {
-		return artFeu;
-	}
+    public void setLevel(int levelGagne) {
+        this.niveau += levelGagne;
+    }
 
-	public boolean getArtVoler() {
-		return artVoler;
-	}
+    public boolean getArtEpee() { return artEpee ; }
 
+    public boolean getArtBouclier() { return artBouclier; }
+
+    public boolean getArtFeu() {
+        return artFeu;
+    }
+
+    public boolean getArtVoler() {
+        return artVoler;
+    }
 }

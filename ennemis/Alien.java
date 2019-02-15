@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class Alien
  *
@@ -36,13 +36,13 @@ public class Alien extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  11);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  9);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  8);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  10);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  11);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  9);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  8);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  10);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  11);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  9);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  8);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  10);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  11);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  9);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  8);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  10);
     }
 }

@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class IceMan
  *
@@ -36,13 +36,13 @@ public class IceMan extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  6);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  6);
     }
 }

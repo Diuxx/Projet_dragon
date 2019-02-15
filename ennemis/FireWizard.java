@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class FireWizard
  *
@@ -36,13 +36,13 @@ public class FireWizard extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  6);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  6);
     }
 }

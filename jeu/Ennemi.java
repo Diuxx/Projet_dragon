@@ -31,6 +31,9 @@ public class Ennemi extends Personnage {
 
     private boolean collid = false;
 
+    private boolean bouge;
+    private boolean veutCombattre;
+
     /**
      * Class constructor
      */
@@ -41,6 +44,9 @@ public class Ennemi extends Personnage {
         this.x = x;
         this.y = y;
         this.tempsChangerDirection = t;
+
+        this.bouge = true;
+        this.veutCombattre = false;
 
         /**
          * L'ennemi quand il est crée est vivant ! (visible)
@@ -108,6 +114,8 @@ public class Ennemi extends Personnage {
 
     @Override
     public void mouvement(int delta, TiledMap map) {
+        if(!this.isBouge())
+            return;
         super.mouvement(delta, map);
         this.move(delta);
     }
@@ -175,5 +183,25 @@ public class Ennemi extends Personnage {
 
     public void setMort(boolean mort) {
         this.mort = mort;
+    }
+
+    public boolean isBouge() {
+        return bouge;
+    }
+
+    public void setBouge(boolean bouge) {
+        this.bouge = bouge;
+    }
+
+    public void startCombat() {
+        this.veutCombattre = true; // --
+    }
+
+    public void seCalme() {
+        this.veutCombattre = false;
+    }
+
+    public boolean veutCombattre() {
+        return veutCombattre;
     }
 }

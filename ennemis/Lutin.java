@@ -3,7 +3,6 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
 
@@ -36,13 +35,13 @@ public class Lutin extends Ennemi {
     }
 
 	private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  2);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  2);
     }
 }

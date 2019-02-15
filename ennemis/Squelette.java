@@ -3,7 +3,6 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
 
@@ -36,13 +35,13 @@ public class Squelette extends Ennemi {
     }
 
 	private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 4,  2);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 3, 5,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 4,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 3, 5,  2);
     }
 }

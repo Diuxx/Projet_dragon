@@ -66,7 +66,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 		this.stageGame = stateBasedGame;
 		font1 = new Font("Matura MT Script Capitals", Font.PLAIN, 35);
-		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
+		font2 = new Font("Tribal InterStateComm", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
 		trueTypeFont1 = new TrueTypeFont(font1, true);
 		trueTypeFont2 = new TrueTypeFont(font2, true);
@@ -108,9 +108,9 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 		graphics.drawString(this.text4, text4X, text4Y);
 		graphics.setFont(trueTypeFont2);
 		graphics.setColor(Color.yellow);
-		graphics.drawString("The Dragon King",
+		graphics.drawString("The InterStateComm King",
 				(int) (main.Main.gX - (main.Main.gX * 0.515)
-						- (int) (font2.getStringBounds("The Dragon King ", tTypeFont).getWidth() * 0.5)),
+						- (int) (font2.getStringBounds("The InterStateComm King ", tTypeFont).getWidth() * 0.5)),
 				(int) (main.Main.gY - (main.Main.gY * 0.98)));
 	}
 

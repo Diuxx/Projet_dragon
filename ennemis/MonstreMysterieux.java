@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class MonstreMysterieux
  *
@@ -36,13 +36,13 @@ public class MonstreMysterieux extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 7,  6);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  7);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  5);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  4);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 6, 8,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 7,  6);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  7);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  5);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  4);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 6, 8,  6);
     }
 }

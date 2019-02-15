@@ -1,11 +1,10 @@
 package Bataille;
 
 import org.newdawn.slick.command.Command;
-import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.state.StateBasedGame;
 
-import sys.InterStateComm;
+import singleton.InterStateComm;
 
 public class BatailleControlle implements InputProviderListener {
 	private BatailleEnnemi ennemi ;
@@ -94,7 +93,7 @@ public class BatailleControlle implements InputProviderListener {
 			  //game.enterState(YouWin.YouWin);
 			  //YouWin fait planter le combat
 			  System.out.println("Victory");
-			  InterStateComm.battleEnnemyDead();
+			  InterStateComm.tuerUnEnnemi();
 		      game.enterState(GameOver.GameOver);
 		      ennemi.regenVie();
 		      //joueur.regenVie(100);
@@ -111,7 +110,7 @@ public class BatailleControlle implements InputProviderListener {
 				      mode = BatailleCommande.NONE;
 				      break; 
 			    default: 
-			      // Fin de cette étape de combat, réinitialisation
+			      // Fin de cette ï¿½tape de combat, rï¿½initialisation
 			      break; 
 			    } 
 		  //joueur.setBarreVie(10);

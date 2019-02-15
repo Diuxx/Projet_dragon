@@ -1,17 +1,19 @@
 package sys;
 
-import Bataille.Bataille;
+import Mondes.Ressources;
 import carte.Carte;
 import hud.Hud;
 import hud.Hud_menu;
-import jeu.*;
-import org.lwjgl.Sys;
-import org.newdawn.slick.*;
+import jeu.Hero;
+import jeu.Message;
+import jeu.Scenario;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import retest.Dragon;
-
-import java.io.IOException;
+import singleton.InterStateComm;
 
 public class EcranJeu extends BasicGameState {
 
@@ -38,14 +40,6 @@ public class EcranJeu extends BasicGameState {
      * Version 0 de la class scenario / histoire du jeu. */
     private Scenario scenario;
 
-    /**
-     * Feuille de style contenant les images des personnage du jeu */
-    public static SpriteSheet spriteSheet;
-    public static SpriteSheet spriteSheet_goblin;
-    public static SpriteSheet spriteSheet_Ennemis;
-    public static SpriteSheet spriteSheet_Dragon;
-    public static SpriteSheet spriteSheet_PNJ;
-
     private Hud hud = new Hud();
     private Hud_menu menu = new Hud_menu();
 
@@ -61,11 +55,7 @@ public class EcranJeu extends BasicGameState {
         this.gameState = stateBasedGame;
 
         // chargement des textures
-        spriteSheet = new SpriteSheet("data/Tiny32.png", 32, 32);
-        spriteSheet_goblin = new SpriteSheet("data/goblin.png", 64, 64);
-        spriteSheet_Ennemis = new SpriteSheet("data/Ennemis.png", 32, 32);
-        spriteSheet_Dragon = new SpriteSheet("data/Dragon.png", 96, 96);
-        spriteSheet_PNJ = new SpriteSheet("data/PNJ.png", 32, 32);
+        Ressources.charger();
 
         lesMessages = new Message();
 
@@ -74,26 +64,26 @@ public class EcranJeu extends BasicGameState {
 
         // Chargement du hero de l'histoire
         Point p = carte.getPositionPersonnage();
-        Dragon.setLeHero(new Hero("LPDQL", p));
+        InterStateComm.setLeHero(new Hero("LPDQL", p));
+        InterStateComm.getLeHero().setPosition(p);
 
         // initialisation de la camera
-        camera = new Camera(Dragon.getLeHero().getX(), Dragon.getLeHero().getY());
+        camera = new Camera(InterStateComm.getLeHero().getX(), InterStateComm.getLeHero().getY());
 
-        // chargement de l'histoire
-        if(Dragon.getLeHero().artDeEpe == false) {
-            // scenario de l'épé
-            scenario = new Scenario(Scenario.Art.EPE, carte, Dragon.getLeHero());
-        } /* ..etc.. */
-        Dragon.getLeHero().addPnj(scenario.getLesPnj());
-        Dragon.getLeHero().addEnnemis(scenario.getLesEnnemis());
+        // chargement du scenario..
+        scenario = new Scenario();
+        scenario.charger(carte);
+
+        InterStateComm.getLeHero().addPnj(scenario.getLesPnj());
         hud.init(); // --
         menu.init(gameContainer);
+
         scenario.getHeals().init();
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException
-    {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+
         camera.translate(graphics, gameContainer);
 
         // affichage de la carte
@@ -104,11 +94,11 @@ public class EcranJeu extends BasicGameState {
         if(scenario != null) {
             scenario.afficherPnj(graphics, this.lesMessages);;
             scenario.afficherEnnemis(graphics);
-            scenario.afficherHeal(graphics);
+            // scenario.afficherHeal(graphics);
         }
 
         // Affichage du hero
-        Dragon.getLeHero().afficher(graphics);
+        InterStateComm.getLeHero().afficher(graphics);
 
         // affichage des messages
         if(lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
@@ -122,13 +112,11 @@ public class EcranJeu extends BasicGameState {
         // images positionné de telle façon
         // que les personnages/ennemis/pnjs puissent passer derrière.
         carte.afficher(carte.getMap().getLayerIndex("overground1"));
-        if(DEBUG) {
-            carte.afficher(carte.getMap().getLayerIndex("porte"));
-        }
-        hud.render(graphics, Dragon.getLeHero());
+        hud.render(graphics, InterStateComm.getLeHero());
 
         if(menu.isShowing()) {
-            switch(menu.render(gameContainer, graphics)) {
+            sys.MenuItem menustats = menu.render(gameContainer, graphics);
+            switch(menustats) {
                 case EXITGAME:
                     container.exit();
                     break;
@@ -137,12 +125,6 @@ public class EcranJeu extends BasicGameState {
                     this.setUpdatePaused(false);
                     break;
                 case NONE:
-                    /*if(gameContainer.getInput().isKeyDown(Input.KEY_ENTER)) {
-                        menu.setShowing(true);
-                        this.setUpdatePaused(true);
-
-                        System.out.println("is paused : " + this.isUpdatePaused());
-                    }*/
                     break;
             }
         }
@@ -151,36 +133,19 @@ public class EcranJeu extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         if(this.isUpdatePaused())
-        	
             return;
-        
-        for (int objectID = 0; objectID < carte.getMap().getObjectCount(0); objectID++) {
-            if (Dragon.getLeHero().getX() > carte.getMap().getObjectX(0, objectID)
-                    && Dragon.getLeHero().getX() < carte.getMap().getObjectX(0, objectID) + carte.getMap().getObjectWidth(0, objectID)
-                    && Dragon.getLeHero().getY() > carte.getMap().getObjectY(0, objectID)
-                    && Dragon.getLeHero().getY() < carte.getMap().getObjectY(0, objectID) + carte.getMap().getObjectHeight(0, objectID)) {
-                if ("Heal".equals(carte.getMap().getObjectType(0, objectID)) && !scenario.getHeals().estPris) {
-                	Dragon.getLeHero().setPointDeVieActuel(Dragon.getLeHero().getPointDeVie());
-                	scenario.getHeals().estPris = true;
-                	//Code de teleportation en bas de la colline
-                	/* Dragon.getLeHero().setY(630);
-                	Dragon.getLeHero().setX(950);
-                	camera.setY(630);
-                	camera.setX(950);*/
-                }
-            }
-         }
+        updateTrigger();
 
          // Gestion des mouvements et des collisions du hero
          // Les collisions sont géré automatiquement dans la class du herp
-        Dragon.getLeHero().controle(gameContainer);
-        Dragon.getLeHero().mouvement(delta, carte.getMap());
+        InterStateComm.getLeHero().controle(gameContainer);
+        InterStateComm.getLeHero().mouvement(delta, carte.getMap());
 
         // affichage des mouvement des ennemi
-        this.scenario.mouvement(this.carte, delta);
+        this.scenario.mouvement(this.carte, delta, this.lesMessages);
 
         // mouvement de la camera
-        this.camera.update(gameContainer, this.carte, Dragon.getLeHero());
+        this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
     }
 
     @Override
@@ -189,7 +154,7 @@ public class EcranJeu extends BasicGameState {
             if(lesMessages != null) lesMessages.next();
         }
         // Affichage du menu du jeu.
-        if(Input.KEY_ENTER == key && !menu.isShowing()) {
+        if(Input.KEY_ENTER == key && !menu.isShowing() && this.menu.getDiff() > 1000) {
             menu.setShowing(true);
             this.setUpdatePaused(true);
 
@@ -198,9 +163,79 @@ public class EcranJeu extends BasicGameState {
     }
 
     @Override
-    public void keyPressed(int key, char c) {
+    public void keyPressed(int key, char c) { }
 
+    /**
+     *
+     */
+    private void updateTrigger() throws SlickException {
+        String type = "";
+        for(int o=0; o<this.carte.getMap().getObjectCount(0); o++)
+        {
+            if(isInTrigger(o)) {
+                type = this.carte.getMap().getObjectType(0, o);
+                if ("change-map".equals(type)) {
+                    changeMap(o);
+                }
+                if ("Heal".equals(type) && !scenario.getHeals().estPris) {
+                    InterStateComm.getLeHero().setPointDeVieActuel(InterStateComm.getLeHero().getPointDeVie());
+                    scenario.getHeals().estPris = true;
+                }
+            }
+        }
+    }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    private boolean isInTrigger(int id) {
+        return InterStateComm.getLeHero().getX() > this.carte.getMap().getObjectX(0, id)
+        && InterStateComm.getLeHero().getX() < this.carte.getMap().getObjectX(0, id) + this.carte.getMap().getObjectWidth(0, id)
+        && InterStateComm.getLeHero().getY() > this.carte.getMap().getObjectY(0, id)
+        && InterStateComm.getLeHero().getY() < this.carte.getMap().getObjectY(0, id) + this.carte.getMap().getObjectHeight(0, id);
+    }
+
+    /**
+     *
+     * @param objectID
+     * @throws SlickException
+     */
+    private void changeMap(int objectID) throws SlickException {
+        String ancienNomMap = this.carte.getFileName();
+        String dest_map = this.carte.getMap().getObjectName(0, objectID);
+
+        System.err.println(this.getClass().getSimpleName() + " : ancienNom -> " + ancienNomMap);
+        if (!"undefined".equals(dest_map)) {
+            this.carte.changeMap("data/" + dest_map + ".tmx");
+            for(int o=0; o<this.carte.getMap().getObjectCount(0); o++)
+            {
+                String type = this.carte.getMap().getObjectType(0, o);
+                if("position-map".equals(type)) {
+                    if(this.carte.getMap().getObjectName(0, o).equals(ancienNomMap)) {
+                        positionMap(o);
+                        this.scenario.resetScenario();
+                        this.scenario.charger(this.carte);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param objectID
+     * @throws SlickException
+     */
+    private void positionMap(int objectID) throws SlickException {
+        int x = this.carte.getMap().getObjectX(0, objectID);
+        int y = this.carte.getMap().getObjectY(0, objectID);
+        InterStateComm.getLeHero().setPosition(new Point(x, y));
+        this.camera.setX(x);
+        this.camera.setY(y);
+
+        System.err.println(this.getClass().getSimpleName() + " : position hero (" + x + "; " + y + ")");
     }
 
     public boolean isUpdatePaused() {
@@ -210,6 +245,4 @@ public class EcranJeu extends BasicGameState {
     public void setUpdatePaused(boolean updatePaused) {
         this.updatePaused = updatePaused;
     }
-    
-    
 }

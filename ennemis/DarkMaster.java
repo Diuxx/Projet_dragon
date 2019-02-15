@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class DarkMaster
  *
@@ -36,13 +36,13 @@ public class DarkMaster extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 1,  2);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 0, 3,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 1,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 0, 3,  2);
     }
 }

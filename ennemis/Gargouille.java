@@ -3,9 +3,9 @@ package ennemis;
 
 import jeu.Ennemi;
 import sys.Direction;
-import sys.EcranJeu;
 import sys.Point;
 import sys.Taille;
+
 /**
  * class Gargouille
  *
@@ -36,13 +36,13 @@ public class Gargouille extends Ennemi {
     
 
     private void chargerImage() {
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 10,  2);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  3);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  1);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  0);
-        this.loadAnimation(EcranJeu.spriteSheet_Ennemis, 9, 11,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 10,  2);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  3);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  1);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  0);
+        this.loadAnimation(Mondes.Ressources.spriteSheet_Ennemis, 9, 11,  2);
     }
 }
