@@ -7,6 +7,7 @@ import hud.Hud_menu;
 import jeu.Hero;
 import jeu.Message;
 import jeu.Scenario;
+import org.lwjgl.Sys;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -218,6 +219,9 @@ public class EcranJeu extends BasicGameState {
                         this.scenario.resetScenario();
                         this.scenario.charger(this.carte);
                     }
+                }
+                if("heal".equals(type)) {
+                    System.out.println("on marche sur un heal !");
                 }
             }
         }
