@@ -142,6 +142,7 @@ public class Scenario {
     public void resetScenario() {
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
+        lesObjets = new ArrayList<>();
 
         InterStateComm.getLeHero().removePnj();
     }

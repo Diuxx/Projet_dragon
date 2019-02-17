@@ -90,9 +90,9 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		graphics.drawString(this.text2, text2X, text2Y);
 		graphics.setFont(trueTypeFont2);
 		graphics.setColor(Color.white);
-		graphics.drawString("The InterStateComm King",
+		graphics.drawString("The Dragon King",
 				(int) (main.Main.gX - (main.Main.gX * 0.515)
-						- (int) (font2.getStringBounds("The InterStateComm King ", tTypeFont).getWidth() * 0.5)),
+						- (int) (font2.getStringBounds("The Dragon King ", tTypeFont).getWidth() * 0.5)),
 				(int) (main.Main.gY - (main.Main.gY * 0.98)));
 	}
 
