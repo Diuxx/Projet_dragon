@@ -1,8 +1,11 @@
 package Objets;
 
+import jeu.Hero;
+import org.lwjgl.Sys;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import sys.EcranJeu;
 import sys.Point;
@@ -13,6 +16,8 @@ import java.util.List;
 
 public class Objet {
 
+
+    private int positionSurMap;
     /**
      * Position de l'objet
      */
@@ -45,7 +50,7 @@ public class Objet {
      * Construceur
      * @param nom
      * @param p */
-    public Objet(String nom, Point p, Taille taille) {
+    public Objet(String nom, Point p, Taille taille, int positionSurMap) {
         // --
         this.position = p;
         this.taille = taille;
@@ -56,6 +61,7 @@ public class Objet {
         this.frames = 0;
 
         this.box = new Rectangle(p.getX(), p.getY(), taille.getLargeur(), taille.getLongeur());
+        this.positionSurMap = positionSurMap;
     }
 
 
@@ -73,12 +79,20 @@ public class Objet {
             g.fill(new Rectangle(this.position.getX(), this.position.getY(), this.taille.getLargeur(), this.taille.getLongeur()));
         }
         if(EcranJeu.DEBUG) {
-            g.setColor(Color.red);
+            g.setColor(Color.blue);
             g.draw(this.box);
-            g.drawString(this.nom, this.position.getX(), this.position.getY());
+            g.drawString(this.nom, this.position.getX(), this.position.getY() + 10);
         }
     }
 
+    // chargement des animations pour un personnage.
+    public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
+        Animation animation = new Animation();
+        for (int x = startX; x < endX; x++) {
+            animation.addFrame(spriteSheet.getSprite(x, y), 350);
+        }
+        this.animations.add(animation);
+    }
 
 
     public boolean isCollision() {
@@ -111,5 +125,17 @@ public class Objet {
 
     public void setDirection(int direction) {
         this.frames = direction;
+    }
+
+    public void interaction(Hero h) {
+        System.err.println("no interaction with hero!");
+    }
+
+    public int getPositionSurMap() {
+        return positionSurMap;
+    }
+
+    public void setPositionSurMap(int positionSurMap) {
+        this.positionSurMap = positionSurMap;
     }
 }

@@ -57,15 +57,15 @@ public class EcranJeu extends BasicGameState {
 
         // chargement des textures
         Ressources.charger();
-
         lesMessages = new Message();
 
+        //if(!InterStateComm.getLeHero().)
+        
         // chargement de la carte de jeu
         carte = new Carte("data/dragon.tmx");
 
         // Chargement du hero de l'histoire
         Point p = carte.getPositionPersonnage();
-        InterStateComm.setLeHero(new Hero("LPDQL", p));
         InterStateComm.getLeHero().setPosition(p);
 
         // initialisation de la camera
@@ -78,8 +78,6 @@ public class EcranJeu extends BasicGameState {
         InterStateComm.getLeHero().addPnj(scenario.getLesPnj());
         hud.init(); // --
         menu.init(gameContainer);
-
-        scenario.getHeals().init();
     }
 
     @Override
@@ -93,8 +91,9 @@ public class EcranJeu extends BasicGameState {
 
         // affichage des personnages non joueurs et des ennemis
         if(scenario != null) {
-            scenario.afficherPnj(graphics, this.lesMessages);;
+            scenario.afficherPnj(graphics, this.lesMessages);
             scenario.afficherEnnemis(graphics);
+            scenario.afficherObjets(graphics, this.lesMessages);
             // scenario.afficherHeal(graphics);
         }
 
@@ -170,17 +169,15 @@ public class EcranJeu extends BasicGameState {
      *
      */
     private void updateTrigger() throws SlickException {
-        String type = "";
-        for(int o=0; o<this.carte.getMap().getObjectCount(0); o++)
-        {
+        String type;
+        for(int o=0; o<this.carte.getMap().getObjectCount(0); o++) {
             if(isInTrigger(o)) {
                 type = this.carte.getMap().getObjectType(0, o);
                 if ("change-map".equals(type)) {
                     changeMap(o);
                 }
-                if ("Heal".equals(type) && !scenario.getHeals().estPris) {
-                    InterStateComm.getLeHero().setPointDeVieActuel(InterStateComm.getLeHero().getPointDeVie());
-                    scenario.getHeals().estPris = true;
+                if ("heal".equals(type)) {
+                    this.scenario.getHeals(o).interaction(InterStateComm.getLeHero());
                 }
             }
         }
@@ -219,9 +216,6 @@ public class EcranJeu extends BasicGameState {
                         this.scenario.resetScenario();
                         this.scenario.charger(this.carte);
                     }
-                }
-                if("heal".equals(type)) {
-                    System.out.println("on marche sur un heal !");
                 }
             }
         }

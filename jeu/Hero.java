@@ -30,12 +30,13 @@ public class Hero extends Personnage {
     private boolean artFeu;
     private boolean artVoler;
 
-
     // hero information
     private static final int HEROLIFE = 1120;
     private static final float HEROSPEED = 0.1f;
     private static final int HEROLEVEL = 5;
     private static final int HEROGOLD = 500;
+
+    private boolean nouvellePartie;
 
     /**
      * Constructeur de la class Hero (projet InterStateComm);
@@ -53,6 +54,8 @@ public class Hero extends Personnage {
         this.artBouclier = true;
         this.artFeu = false;
         this.artVoler = false;
+
+        nouvellePartie = true;
         // --
         this.chargerImage();
     }
@@ -60,6 +63,7 @@ public class Hero extends Personnage {
     public Hero(String save) {
 
         super("?", 0, 0, 0, 0, 0,  HEROSPEED);
+        nouvellePartie = false;
     }
 
 
@@ -224,4 +228,7 @@ public class Hero extends Personnage {
     public boolean getArtVoler() {
         return artVoler;
     }
+
+
+
 }

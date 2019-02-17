@@ -1,11 +1,14 @@
 package jeu;
 
 import Bataille.Bataille;
+import Objets.Heal;
+import Objets.Objet;
 import carte.Carte;
 import ennemis.Chauve;
 import ennemis.FireWarrior;
 import ennemis.FireWizard;
 import ennemis.Squelette;
+import org.lwjgl.Sys;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import singleton.InterStateComm;
@@ -25,6 +28,9 @@ public class Scenario {
 
     // list des pnj
     private List<PersonnageNonJoueur> lesPnj;
+
+    // List des objets
+    private List<Objet> lesObjets;
 
     // les different arts
     public static enum Art {
@@ -49,6 +55,7 @@ public class Scenario {
 
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
+        lesObjets = new ArrayList<>();
     }
 
     /**
@@ -70,6 +77,10 @@ public class Scenario {
      */
     private void chargerEpe(Carte map) {
 
+
+        this.findObjets(map);
+
+
         if(map.getFileName().equals("dragon")) {
             Point position = map.getPositionPersonnage(0, 0, 255);
             PersonnageNonJoueur test = new PersonnageNonJoueur("pnj Paul", position, 32, 32);
@@ -86,11 +97,17 @@ public class Scenario {
             test.addDialogue("Salut Nicolas comment vas-tu ?");
             lesPnj.add(test);
 
-            PersonnageNonJoueur unAutrePnj = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
-            unAutrePnj.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
+            PersonnageNonJoueur PNJquiDonneEpee = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
+            PNJquiDonneEpee.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 6, 7,  4);
+            PNJquiDonneEpee.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
                     "a subitement disparue suite à la grande révolution du monde !/n Tu sais.." +
                     "On a besoin que tu trouve pouquoi tout va mal depuis ce fameux jour !");
-            lesPnj.add(unAutrePnj);
+            lesPnj.add(PNJquiDonneEpee);
+
+            PersonnageNonJoueur PNJServante = new PersonnageNonJoueur("PNJ Servante", map.getPositionPersonnage(0, 255, 255), 32, 32);
+            PNJServante.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 3, 4,  4);
+            PNJServante.addDialogue("Salut !!");
+            lesPnj.add(PNJServante);
 
             PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
             unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
@@ -101,11 +118,6 @@ public class Scenario {
             lesEnnemis.add(new FireWarrior(map.getPositionPersonnage(255, 100, 0), Direction.VERTICAL));
             lesEnnemis.add(new FireWizard(map.getPositionPersonnage(255, 100, 0), Direction.HORIZONTAL));
             lesEnnemis.add(new Chauve(map.getPositionPersonnage(255, 200, 0), Direction.HORIZONTAL));
-
-            Point posHeal = map.getPositionPersonnage(185, 122, 87);
-            posHeal.setX(posHeal.getX() + 8);
-            posHeal.setY(posHeal.getY() + 18);
-            heal = new Heal(posHeal, new Taille(32,32));
         }
     }
 
@@ -169,6 +181,11 @@ public class Scenario {
         }
     }
 
+    /**
+     *
+     * @param g
+     * @param lesMessages
+     */
     public void afficherPnj(Graphics g, Message lesMessages) {
         for(PersonnageNonJoueur pnj : this.lesPnj) {
             pnj.afficher(g);
@@ -179,10 +196,37 @@ public class Scenario {
         }
     }
 
-    public Heal getHeals() {
+    public void afficherObjets(Graphics g, Message lesMessages) {
+        for(Objet unObjet : lesObjets)
+        {
+            unObjet.afficher(g);
+        }
+    }
 
-        return heal;
+    private void findObjets(Carte uneCarte) {
+        int x, y;
+        for(int o=0; o<uneCarte.getMap().getObjectCount(0); o++)
+        {
+            String type = uneCarte.getMap().getObjectType(0, o);
+            if ("heal".equals(type)) {
+                System.err.println("heal found !");
+                x = uneCarte.getMap().getObjectX(0, o);
+                y = uneCarte.getMap().getObjectY(0, o);
+                this.lesObjets.add(new Objets.Heal(new Point(x, y), o));
+            }
+        }
+    }
 
+    public Heal getHeals(int obj) {
+        for(Objet unHeal : lesObjets)
+        {
+            if(!unHeal.getClass().getSimpleName().equals("Heal"))
+                continue;
+
+            if(unHeal.getPositionSurMap() == obj)
+                return (Heal) unHeal;
+        }
+        return null;
     }
 
     public void afficherHeal(Graphics g) {

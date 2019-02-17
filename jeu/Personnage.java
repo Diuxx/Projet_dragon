@@ -28,12 +28,6 @@ public class Personnage {
     protected int direction = 0;
     protected boolean moving = false;
 
-    // pour permetre de changer le scénario ../:
-    public static boolean artDeEpe = false;
-    public static boolean artDuBouclier = false;
-    public static boolean artDuFeu = false;
-    public static boolean artDuVol = false;
-
     // gestion des collisions
     private Rectangle box;
 

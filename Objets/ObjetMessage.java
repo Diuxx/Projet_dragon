@@ -20,8 +20,8 @@ public class ObjetMessage extends Objet {
      * @param nom
      * @param p
      * @param taille */
-    public ObjetMessage(String nom, Point p, Taille taille) {
-        super(nom, p, taille);
+    public ObjetMessage(String nom, Point p, Taille taille, int positionSurMap) {
+        super(nom, p, taille, positionSurMap);
         this.message = "no message set..";
     }
 
@@ -32,4 +32,5 @@ public class ObjetMessage extends Objet {
     public void setMessage(String unMessage) {
         this.message = unMessage;
     }
+
 }
