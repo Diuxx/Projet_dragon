@@ -60,7 +60,7 @@ public class EcranJeu extends BasicGameState {
         lesMessages = new Message();
 
         //if(!InterStateComm.getLeHero().)
-        
+
         // chargement de la carte de jeu
         carte = new Carte("data/dragon.tmx");
 

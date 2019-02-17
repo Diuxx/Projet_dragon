@@ -58,7 +58,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 		this.stageGame = stateBasedGame;
 		font1 = new Font("Matura MT Script Capitals", Font.PLAIN, 35);
-		font2 = new Font("Tribal InterStateComm", Font.BOLD, 55);
+		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
 		trueTypeFont1 = new TrueTypeFont(font1, true);
 		trueTypeFont2 = new TrueTypeFont(font2, true);
