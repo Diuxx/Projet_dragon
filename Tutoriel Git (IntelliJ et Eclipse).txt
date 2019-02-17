@@ -1,5 +1,5 @@
 ********** CONTENU DE CE TUTORIEL ***********
-- Proc?dure d'utilisation de Git
+- Procédure d'utilisation de Git
 - Installation de Git
 - Configurer Git sur IntelliJ
 - Utilisation de Git sur IntelliJ
@@ -8,100 +8,100 @@
 
 
 ********** COMMENT UTILISER GIT **********
-1- Coder une nouvelle fonctionnalit?
+1- Coder une nouvelle fonctionnalité
 2- La tester
-3- Effectuer un commit (cr?? une "sauvegarde" de votre code en local)
-4- Effectuer un pull (mise ? jour du code : r?cup?ration des modifications ajout?es par les autres d?veloppeurs)
-5- R?soudre les conflits (voir les parties "Utilisation de Git")
-6- Effectuer un commit (nouvelle "sauvegarde" en local du code ? jour int?grant votre nouvelle fonctionnalit?)
-7- Effectuer un push (partage avec l'ensemble du groupe le code ? jour et contenant votre nouvelle fonctionnalit?)
+3- Effectuer un commit (créé une "sauvegarde" de votre code en local)
+4- Effectuer un pull (mise à jour du code : récupération des modifications ajoutées par les autres développeurs)
+5- Résoudre les conflits (voir les parties "Utilisation de Git")
+6- Effectuer un commit (nouvelle "sauvegarde" en local du code à jour intégrant votre nouvelle fonctionnalité)
+7- Effectuer un push (partage avec l'ensemble du groupe le code à jour et contenant votre nouvelle fonctionnalité)
 
 
 
 ********** REMARQUES **********
-- Dans un premier temps et jusqu'? avoir bien en main les fonctionnalit?s de Git propos?es par les IDE, il est conseill? ? toute l'?quipe de d?velopper dans la m?me branche (la branche par d?faut) pour ?viter les conflits de code trop complexes ? g?rer.
+- Dans un premier temps et jusqu'à avoir bien en main les fonctionnalités de Git proposées par les IDE, il est conseillé à toute l'équipe de développer dans la même branche (la branche par défaut) pour éviter les conflits de code trop complexes à gérer.
 
 
 
 ********** INSTALLER GIT (WINDOWS) **********
-- Aller ? la page https://gitforwindows.org/
-- T?l?charger la derni?re version disponible
+- Aller à la page https://gitforwindows.org/
+- Télécharger la dernière version disponible
 - Lancer le .exe et suivre les instructions
 > Pour plus d'informations : https://openclassrooms.com/fr/courses/2342361-gerez-votre-code-avec-git-et-github/2433596-installez-git ###
 
 
 
 ********** CONFIGURER GIT SUR INTELLIJ **********
-> Pour un tutoriel plus d?taill?, consulter : https://openclassrooms.com/fr/courses/4975451-demarrez-votre-projet-avec-java/4983156-importez-votre-premier-projet
-- Th?oriquement IntelliJ peut utiliser Git sans intervention de votre part. En cas d'erreur, prendre la partie "Installer Git" ci-dessus.
+> Pour un tutoriel plus détaillé, consulter : https://openclassrooms.com/fr/courses/4975451-demarrez-votre-projet-avec-java/4983156-importez-votre-premier-projet
+- Théoriquement IntelliJ peut utiliser Git sans intervention de votre part. En cas d'erreur, prendre la partie "Installer Git" ci-dessus.
 
 >>> IMPORT DU PROJET
-- Pour ouvrir le projet, aller sur GitHub et r?cup?rer le lien du projet (https://github.com/Diuxx/iut-game-project.git)
-- Dans IntelliJ, si un projet est d?j? ouvert, faire File > Save All puis File > Close Project
-- Sur la fen?tre d'accueil d'IntelliJ, faire "Check out form Version Control" > Git
-- Indiquer l'URL du projet, changer le nom du directory (= dossier que IntelliJ va cr?er pour contenir votre projet) et faire Clone
+- Pour ouvrir le projet, aller sur GitHub et récupérer le lien du projet (https://github.com/Diuxx/iut-game-project.git)
+- Dans IntelliJ, si un projet est déjà ouvert, faire File > Save All puis File > Close Project
+- Sur la fenêtre d'accueil d'IntelliJ, faire "Check out form Version Control" > Git
+- Indiquer l'URL du projet, changer le nom du directory (= dossier que IntelliJ va créer pour contenir votre projet) et faire Clone
 - "You have checked out an IntelliJ IDEA project..." > Yes
-- En bas ? droite de l'?cran, vous avez le texte "Git:nom de la branche". Assurez-vous que vous ?tes bien sur la branche par d?faut
+- En bas à droite de l'écran, vous avez le texte "Git:nom de la branche". Assurez-vous que vous êtes bien sur la branche par défaut
 
 >>> AJOUT DE SLICK
-- S'il n'y est pas d?j?, ajouter dans le dossier de votre projet le dossier lib h?berg? dans GitHub
-- Aller dans File > Project Structure > Modules > Dependencies et s'assurer que lib est pr?sent dans la liste. Si ce n'est pas le cas, l'ajouter avec le "+" en haut ? droite de la liste
-- Ouvrir la classe Main et lancer un run (il est normal d'avoir un ?chec)
+- S'il n'y est pas déjà, ajouter dans le dossier de votre projet le dossier lib hébergé dans GitHub
+- Aller dans File > Project Structure > Modules > Dependencies et s'assurer que lib est présent dans la liste. Si ce n'est pas le cas, l'ajouter avec le "+" en haut à droite de la liste
+- Ouvrir la classe Main et lancer un run (il est normal d'avoir un échec)
 - Aller dans l'onglet Run > Edit Configurations et ajouter "-Djava.library.path=lib/natives" dans VM options > OK
 - Lancer le programme, il doit normalement fonctionner
-- Normalement, vous ne devriez pas avoir ? refaire la proc?dure ci-dessus jusqu'? la fin du projet.
+- Normalement, vous ne devriez pas avoir à refaire la procédure ci-dessus jusqu'à la fin du projet.
 
 
 ********** UTILISER GIT AVEC INTELLIJ **********
 >>> COMMIT
 - Pour faire un commit : VCS > Commit
-- Dans la fen?tre qui s'ouvre, vous pouvez voir les modifications effectu?es sur le code (? gauche, la derni?re version "commit?e", ? droite votre code). Si vous voulez qu'une modification ne soit pas ajout?e dans le commit, vous pouvez d?cocher la case ? droite des num?ros de ligne, dans le panneau de votre code.
+- Dans la fenêtre qui s'ouvre, vous pouvez voir les modifications effectuées sur le code (à gauche, la dernière version "commitée", à droite votre code). Si vous voulez qu'une modification ne soit pas ajoutée dans le commit, vous pouvez décocher la case à droite des numéros de ligne, dans le panneau de votre code.
 - Ajoutez un commentaire de commit explicite et cliquez sur "Commit"
 
 >>> PULL
-- Une fois que vous avez fait un commit en local de votre travail, faite VCS > Git > Pull pour r?cup?rer les modifications ajout?es par les autres d?veloppeurs. Dans la fen?tre Pull Changes, assurez vous que la "Branche to merge" est bien la branche par d?faut.
+- Une fois que vous avez fait un commit en local de votre travail, faite VCS > Git > Pull pour récupérer les modifications ajoutées par les autres développeurs. Dans la fenêtre Pull Changes, assurez vous que la "Branche to merge" est bien la branche par défaut.
 
 >>> GESTION DES CONFLITS APRES PULL
-- S'il y a des conflits (des lignes du programme modifi?es diff?remment par vous et d'autres d?veloppeurs) IntelliJ va ouvrir une fen?tre de conflit. Pour chaque fichier en conflit (= 1 liste de la ligne), vous pouvez cliquer sur "Accept Yours" pour conserver votre version ou "Accept Theirs" pour conserver l'autre version.
-- S'il est n?cessaire de consulter le code, cliquer sur Merge. Dans la fen?tre "Merge Revision", vous avez votre code ? gauche et le code ? merger ? droite. Au centre, il y a la version finale du code, apr?s merge. Les fl?ches >> permettent d'ajouter les lignes de code correspondantes ? la version finale. La croix x permet de les supprimer dans la version finale. Lorsque les deux versions du code contiennent des lignes diff?rentes, vous pouvez accepter les lignes d'un code avec >>, puis ajouter les lignes de l'autre avec les fl?ches >> orient?es vers le bas.
-- Quand toutes les modifications sont prises en compte, cliquer sur Apply. Si vous avez oubli? des conflits, le programme vous le signalera.
+- S'il y a des conflits (des lignes du programme modifiées différemment par vous et d'autres développeurs) IntelliJ va ouvrir une fenêtre de conflit. Pour chaque fichier en conflit (= 1 liste de la ligne), vous pouvez cliquer sur "Accept Yours" pour conserver votre version ou "Accept Theirs" pour conserver l'autre version.
+- S'il est nécessaire de consulter le code, cliquer sur Merge. Dans la fenêtre "Merge Revision", vous avez votre code à gauche et le code à merger à droite. Au centre, il y a la version finale du code, après merge. Les flèches >> permettent d'ajouter les lignes de code correspondantes à la version finale. La croix x permet de les supprimer dans la version finale. Lorsque les deux versions du code contiennent des lignes différentes, vous pouvez accepter les lignes d'un code avec >>, puis ajouter les lignes de l'autre avec les flèches >> orientées vers le bas.
+- Quand toutes les modifications sont prises en compte, cliquer sur Apply. Si vous avez oublié des conflits, le programme vous le signalera.
 
 >>> COMMIT & PUSH DU CODE COMPLET FONCTIONNEL
-- Quand tous les conflits sont r?solus, retestez votre code. S'il ne fonctionne plus, effectuez les correction de bug
+- Quand tous les conflits sont résolus, retestez votre code. S'il ne fonctionne plus, effectuez les correction de bug
 - Quand le programme fonctionne, faites VCS > Commit
-- Proc?dez comme pr?c?demment et, au moment de valider, cliquez sur la fl?che ? c?t? du bouton commit en bas ? droite
-- Cliquez sur Commit & Push. Votre version compl?te actualis?e du code est maintenant partag?e avec l'?quipe.
+- Procédez comme précédemment et, au moment de valider, cliquez sur la flèche à côté du bouton commit en bas à droite
+- Cliquez sur Commit & Push. Votre version complète actualisée du code est maintenant partagée avec l'équipe.
 
 
 ********** CONFIGURER GIT SUR ECLIPSE **********
 >>> INSTALLATION DE EGIT
 > Source : https://openclassrooms.com/fr/courses/1803496-egit-quand-git-s-invite-dans-eclipse#/id/r-2253230
 - Help > Install New Software
-- Dans la liste Work with, s?lectionnez votre version de Eclipse
-- Eclipse liste les plugin disponibles. D?rouler l'?l?ment Collaboration et cocher la case de Git integration for Eclipse
+- Dans la liste Work with, sélectionnez votre version de Eclipse
+- Eclipse liste les plugin disponibles. Dérouler l'élément Collaboration et cocher la case de Git integration for Eclipse
 - Cliquer sur Next > Next > Accept & Finish
-- Red?marrer Eclipse
+- Redémarrer Eclipse
 
 >>> CLONER LE PROJET
 - Dans GitHub, copier l'URL du projet
 - File > Import > Git > Project form Git > Clone URL
 - Coller l'URL du projet dans URL > Next
-- D?cocher si n?cessaire les branches sur lesquelles vous ne travaillerez pas > Next
-- D?finissez dans Directory le dossier que vous voulez que Eclipse cr?? avec votre projet > next
+- Décocher si nécessaire les branches sur lesquelles vous ne travaillerez pas > Next
+- Définissez dans Directory le dossier que vous voulez que Eclipse créé avec votre projet > next
 - Cochez Import using the New Project Wizard > Finish
-- D?rouler Java et s?lectionner Java Project > Next
-- Indiquer comme nom de projet iut-game-project (attention ? taper le nom exact du dossier contenant le projet, en respectant la casse) > Next
-- Dans la fen?tre des Java Settings, faire Finish
+- Dérouler Java et sélectionner Java Project > Next
+- Indiquer comme nom de projet iut-game-project (attention à taper le nom exact du dossier contenant le projet, en respectant la casse) > Next
+- Dans la fenêtre des Java Settings, faire Finish
 
 >>> AJOUT DE SLICK
-- S'il n'y est pas d?j?, ajouter dans le dossier de votre projet le dossier lib h?berg? dans GitHub
+- S'il n'y est pas déjà, ajouter dans le dossier de votre projet le dossier lib hébergé dans GitHub
 - Dans l'arborescence du projet, faire un clic droit sur le nom du projet > properties
-- Dans Java Build Path, dans l'onglet Librairies, faire Add JARs : dans l'arborescence ouverte, aller dans lib, s?lectionner les trois .jar et faire OK > Apply and Close
-- Ouvrir la classe Main et lancer un run (il est normal d'avoir un ?chec)
+- Dans Java Build Path, dans l'onglet Librairies, faire Add JARs : dans l'arborescence ouverte, aller dans lib, sélectionner les trois .jar et faire OK > Apply and Close
+- Ouvrir la classe Main et lancer un run (il est normal d'avoir un échec)
 - Cliquer sur Run > Run Configurations
-- Ouvrir l'onglet Arguments. Dans la fen?tre VM arguments, coller la phrase "-Djava.library.path=lib/natives"
+- Ouvrir l'onglet Arguments. Dans la fenêtre VM arguments, coller la phrase "-Djava.library.path=lib/natives"
 - Lancer le programme, il doit normalement fonctionner
-- Normalement, vous ne devriez pas avoir ? refaire la proc?dure ci-dessus jusqu'? la fin du projet.
+- Normalement, vous ne devriez pas avoir à refaire la procédure ci-dessus jusqu'à la fin du projet.
 
 
 
@@ -109,14 +109,14 @@
 https://openclassrooms.com/fr/courses/1803496-egit-quand-git-s-invite-dans-eclipse#/id/r-2253238
 >>> COMMIT
 - File > Save All
-- Faire un clic droit sur le projet (dans l'arborescence ? gauche) > Team > Commit
-- Cela ouvre le panneau de cr?ation de commit en bas de l'interface. S'assurer qu'on est bien dans la bonne branche (?crit en haut du panneau)
-- Dans le panneau Unstaged Changes, s?lectionner tous les fichiers ? commiter et cliquer sur le + vert. Cela les  bascule dans la fen?tre Staged Changes
+- Faire un clic droit sur le projet (dans l'arborescence à gauche) > Team > Commit
+- Cela ouvre le panneau de création de commit en bas de l'interface. S'assurer qu'on est bien dans la bonne branche (écrit en haut du panneau)
+- Dans le panneau Unstaged Changes, sélectionner tous les fichiers à commiter et cliquer sur le + vert. Cela les  bascule dans la fenêtre Staged Changes
 - Indiquer un Commit message explicite
 - Cliquer sur Commit
 
 >>> PULL
-- Clic droit sur le projet (dans l'arborescence ? gauche) > Team > Pull
+- Clic droit sur le projet (dans l'arborescence à gauche) > Team > Pull
 
 >>> GESTION DES CONFLITS APRES PULL
 ...
@@ -124,6 +124,6 @@ https://openclassrooms.com/fr/courses/1803496-egit-quand-git-s-invite-dans-eclip
 >>> COMMIT & PUSH DU CODE COMPLET ET FONCTIONNEL
 - File > Save All
 - Faire un clic droit sur le projet > Team > Commit
-- Dans le panneau de cr?ation de commit, basculer de Unstaged Changes ? Staged Changes les fichiers dont vous voulez commit les modifications
+- Dans le panneau de création de commit, basculer de Unstaged Changes à Staged Changes les fichiers dont vous voulez commit les modifications
 - Indiquer un Commit Message explicite
 - Cliquer sur Commit and Push
