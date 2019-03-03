@@ -1,6 +1,8 @@
 package ennemis;
 
 
+import org.newdawn.slick.Image;
+
 import jeu.Ennemi;
 import sys.Direction;
 import sys.Point;
@@ -16,22 +18,23 @@ public class DarkMaster extends Ennemi {
     private static final Taille SIZE = new Taille(32, 32);
     private static final int TIMER = 1000;
     private static final float VITESSE = 0.1f;
-
-    public DarkMaster(Point p, Direction direction) {
-        this(p.getX(), p.getY(), DarkMaster.SIZE, direction, DarkMaster.TIMER, DarkMaster.VITESSE);
-    }
+    private static final Image ennemiImages = Mondes.Ressources.spriteSheet_Ennemis.getSubImage(0, 1).getScaledCopy(2);
 
     /**
      * Class constructor
      */
-    public DarkMaster(int x, int y, Taille taille, Direction direction, int timer, float vitesse) {
+    public DarkMaster(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages) {
         super("Dark Master", x, y, taille.getLargeur(), taille.getLongeur(),
-                50, direction, timer, vitesse);
+                50, direction, timer, vitesse, ennemiImages);
         this.chargerImage();
     }
     
-    public DarkMaster(Point positon, Taille taille, Direction direction, int timer, float vitesse) {
-        this(positon.getX(), positon.getY(), taille, direction, timer, vitesse);
+    public DarkMaster(Point positon, Taille taille, Direction direction, int timer, float vitesse , Image ennemiImages) {
+        this(positon.getX(), positon.getY(), taille, direction, timer, vitesse, ennemiImages);
+    }
+
+    public DarkMaster(Point p, Direction direction) {
+        this(p.getX(), p.getY(), DarkMaster.SIZE, direction, DarkMaster.TIMER, DarkMaster.VITESSE, DarkMaster.ennemiImages);
     }
     
 
