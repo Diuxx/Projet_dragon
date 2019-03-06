@@ -16,6 +16,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import singleton.InterStateComm;
 
+import java.beans.IntrospectionException;
+
 public class EcranJeu extends BasicGameState {
 
     private boolean updatePaused = false;
@@ -60,13 +62,21 @@ public class EcranJeu extends BasicGameState {
         lesMessages = new Message();
 
         //if(!InterStateComm.getLeHero().)
+        /**
+         *
+         */
+        //savedData = Save.detecteSavedData();
 
         // chargement de la carte de jeu
         carte = new Carte("data/dragon.tmx");
+        // carte = new Carte(savedData);
 
         // Chargement du hero de l'histoire
         Point p = carte.getPositionPersonnage();
         InterStateComm.getLeHero().setPosition(p);
+        // InterStateComm.getLeHero().setSavedData(savedData);
+
+
 
         // initialisation de la camera
         camera = new Camera(InterStateComm.getLeHero().getX(), InterStateComm.getLeHero().getY());
@@ -99,7 +109,6 @@ public class EcranJeu extends BasicGameState {
 
         // Affichage du hero
         InterStateComm.getLeHero().afficher(graphics);
-
         // affichage des messages
         if(lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
         {

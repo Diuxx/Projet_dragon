@@ -228,7 +228,4 @@ public class Hero extends Personnage {
     public boolean getArtVoler() {
         return artVoler;
     }
-
-
-
 }

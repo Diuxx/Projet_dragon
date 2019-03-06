@@ -76,11 +76,7 @@ public class Scenario {
      * Chargement du scenario de l'épé
      */
     private void chargerEpe(Carte map) {
-
-
         this.findObjets(map);
-
-
         if(map.getFileName().equals("dragon")) {
             Point position = map.getPositionPersonnage(0, 0, 255);
             PersonnageNonJoueur test = new PersonnageNonJoueur("pnj Paul", position, 32, 32);
