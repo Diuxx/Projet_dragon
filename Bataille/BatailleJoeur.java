@@ -10,7 +10,7 @@ public class BatailleJoeur {
 	private PathAnimation animation;
 	
 	public void init() throws SlickException {
-		this.joueur = new Image("data/bataille/hero.png");
+		this.joueur =  Mondes.Ressources.spriteSheet.getSubImage(6, 10).getScaledCopy(2);
 		this.animation = new PathAnimation(new BezierPath(0, 0, 400, 1, -50, 20, 0, 0), 1000);
 
 	}

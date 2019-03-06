@@ -33,12 +33,15 @@ public class Ennemi extends Personnage {
 
     private boolean bouge;
     private boolean veutCombattre;
+    
+    private Image ennemiImages ;
 
-    /**
+
+	/**
      * Class constructor
      */
     public Ennemi(String nom, float x, float y, int w, int h,
-                  int pointDeVie, Direction direction, int t, float vitesse) {
+                  int pointDeVie, Direction direction, int t, float vitesse, Image ennemiImages) {
         super(nom, x, y, w, h, pointDeVie, vitesse);
         this.direction = this.directionTransition = direction;
         this.x = x;
@@ -54,6 +57,7 @@ public class Ennemi extends Personnage {
         this.mort = false;
         lesPersonnages = new ArrayList<Personnage>();
 
+        this.ennemiImages = ennemiImages;
     }
 
 
@@ -62,8 +66,8 @@ public class Ennemi extends Personnage {
      * @param nom
      * @param pos
      */
-    public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse) {
-        this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse);
+    public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse, Image ennemiImages) {
+        this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages);
     }
 
 
@@ -204,4 +208,12 @@ public class Ennemi extends Personnage {
     public boolean veutCombattre() {
         return veutCombattre;
     }
+    
+    public Image getEnnemiImages() {
+		return ennemiImages;
+	}
+
+	public void setEnnemiImages(Image ennemiImages) {
+		this.ennemiImages = ennemiImages;
+	}
 }

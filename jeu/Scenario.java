@@ -1,13 +1,27 @@
 package jeu;
 
 import Bataille.Bataille;
+import Bataille.BatailleEnnemi;
 import Objets.Heal;
 import Objets.Objet;
 import carte.Carte;
+import ennemis.Alien;
 import ennemis.Chauve;
+import ennemis.DarkMaster;
+import ennemis.Dragon;
 import ennemis.FireWarrior;
 import ennemis.FireWizard;
+import ennemis.Gargouille;
+import ennemis.Goblin;
+import ennemis.IceMan;
+import ennemis.Lutin;
+import ennemis.Malin;
+import ennemis.MonstreMysterieux;
+import ennemis.Pirate;
+import ennemis.RoiDesGrenouilles;
 import ennemis.Squelette;
+import ennemis.Warrior;
+
 import org.lwjgl.Sys;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -91,29 +105,41 @@ public class Scenario {
             test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 10);
             test.setDirection(2);
             test.addDialogue("Salut Nicolas comment vas-tu ?");
-            lesPnj.add(test);
-
-            PersonnageNonJoueur PNJquiDonneEpee = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
-            PNJquiDonneEpee.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 6, 7,  4);
-            PNJquiDonneEpee.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
-                    "a subitement disparue suite à la grande révolution du monde !/n Tu sais.." +
-                    "On a besoin que tu trouve pouquoi tout va mal depuis ce fameux jour !");
-            lesPnj.add(PNJquiDonneEpee);
-
-            PersonnageNonJoueur PNJServante = new PersonnageNonJoueur("PNJ Servante", map.getPositionPersonnage(0, 255, 255), 32, 32);
-            PNJServante.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 3, 4,  4);
-            PNJServante.addDialogue("Salut !!");
-            lesPnj.add(PNJServante);
-
-            PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
-            unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
-            lesPnj.add(unAutrePnjs);
+//            lesPnj.add(test);
+//
+//            PersonnageNonJoueur PNJquiDonneEpee = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
+//            PNJquiDonneEpee.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 6, 7,  4);
+//            PNJquiDonneEpee.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
+//                    "a subitement disparue suite à la grande révolution du monde !/n Tu sais.." +
+//                    "On a besoin que tu trouve pouquoi tout va mal depuis ce fameux jour !");
+//            lesPnj.add(PNJquiDonneEpee);
+//
+//            PersonnageNonJoueur PNJServante = new PersonnageNonJoueur("PNJ Servante", map.getPositionPersonnage(0, 255, 255), 32, 32);
+//            PNJServante.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 3, 4,  4);
+//            PNJServante.addDialogue("Salut !!");
+//            lesPnj.add(PNJServante);
+//
+//            PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
+//            unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
+//            lesPnj.add(unAutrePnjs);
 
             // ennemis
+            lesEnnemis.add(new Alien(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new Chauve(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new DarkMaster(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new Dragon(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new FireWizard(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new FireWarrior(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new Gargouille(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new Goblin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new IceMan(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new Lutin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new Malin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new MonstreMysterieux(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new Pirate(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            lesEnnemis.add(new RoiDesGrenouilles(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
             lesEnnemis.add(new Squelette(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new FireWarrior(map.getPositionPersonnage(255, 100, 0), Direction.VERTICAL));
-            lesEnnemis.add(new FireWizard(map.getPositionPersonnage(255, 100, 0), Direction.HORIZONTAL));
-            lesEnnemis.add(new Chauve(map.getPositionPersonnage(255, 200, 0), Direction.HORIZONTAL));
+            lesEnnemis.add(new Warrior(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
         }
     }
 
@@ -158,6 +184,8 @@ public class Scenario {
             if(unEnnemi.veutCombattre())
             {
                 System.out.println(unEnnemi.getNom() + " veut se battre !");
+                // afficher l'ennemi Image sur l'ecran de bataille
+                BatailleEnnemi.ennemiImage = unEnnemi.getEnnemiImages();
                 // --
                 InterStateComm.setUnEnnemi(unEnnemi);
 
