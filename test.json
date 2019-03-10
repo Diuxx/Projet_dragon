@@ -1,0 +1,21 @@
+{
+	"gameName":"DragonProject",
+	"mapData":{
+		"map":"monde_epe"
+	},
+	"playerData":{
+		"name":"LPDQL",
+		"lifePoint":1120.0,
+		"currentLifePoint":1120.0,
+		"x":209.99983,
+		"y":293.0,
+		"direction":3,
+		"experience":15,
+		"level":5,
+		"gold":500,
+		"epeeArt":true,
+		"shieldArt":false,
+		"fireArt":false,
+		"flyArt":false
+	}
+}
