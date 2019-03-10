@@ -83,6 +83,14 @@ public class Personnage {
         return this.y;
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     // mouvement du personnage
     public void mouvement(int delta, TiledMap map) {
         if (this.moving) {
@@ -223,7 +231,7 @@ public class Personnage {
         return pointDeVie;
     }
 
-    public void setPointDeVie(int pointDeVie) {
+    public void setPointDeVie(float pointDeVie) {
         this.pointDeVie = pointDeVie;
     }
 

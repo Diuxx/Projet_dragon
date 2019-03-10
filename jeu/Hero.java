@@ -1,6 +1,7 @@
 package jeu;
 
 import Mondes.Ressources;
+import Sauvegarde.Save;
 import carte.Carte;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -51,7 +52,7 @@ public class Hero extends Personnage {
         this.currentGold = HEROGOLD;
 
         this.artEpee = true;
-        this.artBouclier = true;
+        this.artBouclier = false;
         this.artFeu = false;
         this.artVoler = false;
 
@@ -60,12 +61,37 @@ public class Hero extends Personnage {
         this.chargerImage();
     }
 
-    public Hero(String save) {
+    public Hero(Hero savedData) {
 
         super("?", 0, 0, 0, 0, 0,  HEROSPEED);
         nouvellePartie = false;
     }
 
+    /**
+     *
+     * @param savedData
+     */
+    public void setSavedData(Save savedData) {
+        if(savedData.getSavedHero() == null)
+            return;
+
+        System.out.println("Somes Data is charging !");
+
+        Hero savedHero = savedData.getSavedHero();
+        this.setNom(savedHero.getNom());
+        this.setPointDeVie(savedHero.getPointDeVie());
+        this.setPointDeVieActuel(savedHero.getPointDeVieActuel());
+        this.setX(savedHero.getX());
+        this.setY(savedHero.getY());
+        this.setDirection(savedHero.getDirection());
+        this.setExperience(savedHero.getExperience());
+        this.setNiveau(savedHero.getNiveau());
+        this.setCurrentGold(savedHero.getCurrentGold());
+        this.setArtEpee(savedHero.getArtEpee());
+        this.setArtBouclier(savedHero.getArtBouclier());
+        this.setArtFeu(savedHero.getArtFeu());
+        this.setArtVoler(savedHero.getArtVoler());
+    }
 
 
     // seul le hero peut être contrôlé
@@ -227,5 +253,37 @@ public class Hero extends Personnage {
 
     public boolean getArtVoler() {
         return artVoler;
+    }
+
+    public boolean isArtEpee() {
+        return artEpee;
+    }
+
+    public void setArtEpee(boolean artEpee) {
+        this.artEpee = artEpee;
+    }
+
+    public boolean isArtBouclier() {
+        return artBouclier;
+    }
+
+    public void setArtBouclier(boolean artBouclier) {
+        this.artBouclier = artBouclier;
+    }
+
+    public boolean isArtFeu() {
+        return artFeu;
+    }
+
+    public void setArtFeu(boolean artFeu) {
+        this.artFeu = artFeu;
+    }
+
+    public boolean isArtVoler() {
+        return artVoler;
+    }
+
+    public void setArtVoler(boolean artVoler) {
+        this.artVoler = artVoler;
     }
 }

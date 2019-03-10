@@ -24,6 +24,7 @@ public class Hud_menu {
 
     private Button exit_button;
     private Button back_button;
+    private Button save_button;
 
     private ArrayList<Button> lesBoutons;
     private int currentButton;
@@ -53,9 +54,13 @@ public class Hud_menu {
         this.back_button = new Button("Retour au jeu",
                 new Rectangle(hud_x + 10, hud_y + 15 + 35, (hud_w / 4), 27), MenuItem.BACK);
 
+        this.save_button = new Button("Sauvegarder",
+                new Rectangle(hud_x + 10, hud_y + 15 + 70, (hud_w / 4), 27), MenuItem.SAVEGAME);
+
         lesBoutons = new ArrayList<>();
         lesBoutons.add(exit_button);
         lesBoutons.add(back_button);
+        lesBoutons.add(save_button);
 
         this.currentButton = 0;
     }
@@ -68,9 +73,6 @@ public class Hud_menu {
         g.resetTransform();
         g.setColor(UHD_COLOR);
         g.fillRect(hud_x, hud_y, hud_w, hud_h);
-
-        //if(this.test == false)
-        //    this.test = true;
 
         menuUp(gc);
         if(gc.getInput().isKeyPressed(Input.KEY_DOWN)) {

@@ -36,28 +36,21 @@ public class Carte {
      * do some refactoring on it!
      * @return
      */
-    public Point getPositionPersonnage() {
-        Point position = new Point(); // --
-        int positionLayer = map.getLayerIndex("position");
-        Image tile;
-        Color color;
-        for(int x = 0; x < this.map.getWidth(); x++) {
-            for(int y = 0; y < this.map.getHeight(); y++)
-            {
-                tile = map.getTileImage(x, y, positionLayer);
-                if(tile != null) {
-                    color = tile.getColor((int) x % map.getTileWidth(), (int) y % map.getTileHeight());
-                    // System.out.println("position -> (" + x + "; " + y + ") [ " + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + "]");
-
-                    if(color.getBlue() == 201 && color.getGreen() == 174 && color.getRed() == 255) {
-                        position.setX(x * map.getTileWidth());
-                        position.setY(y * map.getTileHeight()); // --
-                        return position;
-                    }
-                }
+    public Point getCheckPoint() {
+        System.out.println(map.getObjectCount(0));
+        for(int i=0; i<map.getObjectCount(0); i++)
+        {
+            String objType = map.getObjectType(0, i);
+            if(objType.equals("check-point")) {
+                // System.out.println(this.map.getObjectX(0, i) + " : " + i);
+                // System.out.println(this.map.getObjectY(0, i) + " : " + i);
+                return new Point(
+                        this.map.getObjectX(0, i),
+                        this.map.getObjectY(0, i)
+                );
             }
         }
-        return position;
+        return new Point(0, 0);
     }
 
     /**

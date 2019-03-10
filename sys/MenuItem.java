@@ -9,5 +9,6 @@ package sys;
 public enum MenuItem {
     NONE,
     EXITGAME,
+    SAVEGAME,
     BACK;
 }

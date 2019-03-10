@@ -1,6 +1,7 @@
 package sys;
 
 import Mondes.Ressources;
+import Sauvegarde.Save;
 import carte.Carte;
 import hud.Hud;
 import hud.Hud_menu;
@@ -21,6 +22,8 @@ import java.beans.IntrospectionException;
 public class EcranJeu extends BasicGameState {
 
     private boolean updatePaused = false;
+
+    private Save savedData;
 
     /**
      * Variable de debug
@@ -61,22 +64,15 @@ public class EcranJeu extends BasicGameState {
         Ressources.charger();
         lesMessages = new Message();
 
-        //if(!InterStateComm.getLeHero().)
         /**
          *
          */
-        //savedData = Save.detecteSavedData();
-
-        // chargement de la carte de jeu
-        carte = new Carte("data/dragon.tmx");
-        // carte = new Carte(savedData);
+        savedData = Save.detectSavedData();
+        carte = new Carte(savedData.getCarteName());
 
         // Chargement du hero de l'histoire
-        Point p = carte.getPositionPersonnage();
-        InterStateComm.getLeHero().setPosition(p);
-        // InterStateComm.getLeHero().setSavedData(savedData);
-
-
+        InterStateComm.getLeHero().setPosition(carte.getCheckPoint());
+        InterStateComm.getLeHero().setSavedData(savedData);
 
         // initialisation de la camera
         camera = new Camera(InterStateComm.getLeHero().getX(), InterStateComm.getLeHero().getY());
@@ -104,7 +100,7 @@ public class EcranJeu extends BasicGameState {
             scenario.afficherPnj(graphics, this.lesMessages);
             scenario.afficherEnnemis(graphics);
             scenario.afficherObjets(graphics, this.lesMessages);
-            // scenario.afficherHeal(graphics);
+            // scenario.afficherHeal(graphics); --
         }
 
         // Affichage du hero
@@ -132,6 +128,9 @@ public class EcranJeu extends BasicGameState {
                 case BACK:
                     menu.setShowing(false);
                     this.setUpdatePaused(false);
+                    break;
+                case SAVEGAME:
+                    savedData.save(InterStateComm.getLeHero(), carte.getFileName());
                     break;
                 case NONE:
                     break;
