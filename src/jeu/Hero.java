@@ -61,12 +61,6 @@ public class Hero extends Personnage {
         this.chargerImage();
     }
 
-    public Hero(Hero savedData) {
-
-        super("?", 0, 0, 0, 0, 0,  HEROSPEED);
-        nouvellePartie = false;
-    }
-
     /**
      *
      * @param savedData
@@ -81,8 +75,7 @@ public class Hero extends Personnage {
         this.setNom(savedHero.getNom());
         this.setPointDeVie(savedHero.getPointDeVie());
         this.setPointDeVieActuel(savedHero.getPointDeVieActuel());
-        this.setX(savedHero.getX());
-        this.setY(savedHero.getY());
+        super.setPosition(savedHero.getX(), savedHero.getY());
         this.setDirection(savedHero.getDirection());
         this.setExperience(savedHero.getExperience());
         this.setNiveau(savedHero.getNiveau());

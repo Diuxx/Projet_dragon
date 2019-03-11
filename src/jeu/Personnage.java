@@ -262,5 +262,12 @@ public class Personnage {
     public void setPosition(Point p) {
         this.x = p.getX();
         this.y = p.getY();
+        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
+    }
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
     }
 }

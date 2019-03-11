@@ -131,6 +131,9 @@ public class EcranJeu extends BasicGameState {
                     break;
                 case SAVEGAME:
                     savedData.save(InterStateComm.getLeHero(), carte.getFileName());
+                    menu.setShowing(false);
+                    this.setUpdatePaused(false);
+                    lesMessages.add("Une sauvegarde à été effectué...");
                     break;
                 case NONE:
                     break;
