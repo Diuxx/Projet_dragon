@@ -5,22 +5,7 @@ import Bataille.BatailleEnnemi;
 import Objets.Heal;
 import Objets.Objet;
 import carte.Carte;
-import ennemis.Alien;
-import ennemis.Chauve;
-import ennemis.DarkMaster;
-import ennemis.Dragon;
-import ennemis.FireWarrior;
-import ennemis.FireWizard;
-import ennemis.Gargouille;
-import ennemis.Goblin;
-import ennemis.IceMan;
-import ennemis.Lutin;
-import ennemis.Malin;
-import ennemis.MonstreMysterieux;
-import ennemis.Pirate;
-import ennemis.RoiDesGrenouilles;
-import ennemis.Squelette;
-import ennemis.Warrior;
+import ennemis.*;
 
 import org.lwjgl.Sys;
 import org.newdawn.slick.Graphics;
@@ -124,22 +109,10 @@ public class Scenario {
 //            lesPnj.add(unAutrePnjs);
 
             // ennemis
-            lesEnnemis.add(new Alien(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Chauve(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
             lesEnnemis.add(new DarkMaster(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
             lesEnnemis.add(new Dragon(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new FireWizard(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new FireWarrior(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Gargouille(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
             lesEnnemis.add(new Goblin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new IceMan(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Lutin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Malin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new MonstreMysterieux(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Pirate(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new RoiDesGrenouilles(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
             lesEnnemis.add(new Squelette(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Warrior(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
         }
     }
 

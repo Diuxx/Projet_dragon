@@ -19,23 +19,23 @@ public class Dragon extends Ennemi {
     private static final Taille SIZE = new Taille(96, 96);
     private static final int TIMER = 1000;
     private static final float VITESSE = 0.1f;
-    private static final Image ennemiImages = Mondes.Ressources.spriteSheet_Dragon.getSubImage(0, 1).getScaledCopy(2);
-
+    private static final Image ENNEMI_IMAGE = Mondes.Ressources.spriteSheet_Dragon.getSubImage(0, 1).getScaledCopy(2);
+    private static final int NIVEAU = 2;
     /**
      * Class constructor
      */
-    public Dragon(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages) {
+    public Dragon(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages, int niveau) {
         super("Dragon", x, y, taille.getLargeur(), taille.getLongeur(),
-                50, direction, timer, vitesse, ennemiImages);
+                50, direction, timer, vitesse, ennemiImages, niveau);
         this.chargerImage();
     }
     
-    public Dragon(Point positon, Taille taille, Direction direction, int timer, float vitesse , Image ennemiImages) {
-        this(positon.getX(), positon.getY(), taille, direction, timer, vitesse, ennemiImages);
+    public Dragon(Point positon, Taille taille, Direction direction, int timer, float vitesse , Image ennemiImages, int niveau) {
+        this(positon.getX(), positon.getY(), taille, direction, timer, vitesse, ennemiImages, niveau);
     }
 
     public Dragon(Point p, Direction direction) {
-        this(p.getX(), p.getY(), Dragon.SIZE, direction, Dragon.TIMER, Dragon.VITESSE, Dragon.ennemiImages);
+        this(p.getX(), p.getY(), Dragon.SIZE, direction, Dragon.TIMER, Dragon.VITESSE, Dragon.ENNEMI_IMAGE, Dragon.NIVEAU);
     }
 
     private void chargerImage() {
