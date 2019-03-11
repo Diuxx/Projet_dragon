@@ -2,6 +2,7 @@ package jeu;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 import sys.Direction;
@@ -35,11 +36,16 @@ public class Ennemi extends Personnage {
 	private boolean veutCombattre;
 
 	private Image ennemiImages;
+    private Image imageCombat;
 	private int niveau;
 
 	private double atk;
 	private double maxHP;
+	protected int experience;
 
+	public int getExperience() {
+		return experience;
+	}
 	/**
 	 * Class constructor
 	 */
@@ -52,19 +58,20 @@ public class Ennemi extends Personnage {
 		this.tempsChangerDirection = t;
 		this.bouge = true;
 		this.veutCombattre = false;
-		
+
 		this.niveau = niveau;
 		this.atk = niveau * 5.0 + 20;
 		this.maxHP = niveau * 50.0 + 400;
 
-		/**
-		 * L'ennemi quand il est crée est vivant ! (visible)
-		 */
-		this.mort = false;
-		lesPersonnages = new ArrayList<Personnage>();
+        /**
+         * L'ennemi quand il est crée est vivant ! (visible)
+         */
+        this.mort = false;
+        lesPersonnages = new ArrayList<Personnage>();
+        this.ennemiImages = ennemiImages;
+        imageCombat = ennemiImages;
+    }
 
-		this.ennemiImages = ennemiImages;
-	}
 
 	/**
 	 *
@@ -75,7 +82,7 @@ public class Ennemi extends Personnage {
 			Image ennemiImages, int niveau) {
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, niveau);
 	}
-	
+
 	public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
 			Image ennemiImages, double atk, double maxHP) {
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, 0);
@@ -228,7 +235,15 @@ public class Ennemi extends Personnage {
 	public void setEnnemiImages(Image ennemiImages) {
 		this.ennemiImages = ennemiImages;
 	}
-	
+
+	/**
+	 * Important !
+	 * @return
+	 */
+	public String parle() {
+		return getClass().getSimpleName() + " : viens te battre !";
+	}
+
 	/////////////////
 
 	public int getNiveau() {

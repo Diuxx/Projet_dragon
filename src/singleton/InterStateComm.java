@@ -63,11 +63,6 @@ public final class InterStateComm {
     }
 
     public final static Ennemi getUnEnnemi() {
-        synchronized (InterStateComm.class) {
-            if(InterStateComm.unEnnemi == null) {
-                return null;
-            }
-        }
         return InterStateComm.unEnnemi;
     }
 

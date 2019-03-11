@@ -1,14 +1,12 @@
 package sys;
 
 import Mondes.Ressources;
-import Sauvegarde.Save;
+import sauvegarde.Save;
 import carte.Carte;
 import hud.Hud;
 import hud.Hud_menu;
-import jeu.Hero;
 import jeu.Message;
 import jeu.Scenario;
-import org.lwjgl.Sys;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -16,8 +14,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import singleton.InterStateComm;
-
-import java.beans.IntrospectionException;
 
 public class EcranJeu extends BasicGameState {
 

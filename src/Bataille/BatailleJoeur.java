@@ -1,5 +1,7 @@
 package Bataille;
 
+import java.util.HashMap;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -27,8 +29,8 @@ public class BatailleJoeur {
 	    
 	}
 	public void update(int delta) {
-		  this.animation.update(delta);
-		}
+		this.animation.update(delta);
+	}
 
 	public void attaquer(BatailleEnnemi batailleEnnemi) {
 		animation.start();
@@ -45,9 +47,7 @@ public class BatailleJoeur {
 		  this.animation.addListener(500, assignDamage);
 		  this.animation.addListener(1000, endAttack);
 	}
-//	public void regenVie(int Soin) {
-//		barreVie = Soin;
-//	}
+
 	public void setAnimation(PathAnimation animation) {
 		this.animation = animation;
 	}

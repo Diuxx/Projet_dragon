@@ -32,7 +32,7 @@ public class Scenario {
     private List<Objet> lesObjets;
 
     // les different arts
-    public static enum Art {
+    public enum Art {
         EPE,
         BOUCLIER
     }
@@ -62,10 +62,12 @@ public class Scenario {
      * @param map
      */
     public void charger(Carte map) {
+        // ça va changé ça aussi !
         Art currentArt = Scenario.Art.EPE;
 
         switch(currentArt) {
             case EPE:
+                //** I WILL REFACTOR THIS CODE WITH CLASS CALLING INSTEAD OF ALL IN ONE METHOD
                 this.chargerEpe(map);
                 break;
         }
@@ -158,8 +160,8 @@ public class Scenario {
             {
                 System.out.println(unEnnemi.getNom() + " veut se battre !");
                 // afficher l'ennemi Image sur l'ecran de bataille
-                BatailleEnnemi.ennemiImage = unEnnemi.getEnnemiImages();
-                // --
+                // BatailleEnnemi.ennemiImage = unEnnemi.getEnnemiImages();
+                // --SS
                 InterStateComm.setUnEnnemi(unEnnemi);
 
                 EcranJeu.gameState.enterState(Bataille.ID);
@@ -169,7 +171,7 @@ public class Scenario {
             if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()))
             { // début d'un combat
                 System.out.println("intersect");
-                lesMessages.add("boo !");
+                lesMessages.add(unEnnemi.parle());
                 unEnnemi.startCombat();
                 unEnnemi.setBouge(false);
             } else {

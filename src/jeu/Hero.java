@@ -1,18 +1,16 @@
 package jeu;
 
 import Mondes.Ressources;
-import Sauvegarde.Save;
+import sauvegarde.Save;
 import carte.Carte;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 import sys.Point;
 import sys.Taille;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 //import sys.EcranJeu;
@@ -34,10 +32,18 @@ public class Hero extends Personnage {
     // hero information
     private static final int HEROLIFE = 1120;
     private static final float HEROSPEED = 0.1f;
-    private static final int HEROLEVEL = 5;
+    private static final int HEROLEVEL = 0;
     private static final int HEROGOLD = 500;
 
     private boolean nouvellePartie;
+
+    // interstate ? instead of hero !
+    private Music music;
+    private Music pausedMusic;
+    private Sound sound;
+    private boolean muted = false;
+
+    private HashMap levelExperience;
 
     /**
      * Constructeur de la class Hero (projet InterStateComm);
@@ -47,7 +53,7 @@ public class Hero extends Personnage {
     public Hero(String nom, Point positon) {
         super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
-        this.experience = 5;
+        this.experience = 0;
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
 
@@ -58,6 +64,7 @@ public class Hero extends Personnage {
 
         nouvellePartie = true;
         // --
+        levelExperience = new HashMap<>();
         this.chargerImage();
     }
 
@@ -278,5 +285,23 @@ public class Hero extends Personnage {
 
     public void setArtVoler(boolean artVoler) {
         this.artVoler = artVoler;
+    }
+
+    public void changerMusic(String musique) throws SlickException {
+        music = new Music(musique);
+        if (this.getMuted()==false) {
+            music.loop();
+        }
+    }
+    public void setPausedMusic() {
+        pausedMusic = music;
+    }
+    public void playPausedMusic() {
+        if(this.getMuted()== false)
+            pausedMusic.loop();
+        music = pausedMusic;
+    }
+    public boolean getMuted() {
+        return muted;
     }
 }
