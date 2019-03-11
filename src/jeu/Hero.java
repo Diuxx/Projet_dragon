@@ -32,7 +32,7 @@ public class Hero extends Personnage {
     // hero information
     private static final int HEROLIFE = 1120;
     private static final float HEROSPEED = 0.1f;
-    private static final int HEROLEVEL = 0;
+    private static final int HEROLEVEL = 1;
     private static final int HEROGOLD = 500;
 
     private boolean nouvellePartie;

@@ -3,6 +3,13 @@ package hud;
 //import java.awt.*;
 
 import jeu.Hero;
+import jeu.LevelExperience;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
@@ -27,8 +34,7 @@ public class Hud {
     private static final Color MANA_COLOR = new Color(0, 0, 255);
     private static final Color XP_COLOR_FOND = new Color(255, 255, 224); 
     private static final Color XP_COLOR = new Color(100, 149, 237);
-    
-    
+
     /**
      *
      */
@@ -37,13 +43,7 @@ public class Hud {
 	private Image bouclier;
 	private Image feu;
 	private Image air;
-
-    /**
-     *
-     */
-    public Hud() {
-        // --
-    }
+	private LevelExperience levelExperience;
 
     /**
      *
@@ -55,6 +55,7 @@ public class Hud {
         this.bouclier = new Image("data/art_combat/bouclier.png");
         this.feu = new Image("data/art_combat/feu.png");
         this.air = new Image("data/art_combat/air.png");
+        this.levelExperience = new LevelExperience();
     }
 
     /**
@@ -62,24 +63,23 @@ public class Hud {
      * @param g
      */
     public void render(Graphics g, Hero hero) {
-    	
+        if(this.levelExperience == null)
+            this.levelExperience = new LevelExperience();
     	
         g.resetTransform();
         //---- Nom du Joeur
         Font fontG = g.getFont();
         String nomJoeur = hero.getNom();
-        fontG.drawString(60,8,nomJoeur,Color.black);
+        fontG.drawString(60,8, nomJoeur, Color.black);
         
         
-        //-----  Vie ---- 
+        // -----  Vie ----
         g.setColor(LIFE_COLOR);
         g.fillRect(BAR_X, BAR_Y , ((hero.getPointDeVieActuel() / hero.getPointDeVie()) * BAR_W), BAR_H);
         g.setColor(XP_COLOR_FOND);
         g.fillRect(40, 64, 190, 13);
         g.fillRoundRect(19, 58, 23, 23, 30);
     
-        g.setColor(XP_COLOR);
-        g.fillRect(40, 64, 60, 13);
         
         //-- Arte de combat
         if(hero.getArtEpee()) {
@@ -117,15 +117,35 @@ public class Hud {
 	    	g.setColor(Color.black);
 	    	g.fillRoundRect(310, 21, 28, 28, 30);
 	    }
+    
+        // Experience et Level
         
-        //------- Experience et Level
-        String experience = Integer.toString(hero.getExperience()); 
-        String nbrExperienceAtteindreNiveauSuivant = Integer.toString(15);
-        String experienceAfficher = experience + "/" +nbrExperienceAtteindreNiveauSuivant;
+        float experienceJoueurInt = hero.getExperience();
+
+        // System.out.println(hero.getLevel());
+        float experienceMax = this.levelExperience.getLevelsExperiences().get(hero.getLevel());
+                
         
-        String level = Integer.toString(hero.getLevel());
-        fontG.drawString(115,62,experienceAfficher,Color.black);
-        fontG.drawString(24,61,level,Color.black);
+        String nbrExperienceAtteindreNiveauSuivant = Integer.toString(levelExperience.getLevelsExperiences().get(hero.getLevel()));
+        String experienceJoueur = hero.getExperience() + "/" +nbrExperienceAtteindreNiveauSuivant;
+        String levelJoueur = Integer.toString(hero.getLevel());
+        
+        g.setColor(new Color(66,92,100));
+        
+        // System.out.println("Exp  :"+experienceJoueurInt);
+        // System.out.println("Exp Max :"+experienceMax);
+        
+        g.fillRect(40, 64 , Math.round(experienceJoueurInt / experienceMax*189), BAR_H);
+    
+        g.setColor(XP_COLOR);
+          
+        g.fillRect(40, 64, Math.round(0 * 189), 13);
+        
+        
+        fontG.drawString(115,62,experienceJoueur,Color.black);
+        fontG.drawString(24,61,levelJoueur,Color.black);
         g.drawImage(this.playerbars, P_BAR_X, P_BAR_Y);
+        
     }
+    
 }
