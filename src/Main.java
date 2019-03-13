@@ -1,12 +1,11 @@
-package main;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 import sys.StateGame;
 
-public class Main {
-	public static int gX = 1200;
-	public static int gY = 600;
+import static singleton.InterStateComm.gX;
+import static singleton.InterStateComm.gY;
+
+public class  Main {
 
 	public static void main(String[] args) {
     	

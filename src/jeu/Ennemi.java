@@ -63,6 +63,8 @@ public class Ennemi extends Personnage {
 		this.atk = niveau * 5.0 + 20;
 		this.maxHP = niveau * 50.0 + 400;
 
+		this.experience = 10; // test
+
         /**
          * L'ennemi quand il est crée est vivant ! (visible)
          */

@@ -14,6 +14,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import singleton.InterStateComm;
 
 /**
  * class EcranMenuPrincipale
@@ -67,8 +68,8 @@ public class EcranMenuPrincipale extends BasicGameState {
 		text1 = "Nouveau jeu";
 		text2 = "Charger";
 		text3 = "Sortie";
-		text1X = (int) (main.Main.gX - (main.Main.gX * 0.25));
-		text1Y = (int) (main.Main.gY - (main.Main.gY * 0.65));
+		text1X = (int) (InterStateComm.gX - (InterStateComm.gX * 0.25));
+		text1Y = (int) (InterStateComm.gY - (InterStateComm.gY * 0.65));
 		text2X = text1X;
 		text2Y = text1Y + 90;
 		text3X = text2X;
@@ -94,9 +95,9 @@ public class EcranMenuPrincipale extends BasicGameState {
 		graphics.setFont(trueTypeFont2);
 		graphics.setColor(Color.orange);
 		graphics.drawString("The Dragon King",
-				(int) (main.Main.gX - (main.Main.gX * 0.515)
+				(int) (InterStateComm.gX - (InterStateComm.gX * 0.515)
 						- (int) (font2.getStringBounds("The Dragon King ", tTypeFont).getWidth() * 0.5)),
-				(int) (main.Main.gY - (main.Main.gY * 0.98)));
+				(int) (InterStateComm.gY - (InterStateComm.gY * 0.98)));
 	}
 
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {

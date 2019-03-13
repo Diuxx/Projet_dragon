@@ -67,8 +67,8 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		flecheDeRetour = new Image("Data/arrow.png");
 		text1 = "Entrez votre nom";
 		text2 = "Lancer";
-		inputNomX = (int) (main.Main.gX - (main.Main.gX * 0.25));
-		inputNomY = (int) (main.Main.gY - (main.Main.gY * 0.55));
+		inputNomX = (int) (InterStateComm.gX - (InterStateComm.gX * 0.25));
+		inputNomY = (int) (InterStateComm.gY - (InterStateComm.gY * 0.55));
 		text1X = inputNomX + 15;
 		text1Y = inputNomY - 50;
 		text2X = inputNomX + 80;
@@ -91,9 +91,9 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		graphics.setFont(trueTypeFont2);
 		graphics.setColor(Color.white);
 		graphics.drawString("The Dragon King",
-				(int) (main.Main.gX - (main.Main.gX * 0.515)
+				(int) (InterStateComm.gX - (InterStateComm.gX * 0.515)
 						- (int) (font2.getStringBounds("The Dragon King ", tTypeFont).getWidth() * 0.5)),
-				(int) (main.Main.gY - (main.Main.gY * 0.98)));
+				(int) (InterStateComm.gY - (InterStateComm.gY * 0.98)));
 	}
 
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {

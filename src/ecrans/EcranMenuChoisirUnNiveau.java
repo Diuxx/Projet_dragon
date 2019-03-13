@@ -3,7 +3,6 @@ package ecrans;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.beans.DefaultPersistenceDelegate;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
@@ -15,6 +14,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import singleton.InterStateComm;
 
 /**
  * class EcranMenuChoisirUnNiveau
@@ -77,8 +77,8 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 		text2 = "Facile";
 		text3 = "Difficile";
 		text4 = "Tres difficile";
-		text1X = (int) (main.Main.gX - (main.Main.gX * 0.98));
-		text1Y = (int) (main.Main.gY - (main.Main.gY * 0.65));
+		text1X = (int) (InterStateComm.gX - (InterStateComm.gX * 0.98));
+		text1Y = (int) (InterStateComm.gY - (InterStateComm.gY * 0.65));
 		text2X = text1X + 100;
 		text2Y = text1Y + 60;
 		text3X = text2X - 20;
@@ -109,9 +109,9 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 		graphics.setFont(trueTypeFont2);
 		graphics.setColor(Color.yellow);
 		graphics.drawString("The Dragon King",
-				(int) (main.Main.gX - (main.Main.gX * 0.515)
+				(int) (InterStateComm.gX - (InterStateComm.gX * 0.515)
 						- (int) (font2.getStringBounds("The Dragon King ", tTypeFont).getWidth() * 0.5)),
-				(int) (main.Main.gY - (main.Main.gY * 0.98)));
+				(int) (InterStateComm.gY - (InterStateComm.gY * 0.98)));
 	}
 
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {

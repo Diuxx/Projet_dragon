@@ -11,6 +11,11 @@ import jeu.Hero;
  * Les variables sont effac�es apr�s lecture pour �viter l'utilisation de donn�es "p�rim�es"
  */
 public final class InterStateComm {
+
+    // screen width x height
+    public final static int gX = 1200;
+    public final static int gY = 600;
+
     // volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
     // mais pas encore instancié :
     // https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)
