@@ -8,28 +8,50 @@ import sys.Camera;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class Message {
 
+    /**
+     * List contenant les messages à afficher
+     */
     private ArrayList<String> text;
+
+    /**
+     * Position du message (page)
+     */
     private int posisition;
+
+    /**
+     * Hauteur de la fenetre d'affichage des messages
+     */
     private final int taille = 80;
 
-    // --
-    private int MESSAGE_MAXchar = 80;
-    private int MESSAGE_MAXLINE = 3;
-    private int MESSAGE_ESPACE = 5;
+    /**
+     * Espace entre deux ligne de text.
+     */
+    private final int MESSAGE_ESPACE = 5;
 
-    Rectangle rect;
-    // --
+    /**
+     * Rectange d'affichage des messages
+     */
+    private Rectangle rect;
+
+
+    /**
+     * Constructeur de la class message
+     */
     public Message() {
-        // --
+
+        this.posisition = 0;
+
         this.rect = new Rectangle(0, 0, 0, 0);
         this.text = new ArrayList<String>();
     }
 
     public void add(String text) {
         int ligne = 0;
-        // ajout des chaine
         String[] listDeChaine = text.split("#");
         for(String chaine : listDeChaine)
         {
@@ -38,11 +60,20 @@ public class Message {
         this.posisition = 0;
     }
 
+    /**
+     *
+     */
     public void add(Message text) {
         this.text = text.getText();
     }
 
-    // afficher un message
+    /**
+     * Affichage d'un message sur le graphics
+     * @param g
+     * @param c
+     * @param camera
+     * @return
+     */
     public boolean afficher(Graphics g, GameContainer c, Camera camera) {
         if(this.containMessage()) {
             if(posisition != 0) {

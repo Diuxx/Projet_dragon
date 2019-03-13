@@ -26,11 +26,8 @@ public class Ennemi extends Personnage {
 	private float x, y;
 	private int tempsChangerDirection;
 
-	private Hero lehero; // --
 	private List<Personnage> lesPersonnages;
 	private boolean mort;
-
-	private boolean collid = false;
 
 	private boolean bouge;
 	private boolean veutCombattre;
@@ -42,6 +39,11 @@ public class Ennemi extends Personnage {
 	private double atk;
 	private double maxHP;
 	protected int experience;
+
+	// --
+	private boolean hostile;
+	private long timerHostile;
+	private long targetTimerHostile;
 
 	public int getExperience() {
 		return experience;
@@ -63,11 +65,13 @@ public class Ennemi extends Personnage {
 		this.atk = niveau * 5.0 + 20;
 		this.maxHP = niveau * 50.0 + 400;
 
-		this.experience = 10; // test
+		this.experience = 300; // test
+
+		this.hostile = true;
+		this.timerHostile = 0l;
 
         /**
-         * L'ennemi quand il est crée est vivant ! (visible)
-         */
+         * L'ennemi quand il est crée est vivant ! (visible) */
         this.mort = false;
         lesPersonnages = new ArrayList<Personnage>();
         this.ennemiImages = ennemiImages;
@@ -201,6 +205,38 @@ public class Ennemi extends Personnage {
 		}
 		return collision || isCollisionPersonnage(x, y);
 	}
+
+	/**
+	 *
+	 * @param h
+	 * @param targetTimerHostile
+	 */
+	public void setHostile(boolean h, int targetTimerHostile) {
+		this.hostile = h;
+		if(h) {
+			this.targetTimerHostile = targetTimerHostile;
+			this.timerHostile = System.currentTimeMillis();
+		}
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public boolean isHostile() {
+		return this.hostile;
+	}
+
+	/**
+	 *
+	 */
+	private void checkTimerHostile() {
+		if(hostile)
+			return;
+
+		//if(System.currentTimeMillis() - this.timerHostile >= this.targetTimerHostile)
+	}
+
 
 	public boolean isMort() {
 		return mort;

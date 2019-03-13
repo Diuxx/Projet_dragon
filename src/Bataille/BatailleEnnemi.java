@@ -17,13 +17,15 @@ public class BatailleEnnemi {
 	}
 
 
-	public void init() { 
+	public void init() {
 		this.animation = new PathAnimation(new BezierPath(0, 0, -400, 1, 50, 20, 0, 0), 1000);
 	}
 
-	
 	public void render(GameContainer container, Graphics g) {
-		if(null == this.ennemi)
+		if(InterStateComm.getUnEnnemi() == null)
+			return;
+
+		if(InterStateComm.getUnEnnemi() != this.ennemi)
 			this.ennemi = InterStateComm.getUnEnnemi();
 
 		this.experience = ennemi.getExperience();
@@ -58,7 +60,7 @@ public class BatailleEnnemi {
 	}
 	
 	public void setBarreVie(int degat) {
-		ennemi.setPointDeVieActuel( ennemi.getPointDeVieActuel()-degat);
+		ennemi.setPointDeVieActuel( ennemi.getPointDeVieActuel() - degat);
 	}
 	public void regenVie() {
 		ennemi.setPointDeVieActuel(ennemi.getPointDeVie());

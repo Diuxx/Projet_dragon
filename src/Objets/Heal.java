@@ -18,7 +18,6 @@ public class Heal extends Objet {
     private long tempsAvantReApparition = 5000;
     private boolean disponible;
 
-
     /**
      * Class constructor
      */

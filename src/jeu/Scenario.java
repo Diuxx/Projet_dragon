@@ -37,8 +37,6 @@ public class Scenario {
         BOUCLIER
     }
 
-    private Heal heal;
-
     /**
      * Taille des monstre & Pnj
      */
@@ -171,6 +169,9 @@ public class Scenario {
             if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()))
             { // début d'un combat
                 System.out.println("intersect");
+
+
+
                 lesMessages.add(unEnnemi.parle());
                 unEnnemi.startCombat();
                 unEnnemi.setBouge(false);
@@ -227,10 +228,5 @@ public class Scenario {
                 return (Heal) unHeal;
         }
         return null;
-    }
-
-    public void afficherHeal(Graphics g) {
-
-        heal.afficher(g);
     }
 }

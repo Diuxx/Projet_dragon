@@ -22,7 +22,7 @@ public class Bataille extends BasicGameState{
 	private BatailleEnnemi batailleEnnemi;
 	private BatailleJoeur batailleJoueur;
 	private Ennemi ennemi;
-	public static final int ATTAQUER=0;
+	public static final int ATTAQUER = 0;
 	
 	
 	@Override

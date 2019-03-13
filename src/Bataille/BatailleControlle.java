@@ -20,7 +20,7 @@ import singleton.InterStateComm;
 public class BatailleControlle implements InputProviderListener {
 
 	// --
-	private BatailleEnnemi ennemi;
+	private BatailleEnnemi ennemi;// = unE.getBataille();
 	private BatailleJoeur joueur;
 	private StateBasedGame game;
 	private BatailleCommande mode = BatailleCommande.NONE;
@@ -108,7 +108,7 @@ public class BatailleControlle implements InputProviderListener {
 			if(!InterStateComm.getLeHero().getMuted() && swing != null) {
 				swing.play();
 			}
-			ennemi.setBarreVie(10);
+			ennemi.setBarreVie(50);
 			break;
 			default:
 		}
@@ -127,6 +127,9 @@ public class BatailleControlle implements InputProviderListener {
 
 			System.out.println(InterStateComm.getUnEnnemi().getNom() + " est mort !");
 			InterStateComm.tuerUnEnnemi();
+
+			System.out.println(InterStateComm.getUnEnnemi());
+
 			game.enterState(GameOver.GameOver);
 			ennemi.regenVie();
 			// Joueur.regenVie(100);
@@ -161,14 +164,15 @@ public class BatailleControlle implements InputProviderListener {
 					ennemi.attaquer();
 					break;
 				case FUIRE:
+					System.out.println("> fuire ");
+					InterStateComm.getUnEnnemi().seCalme(); // --
+
 					game.enterState(GameOver.GameOver);
 					ennemi.regenVie();
-					//joueur.regenVie(100);
 					mode = BatailleCommande.NONE;
 					break;
 				default:
 			}
-			//joueur.setBarreVie(10);
 		}
 	}
 

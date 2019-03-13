@@ -121,10 +121,7 @@ public class Hud {
         // Experience et Level
         
         float experienceJoueurInt = hero.getExperience();
-
-        // System.out.println(hero.getLevel());
         float experienceMax = this.levelExperience.getLevelsExperiences().get(hero.getLevel());
-                
         
         String nbrExperienceAtteindreNiveauSuivant = Integer.toString(levelExperience.getLevelsExperiences().get(hero.getLevel()));
         String experienceJoueur = hero.getExperience() + "/" +nbrExperienceAtteindreNiveauSuivant;
@@ -135,7 +132,7 @@ public class Hud {
         // System.out.println("Exp  :"+experienceJoueurInt);
         // System.out.println("Exp Max :"+experienceMax);
         
-        g.fillRect(40, 64 , Math.round(experienceJoueurInt / experienceMax*189), BAR_H);
+        g.fillRect(40, 64 , Math.round(experienceJoueurInt / experienceMax * 189), BAR_H);
     
         g.setColor(XP_COLOR);
           
