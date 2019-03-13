@@ -65,7 +65,7 @@ public class Ennemi extends Personnage {
 		this.atk = niveau * 5.0 + 20;
 		this.maxHP = niveau * 50.0 + 400;
 
-		this.experience = 300; // test
+		this.experience = 40; // test
 
 		this.hostile = true;
 		this.timerHostile = 0l;
@@ -234,7 +234,11 @@ public class Ennemi extends Personnage {
 		if(hostile)
 			return;
 
-		//if(System.currentTimeMillis() - this.timerHostile >= this.targetTimerHostile)
+		if(System.currentTimeMillis() - this.timerHostile >= this.targetTimerHostile)
+        {
+            // --
+            System.out.println("");
+        }
 	}
 
 

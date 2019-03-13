@@ -75,10 +75,6 @@ public final class InterStateComm {
      * Methode qui declare mort l'ennemi de la dernière bataille
      */
     public final static void tuerUnEnnemi() {
-
-        //InterStateComm.unEnnemi
-
-
         if (InterStateComm.unEnnemi != null) {
             System.err.println("Un ennemi est sur le point de mourir !");
             InterStateComm.unEnnemi.setMort(true);

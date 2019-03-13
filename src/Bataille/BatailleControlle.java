@@ -131,7 +131,7 @@ public class BatailleControlle implements InputProviderListener {
 			System.out.println(InterStateComm.getUnEnnemi());
 
 			game.enterState(GameOver.GameOver);
-			ennemi.regenVie();
+			// ennemi.regenVie();
 			// Joueur.regenVie(100);
 
 			// Augmenter l'experience et eventuellement le level
@@ -140,7 +140,7 @@ public class BatailleControlle implements InputProviderListener {
 
 
 			int experience  = InterStateComm.getLeHero().getExperience() ;
-			HashMap<Integer,Integer> lesLevelsExperiences = new LevelExperience().getLevelsExperiences();
+			HashMap<Integer, Integer> lesLevelsExperiences = new LevelExperience().getLevelsExperiences();
 			Iterator itLevelExperience = lesLevelsExperiences.entrySet().iterator();
 
 
@@ -151,7 +151,7 @@ public class BatailleControlle implements InputProviderListener {
 					if(experience >= entry.getValue()) {
 						int nouveauExp = experience - lesLevelsExperiences.get(entry.getKey());
 						InterStateComm.getLeHero().setExperience(nouveauExp);
-						InterStateComm.getLeHero().setLevel(entry.getKey()+1);
+						InterStateComm.getLeHero().setLevel(entry.getKey() + 1);
 						experience -= lesLevelsExperiences.get(entry.getKey());
 					}
 				}

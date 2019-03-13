@@ -232,7 +232,7 @@ public class Hero extends Personnage {
     }
 
     public void setExperience(int experienceGagne) {
-        experience += experienceGagne;
+        experience = experienceGagne;
     }
 
     public int getLevel() {
@@ -240,7 +240,7 @@ public class Hero extends Personnage {
     }
 
     public void setLevel(int levelGagne) {
-        this.niveau += levelGagne;
+        this.niveau = levelGagne;
     }
 
     public boolean getArtEpee() { return artEpee ; }

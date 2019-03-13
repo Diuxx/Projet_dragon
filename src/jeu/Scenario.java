@@ -161,6 +161,7 @@ public class Scenario {
                 // BatailleEnnemi.ennemiImage = unEnnemi.getEnnemiImages();
                 // --SS
                 InterStateComm.setUnEnnemi(unEnnemi);
+                //unEnnemi.seCalme();
 
                 EcranJeu.gameState.enterState(Bataille.ID);
                 unEnnemi.seCalme();
@@ -169,8 +170,6 @@ public class Scenario {
             if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()))
             { // début d'un combat
                 System.out.println("intersect");
-
-
 
                 lesMessages.add(unEnnemi.parle());
                 unEnnemi.startCombat();
