@@ -60,15 +60,17 @@ public class Ennemi extends Personnage {
 		this.tempsChangerDirection = t;
 		this.bouge = true;
 		this.veutCombattre = false;
-
-		this.niveau = niveau;
-		this.atk = niveau * 5.0 + 20;
-		this.maxHP = niveau * 50.0 + 400;
-
-		this.experience = 40; // test
-
 		this.hostile = true;
 		this.timerHostile = 0l;
+		
+		
+		/*
+		 * GÈrer les statistiques des ennemis
+		 */
+		this.niveau = niveau;
+		setAtk(niveau);
+		setMaxHP(niveau);
+		this.experience = 40; // test
 
         /**
          * L'ennemi quand il est cr√©e est vivant ! (visible) */
@@ -77,6 +79,7 @@ public class Ennemi extends Personnage {
         this.ennemiImages = ennemiImages;
         imageCombat = ennemiImages;
     }
+
 
 
 	/**
@@ -298,5 +301,12 @@ public class Ennemi extends Personnage {
 
 	public double getHP() {
 		return maxHP;
+	}
+	
+	public void setAtk(int niveau) {
+		this.atk = niveau * 5.0 + 20;
+	}
+	public void setMaxHP(int niveau) {
+		this.maxHP = niveau * 50.0 + 400;
 	}
 }
