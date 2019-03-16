@@ -53,43 +53,6 @@ public class Carte {
         return new Point(0, 0);
     }
 
-    /**
-     *
-     * @param r
-     * @param g
-     * @param b
-     * @return
-     */
-    public Point getPositionPersonnage(int r, int g, int b) {
-        Point position = new Point(); // --
-        int positionLayer = map.getLayerIndex("position");
-        Image tile;
-        Color color;
-        System.out.print("InterStateComm is searching : [ " + r + ", " + g + ", " + b + "]");
-        //boolean found = false;
-
-        for(int x = 0; x < this.map.getWidth(); x++) {
-            for(int y = 0; y < this.map.getHeight(); y++)
-            {
-                tile = map.getTileImage(x, y, positionLayer);
-                if(tile != null) {
-                    color = tile.getColor((int) x % map.getTileWidth(), (int) y % map.getTileHeight());
-                    if(color.getBlue() == b && color.getGreen() == g && color.getRed() == r) {
-                        // System.out.println("position -> (" + x + "; " + y + ") [ " + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + "]");
-                        System.out.println(" found ! (" + x + "; " + y + ")");
-
-
-                        position.setX(x * map.getTileWidth());
-                        position.setY(y * map.getTileHeight()); // --
-                        return position;
-                    }
-                }
-            }
-        }
-        System.out.println(" not found ! ");
-        return position;
-    }
-
     // --
     public String getFileName() {
         return this.nomMap;

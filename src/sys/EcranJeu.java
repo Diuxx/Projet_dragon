@@ -61,7 +61,7 @@ public class EcranJeu extends BasicGameState {
         lesMessages = new Message();
 
         /**
-         *
+         * Chargement des données sauvegardés du jeu
          */
         savedData = Save.detectSavedData();
         carte = new Carte(savedData.getCarteName());
@@ -77,7 +77,6 @@ public class EcranJeu extends BasicGameState {
         scenario = new Scenario();
         scenario.charger(carte);
 
-        InterStateComm.getLeHero().addPnj(scenario.getLesPnj());
         hud.init(); // --
         menu.init(gameContainer);
     }
@@ -96,11 +95,11 @@ public class EcranJeu extends BasicGameState {
             scenario.afficherPnj(graphics, this.lesMessages);
             scenario.afficherEnnemis(graphics);
             scenario.afficherObjets(graphics, this.lesMessages);
-            // scenario.afficherHeal(graphics); --
         }
 
         // Affichage du hero
         InterStateComm.getLeHero().afficher(graphics);
+
         // affichage des messages
         if(lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
         {

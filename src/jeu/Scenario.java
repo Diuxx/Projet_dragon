@@ -3,7 +3,9 @@ package jeu;
 import Bataille.Bataille;
 import Objets.Heal;
 import Objets.Objet;
+import Objets.ObjetMessage;
 import carte.Carte;
+import org.lwjgl.Sys;
 import personnages.PersonnageNonJoueur;
 import personnages.ennemis.*;
 
@@ -61,14 +63,20 @@ public class Scenario {
      */
     public void charger(Carte map) {
         // --
-        Art currentArt = Scenario.Art.EPE;
-
+        Art currentArt = Scenario.Art.EPE; // hero.getCurrentArt() //
+        // currentArt.toString();
+        // chargerClass(currentArt.toString());  ->
         switch(currentArt) {
             case EPE:
                 //** I WILL REFACTOR THIS CODE WITH CLASS CALLING INSTEAD OF ALL IN ONE METHOD
                 this.chargerEpe(map);
                 break;
+            case BOUCLIER:
+                // this.chargerBouclie(map);
+                break;
         }
+        InterStateComm.getLeHero().addPnj(this.getLesPnj());
+        InterStateComm.getLeHero().addObjets(this.getLesObjets());
     }
 
     /**
@@ -76,43 +84,31 @@ public class Scenario {
      */
     private void chargerEpe(Carte map) {
         this.findObjets(map);
+
+        // cherche et affiche les ennemis sur la carte
+        this.findEnnemis(map);
+
+        if(map.getFileName().equals("maison")) {
+            System.err.println("Scenario : maison !(epe)");
+
+            Point pLettre = findObjetPosition(map, "lettre");
+            if(pLettre != null) {
+                // we should do a letter object instead of (ObjetMessage) !
+                ObjetMessage lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
+                lettre.setMessage("blablabla#blablabla\nblablabla");
+                this.lesObjets.add(lettre);
+            }
+        }
+
         if(map.getFileName().equals("dragon")) {
-            Point position = map.getPositionPersonnage(0, 0, 255);
-            PersonnageNonJoueur test = new PersonnageNonJoueur("pnj Paul", position, 32, 32);
 
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 11);
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 9);
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 8);
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 4, 10);
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 11);
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 9);
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 8);
-            test.loadAnimation(Mondes.Ressources.spriteSheet, 3, 6, 10);
-            test.setDirection(2);
-            test.addDialogue("Salut Nicolas comment vas-tu ?");
-//            lesPnj.add(test);
-//
-//            PersonnageNonJoueur PNJquiDonneEpee = new PersonnageNonJoueur("Durand", map.getPositionPersonnage(0, 1, 255), 32, 32);
-//            PNJquiDonneEpee.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 6, 7,  4);
-//            PNJquiDonneEpee.addDialogue("Un grand mystère entours la création du monde. Le roi de dragonia " +
-//                    "a subitement disparue suite à la grande révolution du monde !/n Tu sais.." +
-//                    "On a besoin que tu trouve pouquoi tout va mal depuis ce fameux jour !");
-//            lesPnj.add(PNJquiDonneEpee);
-//
-//            PersonnageNonJoueur PNJServante = new PersonnageNonJoueur("PNJ Servante", map.getPositionPersonnage(0, 255, 255), 32, 32);
-//            PNJServante.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 3, 4,  4);
-//            PNJServante.addDialogue("Salut !!");
-//            lesPnj.add(PNJServante);
-//
-//            PersonnageNonJoueur unAutrePnjs = new PersonnageNonJoueur("pnj pistache", map.getPositionPersonnage(0, 100, 255), 32, 32);
-//            unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
-//            lesPnj.add(unAutrePnjs);
-
-            // personnages.ennemis
-            lesEnnemis.add(new DarkMaster(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Dragon(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Goblin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
-            lesEnnemis.add(new Squelette(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
+            Point pServante = findPnjPosition(map, "servante");
+            if(pServante != null) {
+                PersonnageNonJoueur pnjServante = new PersonnageNonJoueur("Servante", pServante, 32, 32);
+                pnjServante.loadAnimation(Mondes.Ressources.spriteSheet_PNJ, 3, 4,  4);
+                pnjServante.addDialogue("blablabla !#et blablablabla\nblablablabla");
+                lesPnj.add(pnjServante);
+            }
         }
     }
 
@@ -122,6 +118,10 @@ public class Scenario {
 
     public List<PersonnageNonJoueur> getLesPnj() {
         return lesPnj;
+    }
+
+    public List<Objet> getLesObjets() {
+        return lesObjets;
     }
 
     public void afficherEnnemis(Graphics g) {
@@ -137,17 +137,17 @@ public class Scenario {
     public void resetScenario() {
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
-        lesObjets = new ArrayList<>();
+        lesObjets = new ArrayList<Objet>();
 
         InterStateComm.getLeHero().removePnj();
+        InterStateComm.getLeHero().removeObjets();
     }
 
     /**
      * Mouvement des personnages.ennemis sur la map.
      * @param map
      * @param delta
-     * @param lesMessages transmet les messages des personnages.ennemis
-     */
+     * @param lesMessages transmet les messages des personnages.ennemis */
     public void mouvement(Carte map, int delta, Message lesMessages) {
         for(Ennemi unEnnemi : this.lesEnnemis) {
             if(unEnnemi.isMort())
@@ -198,13 +198,29 @@ public class Scenario {
         }
     }
 
+    /**
+     * Affichage des objet sur la carte
+     * @param g
+     * @param lesMessages
+     */
     public void afficherObjets(Graphics g, Message lesMessages) {
         for(Objet unObjet : lesObjets)
         {
             unObjet.afficher(g);
+            if(unObjet instanceof ObjetMessage) {
+                ObjetMessage obj = ((ObjetMessage) unObjet);
+                if(obj.isParle()) {
+                    lesMessages.add(obj.getMessage());
+                    obj.setParle(false);
+                }
+            }
         }
     }
 
+    /**
+     * (a supprimer !)
+     * @param uneCarte
+     */
     private void findObjets(Carte uneCarte) {
         int x, y;
         for(int o=0; o<uneCarte.getMap().getObjectCount(0); o++)
@@ -219,6 +235,126 @@ public class Scenario {
         }
     }
 
+    /**
+     *
+     * @param carte
+     * @param name
+     * @return
+     */
+    private Point findObjetPosition(Carte carte, String name) {
+
+        int layerIndex = 3;
+        int nbObjet = carte.getMap().getObjectCount(layerIndex);
+
+        // position
+        int x = 0;
+        int y = 0;
+        for(int i = 0; i<nbObjet; i++)
+        {
+            String objetName = carte.getMap().getObjectName(layerIndex, i);
+            if (objetName.equals(name)) {
+                x = carte.getMap().getObjectX(layerIndex, i);
+                y = carte.getMap().getObjectY(layerIndex, i);
+                return new Point(x, y);
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param carte
+     * @param name
+     * @return
+     */
+    private Point findPnjPosition(Carte carte, String name) {
+
+        int layerIndex = 2;
+        int nbObjet = carte.getMap().getObjectCount(layerIndex);
+
+        // position
+        int x = 0;
+        int y = 0;
+        for(int i = 0; i<nbObjet; i++)
+        {
+            String objetName = carte.getMap().getObjectName(layerIndex, i);
+            if (objetName.equals(name)) {
+                x = carte.getMap().getObjectX(layerIndex, i);
+                y = carte.getMap().getObjectY(layerIndex, i);
+                return new Point(x, y);
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param carte
+     */
+    private void findEnnemis(Carte carte) {
+
+        int layerIndex = 1;
+        int nbEnnemi = carte.getMap().getObjectCount(1);
+
+        System.out.println("layerIndex : " + carte.getMap().getObjectCount(1) + " nbEnnemi : " + nbEnnemi);
+
+        int x, y;
+
+        for(int i = 0; i<nbEnnemi; i++)
+        {
+            String ennemiName = carte.getMap().getObjectName(layerIndex, i);
+            String direction = carte.getMap().getObjectType(layerIndex, i);
+
+            x = carte.getMap().getObjectX(layerIndex, i);
+            y = carte.getMap().getObjectY(layerIndex, i);
+            switch(ennemiName) {
+                case "Squelette":
+                    lesEnnemis.add(new Squelette(new Point(x, y), getDirectionFromString(direction)));
+                    break;
+                case "Goblin":
+                    lesEnnemis.add(new Goblin(new Point(x, y), getDirectionFromString(direction)));
+                    break;
+                case "DarkMaster":
+                    lesEnnemis.add(new DarkMaster(new Point(x, y), getDirectionFromString(direction)));
+                    break;
+                case "Dragon":
+                    lesEnnemis.add(new Dragon(new Point(x, y), getDirectionFromString(direction)));
+                    break;
+                default:
+            }
+        }
+    }
+
+    /**
+     *
+     * @param direction
+     * @return
+     */
+    public Direction getDirectionFromString(String direction) {
+        Direction d = Direction.IMMOBILE;
+        switch (direction) {
+            case "h":
+                d = Direction.HORIZONTAL;
+                break;
+            case "v":
+                d = Direction.VERTICAL;
+                break;
+            case "r":
+                d = Direction.RANDOM;
+                break;
+            case "i":
+                d = Direction.IMMOBILE;
+                break;
+            default:
+        }
+        return d;
+    }
+
+    /***
+     *
+     * @param obj
+     * @return
+     */
     public Heal getHeals(int obj) {
         for(Objet unHeal : lesObjets)
         {

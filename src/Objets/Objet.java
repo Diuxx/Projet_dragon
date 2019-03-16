@@ -137,4 +137,8 @@ public class Objet {
     public void setPositionSurMap(int positionSurMap) {
         this.positionSurMap = positionSurMap;
     }
+
+    public Rectangle getBoundingBox() {
+        return this.box;
+    }
 }

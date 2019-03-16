@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="87" height="71" tilewidth="16" tileheight="16" infinite="0" nextlayerid="46" nextobjectid="17">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="87" height="71" tilewidth="16" tileheight="16" infinite="0" nextlayerid="50" nextobjectid="23">
  <tileset firstgid="1" source="Tiny32.tsx"/>
  <tileset firstgid="257" source="zelda01.tsx"/>
  <tileset firstgid="737" source="6483.tsx"/>
@@ -27,11 +27,6 @@
    H4sIAAAAAAAACu2c224iMQyG+xw8OjdFCxWovdg+YhVpI3ldO/Exh4FfilrQTOJ8xI6TDLy96XQ+vUopGSr1fqC6b0z7+LpddUvkCdVi27tuti6n/8uX0D4rW4s/7MiW8i2pfR62f5wMYNvw74psqyxsI8ah1W7IdRbbT8bvPWy1uiWw/Tj9fj1iDqBswX3ble1K2oEt9i3NvLqiVmLrmVdX1IpsR9giEeVHmvIw9Mfqu7ux9eRB1FpV0h+r7+4WE6LXnRq2mnvgfaXcN4iju7KNHJPeuCiNl15Rfcb1S30X9zna1pY9kUUjS90WJlyfo2VlS+1pXJ2fg2SfBK8hPWyzZWUbFZNwLClqtYfX6xZxbKPn/5lsW21DHYHtaFHz+jOwxX5KifJnS9tV3Dx1NLa9+TNirdKLR++o7pI7PZ6IbaRdZezXXKPmDFfAMmqfdTRb65iLsktix7OxzcjLJG2uxJabbyLyhFF5xgi2dzQ/wz3K1tr+fOLX0jNyMK1GsG35omUdsCPb1viS1oNFsbSwpezVSJLPevbYKLVyNs04nsFWug6g5j+K40NoC1WqDVx9LQYetr3PTLJH0Ls2ah1gEbxXMk6tbC31tu7FnxkVEyLZeuO/9FrP3HZl6vH6QzRbqPK6rK/eleX8728Rd823gyXU5cTnH6uztdYz4hxV4mtRsaYqMiaUerL306IU/ZlGj9tW7F/97N/aNsyRYJ6dzVZ6n6ftKFnbpsYPjuOwDbzukZ6Z78IW5sr3YJ/JOjvPYJvxjGZGLocVeZ6cxTYjJnNssb965B2/2NZMtq1rtKKepah1w6LZ76BE2Q6V2d9ZbLn6qfHSGlOaunH99XWWn0rqofZ8RrGl2slmm6HWmrEW7/e/eu1qfUhad+T8bxHHtirLjky2q2gnttb4O0uSmDCbLaUd2UJl7uV42M6KEa3zsrqukq65Mv0vim3mHh6VX/RyRKnfr8b2guzP3nem2FLnDleCLbxn9D6Yli3kOCsm9GzD/1P31NeZ++c7xlsNWy4mjMi3j8jWOoe92PbZWuewI7LVxrvSJvUdTs050oyYoGmHY8v9nkmrDk3fuHVh1Bldqy+aswloj/Y5CIqtdj1pYfsX2Qn1HTwWpf2Jfga5xbZqRl4ZKcseO37/xZbWEdl6zpO0z9+2JO0Pjk3w3qhcKoKt51nj3n78yOccVmS7kl5s8zSLbet5eYstWbJ+N4Lrj/S3ZyLmMqpAWyxsI9fSrfgrLZq6qqLzBKpfM8ft6D0Pjq3XX7i26j4p1CfxXk+W7z5l/R4Ppxoz8Pd/vP7SagvHKbwfWNRj57F1lEa2DeuH8QHHauq9KDtHsp0liu0z6AcUrJ5phGAAAA==
   </data>
  </layer>
- <layer id="41" name="position" width="87" height="71">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3a0QmAMAwFwM7R/TewULE//epcHUGCoBLuJkgggRdIKQAAQESvX1cAAABARHPHkdCZYK6vBD0AAP93yBwAAAAAAAAAAI9M/xdwa9gTAICQJT8BAAC8YgNEHzKXhGAAAA==
-  </data>
- </layer>
  <layer id="42" name="message" width="87" height="71" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GA5SCSjhGAAAA==
@@ -54,4 +49,13 @@
    </properties>
   </object>
  </objectgroup>
+ <objectgroup id="46" name="ennemis" width="87" height="71">
+  <object id="19" name="Squelette" type="h" x="300" y="810" width="4" height="4"/>
+  <object id="20" name="Goblin" type="v" x="124" y="950" width="4" height="4"/>
+  <object id="21" name="Squelette" type="r" x="512" y="340" width="4" height="4"/>
+ </objectgroup>
+ <objectgroup id="48" name="pnjs" width="87" height="71">
+  <object id="22" name="servante" x="871" y="400" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="49" name="objets" width="87" height="71"/>
 </map>

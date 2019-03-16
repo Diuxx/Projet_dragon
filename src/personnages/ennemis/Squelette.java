@@ -25,7 +25,7 @@ public class Squelette extends Ennemi {
      * Class constructor
      */
     public Squelette(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages, int niveau) {
-        super("Goblin", x, y, taille.getLargeur(), taille.getLongeur(),
+        super("Squelette", x, y, taille.getLargeur(), taille.getLongeur(),
                 50, direction, timer, vitesse, ennemiImages, niveau);
         this.chargerImage();
     }

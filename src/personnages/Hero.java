@@ -1,6 +1,8 @@
 package personnages;
 
 import Mondes.Ressources;
+import Objets.Objet;
+import Objets.ObjetMessage;
 import sauvegarde.Save;
 import carte.Carte;
 import org.newdawn.slick.*;
@@ -19,6 +21,8 @@ import java.util.List;
 public class Hero extends Personnage {
 
     private List<PersonnageNonJoueur> lesPnj;
+    private List<Objet> lesObjets;
+
     private List<Ennemi> lesEnnemis;
     private int experience;
     private int niveau;
@@ -53,6 +57,7 @@ public class Hero extends Personnage {
     public Hero(String nom, Point positon) {
         super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
+        this.lesObjets = new ArrayList<Objet>();
         this.experience = 0;
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
@@ -76,7 +81,7 @@ public class Hero extends Personnage {
         if(savedData.getSavedHero() == null)
             return;
 
-        System.out.println("Somes Data is charging !");
+        System.out.println("Somes Data is loading !");
 
         Hero savedHero = savedData.getSavedHero();
         this.setNom(savedHero.getNom());
@@ -134,6 +139,14 @@ public class Hero extends Personnage {
         this.lesEnnemis = lesEnnemis;
     }
 
+
+    public void addObjets(List<Objet> lesObjets) {
+        this.lesObjets = lesObjets;
+    }
+    public void removeObjets() {
+        this.lesObjets = new ArrayList<Objet>();
+    }
+
     /**
      *
      * @param x
@@ -151,6 +164,31 @@ public class Hero extends Personnage {
        return false;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    private boolean isCollisionObjets(float x, float y) {
+        for(Objet unObjet : lesObjets) {
+            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unObjet.getBoundingBox());
+            if(collision) {
+                if(unObjet instanceof ObjetMessage) {
+                    ((ObjetMessage) unObjet).setParle(true);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     private boolean isCollisionEnnemi(float x, float y) {
         for(Ennemi unEnnemi : lesEnnemis) {
             boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unEnnemi.getBoundingBox());
@@ -160,26 +198,6 @@ public class Hero extends Personnage {
             }
         }
         return false;
-    }
-
-    /**
-     *
-     */
-    public Color detectAreaChanging(Carte uneCarte) {
-        int tileW = uneCarte.getMap().getTileWidth();
-        int tileH = uneCarte.getMap().getTileHeight();
-
-        int gateLayer = uneCarte.getMap().getLayerIndex("porte");
-        Image tile = uneCarte.getMap().getTileImage((int) this.x / tileW, (int) this.y / tileH, gateLayer);
-
-        boolean collision = tile != null;
-        if(collision)
-        {
-            Color color = tile.getColor((int) x % tileW, (int) y % tileH);
-            System.out.println(color.getRed() + "," + color.getGreen() + "," + color.getBlue());
-            return color;
-        }
-        return new Color(0, 0, 0);
     }
 
     @Override
@@ -194,7 +212,7 @@ public class Hero extends Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        return collision || isCollisionPnj( x, y)/* || isCollisionEnnemi( x, y)*/;
+        return collision || isCollisionPnj( x, y) || isCollisionObjets(x, y) || super.isDynamicCollision()/* || isCollisionEnnemi( x, y)*/;
     }
 
     /**

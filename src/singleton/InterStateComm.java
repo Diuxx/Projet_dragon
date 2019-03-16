@@ -22,8 +22,7 @@ public final class InterStateComm {
     private static volatile Hero leHero = null;
 
     /**
-     * Variable battleEnnemy : ennemi rencontre sur la map et qui lance la bataille
-     */
+     * Variable battleEnnemy : ennemi rencontre sur la map et qui lance la bataille */
     private static volatile Ennemi unEnnemi = null;
 
     // ??

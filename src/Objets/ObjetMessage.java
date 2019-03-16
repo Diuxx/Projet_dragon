@@ -33,4 +33,19 @@ public class ObjetMessage extends Objet {
         this.message = unMessage;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String getMessage() {
+        return this.message;
+    }
+
+    public boolean isParle() {
+        return parle;
+    }
+
+    public void setParle(boolean parle) {
+        this.parle = parle;
+    }
 }

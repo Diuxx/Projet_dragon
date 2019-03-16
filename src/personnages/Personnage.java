@@ -43,6 +43,9 @@ public class Personnage {
 
     // vitesse des personnages
     private float vitesse = 0.1f;
+
+    private boolean dynamicCollision;
+
     // --
     public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse) {
         this.nom = nom;
@@ -60,6 +63,8 @@ public class Personnage {
         this.vitesse = vitesse;
 
         this.animation = new ArrayList<Animation>();
+
+        this.dynamicCollision = false;
 
         box = new Rectangle(x - this.centerX, y - this.centerY, w, h);
     }
@@ -97,9 +102,15 @@ public class Personnage {
             futurX = this.getFuturX(delta);
             futurY = this.getFuturY(delta);
 
+            // float savedX = box.getX();
+            // float savedY = box.getY();
+            // box.setBounds(futurX - centerX, futurY - centerY, this.width, this.height);
+
             collision = iscollisionLogic(map, futurX, futurY);
             if(collision) {
                 this.moving = false;
+                this.dynamicCollision = false; // test
+                // box.setBounds(savedX, savedY, this.width, this.height);
             } else {
                 this.x = futurX;
                 this.y = futurY;
@@ -156,7 +167,8 @@ public class Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        return collision;
+        // test
+        return collision || this.dynamicCollision;
     }
 
     public Rectangle getBoundingBox() {
@@ -269,5 +281,13 @@ public class Personnage {
         this.x = x;
         this.y = y;
         box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
+    }
+
+    public boolean isDynamicCollision() {
+        return dynamicCollision;
+    }
+
+    public void setDynamicCollision(boolean dynamicCollision) {
+        this.dynamicCollision = dynamicCollision;
     }
 }
