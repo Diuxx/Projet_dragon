@@ -52,7 +52,7 @@ public class Scenario {
 
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
-        lesObjets = new ArrayList<>();
+        lesObjets = new ArrayList<Objet>();
     }
 
     /**
@@ -60,7 +60,7 @@ public class Scenario {
      * @param map
      */
     public void charger(Carte map) {
-        // ça va changé ça aussi !
+        // --
         Art currentArt = Scenario.Art.EPE;
 
         switch(currentArt) {
@@ -143,40 +143,39 @@ public class Scenario {
     }
 
     /**
-     *
+     * Mouvement des ennemis sur la map.
      * @param map
      * @param delta
-     * @param lesMessages
+     * @param lesMessages transmet les messages des ennemis
      */
     public void mouvement(Carte map, int delta, Message lesMessages) {
-        // affichage des mouvement des ennemi
         for(Ennemi unEnnemi : this.lesEnnemis) {
             if(unEnnemi.isMort())
                 continue;
 
-            if(unEnnemi.veutCombattre())
+            // Passe l'ennemi de friendly à hostile quand le timer firendly est écoulé.
+            unEnnemi.checkTimerFriendly();
+            if(unEnnemi.veutCombattre() && !unEnnemi.isFriendly())
             {
                 System.out.println(unEnnemi.getNom() + " veut se battre !");
-                // afficher l'ennemi Image sur l'ecran de bataille
-                // BatailleEnnemi.ennemiImage = unEnnemi.getEnnemiImages();
-                // --SS
                 InterStateComm.setUnEnnemi(unEnnemi);
-                //unEnnemi.seCalme();
 
+                // début d'un combat
                 EcranJeu.gameState.enterState(Bataille.ID);
-                unEnnemi.seCalme();
             }
             unEnnemi.mouvement(delta, map.getMap());
-            if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()))
-            { // début d'un combat
-                System.out.println("intersect");
+
+            // détection de l'intersection avec un ennemi
+            if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()) && !unEnnemi.veutCombattre())
+            {
+                System.out.println("intersect avec " + unEnnemi.getNom());
 
                 lesMessages.add(unEnnemi.parle());
                 unEnnemi.startCombat();
                 unEnnemi.setBouge(false);
             } else {
                 if(!unEnnemi.isBouge())
-                unEnnemi.setBouge(true);
+                    unEnnemi.setBouge(true);
             }
         }
     }

@@ -33,7 +33,7 @@ public class PersonnageNonJoueur extends Personnage {
         this.parle = false;
     }
 
-    /*
+    /**
      *
      */
     public void addDialogue(String text) {

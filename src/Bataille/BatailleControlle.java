@@ -131,18 +131,14 @@ public class BatailleControlle implements InputProviderListener {
 			System.out.println(InterStateComm.getUnEnnemi());
 
 			game.enterState(GameOver.GameOver);
-			// ennemi.regenVie();
-			// Joueur.regenVie(100);
 
 			// Augmenter l'experience et eventuellement le level
 			int experienceAjouter = ennemi.getExperience() + InterStateComm.getLeHero().getExperience();
 			InterStateComm.getLeHero().setExperience(experienceAjouter);
 
-
 			int experience  = InterStateComm.getLeHero().getExperience() ;
 			HashMap<Integer, Integer> lesLevelsExperiences = new LevelExperience().getLevelsExperiences();
 			Iterator itLevelExperience = lesLevelsExperiences.entrySet().iterator();
-
 
 			while (itLevelExperience.hasNext()) {
 				Map.Entry<Integer,Integer> entry =  (Entry<Integer, Integer>) itLevelExperience.next();
@@ -165,7 +161,7 @@ public class BatailleControlle implements InputProviderListener {
 					break;
 				case FUIRE:
 					System.out.println("> fuire ");
-					InterStateComm.getUnEnnemi().seCalme(); // --
+					InterStateComm.getUnEnnemi().setFriendly(true, 20000); // --
 
 					game.enterState(GameOver.GameOver);
 					ennemi.regenVie();

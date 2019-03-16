@@ -40,16 +40,31 @@ public class Ennemi extends Personnage {
 	private double maxHP;
 	protected int experience;
 
-	// --
-	private boolean hostile;
-	private long timerHostile;
-	private long targetTimerHostile;
-
-	public int getExperience() {
-		return experience;
-	}
 	/**
-	 * Class constructor
+	 * L'ennemi est naturellement hostile et attaquer.
+	 * firendly = false */
+	private boolean friendly;
+
+	/**
+	 * L'ennemi peut ne plus être hostile et ne pas attaquer
+	 * Variables qui gère la durée durant laquel l'ennemi n'est
+	 * pas hostile */
+	private long friendlyTimer;
+	private long targetFriendlyTimer;
+
+	/**
+	 *
+	 * @param nom
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param pointDeVie
+	 * @param direction
+	 * @param t
+	 * @param vitesse
+	 * @param ennemiImages
+	 * @param niveau
 	 */
 	public Ennemi(String nom, float x, float y, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
 			Image ennemiImages, int niveau) {
@@ -60,13 +75,11 @@ public class Ennemi extends Personnage {
 		this.tempsChangerDirection = t;
 		this.bouge = true;
 		this.veutCombattre = false;
-		this.hostile = true;
-		this.timerHostile = 0l;
-		
-		
+		this.friendly = false;
+		this.friendlyTimer = 0l;
+
 		/*
-		 * G�rer les statistiques des ennemis
-		 */
+		 * Statistiques des ennemis */
 		this.niveau = niveau;
 		setAtk(niveau);
 		setMaxHP(niveau);
@@ -80,7 +93,13 @@ public class Ennemi extends Personnage {
         imageCombat = ennemiImages;
     }
 
-
+	/**
+	 *
+	 * @return
+	 */
+	public int getExperience() {
+		return experience;
+	}
 
 	/**
 	 *
@@ -210,40 +229,39 @@ public class Ennemi extends Personnage {
 	}
 
 	/**
-	 *
+	 * changement d'état fiendly or not !
 	 * @param h
-	 * @param targetTimerHostile
+	 * @param timer
 	 */
-	public void setHostile(boolean h, int targetTimerHostile) {
-		this.hostile = h;
+	public void setFriendly(boolean h, int timer) {
+		this.friendly = h;
 		if(h) {
-			this.targetTimerHostile = targetTimerHostile;
-			this.timerHostile = System.currentTimeMillis();
+			this.targetFriendlyTimer = timer;
+			this.friendlyTimer = System.currentTimeMillis();
+			System.out.println(this.getNom() + " n'est plus une menace !");
 		}
 	}
 
 	/**
-	 *
-	 * @return
-	 */
-	public boolean isHostile() {
-		return this.hostile;
+	 * Retourne l'etat d'hostilité de l'ennemi.
+	 * @return boolean value (true : when fiendly| false : when not friendly) */
+	public boolean isFriendly() {
+		return this.friendly;
 	}
 
 	/**
-	 *
-	 */
-	private void checkTimerHostile() {
-		if(hostile)
+	 * Gère le changement d'état fiendly/malicious d'un ennemi */
+	public void checkTimerFriendly() {
+		if(!this.friendly)
 			return;
 
-		if(System.currentTimeMillis() - this.timerHostile >= this.targetTimerHostile)
+		if(System.currentTimeMillis() - this.friendlyTimer >= this.targetFriendlyTimer)
         {
             // --
-            System.out.println("");
+            System.out.println(this.getNom() + " redevient une menace !");
+            this.friendly = false;
         }
 	}
-
 
 	public boolean isMort() {
 		return mort;
@@ -286,10 +304,8 @@ public class Ennemi extends Personnage {
 	 * @return
 	 */
 	public String parle() {
-		return getClass().getSimpleName() + " : viens te battre !";
+		return this.getNom() + " : viens te battre !";
 	}
-
-	/////////////////
 
 	public int getNiveau() {
 		return niveau;
