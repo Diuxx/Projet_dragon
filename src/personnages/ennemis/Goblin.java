@@ -1,7 +1,7 @@
-package ennemis;
+package personnages.ennemis;
 import org.newdawn.slick.Image;
 
-import jeu.Ennemi;
+import personnages.Ennemi;
 import sys.Direction;
 import sys.Point;
 import sys.Taille;

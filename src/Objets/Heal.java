@@ -2,7 +2,7 @@ package Objets;
 
 
 import Mondes.Ressources;
-import jeu.Hero;
+import personnages.Hero;
 import org.newdawn.slick.Graphics;
 import sys.Point;
 import sys.Taille;

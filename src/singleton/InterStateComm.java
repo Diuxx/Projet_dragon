@@ -2,8 +2,8 @@ package singleton;
 
 
 import carte.Carte;
-import jeu.Ennemi;
-import jeu.Hero;
+import personnages.Ennemi;
+import personnages.Hero;
 
 /**
  * Class InterStateComm (communication entre les States du jeu).
@@ -83,5 +83,10 @@ public final class InterStateComm {
         else {
             System.err.println("Pas d'ennemi enregistre pour la bataille");
         }
+    }
+
+
+    public final static void enleverUnEnnemi() {
+        InterStateComm.unEnnemi = null;
     }
 }

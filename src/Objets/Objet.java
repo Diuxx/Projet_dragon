@@ -1,7 +1,6 @@
 package Objets;
 
-import jeu.Hero;
-import org.lwjgl.Sys;
+import personnages.Hero;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;

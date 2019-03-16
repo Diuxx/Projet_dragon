@@ -1,8 +1,7 @@
-package jeu;
+package personnages;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 import sys.Direction;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * class jeu.Ennemi
+ * class personnages.Ennemi
  *
  * @author: Diuxx
  */
@@ -79,7 +78,7 @@ public class Ennemi extends Personnage {
 		this.friendlyTimer = 0l;
 
 		/*
-		 * Statistiques des ennemis */
+		 * Statistiques des personnages.ennemis */
 		this.niveau = niveau;
 		setAtk(niveau);
 		setMaxHP(niveau);

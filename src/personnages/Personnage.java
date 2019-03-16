@@ -1,4 +1,4 @@
-package jeu;
+package personnages;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;

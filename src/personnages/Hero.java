@@ -1,4 +1,4 @@
-package jeu;
+package personnages;
 
 import Mondes.Ressources;
 import sauvegarde.Save;

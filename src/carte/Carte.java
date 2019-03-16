@@ -1,6 +1,6 @@
 package carte;
 
-import jeu.Hero;
+import personnages.Hero;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;

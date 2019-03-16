@@ -1,9 +1,11 @@
-package jeu;
+package personnages;
 
+import jeu.Message;
+import personnages.Personnage;
 import sys.Point;
 
 /**
- * class jeu.PersonnageNonJoueur
+ * class personnages.PersonnageNonJoueur
  *
  * @author: Diuxx
  */

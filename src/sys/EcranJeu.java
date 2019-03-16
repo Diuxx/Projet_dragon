@@ -91,7 +91,7 @@ public class EcranJeu extends BasicGameState {
         carte.afficher(carte.getMap().getLayerIndex("background1"));
         carte.afficher(carte.getMap().getLayerIndex("background2"));
 
-        // affichage des personnages non joueurs et des ennemis
+        // affichage des personnages non joueurs et des personnages.ennemis
         if(scenario != null) {
             scenario.afficherPnj(graphics, this.lesMessages);
             scenario.afficherEnnemis(graphics);
@@ -111,7 +111,7 @@ public class EcranJeu extends BasicGameState {
         }
 
         // images positionné de telle façon
-        // que les personnages/ennemis/pnjs puissent passer derrière.
+        // que les personnages/personnages.ennemis/pnjs puissent passer derrière.
         carte.afficher(carte.getMap().getLayerIndex("overground1"));
         hud.render(graphics, InterStateComm.getLeHero());
 

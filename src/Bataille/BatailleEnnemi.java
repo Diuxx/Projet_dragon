@@ -3,7 +3,7 @@ package Bataille;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 
-import jeu.Ennemi;
+import personnages.Ennemi;
 import singleton.InterStateComm;
 
 public class BatailleEnnemi {

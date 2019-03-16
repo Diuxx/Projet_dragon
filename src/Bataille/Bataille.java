@@ -5,14 +5,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.KeyControl;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import jeu.Ennemi;
-import jeu.Hero;
+import personnages.Ennemi;
 
 public class Bataille extends BasicGameState{
 

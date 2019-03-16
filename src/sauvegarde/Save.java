@@ -2,7 +2,7 @@ package sauvegarde;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import jeu.Hero;
+import personnages.Hero;
 import sys.Point;
 
 import java.io.*;

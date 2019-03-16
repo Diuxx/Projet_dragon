@@ -2,13 +2,8 @@ package hud;
 
 //import java.awt.*;
 
-import jeu.Hero;
+import personnages.Hero;
 import jeu.LevelExperience;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;

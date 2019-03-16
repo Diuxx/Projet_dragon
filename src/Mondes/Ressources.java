@@ -1,6 +1,6 @@
 package Mondes;
 
-import jeu.Hero;
+import personnages.Hero;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import singleton.InterStateComm;

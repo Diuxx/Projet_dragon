@@ -1,15 +1,15 @@
 package jeu;
 
 import Bataille.Bataille;
-import Bataille.BatailleEnnemi;
 import Objets.Heal;
 import Objets.Objet;
 import carte.Carte;
-import ennemis.*;
+import personnages.PersonnageNonJoueur;
+import personnages.ennemis.*;
 
-import org.lwjgl.Sys;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import personnages.Ennemi;
 import singleton.InterStateComm;
 import sys.Direction;
 import sys.EcranJeu;
@@ -22,7 +22,7 @@ import java.util.List;
 // comment gérer le scenario
 public class Scenario {
 
-    // list des ennemis
+    // list des personnages.ennemis
     private List<Ennemi> lesEnnemis;
 
     // list des pnj
@@ -108,7 +108,7 @@ public class Scenario {
 //            unAutrePnjs.addDialogue("Je suis pistache! bien le bonjour !");
 //            lesPnj.add(unAutrePnjs);
 
-            // ennemis
+            // personnages.ennemis
             lesEnnemis.add(new DarkMaster(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
             lesEnnemis.add(new Dragon(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
             lesEnnemis.add(new Goblin(map.getPositionPersonnage(0, 255, 255), Direction.RANDOM));
@@ -143,10 +143,10 @@ public class Scenario {
     }
 
     /**
-     * Mouvement des ennemis sur la map.
+     * Mouvement des personnages.ennemis sur la map.
      * @param map
      * @param delta
-     * @param lesMessages transmet les messages des ennemis
+     * @param lesMessages transmet les messages des personnages.ennemis
      */
     public void mouvement(Carte map, int delta, Message lesMessages) {
         for(Ennemi unEnnemi : this.lesEnnemis) {
@@ -159,19 +159,22 @@ public class Scenario {
             {
                 System.out.println(unEnnemi.getNom() + " veut se battre !");
                 InterStateComm.setUnEnnemi(unEnnemi);
+                unEnnemi.seCalme(); // l'ennemi ne déclanche plus de combat.
 
                 // début d'un combat
                 EcranJeu.gameState.enterState(Bataille.ID);
+                continue;
             }
             unEnnemi.mouvement(delta, map.getMap());
 
             // détection de l'intersection avec un ennemi
-            if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()) && !unEnnemi.veutCombattre())
+            if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()))
             {
-                System.out.println("intersect avec " + unEnnemi.getNom());
-
-                lesMessages.add(unEnnemi.parle());
-                unEnnemi.startCombat();
+                if(!unEnnemi.isFriendly()) {
+                    System.out.println("intersect avec " + unEnnemi.getNom());
+                    lesMessages.add(unEnnemi.parle());
+                    unEnnemi.startCombat();
+                }
                 unEnnemi.setBouge(false);
             } else {
                 if(!unEnnemi.isBouge())
