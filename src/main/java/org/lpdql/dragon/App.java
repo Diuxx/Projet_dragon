@@ -17,7 +17,6 @@ public class App {
 	    addToJavaLibraryPath(new File("lib/natives-windows"));
 
 	    // launch game app
-	    // Zohal
         new AppGameContainer(new StateGame(), gX, gY, false).start();
     }
 
