@@ -1,6 +1,12 @@
 package org.lpdql.dragon.jeu;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.lpdql.dragon.personnages.Hero;
+import org.lpdql.dragon.singleton.InterStateComm;
 
 public class LevelExperience {
 
@@ -30,10 +36,29 @@ public class LevelExperience {
 		return levelsExperiences;
 	}
 	
-	
 	public static void main(String[] args) {
 		for(int i=1;i<10;i++)
 			System.out.println(new LevelExperience().levelsExperiences.get(i));
 	}
+	
+	
+	public void checkUpLevelEtExperience(int experience) {
+		Iterator itLevelExperience = this.levelsExperiences.entrySet().iterator();
+		
+		while (itLevelExperience.hasNext()) {
+			Map.Entry<Integer,Integer> entry =  (Entry<Integer, Integer>) itLevelExperience.next();
+			
+			if(InterStateComm.getLeHero().getLevel() == entry.getKey()) {
+				if(experience >= entry.getValue()) {
+					int nouveauExp = experience - this.levelsExperiences.get(entry.getKey());
+					InterStateComm.getLeHero().setExperience(nouveauExp);
+					InterStateComm.getLeHero().setLevel(entry.getKey() + 1);
+					experience -= this.levelsExperiences.get(entry.getKey());
+				}
+			}
+		}
+	}
+	
+	
 }
 

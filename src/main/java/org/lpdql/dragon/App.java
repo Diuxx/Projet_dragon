@@ -34,7 +34,7 @@ public class App {
 
         resetJavaLibraryPath();
     }
-
+    
     /**
      * Supprime le cache du "java.library.path".
      * Cela forcera le classloader à revérifier sa valeur lors du prochaine chargement de librairie.
