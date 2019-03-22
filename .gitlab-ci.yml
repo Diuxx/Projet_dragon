@@ -1,4 +1,0 @@
-image: maven:3
-
-build:
-  script: "mvn install -B"
