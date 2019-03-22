@@ -101,7 +101,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 					InterStateComm.getLeHero().setNom(inputNom.getText());
 					stageGame.enterState(EcranJeu.ID);
 				}
-				color2 = Color.red;
+				color2 = Color.red; //fsd
 			} else {
 				color2 = Color.white;
 			}
