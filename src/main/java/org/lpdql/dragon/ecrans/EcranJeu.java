@@ -1,4 +1,4 @@
-package org.lpdql.dragon.system;
+package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.hud.Hud;
@@ -8,6 +8,9 @@ import org.lpdql.dragon.jeu.Scenario;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Camera;
+import org.lpdql.dragon.system.MenuItem;
+import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;

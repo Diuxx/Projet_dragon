@@ -31,7 +31,6 @@
       <groupId>org.slick2d</groupId>
       <artifactId>slick2d-core</artifactId>
       <version>1.0.2</version>
-      
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
