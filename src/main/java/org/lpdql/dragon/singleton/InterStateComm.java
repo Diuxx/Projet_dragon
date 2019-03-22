@@ -3,6 +3,7 @@ package org.lpdql.dragon.singleton;
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
+import org.lpdql.dragon.system.Difficulty;
 
 /**
  * Class InterStateComm (communication entre les States du jeu).
@@ -12,8 +13,11 @@ import org.lpdql.dragon.personnages.Hero;
 public final class InterStateComm {
 
     // screen width x height
-    public final static int gX = 1200;
-    public final static int gY = 600;
+    public static final int gX = 1200;
+    public static final int gY = 600;
+    
+    // Niveau du jeu
+    private int niveauDuJeu;
 
     // volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
     // mais pas encore instancié :
