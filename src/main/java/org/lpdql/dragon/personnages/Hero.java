@@ -169,6 +169,9 @@ public class Hero extends Personnage {
      */
     private boolean isCollisionObjets(float x, float y) {
         for(Objet unObjet : lesObjets) {
+            if(unObjet instanceof ObjetMessage == false)
+                continue;
+
             boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unObjet.getBoundingBox());
             if(collision) {
                 if(unObjet instanceof ObjetMessage) {

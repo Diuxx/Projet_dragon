@@ -231,7 +231,7 @@ public class Scenario {
                 System.err.println("heal found !");
                 x = uneCarte.getMap().getObjectX(0, o);
                 y = uneCarte.getMap().getObjectY(0, o);
-                this.lesObjets.add(new org.lpdql.dragon.objets.Heal(new Point(x, y), o));
+                this.lesObjets.add(new Heal(new Point(x, y), o));
             }
         }
     }
