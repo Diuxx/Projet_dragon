@@ -245,6 +245,7 @@ public class Personnage {
 
     public void setPointDeVie(float pointDeVie) {
         this.pointDeVie = pointDeVie;
+        System.out.println(pointDeVie + "++++++++++++++++++++++++++++++++++++");
     }
 
     public float getPointDeVieActuel() {
