@@ -17,7 +17,7 @@ public class Squelette extends Ennemi {
     private static final Taille SIZE = new Taille(32, 32);
     private static final int TIMER = 1500;
     private static final float VITESSE = 0.04f;
-    private static final Image ENNEMI_IMAGE = Ressources.spriteSheet_Ennemis.getSubImage(3, 1).getScaledCopy(2);
+    private static final Image ENNEMI_IMAGE = Ressources.spriteSheet_Ennemis.getSubImage(3, 1);
     private static final int NIVEAU = 2;
     
     /**
