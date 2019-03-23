@@ -5,4 +5,4 @@ stages:
     
 bulid:
     stage: build
-    scrit: echo test
+    script: echo test
