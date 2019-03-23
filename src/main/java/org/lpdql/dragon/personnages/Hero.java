@@ -45,6 +45,7 @@ public class Hero extends Personnage {
     private boolean muted = false;
 
     private HashMap levelExperience;
+    
 
     /**
      * Constructeur de la class Hero (projet InterStateComm);
@@ -53,6 +54,7 @@ public class Hero extends Personnage {
      */
     public Hero(String nom, Point positon) {
         super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
+        super.setHeroStatistques(this.niveau);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
         this.lesObjets = new ArrayList<Objet>();
         this.experience = 0;
