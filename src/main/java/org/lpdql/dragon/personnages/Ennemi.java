@@ -35,8 +35,6 @@ public class Ennemi extends Personnage {
     private Image imageCombat;
 	private int niveau;
 
-	private double atk;
-//	private double maxPointDeVie;
 	protected int experience;
 
 	/**
@@ -80,8 +78,7 @@ public class Ennemi extends Personnage {
 		/*
 		 * Statistiques des personnages.ennemis */
 		this.niveau = niveau;
-		setAtk(niveau);
-		super.setPointDeVie((float)(niveau * 50.0 + 400));
+		super.setEnnemiStatistques(niveau);
 		this.experience = 40; // test
 
         /**
@@ -113,7 +110,6 @@ public class Ennemi extends Personnage {
 	public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
 			Image ennemiImages, double atk, double maxHP) {
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, 0);
-		this.atk = atk;
 	}
 
 	/**
@@ -307,14 +303,6 @@ public class Ennemi extends Personnage {
 
 	public int getNiveau() {
 		return niveau;
-	}
-
-	public double getATK() {
-		return atk;
-	}
-	
-	public void setAtk(int niveau) {
-		this.atk = niveau * 5.0 + 20;
 	}
 
 }
