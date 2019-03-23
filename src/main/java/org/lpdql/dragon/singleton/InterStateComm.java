@@ -17,9 +17,18 @@ public final class InterStateComm {
     public static final int gY = 600;
     
     // Niveau du jeu
-    private int niveauDuJeu;
+    private static int niveauDuJeu;
 
-    // volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
+    public int getNiveauDuJeu() {
+		return niveauDuJeu;
+	}
+
+	public static void setNiveauDuJeu(int niveauDuJeu) {
+		InterStateComm.niveauDuJeu = niveauDuJeu;
+	}
+
+
+	// volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
     // mais pas encore instancié :
     // https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)
     private static volatile Hero leHero = null;

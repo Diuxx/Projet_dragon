@@ -18,7 +18,7 @@ public class Dragon extends Ennemi {
     private static final Taille SIZE = new Taille(96, 96);
     private static final int TIMER = 1000;
     private static final float VITESSE = 0.1f;
-    private static final Image ENNEMI_IMAGE = Ressources.spriteSheet_Dragon.getSubImage(0, 1).getScaledCopy(2);
+    private static final Image ENNEMI_IMAGE = Ressources.spriteSheet_Dragon.getSubImage(0, 1);
     private static final int NIVEAU = 2;
     /**
      * Class constructor
