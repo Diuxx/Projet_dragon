@@ -6,7 +6,7 @@ stages:
     
 bulid:
     stage: build
-    script: echo build..
+    script: "mvn clean install -DskipTests"
     
     
 test:
