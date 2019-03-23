@@ -2,7 +2,15 @@ image: maven:3-jdk-8
 
 stages:
     - build
+    - test
     
 bulid:
     stage: build
-    script: echo test
+    script: echo build..
+    
+    
+test:
+    stage: test
+    script: 
+        - echo test 1...
+        - echo test 2...
