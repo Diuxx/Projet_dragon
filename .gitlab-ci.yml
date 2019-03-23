@@ -1,5 +1,9 @@
 image: maven:3-jdk-8
 
+variables:
+  # Use the cached directory above.
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
 stages:
     - build
     - test
