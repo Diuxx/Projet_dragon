@@ -253,7 +253,7 @@ public class Personnage {
 		this.atk = (float) (niveau * 5.0 + 20);
 	}
 
-	// Level UP Ennemis
+	// Level UP Ennemi
 	public void setEnnemiStatistques(int niveau) {
 		this.pointDeVie = (float) (niveau * 25.0 + 300);
 		this.atk = (float) (niveau * 3.0 + 10);
