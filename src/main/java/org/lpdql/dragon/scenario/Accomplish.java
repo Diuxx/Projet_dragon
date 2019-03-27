@@ -50,6 +50,8 @@ public class Accomplish {
         return this.lastArt;
     }
 
+    
+
     /**
      * Returns {@code String} corresponding to the cu
      * @param currentArt {@code String} the current Art
