@@ -9,25 +9,30 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Carte {
 
     /**
-     *
+     * this variable is the Current tiledMap
+     * @see TiledMap
      */
     private TiledMap map;
+
+    /**
+     * {@code String} value of the last map on which he was.
+     */
     private String dernierMap;
 
+    /**
+     * {@code String} value of the current map.
+     */
     private String nomMap;
 
-    // --
+    /**
+     * Class constructor. she instantiates the {@code TiledMap}
+     *
+     * @param fileMap {@code String} directory where is the map
+     * @throws SlickException
+     */
     public Carte(String fileMap) throws SlickException {
         this.map = new TiledMap(fileMap);
         this.nomMap = fileMap.split("/")[fileMap.split("/").length - 1].split("\\.")[0];
-    }
-
-    public TiledMap getMap() {
-        return this.map;
-    }
-
-    public void afficher(int layer) {
-        map.render(0, 0, layer); // we can do somes calcule here !
     }
 
     /**
@@ -51,26 +56,14 @@ public class Carte {
         return new Point(0, 0);
     }
 
-    // --
-    public String getFileName() {
-        return this.nomMap;
-    }
-
     /**
-     * Change la Map acctuellement chargé
-     * @param dest
+     * Change the currently loaded Map
+     *
+     * @param {@code String} directory where is the map
      */
     public void changeMap(String dest) throws SlickException {
         this.nomMap = dest.split("/")[dest.split("/").length - 1].split("\\.")[0];
         this.map = new TiledMap(dest);
-    }
-
-    public float getHerox() {
-        return 0f;
-    }
-
-    public float getHeroy() {
-        return 0f;
     }
 
     /**
@@ -101,4 +94,18 @@ public class Carte {
         int hauteurDeCarte = this.map.getHeight() * this.map.getTileHeight();
         return ((hauteurDeCarte - (fenetre.getHeight() / 2)) - h.getY()) < 0;
     }
+
+    // --
+    public String getFileName() {
+        return this.nomMap;
+    }
+
+    public TiledMap getMap() {
+        return this.map;
+    }
+
+    public void afficher(int layer) {
+        map.render(0, 0, layer); // we can do somes calcule here !
+    }
+
 }
