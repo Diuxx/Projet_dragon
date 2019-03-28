@@ -9,6 +9,24 @@ package org.lpdql.dragon.scenario;
 public class Art {
 
     /**
+     *
+     */
+    public static enum ENUM {
+        EPEE("Epee"),
+        BOUCLIER("Bouclier"),
+        FEU("Feu"),
+        VOLER("Voler");
+
+        private String artString;
+        private ENUM(String artString) {
+            this.artString = artString;
+        }
+        public String toString() {
+            return this.artString;
+        }
+    }
+
+    /**
      * Name of the current art.
      */
     private String name;
@@ -40,5 +58,10 @@ public class Art {
 
     public void setDone(Boolean done) {
         this.done = done;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

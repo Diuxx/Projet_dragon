@@ -4,6 +4,7 @@ import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
+import org.lpdql.dragon.scenario.Accomplish;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
@@ -30,7 +31,14 @@ public class Hero extends Personnage {
     private boolean artFeu;
     private boolean artVoler;
 
-    // hero information
+    /**
+     * State of events related to history
+     */
+    private Accomplish accomplishement;
+
+    /**
+     * Tests values for the hero statistics
+     */
     private static final int HEROLIFE = 1120;
     private static final float HEROSPEED = 0.1f;
     private static final int HEROLEVEL = 1;
@@ -67,18 +75,35 @@ public class Hero extends Personnage {
         nouvellePartie = true;
         // --
         levelExperience = new HashMap<>();
+
+        /**
+         * Load accomplishement.
+         */
+        this.accomplishement = new Accomplish();
+
+        /**
+         * Load sprite tiles from sprite sheet.
+         */
         this.chargerImage();
     }
 
+    public Accomplish getAccomplishement() {
+        return this.accomplishement;
+    }
+
+    public void setAccomplishement(Accomplish accomplishement) {
+        this.accomplishement = accomplishement;
+    }
+
     /**
-     *
+     * Update some elements to match the last game backup
      * @param savedData
      */
     public void setSavedData(Save savedData) {
         if(savedData.getSavedHero() == null)
             return;
 
-        System.out.println("Somes Data is loading !");
+        System.out.println("Performing loading on saved data!");
 
         Hero savedHero = savedData.getSavedHero();
         this.setNom(savedHero.getNom());
@@ -89,14 +114,22 @@ public class Hero extends Personnage {
         this.setExperience(savedHero.getExperience());
         this.setNiveau(savedHero.getNiveau());
         this.setCurrentGold(savedHero.getCurrentGold());
+
+
         this.setArtEpee(savedHero.getArtEpee());
         this.setArtBouclier(savedHero.getArtBouclier());
         this.setArtFeu(savedHero.getArtFeu());
         this.setArtVoler(savedHero.getArtVoler());
+
+        this.accomplishement = savedHero.getAccomplishement();
+
+        this.accomplishement.getLog();
     }
 
-
-    // seul le hero peut être contrôlé
+    /**
+     * Only an Hero can be controled.
+     * @param container
+     */
     public void controle(GameContainer container) {
         if(container.getInput().isKeyDown(Input.KEY_UP)) {
             super.setDirection(0);
@@ -128,6 +161,7 @@ public class Hero extends Personnage {
     public void removePnj() {
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
     }
+
     /**
      *
      * @param lesEnnemis
@@ -136,10 +170,10 @@ public class Hero extends Personnage {
         this.lesEnnemis = lesEnnemis;
     }
 
-
     public void addObjets(List<Objet> lesObjets) {
         this.lesObjets = lesObjets;
     }
+
     public void removeObjets() {
         this.lesObjets = new ArrayList<Objet>();
     }

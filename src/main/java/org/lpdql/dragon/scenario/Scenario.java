@@ -13,68 +13,108 @@ import org.lpdql.dragon.personnages.ennemis.Dragon;
 import org.lpdql.dragon.personnages.ennemis.Goblin;
 import org.lpdql.dragon.personnages.ennemis.Squelette;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Direction;
-import org.lpdql.dragon.system.EcranJeu;
-import org.lpdql.dragon.system.Point;
-import org.lpdql.dragon.system.Taille;
+import org.lpdql.dragon.system.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// comment gérer le scenario
+/**
+ *
+ */
 public class Scenario {
 
-    // list des personnages.ennemis
+    /**
+     * The game ennemis List. This one depend of
+     * the current game scenario and the current map.
+     *
+     * @see Ennemi
+     */
     private List<Ennemi> lesEnnemis;
 
-    // list des pnj
+    /**
+     * The game Pnj's List. Also depend of the
+     * current game Scenario and The current map.
+     *
+     * @see org.lpdql.dragon.personnages.PersonnageNonJoueur
+     * @see org.lpdql.dragon.carte.Carte
+     * @see org.lpdql.dragon.scenario.Scenario
+     */
     private List<PersonnageNonJoueur> lesPnj;
 
-    // List des objets
+    /**
+     * The game Objets List. Also depend of the current game
+     * Scenario & Map
+     *
+     * @see org.lpdql.dragon.objets.Objet
+     * @see org.lpdql.dragon.carte.Carte
+     * @see org.lpdql.dragon.scenario.Scenario
+     */
     private List<Objet> lesObjets;
 
-    // les different arts
-    public enum Art {
-        EPE,
-        BOUCLIER
-    }
-
     /**
-     * Taille des monstre & Pnj
+     * Constant, Position of "ennemis" layer on the map file.
      */
-    private final Taille BASIC_SIZE = new Taille(16, 16);
-    private final Taille LARGE_SIZE = new Taille(32, 32);
-    private final Taille BIG_SIZE = new Taille(64, 64);
+    private final int ENNEMIS_LAYER_INDEX = 1;
 
     /**
+     * Constant, Position of "pnjs" layer on the map file.
+     */
+    private final int PNJS_LAYER_INDEX = 2;
+
+    /**
+     * Constant, Position of "objets" layer on the map file.
+     */
+    private final int OBJETS_LAYER_INDEX = 3;
+
+    /**
+     * Class constructor, instantiate each needed list
+     * <tt>lesObjets</tt>
+     * <tt>lesPnj</tt>
+     * <tt>lesEnnemis</tt>
      *
      * @throws SlickException
      */
     public Scenario() throws SlickException {
-
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
         lesObjets = new ArrayList<Objet>();
     }
 
     /**
+     * Default <tt>charger(Carte map)</tt> method.
+     * This method load the story depending on where
+     * the character is on the map.
      *
-     * @param map
+     * @param map the map on which the player is located
      */
     public void charger(Carte map) {
-        // --
-        Art currentArt = Scenario.Art.EPE; // hero.getCurrentArt() //
-        // currentArt.toString();
-        // chargerClass(currentArt.toString());  ->
-        switch(currentArt) {
-            case EPE:
-                //** I WILL REFACTOR THIS CODE WITH CLASS CALLING INSTEAD OF ALL IN ONE METHOD
-                this.chargerEpe(map);
+
+        MyStdOut.write(MyStdColor.BLUE, "Chargement du Scenario : " + this.getClass().getSimpleName());
+        MyStdOut.write(MyStdColor.BLUE, "Chargement de la map : " + map.getFileName());
+        this.findObjets(map.getMap());
+        this.findEnnemis(map.getMap());
+
+        switch(map.getFileName()) {
+            case "maison":
+                chargerMaison(map);
                 break;
-            case BOUCLIER:
-                // this.chargerBouclie(map);
+            case "dragon":
+                chargerMainMap(map);
+                break;
+            case "monde_bouclier":
+                chargerMondeBouclier(map);
+                break;
+            case "monde_epe":
+                chargerMondeEpee(map);
+                break;
+            case "monde_feu":
+                chargerMondeFeu(map);
+                break;
+            case "monde_pouvoir":
+                chargerMondePouvoir(map);
                 break;
         }
         InterStateComm.getLeHero().addPnj(this.getLesPnj());
@@ -82,59 +122,77 @@ public class Scenario {
     }
 
     /**
-     * Chargement du scenario de l'épé
+     * We are loading <tt>MondePouvoir</tt> spec
+     *
+     * @param map the map on which the player is located
      */
-    private void chargerEpe(Carte map) {
-        this.findObjets(map);
+    protected void chargerMondePouvoir(Carte map) {
+        MyStdOut.write(MyStdColor.BLUE, "Chargement du Scenario : " + this.getClass().getSimpleName());
 
-        // cherche et affiche les ennemis sur la carte
-        this.findEnnemis(map);
-
-        if(map.getFileName().equals("maison")) {
-            System.err.println("Scenario : maison !(epe)");
-
-            Point pLettre = findObjetPosition(map, "lettre");
-            if(pLettre != null) {
-                // we should do a letter object instead of (ObjetMessage) !
-                ObjetMessage lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
-                lettre.setMessage("blablabla#blablabla\nblablabla");
-                this.lesObjets.add(lettre);
-            }
-        }
-
-        if(map.getFileName().equals("dragon")) {
-
-            Point pServante = findPnjPosition(map, "servante");
-            if(pServante != null) {
-                PersonnageNonJoueur pnjServante = new PersonnageNonJoueur("Servante", pServante, 32, 32);
-                pnjServante.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 3, 4,  4);
-                pnjServante.addDialogue("blablabla !#et blablablabla\nblablablabla");
-                lesPnj.add(pnjServante);
-            }
-        }
     }
 
-    public List<Ennemi> getLesEnnemis() {
-        return lesEnnemis;
+    /**
+     * We are loading <tt>MondeFeu</tt> spec
+     *
+     * @param map the map on which the player is located
+     */
+    protected void chargerMondeFeu(Carte map) {
+
     }
 
-    public List<PersonnageNonJoueur> getLesPnj() {
-        return lesPnj;
+    /**
+     * We are loading <tt>MondeEpee</tt> spec
+     *
+     * @param map the map on which the player is located
+     */
+    protected void chargerMondeEpee(Carte map) {
+
     }
 
-    public List<Objet> getLesObjets() {
-        return lesObjets;
+    /**
+     * We are loading <tt>MondeBouclier</tt> spec
+     *
+     * @param map the map on which the player is located
+     */
+    protected void chargerMondeBouclier(Carte map) {
+
     }
 
+    /**
+     * We are loading <tt>MondeMaison</tt> spec
+     *
+     * @param map the map on which the player is located
+     */
+    protected void chargerMaison(Carte map) {
+
+
+    }
+
+    /**
+     * We are loading <tt>dragon</tt> spec
+     *
+     * @param map the map on which the player is located
+     */
+    protected void chargerMainMap(Carte map) {
+
+    }
+
+    /**
+     * Draw an ennemi {@code Ennemi} if and only if he is alive!
+     * @param g the slick current graphic
+     *
+     * @see Ennemi
+     */
     public void afficherEnnemis(Graphics g) {
         for(Ennemi unEnnemi : this.lesEnnemis) {
-            if(!unEnnemi.isMort()) // si l'ennemi est vivant ?
+            if(!unEnnemi.isMort())
                 unEnnemi.afficher(g);
         }
     }
 
     /**
-     *
+     * Remove from all list, <tt>lesObjets</tt>, <tt>lesPnj</tt>, <tt>lesEnnemis</tt>
+     * Each elements.
      */
     public void resetScenario() {
         lesEnnemis = new ArrayList<Ennemi>();
@@ -146,10 +204,22 @@ public class Scenario {
     }
 
     /**
-     * Mouvement des personnages.ennemis sur la map.
-     * @param map
-     * @param delta
-     * @param lesMessages transmet les messages des personnages.ennemis */
+     * This function manages the movement of the enemy.
+     * Also this function detects the ennemis intersection
+     * with the player & it can send messages to the player.
+     * At least it can also switch Ennemis stats :
+     * Friendly -> aggressive.
+     * The function {@code mouvement} are looping over the entire
+     * {@code lesEnnemis} list if we found a dead ennemi we move on
+     * to the next.
+     *
+     * @param map the map on which the player is located
+     * @param delta slick timer method.
+     * @param lesMessages messages transmitted from enemies.
+     *
+     * @see SlickException
+     * @see Message
+     **/
     public void mouvement(Carte map, int delta, Message lesMessages) {
         for(Ennemi unEnnemi : this.lesEnnemis) {
             if(unEnnemi.isMort())
@@ -161,9 +231,10 @@ public class Scenario {
             {
                 System.out.println(unEnnemi.getNom() + " veut se battre !");
                 InterStateComm.setUnEnnemi(unEnnemi);
-                unEnnemi.seCalme(); // l'ennemi ne déclanche plus de combat.
+                // l'ennemi ne déclanche plus de combat.
+                unEnnemi.seCalme();
 
-                // début d'un combat
+                // Battle Start
                 EcranJeu.gameState.enterState(Bataille.ID);
                 continue;
             }
@@ -186,13 +257,17 @@ public class Scenario {
     }
 
     /**
+     * Draw on the graphics all {@code PersonnageNonJoueur} from
+     * pnj List. {@code PersonnageNonJoueur} can transmit messages.
      *
-     * @param g
-     * @param lesMessages
+     * @param g Slick current graphic
+     * @param lesMessages messages transmitted from Pnjs.
      */
     public void afficherPnj(Graphics g, Message lesMessages) {
         for(PersonnageNonJoueur pnj : this.lesPnj) {
             pnj.afficher(g);
+
+            // transmission des messages
             if(pnj.isParle()) {
                 lesMessages.add(pnj.getDialogue());
                 pnj.arreteDeParler();
@@ -201,9 +276,11 @@ public class Scenario {
     }
 
     /**
-     * Affichage des objet sur la carte
-     * @param g
-     * @param lesMessages
+     * Drawing {@code Objet} ellement from lesObjets. somes objets can
+     * share messages.
+     *
+     * @param g Slick current graphic
+     * @param lesMessages messages transmitted from Objet.
      */
     public void afficherObjets(Graphics g, Message lesMessages) {
         for(Objet unObjet : lesObjets)
@@ -223,27 +300,29 @@ public class Scenario {
      * (a supprimer !)
      * @param uneCarte
      */
-    private void findObjets(Carte uneCarte) {
+    public void findObjets(TiledMap uneCarte) {
         int x, y;
-        for(int o=0; o<uneCarte.getMap().getObjectCount(0); o++)
+        for(int o=0; o<uneCarte.getObjectCount(0); o++)
         {
-            String type = uneCarte.getMap().getObjectType(0, o);
+            String type = uneCarte.getObjectType(0, o);
             if ("heal".equals(type)) {
                 System.err.println("heal found !");
-                x = uneCarte.getMap().getObjectX(0, o);
-                y = uneCarte.getMap().getObjectY(0, o);
+                x = uneCarte.getObjectX(0, o);
+                y = uneCarte.getObjectY(0, o);
                 this.lesObjets.add(new Heal(new Point(x, y), o));
             }
         }
     }
 
     /**
+     * This method looks for an object on the map named. if she found it
+     * she return the (objet) position {@code Point}.
      *
-     * @param carte
-     * @param name
-     * @return
+     * @param carte the map on which the player is located
+     * @param name object Name (I think we should build an enum (objet) list.
+     * @return {@code Point} or null if he dont found any objet by name.
      */
-    private Point findObjetPosition(Carte carte, String name) {
+    protected Point findObjetPosition(Carte carte, String name) {
 
         int layerIndex = 3;
         int nbObjet = carte.getMap().getObjectCount(layerIndex);
@@ -264,12 +343,16 @@ public class Scenario {
     }
 
     /**
+     * This method looks for a PNJ on the map named. if she found it
+     * she return the (Pnj) position {@code Point}.
      *
-     * @param carte
-     * @param name
-     * @return
+     * @param carte the map on which the player is located
+     * @param name object Name (I think we should build an enum (Pnj) list.
+     * @return {@code Point} or null if he dont found any Pnj by name.
+     *
+     * @see Carte
      */
-    private Point findPnjPosition(Carte carte, String name) {
+    protected Point findPnjPosition(Carte carte, String name) {
 
         int layerIndex = 2;
         int nbObjet = carte.getMap().getObjectCount(layerIndex);
@@ -290,25 +373,28 @@ public class Scenario {
     }
 
     /**
+     * This method looks for all ennemis on the map. When she found them
+     * she just fill lesEnnemis List.
      *
-     * @param carte
+     * @param map the map on which the player is located
+     *
+     * @see Carte
      */
-    private void findEnnemis(Carte carte) {
-
+    public void findEnnemis(TiledMap map) {
         int layerIndex = 1;
-        int nbEnnemi = carte.getMap().getObjectCount(1);
+        int nbEnnemi = map.getObjectCount(1);
 
-        System.out.println("layerIndex : " + carte.getMap().getObjectCount(1) + " nbEnnemi : " + nbEnnemi);
-
+        //System.out.println("layerIndex : " + map.getObjectCount(1) + " nbEnnemi : " + nbEnnemi);
+        MyStdOut.write(MyStdColor.GREEN, "Nombre d'ennemi : " + nbEnnemi);
         int x, y;
 
         for(int i = 0; i<nbEnnemi; i++)
         {
-            String ennemiName = carte.getMap().getObjectName(layerIndex, i);
-            String direction = carte.getMap().getObjectType(layerIndex, i);
+            String ennemiName = map.getObjectName(layerIndex, i);
+            String direction = map.getObjectType(layerIndex, i);
 
-            x = carte.getMap().getObjectX(layerIndex, i);
-            y = carte.getMap().getObjectY(layerIndex, i);
+            x = map.getObjectX(layerIndex, i);
+            y = map.getObjectY(layerIndex, i);
             switch(ennemiName) {
                 case "Squelette":
                     lesEnnemis.add(new Squelette(new Point(x, y), getDirectionFromString(direction)));
@@ -328,9 +414,13 @@ public class Scenario {
     }
 
     /**
+     * We detect ennemis position on .tmx file.
+     * it sends us back the position of the enemies in {@code String} value.
+     * the function transforms the {@code String} position into {@code Direction}
      *
      * @param direction
-     * @return
+     * @return {@code Direction} from string allowed { @code {h, v, r, i} }
+     *         default {@code Direction.IMMOBILE}
      */
     public Direction getDirectionFromString(String direction) {
         Direction d = Direction.IMMOBILE;
@@ -367,5 +457,17 @@ public class Scenario {
                 return (Heal) unHeal;
         }
         return null;
+    }
+
+    public List<Ennemi> getLesEnnemis() {
+        return lesEnnemis;
+    }
+
+    public List<PersonnageNonJoueur> getLesPnj() {
+        return lesPnj;
+    }
+
+    public List<Objet> getLesObjets() {
+        return lesObjets;
     }
 }

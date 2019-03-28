@@ -15,15 +15,26 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+
+/**
+ *
+ */
 public class EcranJeu extends BasicGameState {
 
+    /**
+     *
+     */
     private boolean updatePaused = false;
 
+    /**
+     *
+     */
     private Save savedData;
 
     /**
      * Variable de debug
-     * Modifie certains élements d'affichage dans l'environnement */
+     * Modifie certains élements d'affichage dans l'environnement
+     **/
     public static final boolean DEBUG = true;
     public static final int ID = 2;
 
@@ -40,7 +51,7 @@ public class EcranJeu extends BasicGameState {
 
     /**
      * Version 0 de la class scenario / histoire du jeu. */
-    private Scenario scenario;
+    private  org.lpdql.dragon.scenario.Scenario scenario;
 
     private Hud hud = new Hud();
     private Hud_menu menu = new Hud_menu();
@@ -74,8 +85,15 @@ public class EcranJeu extends BasicGameState {
         camera = new Camera(InterStateComm.getLeHero().getX(), InterStateComm.getLeHero().getY());
 
         // chargement du scenario..
-        scenario = new Scenario();
-        scenario.charger(carte);
+        /*scenario = new Scenario();
+        scenario.charger(carte);*/
+
+        /**
+         * Refactoring fonctionnement du scenario
+         */
+        scenario = org.lpdql.dragon.scenario.Charger.charger_scenario(carte);
+
+
 
         hud.init(); // --
         menu.init(gameContainer);
