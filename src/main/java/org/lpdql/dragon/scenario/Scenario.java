@@ -18,6 +18,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+import org.lpdql.dragon.scenario.Story;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,8 +96,6 @@ public class Scenario {
 
         MyStdOut.write(MyStdColor.BLUE, "Chargement du Scenario : " + this.getClass().getSimpleName());
         MyStdOut.write(MyStdColor.BLUE, "Chargement de la map : " + map.getFileName());
-        this.findObjets(map.getMap());
-        this.findEnnemis(map.getMap());
 
         switch(map.getFileName()) {
             case "maison":
@@ -117,6 +117,12 @@ public class Scenario {
                 chargerMondePouvoir(map);
                 break;
         }
+
+        this.findObjets(map.getMap());
+
+        if(Story.TUTOEND.getState()) // test()
+            this.findEnnemis(map.getMap());
+
         InterStateComm.getLeHero().addPnj(this.getLesPnj());
         InterStateComm.getLeHero().addObjets(this.getLesObjets());
     }

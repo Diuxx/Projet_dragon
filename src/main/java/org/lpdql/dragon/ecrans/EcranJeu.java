@@ -7,6 +7,7 @@ import org.lpdql.dragon.jeu.Message;
 import org.lpdql.dragon.jeu.Scenario;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.sauvegarde.Save;
+import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Camera;
 import org.lpdql.dragon.system.MenuItem;
@@ -96,8 +97,6 @@ public class EcranJeu extends BasicGameState {
          */
         scenario = org.lpdql.dragon.scenario.Charger.charger_scenario(carte);
 
-
-
         hud.init(); // --
         menu.init(gameContainer);
     }
@@ -186,6 +185,10 @@ public class EcranJeu extends BasicGameState {
             this.setUpdatePaused(true);
 
             System.out.println("is paused : " + this.isUpdatePaused());
+        }
+
+        if(Input.KEY_A == key) {
+            Story.TUTOEND.done(); // test()
         }
     }
 

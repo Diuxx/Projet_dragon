@@ -6,6 +6,7 @@ import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.scenario.Accomplish;
 import org.lpdql.dragon.scenario.Scenario;
 import org.lpdql.dragon.scenario.Art;
+import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.scenario.errors.ScenarioError;
 import org.lpdql.dragon.system.Point;
 
@@ -98,7 +99,6 @@ public class Save {
             savedHero.setNiveau(playerLevel);
             savedHero.setCurrentGold(playerGold);
 
-
             savedHero.setArtEpee(playerSwordArt);
             savedHero.setArtBouclier(playerShiedArt);
             savedHero.setArtFeu(playerFireArt);
@@ -117,6 +117,12 @@ public class Save {
 
             if(accomplishement.get(Art.ENUM.VOLER.toString()).getAsBoolean())
                 savedAccomplishement.setEndArt(Art.ENUM.VOLER.toString());
+
+            // chargement des elements de la Story
+            for(Story s : Story.values()) {
+                if(accomplishement.get(s.getSavedId()).getAsBoolean())
+                    s.done();
+            }
 
             savedHero.setAccomplishement(savedAccomplishement);
 
@@ -202,6 +208,12 @@ public class Save {
         accomplishement.addProperty(Art.ENUM.BOUCLIER.toString(), hero.getAccomplishement().isArtAccomplished(Art.ENUM.BOUCLIER));
         accomplishement.addProperty(Art.ENUM.FEU.toString(), hero.getAccomplishement().isArtAccomplished(Art.ENUM.FEU));
         accomplishement.addProperty(Art.ENUM.VOLER.toString(), hero.getAccomplishement().isArtAccomplished(Art.ENUM.VOLER));
+
+        for(Story s : Story.values()) {
+            // sauvegarde
+            accomplishement.addProperty(s.getSavedId(), s.getState());
+        }
+
         save.add("accomplishement", accomplishement);
 
         try {

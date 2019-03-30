@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Accomplish {
     /**
-     * Art. Periode du jeu ou le hero doit accomplir tache pour valider les Art;
+     * Art. Periode du jeu ou le hero doit accomplir diff taches pour valider les Art;
      */
     private List<Art> arts;
 
@@ -46,7 +46,6 @@ public class Accomplish {
 
         // instance of accomplish
         Accomplish save = savedData.getAccomplishement();
-
     }
 
     /**
@@ -56,6 +55,14 @@ public class Accomplish {
     public void save() {
         System.out.println("Accomplishement backup in progress\n");
 
+    }
+
+    /**
+     *
+     */
+    public boolean setStoryStat(Story storyElement, boolean state) {
+        storyElement.setState(state);
+        return true;
     }
 
     /**
@@ -105,6 +112,10 @@ public class Accomplish {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLog() {
         String log = this.getClass().getSimpleName() + " -> log:";
         for(Art unArt : arts)
