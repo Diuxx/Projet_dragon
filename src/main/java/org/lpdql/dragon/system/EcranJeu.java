@@ -23,6 +23,11 @@ import org.newdawn.slick.state.StateBasedGame;
 public class EcranJeu extends BasicGameState {
 
     /**
+     * Slick game State id
+     */
+    public static final int ID = 2;
+
+    /**
      *
      */
     private boolean updatePaused = false;
@@ -33,104 +38,148 @@ public class EcranJeu extends BasicGameState {
     private Save savedData;
 
     /**
-     * Variable de debug
-     * Modifie certains élements d'affichage dans l'environnement
+     * debug variable
+     * Modify some elements in game
      **/
     public static final boolean DEBUG = true;
-    public static final int ID = 2;
 
     /**
-     * Gestion de la fenetre et de l'affichage */
+     * game display management
+     **/
     private GameContainer container;
+
+    /**
+     * This variable is a slick game state
+     * @see BasicGameState
+     **/
     public static StateBasedGame gameState;
 
     /**
-     * Variable de jeu et d'affichage */
-    private Message lesMessages; /* test */
+     * This variable manages the display of messages in game
+     * @see Message
+     */
+    private Message lesMessages; // test();
+
+    /**
+     * This valiable manages the different maps of the game
+     * @see Carte
+     */
     private Carte carte;
+
+    /**
+     * This variable manage the game the points of view
+     */
     private Camera camera;
 
     /**
-     * Version 0 de la class scenario / histoire du jeu. */
+     * Version 0 de la class scenario / histoire du jeu.
+     * à modifier commit 30-03
+     **/
     private  org.lpdql.dragon.scenario.Scenario scenario;
 
+    /**
+     * This variable manage the game Head up display
+     * show progress bars for example.
+     * @see Hud
+     */
     private Hud hud = new Hud();
+
+    /**
+     * This variable manage the game menu
+     * see this menu means that the game is paused.
+     * @see Hud_menu
+     */
     private Hud_menu menu = new Hud_menu();
 
+    /**
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @throws SlickException
+     */
     @Override
-    public int getID() {
-        return EcranJeu.ID;
-    }
-
-    @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        // initalisation de la fenètre
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
+            throws SlickException
+    {
+        // instantiation of the environment
         this.container = gameContainer;
         this.gameState = stateBasedGame;
 
-        // chargement des textures
+        // Texture loading
         Ressources.charger();
+
+        // instantiation of the message manager
         lesMessages = new Message();
 
-        /**
-         * Chargement des données sauvegardés du jeu
-         */
-        savedData = Save.detectSavedData();
-        carte = new Carte(savedData.getCarteName());
+        savedData = Save.detectSavedData(); // Loading saved data
+        carte = new Carte(savedData.getCarteName()); // Map definition
 
-        // Chargement du hero de l'histoire
+        // Loading the hero of the story
         InterStateComm.getLeHero().setPosition(carte.getCheckPoint());
         InterStateComm.getLeHero().setSavedData(savedData);
 
-        // initialisation de la camera
-        camera = new Camera(InterStateComm.getLeHero().getX(), InterStateComm.getLeHero().getY());
+        // initialization of camera position
+        camera = new Camera(
+                InterStateComm.getLeHero().getX(),
+                InterStateComm.getLeHero().getY());
 
         // chargement du scenario..
         /*scenario = new Scenario();
         scenario.charger(carte);*/
 
-        /**
-         * Refactoring fonctionnement du scenario
-         */
+        // loading the scenario
         scenario = org.lpdql.dragon.scenario.Charger.charger_scenario(carte);
 
-        hud.init(); // --
-        menu.init(gameContainer);
+        hud.init(); // loading h U D
+        menu.init(gameContainer); // loading Menu
     }
 
+    /**
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @param graphics
+     * @throws SlickException
+     */
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
+            throws SlickException
+    {
+        // updated point of view
         camera.translate(graphics, gameContainer);
 
-        // affichage de la carte
+        // drawing background layer from map
         carte.afficher(carte.getMap().getLayerIndex("background1"));
         carte.afficher(carte.getMap().getLayerIndex("background2"));
 
-        // affichage des personnages non joueurs et des personnages.ennemis
+        // display non-player characters and enemies
         if(scenario != null) {
             scenario.afficherPnj(graphics, this.lesMessages);
             scenario.afficherEnnemis(graphics);
             scenario.afficherObjets(graphics, this.lesMessages);
         }
 
-        // Affichage du hero
+        // drawing Hero
         InterStateComm.getLeHero().afficher(graphics);
 
-        // affichage des messages
+        // drawing message
         if(lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
         {
+            // when we are displaying menu or message
+            // we put the game on pause.
             this.setUpdatePaused(true);
         } else {
-            if(this.isUpdatePaused())
-                this.setUpdatePaused(false);
+            // disable pause
+            if(this.isUpdatePaused()) this.setUpdatePaused(false);
         }
 
-        // images positionné de telle façon
-        // que les personnages/personnages.ennemis/pnjs puissent passer derrière.
+        // drawing overground layer from map
         carte.afficher(carte.getMap().getLayerIndex("overground1"));
+
+        // drawing hud
         hud.render(graphics, InterStateComm.getLeHero());
 
+        // drawing menu
         if(menu.isShowing()) {
             MenuItem menustats = menu.render(gameContainer, graphics);
             switch(menustats) {
@@ -156,32 +205,36 @@ public class EcranJeu extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         if(this.isUpdatePaused())
-            return;
+            return; // no update when game paused
+
+        // test();
         updateTrigger();
 
-         // Gestion des mouvements et des collisions du hero
-         // Les collisions sont géré automatiquement dans la class du herp
+        // updating position + collisions
         InterStateComm.getLeHero().controle(gameContainer);
         InterStateComm.getLeHero().mouvement(delta, carte.getMap());
 
-        // affichage des mouvement des ennemi
+        // scenario all movement (ennemis/object) collision
         this.scenario.mouvement(this.carte, delta, this.lesMessages);
 
-        // mouvement de la camera
+        // updating camera position
         this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
     }
 
+
     @Override
     public void keyReleased(int key, char c) {
+
         if(Input.KEY_W == key) {
             if(lesMessages != null) lesMessages.next();
         }
-        // Affichage du menu du jeu.
-        if(Input.KEY_ENTER == key && !menu.isShowing() && this.menu.getDiff() > 1000) {
-            menu.setShowing(true);
-            this.setUpdatePaused(true);
 
-            System.out.println("is paused : " + this.isUpdatePaused());
+        // request the menu
+        if(Input.KEY_ENTER == key && !menu.isShowing() && this.menu.getDiff() > 1500 && lesMessages.containMessage()) {
+            menu.setShowing(true);
+            this.setUpdatePaused(true); // game paused
+
+            System.out.println("<game> is paused : " + this.isUpdatePaused());
         }
 
         if(Input.KEY_A == key) {
@@ -269,5 +322,10 @@ public class EcranJeu extends BasicGameState {
 
     public void setUpdatePaused(boolean updatePaused) {
         this.updatePaused = updatePaused;
+    }
+
+    @Override
+    public int getID() {
+        return EcranJeu.ID;
     }
 }

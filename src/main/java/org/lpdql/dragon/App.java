@@ -17,7 +17,9 @@ public class App {
 	    addToJavaLibraryPath(new File("lib/natives-windows"));
 
 	    // launch game app
-        new AppGameContainer(new StateGame(), gX, gY, false).start();
+        AppGameContainer app = new AppGameContainer(new StateGame(), gX, gY, false);
+        app.setUpdateOnlyWhenVisible(true);
+        app.start();
     }
 
     /**
