@@ -43,13 +43,15 @@ public class Message {
      * Constructeur de la class message
      */
     public Message() {
-
         this.posisition = 0;
-
         this.rect = new Rectangle(0, 0, 0, 0);
         this.text = new ArrayList<String>();
     }
 
+    /**
+     *
+     * @param text
+     */
     public void add(String text) {
         int ligne = 0;
         String[] listDeChaine = text.split("#");
@@ -61,7 +63,8 @@ public class Message {
     }
 
     /**
-     * test
+     *
+     * @param text
      */
     public void add(Message text) {
         this.text = text.getText();
@@ -97,6 +100,10 @@ public class Message {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean containMessage() {
         return (this.posisition >= this.text.size());
     }
