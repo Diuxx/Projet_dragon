@@ -2,8 +2,6 @@ package org.lpdql.dragon.scenario;
 
 
 import org.lpdql.dragon.carte.Carte;
-import org.lpdql.dragon.objets.ObjetMessage;
-import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.SlickException;
 
 /**

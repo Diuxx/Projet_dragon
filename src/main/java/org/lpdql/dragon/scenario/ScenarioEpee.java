@@ -72,6 +72,17 @@ public class ScenarioEpee extends Scenario {
             pnjServante.addDialogue("blablabla !#et blablablabla\nblablablabla");
             super.getLesPnj().add(pnjServante);
         }
+
+        if(!Story.TUTOEND.getState()) {
+            loadTuto();
+        }
+    }
+
+    /**
+     *
+     */
+    private void loadTuto() {
+
     }
 
 }
