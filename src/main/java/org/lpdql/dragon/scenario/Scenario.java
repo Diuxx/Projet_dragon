@@ -7,6 +7,7 @@ import org.lpdql.dragon.objets.Heal;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.Ennemi;
+import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
 import org.lpdql.dragon.personnages.ennemis.DarkMaster;
 import org.lpdql.dragon.personnages.ennemis.Dragon;
@@ -299,6 +300,10 @@ public class Scenario {
                     obj.setParle(false);
                 }
             }
+            if(unObjet instanceof Heal) {
+                // System.out.print("draw heal !");
+                // unObjet.interaction(InterStateComm.getLeHero());
+            }
         }
     }
 
@@ -476,4 +481,156 @@ public class Scenario {
     public List<Objet> getLesObjets() {
         return lesObjets;
     }
+
+    /**
+     * This functon detect when the Hero is on a map trigger.
+     * This function should be called in StageBasedGame update.
+     * @param carte the map on which the player is located
+     * @param camera the current display settings
+     * @throws SlickException
+     */
+    public void detectMapChanged(Carte carte, Camera camera) throws SlickException {
+
+        int changementMapGroupId = 0;
+        int nbGate = carte
+                    .getMap()
+                    .getObjectCount(changementMapGroupId);
+        String gateType = "";
+
+        for(int i = 0; i<nbGate; i++)
+        {
+            if(!isHeroisInGate(carte.getMap(), i))
+                continue;
+
+            gateType = carte.getMap().getObjectType(changementMapGroupId, i);
+            if(gateType.equals("change-map"))
+            {
+                if(!this.laodMapAuthorization(carte.getMap().getObjectName(changementMapGroupId, i))) {
+                    // teleport on trigger
+                    teleportOnSafeTrigger(carte, i);
+                    return;
+                }
+                loadMap(carte, i, camera);
+                return;
+            }
+
+            if(gateType.equals("heal"))
+            {
+                this.getHeals(i).interaction(InterStateComm.getLeHero());
+            }
+        }
+    }
+
+    /**
+     *
+     * @param carte
+     * @param gateId
+     */
+    private void teleportOnSafeTrigger(Carte carte, int gateId) {
+        // --
+        int changementMapGroupId = 0;
+        String destMap = carte.getMap().getObjectName(changementMapGroupId, gateId);
+
+        if(destMap.equals("undefined"))
+            return;
+
+        int nbGate = carte.getMap().getObjectCount(changementMapGroupId);
+
+        for(int i=0; i<nbGate; i++) {
+
+            String gateType = carte.getMap().getObjectType(changementMapGroupId, i);
+            if (!gateType.equals("position-map"))
+                continue;
+
+            if(!carte.getMap().getObjectName(changementMapGroupId, i).equals(destMap))
+                continue;
+
+            int x = carte.getMap().getObjectX(changementMapGroupId, i);
+            int y = carte.getMap().getObjectY(changementMapGroupId, i);
+            InterStateComm.getLeHero().setPosition(new Point(x, y));
+
+            return;
+        }
+    }
+
+
+    /**
+     * Private Function load the new map when Hero hit a map trigger
+     * @param carte the map on which the player is located
+     * @param gateId tmx file share the object ID of the trigger
+     * @param camera current display settings
+     * @throws SlickException
+     *
+     * @see TiledMap
+     */
+    private void loadMap(Carte carte, int gateId, Camera camera) throws SlickException {
+
+        int changementMapGroupId = 0;
+        String lastMapName = carte.getFileName();
+        String destMap = carte.getMap().getObjectName(changementMapGroupId, gateId);
+
+        if(destMap.equals("undefined"))
+            return;
+
+        MyStdOut.write(MyStdColor.YELLOW,
+                "<scenario> changement de map " + lastMapName + " -> " + destMap);
+
+        // loading a new map
+        carte.changeMap("data/" + destMap + ".tmx");
+        int nbGate = carte.getMap().getObjectCount(changementMapGroupId);
+
+        for(int i=0; i<nbGate; i++) {
+
+            String gateType = carte.getMap().getObjectType(changementMapGroupId, i);
+            if(!gateType.equals("position-map"))
+                continue;
+
+            if(!carte.getMap().getObjectName(changementMapGroupId, i).equals(lastMapName))
+                continue;
+
+            int x = carte.getMap().getObjectX(changementMapGroupId, i);
+            int y = carte.getMap().getObjectY(changementMapGroupId, i);
+            InterStateComm.getLeHero().setPosition(new Point(x, y));
+
+            // that camera position
+            camera.setX(x);
+            camera.setY(y);
+
+            this.resetScenario();
+            this.charger(carte);
+            return;
+        }
+    }
+
+    /**
+     * Return boolean {@code true} if hero is on trigger, {@code false}
+     * if not.
+     * @param tm the map on which the player is located
+     * @param gateId tmx file share the object ID of the trigger
+     * @return boolean {@code true} if hero is on trigger, or {@code false}
+     *
+     * @see TiledMap
+     */
+    private boolean isHeroisInGate(TiledMap tm, int gateId) {
+
+        int changementMapGroupId = 0;
+        Hero h = InterStateComm.getLeHero();
+        int xgate = tm.getObjectX(changementMapGroupId, gateId);
+        int ygate = tm.getObjectY(changementMapGroupId, gateId);
+        int hgate = tm.getObjectHeight(changementMapGroupId, gateId);
+        int wgate = tm.getObjectWidth(changementMapGroupId, gateId);
+
+        return h.getX() > xgate && h.getX() < xgate + wgate &&
+               h.getY() > ygate && h.getY() < ygate + hgate;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private boolean laodMapAuthorization(String destMap) {
+
+        return true;
+    }
+
 }
