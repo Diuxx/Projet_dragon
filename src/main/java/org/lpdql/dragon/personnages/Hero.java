@@ -210,6 +210,9 @@ public class Hero extends Personnage {
 
             boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unObjet.getBoundingBox());
             if(collision) {
+                if(unObjet.containStoryElement())
+                    unObjet.storyDone();
+
                 if(unObjet instanceof ObjetMessage) {
                     ((ObjetMessage) unObjet).setParle(true);
                 }

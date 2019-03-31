@@ -35,6 +35,10 @@ public class Carte {
         this.nomMap = fileMap.split("/")[fileMap.split("/").length - 1].split("\\.")[0];
     }
 
+    public String getNomMap() {
+        return this.nomMap;
+    }
+
     /**
      * do some refactoring on it!
      * @return

@@ -4,6 +4,7 @@ package org.lpdql.dragon.scenario;
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
+import org.lpdql.dragon.system.EcranJeu;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.SlickException;
@@ -56,6 +57,9 @@ public class ScenarioEpee extends Scenario {
             // we should do a letter object instead of (ObjetMessage) !
             ObjetMessage lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
             lettre.setMessage("blablabla#blablabla\nblablabla");
+
+            // set a story element who should be donne if interact
+            lettre.setStoryElement(Story.LIRELETTRE);
             super.getLesObjets().add(lettre);
         }
     }
@@ -83,6 +87,26 @@ public class ScenarioEpee extends Scenario {
      */
     private void loadTuto() {
 
+    }
+
+    /**
+     *
+     * @param destMap
+     * @return
+     */
+    @Override
+    protected boolean laodMapAuthorization(String originMap, String destMap) {
+
+        boolean autorization = true && super.laodMapAuthorization(originMap, destMap);
+        boolean readLetterBeforLeave = (originMap.equals("maison") && destMap.equals("dragon")) ? Story.LIRELETTRE.getState(): true;
+        if(!readLetterBeforLeave) {
+            EcranJeu.lesMessages.add(Story.LIRELETTRE.getMessage());
+        }
+
+        // autorization
+        autorization = autorization && readLetterBeforLeave;
+
+        return autorization;
     }
 
 }
