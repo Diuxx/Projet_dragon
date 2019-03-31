@@ -1,6 +1,7 @@
 package org.lpdql.dragon.objets;
 
 import org.lpdql.dragon.personnages.Hero;
+import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.system.EcranJeu;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
@@ -15,8 +16,16 @@ import java.util.List;
 
 public class Objet {
 
+    /**
+     * That a pointer to a Story Element
+     */
+    private Story storyElement;
 
+    /**
+     *
+     */
     private int positionSurMap;
+
     /**
      * Position de l'objet
      */
@@ -63,6 +72,32 @@ public class Objet {
         this.positionSurMap = positionSurMap;
     }
 
+    /**
+     * This class ends a story element if it exist.
+     */
+    public void storyDone() {
+        // --
+        if(this.storyElement == null)
+            return;
+
+        this.storyElement.done();
+    }
+
+    /**
+     * fill the pointer if needed
+     * @param element
+     */
+    public void setStoryElement(Story element) {
+        this.storyElement = element;
+    }
+
+    /**
+     * return {@code true} if storyElement is not Empty
+     * @return
+     */
+    public boolean containStoryElement() {
+        return (storyElement != null);
+    }
 
     /**
      * affichage du personnage dans le graphique */

@@ -58,7 +58,7 @@ public class EcranJeu extends BasicGameState {
      * This variable manages the display of messages in game
      * @see Message
      */
-    private Message lesMessages; // test();
+    public static Message lesMessages; // test();
 
     /**
      * This valiable manages the different maps of the game

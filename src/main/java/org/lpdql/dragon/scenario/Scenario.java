@@ -505,7 +505,7 @@ public class Scenario {
             gateType = carte.getMap().getObjectType(changementMapGroupId, i);
             if(gateType.equals("change-map"))
             {
-                if(!this.laodMapAuthorization(carte.getMap().getObjectName(changementMapGroupId, i))) {
+                if(!this.laodMapAuthorization(carte.getNomMap(), carte.getMap().getObjectName(changementMapGroupId, i))) {
                     // teleport on trigger
                     teleportOnSafeTrigger(carte, i);
                     return;
@@ -628,9 +628,37 @@ public class Scenario {
      *
      * @return
      */
-    private boolean laodMapAuthorization(String destMap) {
+    protected boolean laodMapAuthorization(String originMap, String destMap) {
+        MyStdOut.write(MyStdColor.YELLOW, "<" + this.getClass().getSimpleName() + "> performing autorization");
 
-        return true;
+        boolean autorization = true;
+        boolean endScenarioTutoForEpee = (originMap.equals("dragon") && destMap.equals("monde_epe")) ? Story.TUTOEND.getState(): true;
+        if(!endScenarioTutoForEpee) {
+            EcranJeu.lesMessages.add(Story.TUTOEND.getMessage());
+        }
+        autorization = autorization && endScenarioTutoForEpee;
+
+        boolean endScenarioEpeeForBouclier = (originMap.equals("dragon") && destMap.equals("monde_bouclier")) ? Story.ACTIVATEBOUCLIER.getState(): true;
+        if(!endScenarioEpeeForBouclier) {
+            EcranJeu.lesMessages.add(Story.ACTIVATEBOUCLIER.getMessage());
+        }
+        autorization = autorization && endScenarioEpeeForBouclier;
+
+        boolean endScenarioBouclierForFeu = (originMap.equals("dragon") && destMap.equals("monde_feu")) ? Story.ACTIVATEFEU.getState(): true;
+        if(!endScenarioBouclierForFeu) {
+            EcranJeu.lesMessages.add(Story.ACTIVATEFEU.getMessage());
+        }
+        autorization = autorization && endScenarioBouclierForFeu;
+
+        boolean endScenarioFeuForPouvoir = (originMap.equals("dragon") && destMap.equals("monde_pouvoir")) ? Story.ACTIVATEPOUVOIR.getState(): true;
+        if(!endScenarioFeuForPouvoir) {
+            EcranJeu.lesMessages.add(Story.ACTIVATEPOUVOIR.getMessage());
+        }
+        autorization = autorization && endScenarioFeuForPouvoir;
+
+
+
+        return autorization;
     }
 
 }
