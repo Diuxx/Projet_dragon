@@ -209,9 +209,8 @@ public class EcranJeu extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         if(this.isUpdatePaused())
             return; // no update when game paused
-
         // test();
-        updateTrigger();
+        scenario.detectMapChanged(this.carte, this.camera);
 
         // updating position + collisions
         InterStateComm.getLeHero().controle(gameContainer);
@@ -247,77 +246,6 @@ public class EcranJeu extends BasicGameState {
 
     @Override
     public void keyPressed(int key, char c) { }
-
-    /**
-     *
-     */
-    private void updateTrigger() throws SlickException {
-        String type;
-        for(int o=0; o<this.carte.getMap().getObjectCount(0); o++) {
-            if(isInTrigger(o)) {
-                type = this.carte.getMap().getObjectType(0, o);
-                if ("change-map".equals(type)) {
-                    changeMap(o);
-                }
-                if ("heal".equals(type)) {
-                    this.scenario.getHeals(o).interaction(InterStateComm.getLeHero());
-                }
-            }
-        }
-    }
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    private boolean isInTrigger(int id) {
-        return InterStateComm.getLeHero().getX() > this.carte.getMap().getObjectX(0, id)
-        && InterStateComm.getLeHero().getX() < this.carte.getMap().getObjectX(0, id) + this.carte.getMap().getObjectWidth(0, id)
-        && InterStateComm.getLeHero().getY() > this.carte.getMap().getObjectY(0, id)
-        && InterStateComm.getLeHero().getY() < this.carte.getMap().getObjectY(0, id) + this.carte.getMap().getObjectHeight(0, id);
-    }
-
-    /**
-     *
-     * @param objectID
-     * @throws SlickException
-     */
-    private void changeMap(int objectID) throws SlickException {
-        String ancienNomMap = this.carte.getFileName();
-        String dest_map = this.carte.getMap().getObjectName(0, objectID);
-
-        System.err.println(this.getClass().getSimpleName() + " : ancienNom -> " + ancienNomMap);
-        if (!"undefined".equals(dest_map)) {
-            this.carte.changeMap("data/" + dest_map + ".tmx");
-            for(int o=0; o<this.carte.getMap().getObjectCount(0); o++)
-            {
-                String type = this.carte.getMap().getObjectType(0, o);
-                if("position-map".equals(type)) {
-                    if(this.carte.getMap().getObjectName(0, o).equals(ancienNomMap)) {
-                        positionMap(o);
-                        this.scenario.resetScenario();
-                        this.scenario.charger(this.carte);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     *
-     * @param objectID
-     * @throws SlickException
-     */
-    private void positionMap(int objectID) throws SlickException {
-        int x = this.carte.getMap().getObjectX(0, objectID);
-        int y = this.carte.getMap().getObjectY(0, objectID);
-        InterStateComm.getLeHero().setPosition(new Point(x, y));
-        this.camera.setX(x);
-        this.camera.setY(y);
-
-        System.err.println(this.getClass().getSimpleName() + " : position hero (" + x + "; " + y + ")");
-    }
 
     public boolean isUpdatePaused() {
         return updatePaused;
