@@ -10,29 +10,59 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Personnage {
 
-    // animation du personnage
+    /**
+     * Array containing all animations of the object
+     * @see Animation
+     */
     private List<Animation> animation;
 
-    // ajout de collision avec d'autre personnage
-    private List<Personnage> lesAutre;
-
-    // information sur le personnage
+    /**
+     * Name of the current {@code Personnage}
+     */
     private String nom;
+
+    /**
+     * {@code Personnage} total life Points
+     */
     private float pointDeVie;
+
+    /**
+     * Current {@code Personnage} life Points
+     */
     private float pointDeVieActuel;
 
-    // mouvement du personnage
-    protected float x = 0, y = 0;
+    /**
+     * {@code Personnage} position on map.
+     */
+    protected float x;
+    protected float y;
+
+    /**
+     *
+     */
     protected int direction = 0;
     protected boolean moving = false;
 
-    // gestion des collisions
+    /**
+     * Debug box managing collision
+     * @see Rectangle
+     */
     private Rectangle box;
 
+    /**
+     * Future calculated position for collisions
+     */
     private float futurX = 0;
     private float futurY = 0;
+
+    /**
+     * If collision appened this variable value switch to {@code true}
+     */
     private boolean collision = false;
 
     // taille de la tile
@@ -46,7 +76,16 @@ public class Personnage {
 
     private boolean dynamicCollision;
 
-    // --
+    /**
+     * Main Constructor of Personnage class.
+     * @param nom
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     * @param pointDeVie
+     * @param vitesse
+     */
     public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse) {
         this.nom = nom;
         this.x = x;
