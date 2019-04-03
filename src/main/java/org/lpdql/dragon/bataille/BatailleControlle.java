@@ -109,8 +109,11 @@ public class BatailleControlle implements InputProviderListener {
 			if(!InterStateComm.getLeHero().getMuted() && swing != null) {
 				swing.play();
 			}
+			System.out.println("ennemi Vie   ----> " + (int) ennemi.getBarreVie());
 			ennemi.setBarreVie((int) joueur.getATK());
-			System.out.println("Hero ATK--->" + (int) joueur.getATK());
+			System.out.println("Hero ATK     ----> " + (int) joueur.getATK());
+			System.out.println("ennemi Vie   ----> " + (int) ennemi.getBarreVie());
+			System.out.println();
 			break;
 			default:
 		}
@@ -167,7 +170,11 @@ public class BatailleControlle implements InputProviderListener {
 	 *
 	 */
 	private void ennemiAssignDamage() {
-		joueur.setBarreVie(10);
+		System.out.println("Hero Vie   ----> " + (int) joueur.getBarreVie());
+		joueur.setBarreVie((int) ennemi.getATK());
+		System.out.println("ennemi ATK ----> " + (int) ennemi.getATK());
+		System.out.println("Hero Vie   ----> " + (int) joueur.getBarreVie());
+		System.out.println();
 		if(!InterStateComm.getLeHero().getMuted() && swing != null) {
 			swing.play();
 		}

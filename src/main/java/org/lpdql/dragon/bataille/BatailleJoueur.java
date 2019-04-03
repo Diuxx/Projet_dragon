@@ -35,7 +35,6 @@ public class BatailleJoueur {
 	}
 	
 	public float getBarreVie() {
-		System.out.println("Hero Vie ---------= " + InterStateComm.getLeHero().getPointDeVieActuel());
 		return InterStateComm.getLeHero().getPointDeVieActuel();
 	}
 	
@@ -43,7 +42,7 @@ public class BatailleJoueur {
 		InterStateComm.getLeHero().setPointDeVieActuel(InterStateComm.getLeHero().getPointDeVieActuel()-degat);
 	}
 	public float getATK() {
-		return ((int) (InterStateComm.getLeHero().getLevel() * 5.0 + 20));
+		return ((int) (InterStateComm.getLeHero().getLevel() * 5.0 + 50));
 	}
 	
 	public void addAnimationListener(AnimationListener assignDamage, AnimationListener endAttack) {

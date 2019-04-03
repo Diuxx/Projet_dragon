@@ -58,8 +58,11 @@ public class BatailleEnnemi {
 	}
 	
 	public float getBarreVie() {
-		System.out.println("Ennemi Vie ---------= " + ennemi.getPointDeVieActuel());
 		return ennemi.getPointDeVieActuel();
+	}
+	
+	public float getATK() {
+		return ((int) (ennemi.getNiveau() * 5.0 + 20));
 	}
 	
 	public void setBarreVie(int degat) {
