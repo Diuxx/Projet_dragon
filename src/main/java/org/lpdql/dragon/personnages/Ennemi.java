@@ -1,7 +1,7 @@
 package org.lpdql.dragon.personnages;
 
-import org.lpdql.dragon.interfaces.StoryElement;
-import org.lpdql.dragon.scenario.Story;
+import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.lpdql.dragon.system.Direction;
 import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.Color;
@@ -17,12 +17,7 @@ import java.util.List;
  *
  * @author: Diuxx
  */
-public class Ennemi extends Personnage implements StoryElement {
-
-	/**
-	 * That a pointer to a Story Element
-	 */
-	private Story storyElement;
+public class Ennemi extends Personnage {
 
 	// --
 	private float timeSinceTrigger = 0;
@@ -42,8 +37,6 @@ public class Ennemi extends Personnage implements StoryElement {
     private Image imageCombat;
 	private int niveau;
 
-	private double atk;
-	private double maxHP;
 	protected int experience;
 
 	/**
@@ -74,7 +67,7 @@ public class Ennemi extends Personnage implements StoryElement {
 	 */
 	public Ennemi(String nom, float x, float y, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
 			Image ennemiImages, int niveau) {
-		super(nom, x, y, w, h, pointDeVie, vitesse);
+		super(nom, x, y, w, h, niveau * pointDeVie, vitesse, niveau);
 		this.direction = this.directionTransition = direction;
 		this.x = x;
 		this.y = y;
@@ -83,13 +76,25 @@ public class Ennemi extends Personnage implements StoryElement {
 		this.veutCombattre = false;
 		this.friendly = false;
 		this.friendlyTimer = 0l;
+		super.setHeroStatistques(niveau);
 
 		/*
 		 * Statistiques des personnages.ennemis */
 		this.niveau = niveau;
-		setAtk(niveau);
-		setMaxHP(niveau);
-		this.experience = 40; // test
+		super.setEnnemiStatistques(niveau);
+		this.experience = niveau * 5 + 25; // test
+		
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.experience = niveau * 5 + 50;
+			break;
+		case Difficulty.DIFFICILE:
+			this.experience = niveau * 5 + 40;
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.experience = niveau * 5 + 20;
+			break;
+		}
 
         /**
          * L'ennemi quand il est crée est vivant ! (visible) */
@@ -120,8 +125,6 @@ public class Ennemi extends Personnage implements StoryElement {
 	public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
 			Image ennemiImages, double atk, double maxHP) {
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, 0);
-		this.atk = atk;
-		this.maxHP = maxHP;
 	}
 
 	/**
@@ -317,57 +320,4 @@ public class Ennemi extends Personnage implements StoryElement {
 		return niveau;
 	}
 
-	public double getATK() {
-		return atk;
-	}
-
-	public double getHP() {
-		return maxHP;
-	}
-	
-	public void setAtk(int niveau) {
-		this.atk = niveau * 5.0 + 20;
-	}
-	public void setMaxHP(int niveau) {
-		this.maxHP = niveau * 50.0 + 400;
-	}
-
-	/**
-	 * This class ends a story element if it exist.
-	 */
-	@Override
-	public void storyDone() {
-		// --
-		if(this.storyElement == null)
-			return;
-
-		this.storyElement.done();
-	}
-
-	/**
-	 * fill the pointer if needed
-	 * @param element
-	 */
-	@Override
-	public void setStoryElement(Story element) {
-		this.storyElement = element;
-	}
-
-	/**
-	 * return {@code true} if storyElement is not Empty
-	 * @return
-	 */
-	@Override
-	public boolean containStoryElement() {
-		return (this.storyElement != null);
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	@Override
-	public Story getStoryElement() {
-		return this.storyElement;
-	}
 }
