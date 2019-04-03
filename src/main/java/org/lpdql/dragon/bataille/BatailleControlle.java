@@ -107,7 +107,8 @@ public class BatailleControlle implements InputProviderListener {
 			if(!InterStateComm.getLeHero().getMuted() && swing != null) {
 				swing.play();
 			}
-			ennemi.setBarreVie(50);
+			ennemi.setBarreVie((int) joueur.getATK());
+			System.out.println("Hero ATK--->" + (int) joueur.getATK());
 			break;
 			default:
 		}

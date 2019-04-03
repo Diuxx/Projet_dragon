@@ -65,7 +65,7 @@ public class Ennemi extends Personnage {
 	 */
 	public Ennemi(String nom, float x, float y, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
 			Image ennemiImages, int niveau) {
-		super(nom, x, y, w, h, pointDeVie, vitesse);
+		super(nom, x, y, w, h, niveau * pointDeVie, vitesse, niveau);
 		this.direction = this.directionTransition = direction;
 		this.x = x;
 		this.y = y;
@@ -74,12 +74,13 @@ public class Ennemi extends Personnage {
 		this.veutCombattre = false;
 		this.friendly = false;
 		this.friendlyTimer = 0l;
+		super.setHeroStatistques(niveau);
 
 		/*
 		 * Statistiques des personnages.ennemis */
 		this.niveau = niveau;
 		super.setEnnemiStatistques(niveau);
-		this.experience = niveau * 4 + 15; // test
+		this.experience = niveau * 5 + 25; // test
 
         /**
          * L'ennemi quand il est crée est vivant ! (visible) */

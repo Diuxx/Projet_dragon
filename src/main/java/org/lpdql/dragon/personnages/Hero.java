@@ -22,16 +22,21 @@ public class Hero extends Personnage {
 
     private List<Ennemi> lesEnnemis;
     private int experience;
-    private int niveau;
-    private int currentGold;
+    private float atk;
 
-    private boolean artEpee;
+	private int niveau;
+    private int currentGold;
+    
+    private float pointDeVie;
+
+
+	private boolean artEpee;
     private boolean artBouclier;
     private boolean artFeu;
     private boolean artVoler;
 
     // hero information
-    private static final int HEROLIFE = 1120;
+    private static final int HEROLIFE = 60;
     private static final float HEROSPEED = 0.1f;
     private static final int HEROLEVEL = 1;
     private static final int HEROGOLD = 500;
@@ -53,14 +58,13 @@ public class Hero extends Personnage {
      * @param positon
      */
     public Hero(String nom, Point positon) {
-        super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
-        super.setHeroStatistques(this.niveau);
+        super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED, 2);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
         this.lesObjets = new ArrayList<Objet>();
         this.experience = 0;
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
-
+        super.setHeroStatistques(this.getLevel());
         this.artEpee = true;
         this.artBouclier = false;
         this.artFeu = false;
@@ -324,4 +328,11 @@ public class Hero extends Personnage {
     public boolean getMuted() {
         return muted;
     }
+    public float getAtk() {
+		return atk;
+	}
+
+	public void setAtk(float atk) {
+		this.atk = atk;
+	}
 }

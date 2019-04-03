@@ -21,7 +21,8 @@ public class Personnage {
 	// information sur le personnage
 	private String nom;
 	private float pointDeVie;
-	private float atk;
+
+
 	private float pointDeVieActuel;
 
 	// mouvement du personnage
@@ -48,7 +49,7 @@ public class Personnage {
 	private boolean dynamicCollision;
 
 	// --
-	public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse) {
+	public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse, int niveau) {
 		this.nom = nom;
 		this.x = x;
 		this.y = y;
@@ -58,7 +59,6 @@ public class Personnage {
 		this.centerX = (int) (w / 2);
 		this.centerY = (int) (h - (h / 5));
 
-		this.pointDeVie = pointDeVie;
 		this.pointDeVieActuel = pointDeVie;
 
 		this.vitesse = vitesse;
@@ -71,13 +71,13 @@ public class Personnage {
 	}
 
 	// --
-	public Personnage(String nom, Point pos, int w, int h, float pointDeVie, float vitesse) {
-		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, vitesse);
+	public Personnage(String nom, Point pos, int w, int h, float pointDeVie, float vitesse, int niveau) {
+		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, vitesse, niveau);
 	}
 
 	// --
-	public Personnage(String nom, Point pos, Taille t, float pointDeVie, float vitesse) {
-		this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse);
+	public Personnage(String nom, Point pos, Taille t, float pointDeVie, float vitesse, int niveau) {
+		this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse, niveau);
 	}
 
 	public float getX() {
@@ -249,14 +249,14 @@ public class Personnage {
 
 	// Level UP HERO
 	public void setHeroStatistques(int niveau) {
-		this.pointDeVie = (float) (niveau * 50.0 + 400);
-		this.atk = (float) (niveau * 5.0 + 20);
+		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 50.0 + 400);
+		System.out.println("Hero --------------------------------> " + this.pointDeVie);
 	}
 
 	// Level UP Ennemi
 	public void setEnnemiStatistques(int niveau) {
-		this.pointDeVie = (float) (niveau * 25.0 + 300);
-		this.atk = (float) (niveau * 3.0 + 10);
+		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 50.0 + 250);
+		System.out.println("Ennemi --------------------------------> " + this.pointDeVie);
 	}
 
 	public float getPointDeVieActuel() {
