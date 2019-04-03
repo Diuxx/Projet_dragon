@@ -25,9 +25,8 @@ public class Ressources {
             spriteSheet_Dragon = new SpriteSheet("data/Dragon.png", 96, 96);
             healSheet = new SpriteSheet("data/heal.png", 16, 16);
             spriteSheet_PNJ = new SpriteSheet("data/PNJ.png", 32, 32);
-
             charger = true;
-
+            
             // chargement du personnage
             InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
         }

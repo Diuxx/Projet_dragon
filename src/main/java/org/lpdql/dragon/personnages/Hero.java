@@ -69,7 +69,12 @@ public class Hero extends Personnage {
         levelExperience = new HashMap<>();
         this.chargerImage();
     }
-
+    
+    public Hero(String nom) {
+    	super(nom);
+    	this.niveau = HEROLEVEL;
+    }
+    
     /**
      *
      * @param savedData

@@ -117,6 +117,7 @@ public class Ennemi extends Personnage {
 		this.maxHP = maxHP;
 	}
 
+
 	/**
 	 *
 	 * @param delta

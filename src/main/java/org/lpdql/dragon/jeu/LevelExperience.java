@@ -36,28 +36,25 @@ public class LevelExperience {
 		return levelsExperiences;
 	}
 	
-	public static void main(String[] args) {
-		for(int i=1;i<10;i++)
-			System.out.println(new LevelExperience().levelsExperiences.get(i));
+	public void afficherLesLevelsExperiences (){
+		for(int i=1;i<20;i++)
+			System.out.println("Level :"+i+ ", ExperienceMax :"+new LevelExperience().levelsExperiences.get(i));
 	}
 	
-	
-	public void checkUpLevelEtExperience(int experience) {
+	public void checkUpLevelEtExperience(int experienceAajouter, Hero hero) {
 		Iterator itLevelExperience = this.levelsExperiences.entrySet().iterator();
 		
 		while (itLevelExperience.hasNext()) {
 			Map.Entry<Integer,Integer> entry =  (Entry<Integer, Integer>) itLevelExperience.next();
 			
-			if(InterStateComm.getLeHero().getLevel() == entry.getKey()) {
-				if(experience >= entry.getValue()) {
-					int nouveauExp = experience - this.levelsExperiences.get(entry.getKey());
-					InterStateComm.getLeHero().setExperience(nouveauExp);
-					InterStateComm.getLeHero().setLevel(entry.getKey() + 1);
-					experience -= this.levelsExperiences.get(entry.getKey());
+			if(hero.getLevel() == entry.getKey()) {
+				if(experienceAajouter >= entry.getValue()) {
+					int nouveauExp = experienceAajouter - this.levelsExperiences.get(entry.getKey());
+					hero.setExperience(nouveauExp);
+					hero.setLevel(entry.getKey() + 1);
+					experienceAajouter -= this.levelsExperiences.get(entry.getKey());
 				}
 			}
 		}
 	}
-	
 }
-

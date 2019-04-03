@@ -68,7 +68,10 @@ public class Personnage {
 
         box = new Rectangle(x - this.centerX, y - this.centerY, w, h);
     }
-
+    
+    public Personnage(String nom) {
+    	this.nom = nom;
+    }
     // --
     public Personnage(String nom, Point pos, int w, int h, float pointDeVie, float vitesse) {
         this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, vitesse);
