@@ -4,7 +4,6 @@ import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
-import org.lpdql.dragon.scenario.Accomplish;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
@@ -31,14 +30,7 @@ public class Hero extends Personnage {
     private boolean artFeu;
     private boolean artVoler;
 
-    /**
-     * State of events related to history
-     */
-    private Accomplish accomplishement;
-
-    /**
-     * Tests values for the hero statistics
-     */
+    // hero information
     private static final int HEROLIFE = 1120;
     private static final float HEROSPEED = 0.1f;
     private static final int HEROLEVEL = 1;
@@ -53,7 +45,6 @@ public class Hero extends Personnage {
     private boolean muted = false;
 
     private HashMap levelExperience;
-    
 
     /**
      * Constructeur de la class Hero (projet InterStateComm);
@@ -62,7 +53,6 @@ public class Hero extends Personnage {
      */
     public Hero(String nom, Point positon) {
         super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
-        super.setHeroStatistques(this.niveau);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
         this.lesObjets = new ArrayList<Objet>();
         this.experience = 0;
@@ -77,35 +67,23 @@ public class Hero extends Personnage {
         nouvellePartie = true;
         // --
         levelExperience = new HashMap<>();
-
-        /**
-         * Load accomplishement.
-         */
-        this.accomplishement = new Accomplish();
-
-        /**
-         * Load sprite tiles from sprite sheet.
-         */
         this.chargerImage();
     }
-
-    public Accomplish getAccomplishement() {
-        return this.accomplishement;
+    
+    public Hero(String nom) {
+    	super(nom);
+    	this.niveau = HEROLEVEL;
     }
-
-    public void setAccomplishement(Accomplish accomplishement) {
-        this.accomplishement = accomplishement;
-    }
-
+    
     /**
-     * Update some elements to match the last game backup
+     *
      * @param savedData
      */
     public void setSavedData(Save savedData) {
         if(savedData.getSavedHero() == null)
             return;
 
-        System.out.println("Performing loading on saved data!");
+        System.out.println("Somes Data is loading !");
 
         Hero savedHero = savedData.getSavedHero();
         this.setNom(savedHero.getNom());
@@ -116,22 +94,14 @@ public class Hero extends Personnage {
         this.setExperience(savedHero.getExperience());
         this.setNiveau(savedHero.getNiveau());
         this.setCurrentGold(savedHero.getCurrentGold());
-
-
         this.setArtEpee(savedHero.getArtEpee());
         this.setArtBouclier(savedHero.getArtBouclier());
         this.setArtFeu(savedHero.getArtFeu());
         this.setArtVoler(savedHero.getArtVoler());
-
-        this.accomplishement = savedHero.getAccomplishement();
-
-        this.accomplishement.getLog();
     }
 
-    /**
-     * Only an Hero can be controled.
-     * @param container
-     */
+
+    // seul le hero peut être contrôlé
     public void controle(GameContainer container) {
         if(container.getInput().isKeyDown(Input.KEY_UP)) {
             super.setDirection(0);
@@ -163,7 +133,6 @@ public class Hero extends Personnage {
     public void removePnj() {
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
     }
-
     /**
      *
      * @param lesEnnemis
@@ -172,10 +141,10 @@ public class Hero extends Personnage {
         this.lesEnnemis = lesEnnemis;
     }
 
+
     public void addObjets(List<Objet> lesObjets) {
         this.lesObjets = lesObjets;
     }
-
     public void removeObjets() {
         this.lesObjets = new ArrayList<Objet>();
     }
@@ -210,9 +179,6 @@ public class Hero extends Personnage {
 
             boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unObjet.getBoundingBox());
             if(collision) {
-                if(unObjet.containStoryElement())
-                    unObjet.storyDone();
-
                 if(unObjet instanceof ObjetMessage) {
                     ((ObjetMessage) unObjet).setParle(true);
                 }

@@ -137,7 +137,7 @@ public class BatailleControlle implements InputProviderListener {
 			InterStateComm.getLeHero().setExperience(ennemi.getExperience() + InterStateComm.getLeHero().getExperience());
 			
 			// on check s'il y a level up
-			levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience());
+			levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience(), InterStateComm.getLeHero());
 			
 
 			mode = BatailleCommande.NONE;

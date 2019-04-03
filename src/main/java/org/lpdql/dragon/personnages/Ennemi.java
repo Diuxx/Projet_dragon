@@ -112,6 +112,7 @@ public class Ennemi extends Personnage {
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, 0);
 	}
 
+
 	/**
 	 *
 	 * @param delta
