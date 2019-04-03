@@ -188,6 +188,9 @@ public class Hero extends Personnage {
        for(PersonnageNonJoueur unPnj : lesPnj) {
            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unPnj.getBoundingBox());
            if(collision) {
+               if(unPnj.containStoryElement())
+                   unPnj.storyDone();
+
                unPnj.setParle();
                return true;
            }

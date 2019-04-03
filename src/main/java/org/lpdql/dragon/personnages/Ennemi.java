@@ -1,5 +1,7 @@
 package org.lpdql.dragon.personnages;
 
+import org.lpdql.dragon.interfaces.StoryElement;
+import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.system.Direction;
 import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.Color;
@@ -15,7 +17,12 @@ import java.util.List;
  *
  * @author: Diuxx
  */
-public class Ennemi extends Personnage {
+public class Ennemi extends Personnage implements StoryElement {
+
+	/**
+	 * That a pointer to a Story Element
+	 */
+	private Story storyElement;
 
 	// --
 	private float timeSinceTrigger = 0;
@@ -323,5 +330,44 @@ public class Ennemi extends Personnage {
 	}
 	public void setMaxHP(int niveau) {
 		this.maxHP = niveau * 50.0 + 400;
+	}
+
+	/**
+	 * This class ends a story element if it exist.
+	 */
+	@Override
+	public void storyDone() {
+		// --
+		if(this.storyElement == null)
+			return;
+
+		this.storyElement.done();
+	}
+
+	/**
+	 * fill the pointer if needed
+	 * @param element
+	 */
+	@Override
+	public void setStoryElement(Story element) {
+		this.storyElement = element;
+	}
+
+	/**
+	 * return {@code true} if storyElement is not Empty
+	 * @return
+	 */
+	@Override
+	public boolean containStoryElement() {
+		return (this.storyElement != null);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public Story getStoryElement() {
+		return this.storyElement;
 	}
 }

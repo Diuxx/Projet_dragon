@@ -52,4 +52,9 @@ public class ScenarioEnd extends Scenario {
     protected void chargerMainMap(Carte map) {
 
     }
+
+    @Override
+    public void update(Carte map) {
+
+    }
 }

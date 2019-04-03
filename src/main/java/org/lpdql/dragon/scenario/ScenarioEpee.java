@@ -4,6 +4,8 @@ package org.lpdql.dragon.scenario;
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
+import org.lpdql.dragon.personnages.ennemis.Squelette;
+import org.lpdql.dragon.system.Direction;
 import org.lpdql.dragon.system.EcranJeu;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
@@ -56,7 +58,11 @@ public class ScenarioEpee extends Scenario {
         if(pLettre != null) {
             // we should do a letter object instead of (ObjetMessage) !
             ObjetMessage lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
-            lettre.setMessage("blablabla#blablabla\nblablabla");
+            lettre.setMessage(
+                "Si tu lis cette lettre c'est que les 4 royaumes font faces à une grande menace#" +
+                "Tu va devoir les explorer et obtenir l'artéfact présent dans chacun d'eux\n" +
+                "une fois cela fait rend toi au chateau et élimine le vil Roi Dragon qui menace ce monde\n"
+            );
 
             // set a story element who should be donne if interact
             lettre.setStoryElement(Story.LIRELETTRE);
@@ -70,22 +76,67 @@ public class ScenarioEpee extends Scenario {
     @Override
     protected void chargerMainMap(Carte map) {
         Point pServante = findPnjPosition(map, "servante");
-        if(pServante != null) {
-            PersonnageNonJoueur pnjServante = new PersonnageNonJoueur("Servante", pServante, 32, 32);
-            pnjServante.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 3, 4,  4);
-            pnjServante.addDialogue("blablabla !#et blablablabla\nblablablabla");
-            super.getLesPnj().add(pnjServante);
-        }
+        if(null == pServante)
+            return;
+
+        PersonnageNonJoueur pnjServante = new PersonnageNonJoueur("Servante", pServante, 32, 32);
+        pnjServante.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 3, 4,  4);
+
+        pnjServante.addDialogue("Tu devrais commencer par te rendre au pays de l'Epee#Leur trésor te sera utile pour obtenir les 3 autres.");
+        if(!Story.TUTOPARLEROLDMAN.getState())
+            pnjServante.addDialogue("Il y a un vielle homme la bas... il veut te parler !#Apparement c'est important..");
+
+        super.getLesPnj().add(pnjServante);
+
+        Point pChasseur = findPnjPosition(map, "old_man");// 362 870
+        PersonnageNonJoueur pnjOldMan = new PersonnageNonJoueur("Old man", pChasseur, 32, 32);
+        pnjOldMan.addDialogue("Prends cette épée et va tuer ce monstre pour t'entrainer..");
+        // --
+        pnjOldMan.setStoryElement(Story.TUTOPARLEROLDMAN);
+        super.getLesPnj().add(pnjOldMan);
+
 
         if(!Story.TUTOEND.getState()) {
+
+            if(!Story.TUTOPARLEROLDMAN.getState() /*&& map.getLastMapName().equals(""))*/)
+                pnjServante.setParle();
+
+            if(!Story.TUTOFIRSTENNEMIWASKILLED.getState()) {
+                Story.TUTOPARLEROLDMAN.setState(false);
+                Story.TUTOSPAWNENNEMI.setState(false);
+            }
+
             loadTuto();
         }
+    }
+
+    @Override
+    public void update(Carte map) {
+        if(Story.TUTOPARLEROLDMAN.getState())
+        {
+            if(!Story.TUTOSPAWNENNEMI.getState()) {
+                Point pFirstEnnemi = findPnjPosition(map, "first_ennemi");
+                Squelette firstEnnemi = new Squelette(pFirstEnnemi, Direction.VERTICAL);
+                firstEnnemi.setStoryElement(Story.TUTOFIRSTENNEMIWASKILLED);
+                super.getLesEnnemis().add(firstEnnemi);
+
+                Story.TUTOSPAWNENNEMI.done();
+            }
+        }
+
+    }
+
+    private void checkEvents() {
     }
 
     /**
      *
      */
     private void loadTuto() {
+
+
+
+
 
     }
 
@@ -105,7 +156,6 @@ public class ScenarioEpee extends Scenario {
 
         // autorization
         autorization = autorization && readLetterBeforLeave;
-
         return autorization;
     }
 

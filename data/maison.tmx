@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="8">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="8">
  <tileset firstgid="1" source="zelda01.tsx"/>
  <tileset firstgid="481" source="zelda_house.tsx"/>
+ <tileset firstgid="770" source="solide16x16.tsx"/>
  <layer id="1" name="background1" width="16" height="16">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACo3SSVLCUBCA4RgIRA7AUKVHkCPoUlgwLIEF6BbZwBEEj6DHQTwBwwmYYe0AuPO3yCteveqELL6q1510uvtVZheWNccihCvbsq7t43mDLT7xhe8QbqjN2sfzAb+IEEeRRAppZOAghjhcL35G14svkbBP9fp7jlDfxzsG+BDq9Z5qBlfLDTHCGBOh3hV6ZrS9pphh/n9/Z+Y395Zisz5t9JPuQD1/wQMetXr1bpj+b2ijI/Q35/DLq/lvcYee0M/cxfG+oe9fQhmvPn39YvP+gvZX/0w/xP1L+zbxhJbQ/x455AMsscJayxVQRAVV1AL8YIe9lqujgT8Q1m+xAAQAAA==
@@ -17,9 +18,9 @@
    H4sIAAAAAAAACmNgGAWjYBSMVAAALq+17wAEAAA=
   </data>
  </layer>
- <layer id="4" name="solide" width="16" height="16" visible="0">
+ <layer id="4" name="solide" width="16" height="16" opacity="0.27">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAWjYBSMVAAALq+17wAEAAA=
+   H4sIAAAAAAAACmNiZmBgGiSYnUiMSz8+IABVw0+mfmLcjw+IU6ifGLeM6h9Y/RxE4oHOZ8gYAG2y+UgABAAA
   </data>
  </layer>
  <layer id="5" name="position" width="16" height="16">

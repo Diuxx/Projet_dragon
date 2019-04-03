@@ -52,4 +52,9 @@ public class ScenarioBouclier extends Scenario {
     protected void chargerMainMap(Carte map) {
 
     }
+
+    @Override
+    public void update(Carte map) {
+
+    }
 }

@@ -31,12 +31,12 @@ public class Carte {
      * @throws SlickException
      */
     public Carte(String fileMap) throws SlickException {
+
+        if(this.nomMap != null)
+            this.dernierMap = this.nomMap;
+
         this.map = new TiledMap(fileMap);
         this.nomMap = fileMap.split("/")[fileMap.split("/").length - 1].split("\\.")[0];
-    }
-
-    public String getNomMap() {
-        return this.nomMap;
     }
 
     /**
@@ -112,4 +112,12 @@ public class Carte {
         map.render(0, 0, layer); // we can do somes calcule here !
     }
 
+
+    public String getLastMapName() {
+        return this.dernierMap != null ? this.dernierMap : "";
+    }
+
+    public String getNomMap() {
+        return this.nomMap;
+    }
 }
