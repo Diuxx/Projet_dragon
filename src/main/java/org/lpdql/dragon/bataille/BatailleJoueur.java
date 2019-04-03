@@ -49,7 +49,7 @@ public class BatailleJoueur {
 	public float getATK() {
 		switch (InterStateComm.getNiveauDuJeu()) {
 		case Difficulty.FACILE:
-			return ((int) (InterStateComm.getLeHero().getLevel() * 5.0 + 30));
+			return ((int) (InterStateComm.getLeHero().getLevel() * 5.0 + 35));
 		case Difficulty.DIFFICILE:
 			return ((int) (InterStateComm.getLeHero().getLevel() * 4.0 + 25));
 		case Difficulty.TRES_DIFFICILE:
