@@ -24,7 +24,8 @@ public class Hero extends Personnage {
     private int experience;
     private int niveau;
     private int currentGold;
-
+    
+    private boolean lettre;
     private boolean artEpee;
     private boolean artBouclier;
     private boolean artFeu;
@@ -176,6 +177,10 @@ public class Hero extends Personnage {
             if(collision) {
                 if(unObjet instanceof ObjetMessage) {
                     ((ObjetMessage) unObjet).setParle(true);
+                    if(unObjet.getNom() == "Lettre") {
+                    	this.setLettre();
+                    	this.lesPnj.get(0).addDialogue("Tu devrais commencer par te rendre au pays de l'Epee#Leur trésor te sera utile pour obtenir les 3 autres.");
+                    }
                 }
                 return true;
             }
@@ -244,7 +249,12 @@ public class Hero extends Personnage {
     public void setCurrentGold(int currentGold) {
         this.currentGold = currentGold;
     }
-
+    
+    public void setLettre() {
+    	this.lettre = true;
+    	System.out.println("Lettre trouvée");
+    }
+    
     public int getExperience() {
         return this.experience;
     }
@@ -252,7 +262,7 @@ public class Hero extends Personnage {
     public void setExperience(int experienceGagne) {
         experience = experienceGagne;
     }
-
+    
     public int getLevel() {
         return this.niveau;
     }
@@ -272,7 +282,9 @@ public class Hero extends Personnage {
     public boolean getArtVoler() {
         return artVoler;
     }
-
+    public boolean isLettre() {
+    	return this.lettre;
+    }
     public boolean isArtEpee() {
         return artEpee;
     }
@@ -304,7 +316,7 @@ public class Hero extends Personnage {
     public void setArtVoler(boolean artVoler) {
         this.artVoler = artVoler;
     }
-
+    
     public void changerMusic(String musique) throws SlickException {
         music = new Music(musique);
         if (this.getMuted()==false) {

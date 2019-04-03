@@ -91,13 +91,23 @@ public class Scenario {
 
         if(map.getFileName().equals("maison")) {
             System.err.println("Scenario : maison !(epe)");
-
+            ObjetMessage lettre;
             Point pLettre = findObjetPosition(map, "lettre");
-            if(pLettre != null) {
+            if(pLettre != null && !InterStateComm.getLeHero().isLettre()) {
                 // we should do a letter object instead of (ObjetMessage) !
-                ObjetMessage lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
-                lettre.setMessage("blablabla#blablabla\nblablabla");
-                this.lesObjets.add(lettre);
+                lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
+                lettre.setMessage("Si tu lis cette lettre c'est que les 4 royaumes font faces à une grande menace#Tu va devoir les explorer et obtenir l'artéfact présent dans chacun d'eux\nune fois cela fait rend toi au chateau et élimine le vil Roi Dragon qui menace ce monde");
+               this.lesObjets.add(lettre);
+            }
+            Point pServante = findPnjPosition(map, "servante");
+            if(pServante != null) {
+                PersonnageNonJoueur pnjServante = new PersonnageNonJoueur("Servante", pServante, 32, 32);
+                pnjServante.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 3, 4,  4);
+                if(!InterStateComm.getLeHero().isLettre())
+                	pnjServante.addDialogue("Le jour où il t'a confié à moi, ton père m'a aussi donné une lettre qu'il m'a dit de te donner lorsque tu seras\nsuffisament grand#et je pense que ce moment est venu. Elle se trouve sur la table, va donc la lire. ");
+                else
+                	pnjServante.addDialogue("Tu devrais commencer par te rendre au pays de l'Epee#Leur trésor te sera utile pour obtenir les 3 autres.");
+                lesPnj.add(pnjServante);
             }
         }
 
@@ -107,10 +117,22 @@ public class Scenario {
             if(pServante != null) {
                 PersonnageNonJoueur pnjServante = new PersonnageNonJoueur("Servante", pServante, 32, 32);
                 pnjServante.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 3, 4,  4);
-                pnjServante.addDialogue("blablabla !#et blablablabla\nblablablabla");
+                if(!InterStateComm.getLeHero().isArtEpee())
+                	pnjServante.addDialogue("N'oublie pas, tu dois commencer par te rendre au pays de l'Epée.");
+                else if(InterStateComm.getLeHero().isArtEpee() && !InterStateComm.getLeHero().isArtBouclier())
+                	pnjServante.addDialogue("Félicitation pour l'obtention de l'épée sacrée.\nTu va désormais devoir te rendre au pays du bouclier afin de pouvoir te protéger face à ce qu'il t'attends dans les 2 autres pays.");
+                else
+                	pnjServante.addDialogue("Devs : Bon... On a pas encore géré les phrases après le bouclier...\n Laissez nous tranquille !");
                 lesPnj.add(pnjServante);
+            	}
             }
-        }
+             Point pVieilHomme = findPnjPosition(map, "old_man");
+             if(pVieilHomme != null) {
+                 PersonnageNonJoueur pnjVieilHomme = new PersonnageNonJoueur("Old_Man", pVieilHomme, 32, 32);
+                 pnjVieilHomme.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 0, 1,  4);
+                 pnjVieilHomme.addDialogue("Prends cette épée et va tuer ce monstre pour t'entrainer.");
+                 lesPnj.add(pnjVieilHomme);
+             }
     }
 
     public List<Ennemi> getLesEnnemis() {
