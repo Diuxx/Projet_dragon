@@ -36,7 +36,7 @@ public final class InterStateComm {
      * Constructeur de l'objet
      */
     private InterStateComm() {
-        // La présence d'un constructeur privé supprime le constructeur public/
+        // La présence d'un constructeur privé supprime le constructeur public
         super();
     }
 
