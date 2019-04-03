@@ -19,7 +19,7 @@ public final class InterStateComm {
     // Niveau du jeu
     private static int niveauDuJeu;
 
-    public int getNiveauDuJeu() {
+    public static int getNiveauDuJeu() {
 		return niveauDuJeu;
 	}
 

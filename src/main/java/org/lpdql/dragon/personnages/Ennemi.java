@@ -1,5 +1,7 @@
 package org.lpdql.dragon.personnages;
 
+import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.lpdql.dragon.system.Direction;
 import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.Color;
@@ -81,6 +83,18 @@ public class Ennemi extends Personnage {
 		this.niveau = niveau;
 		super.setEnnemiStatistques(niveau);
 		this.experience = niveau * 5 + 25; // test
+		
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.experience = niveau * 5 + 50;
+			break;
+		case Difficulty.DIFFICILE:
+			this.experience = niveau * 5 + 40;
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.experience = niveau * 5 + 20;
+			break;
+		}
 
         /**
          * L'ennemi quand il est crée est vivant ! (visible) */

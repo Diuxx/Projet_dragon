@@ -249,13 +249,13 @@ public class Personnage {
 
 	// Level UP HERO
 	public void setHeroStatistques(int niveau) {
-		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 50.0 + 400);
+		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 50.0 + 250);
 		System.out.println("Hero --------------------------------> " + this.pointDeVie);
 	}
 
 	// Level UP Ennemi
 	public void setEnnemiStatistques(int niveau) {
-		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 50.0 + 250);
+		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 30.0 + 150);
 		System.out.println("Ennemi --------------------------------> " + this.pointDeVie);
 	}
 
