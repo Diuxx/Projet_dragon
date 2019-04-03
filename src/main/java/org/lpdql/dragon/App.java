@@ -33,6 +33,7 @@ public class App {
         System.setProperty(LIBRARY_PATH, javaLibraryPath + File.pathSeparatorChar + dir.getAbsolutePath());
 
         resetJavaLibraryPath();
+        
     }
     
     /**
