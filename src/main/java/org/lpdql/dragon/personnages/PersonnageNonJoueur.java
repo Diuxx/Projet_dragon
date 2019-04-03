@@ -1,6 +1,8 @@
 package org.lpdql.dragon.personnages;
 
+import org.lpdql.dragon.interfaces.StoryElement;
 import org.lpdql.dragon.jeu.Message;
+import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.system.Point;
 
 /**
@@ -8,12 +10,21 @@ import org.lpdql.dragon.system.Point;
  *
  * @author: Diuxx
  */
-public class PersonnageNonJoueur extends Personnage {
+public class PersonnageNonJoueur extends Personnage implements StoryElement {
 
-    // dialogue entre le personnage et le pnj
+    /**
+     * That a pointer to a Story Element
+     */
+    private Story storyElement;
+
+    /**
+     * Dialogue entre le personnage et le pnj
+     */
     private Message dialogue;
 
-    // detecte si le personnage parle
+    /**
+     * detecte si le personnage parle
+     */
     private boolean parle;
 
     /**
@@ -40,6 +51,45 @@ public class PersonnageNonJoueur extends Personnage {
     public void addDialogue(String text) {
         this.dialogue = new Message();
         this.dialogue.add(text);
+    }
+
+    /**
+     * This class ends a story element if it exist.
+     */
+    @Override
+    public void storyDone() {
+        // --
+        if(this.storyElement == null)
+            return;
+
+        this.storyElement.done();
+    }
+
+    /**
+     * fill the pointer if needed
+     * @param element
+     */
+    @Override
+    public void setStoryElement(Story element) {
+        this.storyElement = element;
+    }
+
+    /**
+     * return {@code true} if storyElement is not Empty
+     * @return
+     */
+    @Override
+    public boolean containStoryElement() {
+        return (storyElement != null);
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Story getStoryElement() {
+        return null;
     }
 
     public Message getDialogue() {

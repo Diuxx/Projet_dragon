@@ -624,6 +624,10 @@ public class Scenario {
                h.getY() > ygate && h.getY() < ygate + hgate;
     }
 
+    public void update(Carte map) {
+        /* do somes mushibuchy */
+    }
+
     /**
      *
      * @return

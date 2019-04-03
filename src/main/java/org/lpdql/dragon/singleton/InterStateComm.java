@@ -3,7 +3,8 @@ package org.lpdql.dragon.singleton;
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
-import org.lpdql.dragon.system.Difficulty;
+import org.lpdql.dragon.scenario.Story;
+import org.lpdql.dragon.system.EcranJeu;
 
 /**
  * Class InterStateComm (communication entre les States du jeu).
@@ -13,22 +14,10 @@ import org.lpdql.dragon.system.Difficulty;
 public final class InterStateComm {
 
     // screen width x height
-    public static final int gX = 1200;
-    public static final int gY = 600;
-    
-    // Niveau du jeu
-    private static int niveauDuJeu;
+    public final static int gX = 1200;
+    public final static int gY = 600;
 
-    public int getNiveauDuJeu() {
-		return niveauDuJeu;
-	}
-
-	public static void setNiveauDuJeu(int niveauDuJeu) {
-		InterStateComm.niveauDuJeu = niveauDuJeu;
-	}
-
-
-	// volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
+    // volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
     // mais pas encore instancié :
     // https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)
     private static volatile Hero leHero = null;
@@ -47,7 +36,7 @@ public final class InterStateComm {
      * Constructeur de l'objet
      */
     private InterStateComm() {
-        // La présence d'un constructeur privé supprime le constructeur public
+        // La présence d'un constructeur privé supprime le constructeur public/
         super();
     }
 
@@ -88,6 +77,15 @@ public final class InterStateComm {
     public final static void tuerUnEnnemi() {
         if (InterStateComm.unEnnemi != null) {
             System.err.println("Un ennemi est sur le point de mourir !");
+
+            if(unEnnemi.containStoryElement()) {
+                EcranJeu.lesMessages.add(unEnnemi.getStoryElement().getMessage());
+                unEnnemi.storyDone();
+                if(unEnnemi.getStoryElement() == Story.TUTOFIRSTENNEMIWASKILLED) {
+                    Story.TUTOEND.done();
+                }
+            }
+
             InterStateComm.unEnnemi.setMort(true);
             InterStateComm.unEnnemi = null;
         }

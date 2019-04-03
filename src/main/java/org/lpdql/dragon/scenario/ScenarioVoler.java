@@ -53,4 +53,9 @@ public class ScenarioVoler extends Scenario {
 
     }
 
+    @Override
+    public void update(Carte map) {
+
+    }
+
 }

@@ -57,7 +57,7 @@ public class Message {
         String[] listDeChaine = text.split("#");
         for(String chaine : listDeChaine)
         {
-            this.text.add(chaine + " (appuyez sur [w] pour continuer...)");
+            this.text.add(chaine + "(appuyez sur [w] pour continuer...)");
         }
         this.posisition = 0;
     }

@@ -3,18 +3,20 @@ package scenario;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lpdql.dragon.MyFunction;
+import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.scenario.Scenario;
 import org.lpdql.dragon.system.Direction;
-
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.io.File;
+
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 import static org.lpdql.dragon.App.addToJavaLibraryPath;
 import static org.lpdql.dragon.MyFunction._integration;
-
-import org.lpdql.dragon.MyFunction;
 
 public class ScenarioTest {
 
@@ -47,27 +49,7 @@ public class ScenarioTest {
     }
 
     @Test
-    public void testtest() throws InterruptedException {
-        final String[] test = {""};
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                test[0] = "test";
-            }
-        });
-        t.start();
-        t.join();
-        assertEquals("test", test[0]);
-    }
-
-
-    @Test
-    public void findEnnemisWithOneEnnemi() throws InterruptedException, SlickException {
+    public void findEnnemisWithOneEnnemi() {
 
         MyFunction myFunction = new MyFunction() {
             @Override
@@ -81,7 +63,13 @@ public class ScenarioTest {
             }
         };
 
-        String[] result = _integration(myFunction);
-        assertEquals("1", result[0]);
+        try {
+
+            String[] result = _integration(myFunction);
+            assertEquals("1", result[0]);
+
+        } catch(SlickException e) {
+            fail("SlickException.class should not be raised");
+        }
     }
 }

@@ -52,4 +52,9 @@ public class ScenarioFeu extends Scenario {
     protected void chargerMainMap(Carte map) {
 
     }
+
+    @Override
+    public void update(Carte map) {
+
+    }
 }

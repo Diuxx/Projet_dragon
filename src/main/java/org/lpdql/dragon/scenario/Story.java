@@ -7,14 +7,16 @@ import org.lpdql.dragon.system.MyStdOut;
  *
  */
 public enum Story {
+    TUTOPARLEROLDMAN("speak_to_old_man", "parler au vieux monsieur", "Un vieux monsieur a besoin de vous parler..", false),
+    TUTOSPAWNENNEMI("tuto_spawn_ennemi", "Apparition du premier ennemi", "Un ennemi est apparu tu dois le tuer..", false),
+    TUTOFIRSTENNEMIWASKILLED("tuto_first_kill", "Le premier ennemi est mort", "Bien joué vous avez tué votre premier ennemi..", false),
+
     LIRELETTRE("lire_lettre", "Lecture de la lettre", "Vous devez lire la lettre avant de sortir..", false),
     TUTOEND("fin_tuto", "Fin du tuto jeu", "Le tuto doit être terminé pour poursuivre..", false),
-    TUTOFIRSTKILL("tuto_first_kill", "Premier ennemi tué lors du tuto", "", false),
     ACTIVATEEPEE("activation_monde_epe", "activation du monde de l'epée", "", false),
     ACTIVATEBOUCLIER("activation_monde_bouclier", "activation du monde des bouclier", "Le scenario épe doit être terminé pour poursuivre..", false),
     ACTIVATEFEU("activation_monde_feu", "activation du monde de feu", "Le scenario bouclier doit être terminé pour poursuivre..", false),
-    ACTIVATEPOUVOIR("activation_monde_pouvoir", "activation du monde des pouvoir", "Le scenario Feu doit être terminé pour poursuivre..", false),
-    USERCANSTART("user_can_start", "le joueur peut sortir de la maison", "", false);
+    ACTIVATEPOUVOIR("activation_monde_pouvoir", "activation du monde des pouvoir", "Le scenario Feu doit être terminé pour poursuivre..", false);
 
     /**
      *
