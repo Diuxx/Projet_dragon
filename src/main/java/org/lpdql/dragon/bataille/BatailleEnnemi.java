@@ -65,11 +65,11 @@ public class BatailleEnnemi {
 	public float getATK() {
 		switch (InterStateComm.getNiveauDuJeu()) {
 		case Difficulty.FACILE:
-			return ((int) (ennemi.getNiveau() * 3.0 + 15));
+			return ((int) (ennemi.getNiveau() * 5.0 + 15));
 		case Difficulty.DIFFICILE:
-			return ((int) (ennemi.getNiveau() * 4.0 + 20));
+			return ((int) (ennemi.getNiveau() * 6.0 + 20));
 		case Difficulty.TRES_DIFFICILE:
-			return ((int) (ennemi.getNiveau() * 5.0 + 20));
+			return ((int) (ennemi.getNiveau() * 7.0 + 25));
 		default:
 			return 0;
 		}
