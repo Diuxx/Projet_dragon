@@ -35,12 +35,17 @@ public class BatailleJoueur {
 	}
 	
 	public float getBarreVie() {
+		System.out.println("Hero Vie ---------= " + InterStateComm.getLeHero().getPointDeVieActuel());
 		return InterStateComm.getLeHero().getPointDeVieActuel();
 	}
 	
 	public void setBarreVie(int degat) {
 		InterStateComm.getLeHero().setPointDeVieActuel(InterStateComm.getLeHero().getPointDeVieActuel()-degat);
 	}
+	public float getATK() {
+		return ((int) (InterStateComm.getLeHero().getLevel() * 5.0 + 20));
+	}
+	
 	public void addAnimationListener(AnimationListener assignDamage, AnimationListener endAttack) {
 		  this.animation.addListener(500, assignDamage);
 		  this.animation.addListener(1000, endAttack);
