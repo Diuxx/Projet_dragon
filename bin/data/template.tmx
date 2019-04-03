@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="87" height="71" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="4">
+ <tileset firstgid="1" source="zelda01.tsx"/>
+ <layer id="1" name="background1" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3RsQ2AMADAsHJB4RDg/+/oER2siCGS98xjjHN1rebvrb5Xz+r9vd3C36qFv1ULf6sW/lYt/K1a+Fu18Ldq4W/Vwt+qhb9VC3+rFv5WLfytWvhbtfC3auFv1cLfqoW/VQt/qxb+Vi38rVr4W7Xwt2rhb9XC36qFv1ULf6sW/lYt/K1a+Fu18Ldq4W/Vwt+qhb9VC3+rFv5WLfytWvhbtfC3auFv1cLfqoW/VQt/qxb+Vi38rVr4W7Xwt2rhb9XC36qFv1ULf6sW/lYt/K1a+Fu18Ldq4W/Vwt+qhb9VC3+rFv5WLfytWvhbtfC3auFv1cLfqoW/VQt/qxb+Vi38rfoDopLri4RgAAA=
+  </data>
+ </layer>
+ <layer id="2" name="background2" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GA5SCSjhGAAAA==
+  </data>
+ </layer>
+ <layer id="3" name="overground1" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GA5SCSjhGAAAA==
+  </data>
+ </layer>
+ <layer id="4" name="solide" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GA5SCSjhGAAAA==
+  </data>
+ </layer>
+ <layer id="5" name="position" width="87" height="71">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GA5SCSjhGAAAA==
+  </data>
+ </layer>
+ <objectgroup id="6" name="map-teleport">
+  <object id="2" name="dragon" type="change-map" x="600" y="0" width="113" height="52"/>
+  <object id="3" name="dragon" type="position-map" x="652" y="75" width="16" height="16"/>
+ </objectgroup>
+</map>
