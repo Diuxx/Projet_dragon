@@ -79,7 +79,7 @@ public class Ennemi extends Personnage {
 		 * Statistiques des personnages.ennemis */
 		this.niveau = niveau;
 		super.setEnnemiStatistques(niveau);
-		this.experience = 40; // test
+		this.experience = niveau * 4 + 15; // test
 
         /**
          * L'ennemi quand il est crée est vivant ! (visible) */
