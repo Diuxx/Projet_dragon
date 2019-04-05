@@ -5,10 +5,8 @@ import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
 import org.lpdql.dragon.personnages.ennemis.Squelette;
-import org.lpdql.dragon.system.Direction;
-import org.lpdql.dragon.system.EcranJeu;
-import org.lpdql.dragon.system.Point;
-import org.lpdql.dragon.system.Taille;
+import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.*;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -90,15 +88,19 @@ public class ScenarioEpee extends Scenario {
 
         Point pChasseur = findPnjPosition(map, "old_man");// 362 870
         PersonnageNonJoueur pnjOldMan = new PersonnageNonJoueur("Old man", pChasseur, 32, 32);
-        pnjOldMan.addDialogue("Prends cette épée et va tuer ce monstre pour t'entrainer..");
-        // --
+
+        pnjOldMan.addDialogue("aaahhh ! il y a plein de monstres.. tues les tu gagnera en puissance !");
+        if(!Story.TUTOEND.getState())
+            pnjOldMan.addDialogue("Prends cette épée et va tuer ce monstre pour t'entrainer..");
         pnjOldMan.setStoryElement(Story.TUTOPARLEROLDMAN);
         super.getLesPnj().add(pnjOldMan);
 
 
         if(!Story.TUTOEND.getState()) {
 
-            if(!Story.TUTOPARLEROLDMAN.getState() /*&& map.getLastMapName().equals(""))*/)
+            MyStdOut.write(MyStdColor.GREEN, "<" + getClass().getSimpleName() + ">" + map.getLastMapName());
+
+            if(!Story.TUTOPARLEROLDMAN.getState() && map.getLastMapName().equals("maison"))
                 pnjServante.setParle();
 
             if(!Story.TUTOFIRSTENNEMIWASKILLED.getState()) {
@@ -122,6 +124,20 @@ public class ScenarioEpee extends Scenario {
 
                 Story.TUTOSPAWNENNEMI.done();
             }
+        }
+        if(Story.TUTOEND.getState() && !Story.GAMESTART.getState())
+        {
+            Point pCheckPoint = map.getCheckPoint();
+            //InterStateComm.getLeHero().se
+
+            MyStdOut.write(MyStdColor.YELLOW, "(" + map.getCheckPoint().getX() + " " + map.getCheckPoint().getY() + ")");
+            InterStateComm.getLeHero().setPosition(map.getCheckPoint().getX(), map.getCheckPoint().getY());
+
+            // this.charger("maison");
+            // this.loadMap(map, int gateId, Camera camera);
+            super.chargerMap(map);
+
+            Story.GAMESTART.done();
         }
 
     }

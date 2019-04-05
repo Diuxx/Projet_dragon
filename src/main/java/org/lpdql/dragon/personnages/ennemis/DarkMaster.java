@@ -25,6 +25,7 @@ public class DarkMaster extends Ennemi {
     public DarkMaster(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages, int niveau) {
         super("Dark Master", x, y, taille.getLargeur(), taille.getLongeur(),
                 50, direction, timer, vitesse, ennemiImages, niveau);
+
         this.chargerImage();
     }
     
@@ -35,7 +36,10 @@ public class DarkMaster extends Ennemi {
     public DarkMaster(Point p, Direction direction) {
         this(p.getX(), p.getY(), DarkMaster.SIZE, direction, DarkMaster.TIMER, DarkMaster.VITESSE, DarkMaster.ENNEMI_IMAGE, DarkMaster.NIVEAU);
     }
-    
+
+    public DarkMaster(Point p, Direction direction, boolean charger) {
+        this(p.getX(), p.getY(), DarkMaster.SIZE, direction, DarkMaster.TIMER, DarkMaster.VITESSE, DarkMaster.ENNEMI_IMAGE, DarkMaster.NIVEAU);
+    }
 
     private void chargerImage() {
         this.loadAnimation(Ressources.spriteSheet_Ennemis, 0, 1,  3);

@@ -523,6 +523,16 @@ public class Scenario {
 
     /**
      *
+     */
+    protected Carte chargerMap(Carte map) {
+
+        this.charger(map);
+
+        return null;
+    }
+
+    /**
+     *
      * @param carte
      * @param gateId
      */
@@ -563,7 +573,7 @@ public class Scenario {
      *
      * @see TiledMap
      */
-    private void loadMap(Carte carte, int gateId, Camera camera) throws SlickException {
+    protected void loadMap(Carte carte, int gateId, Camera camera) throws SlickException {
 
         int changementMapGroupId = 0;
         String lastMapName = carte.getFileName();

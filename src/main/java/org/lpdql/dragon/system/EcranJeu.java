@@ -210,7 +210,6 @@ public class EcranJeu extends BasicGameState {
         scenario.detectMapChanged(this.carte, this.camera);
         scenario.update(this.carte); // --
 
-
         // updating position + collisions
         InterStateComm.getLeHero().controle(gameContainer);
         InterStateComm.getLeHero().mouvement(delta, carte.getMap());
