@@ -66,6 +66,10 @@ public class Carte {
      * @param {@code String} directory where is the map
      */
     public void changeMap(String dest) throws SlickException {
+
+        if(this.nomMap != null)
+            this.dernierMap = this.nomMap;
+
         this.nomMap = dest.split("/")[dest.split("/").length - 1].split("\\.")[0];
         this.map = new TiledMap(dest);
     }
