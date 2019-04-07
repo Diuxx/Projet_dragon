@@ -24,77 +24,84 @@ import static org.lpdql.dragon.system.EcranJeu.lesMessages;
 public class Ennemi extends Personnage implements StoryElement {
 
 	/**
-	 * This variable is a pointer to a Story Element
-	 * a story element can be activated with
-	 * some methods.
+	 * this variable points to a Story Element
+	 * a story can be activated or not
 	 * @see StoryElement
 	 */
 	private Story storyElement;
 
 	/**
-	 * This variable is a timer for improve Ennemi movement
-	 * mouvement.
+	 * this varibale manages the movement of an enemy
 	 */
 	private float timeSinceTrigger = 0f;
 
 	/**
-	 * The actual direction of the ennemi
+	 * these variables manages the directions that the enemy can take
 	 * @see Direction
 	 */
-	private Direction direction;
-	private Direction directionTransition;
+	private Direction direction, directionTransition;
 
 	/**
-	 * The position of the current object on tiled map
+	 * the starting position saved from the enemy
+	 * it's not the variables managing the movement
 	 */
 	private float x, y;
 
 	/**
-	 * This variable is the time enlapsed before
-	 * Tthe object switch direction.
+	 * this variable represents the time elapsed before changing direction
 	 */
 	private int tempsChangerDirection;
 
 	/**
-	 * Personnage who can collid with this instance of Ennemi
+	 * objects that can collide with an enemy
 	 * @see Personnage
 	 */
 	private List<Personnage> lesPersonnages;
 
 	/**
-	 * Status of this ennemi. if element can interact with?
-	 * {@code true} if showable
-	 * {@code false} if not showable
+	 * Enemy states. if element can interact with?
+	 * {@code true} if it exists
+	 * {@code false} if it not exists
 	 */
 	private boolean mort;
 
 	/**
-	 * {@code true} when an instance of Ennemi want to fight.
+	 * just before the start of a fight this variable goes to {@code true}
 	 */
 	private boolean veutCombattre;
+
+	/**
+	 * if the hero collides, to post a message you must request a fight
+	 * when it's the enemy that collides not need
+	 */
 	private boolean requestFight;
 
-	private Image ennemiImages;
-    private Image imageCombat;
-	private int niveau;
+	/**
+	 * image representing the enemy
+	 */
+	private Image ennemiImages, imageCombat;
 
+	/**
+	 * Enemy statistics
+	 */
+	private int niveau;
 	private double atk;
 	private double maxHP;
 	protected int experience;
 
 	/**
+	 * this variable manage the aggressiveness of an enemy
 	 * by default it set to true for all ennemis
 	 * {@code false} considered as fiendly
 	 **/
 	private boolean friendly;
 
 	/**
-	 * L'ennemi peut ne plus être hostile et ne pas attaquer
-	 * Variables qui gère la durée durant laquel l'ennemi n'est
-	 * pas hostile
+	 * Variables that manages the duration during which the enemy is
+	 * not hostile
+	 * The enemy may no longer be hostile and not attack
 	 **/
-	private long friendlyTimer;
-	private long targetFriendlyTimer;
+	private long friendlyTimer, targetFriendlyTimer;
 
 	/**
 	 * This manage a timer who allows the enemy to move after a collision.
@@ -153,10 +160,17 @@ public class Ennemi extends Personnage implements StoryElement {
     }
 
 	/**
-	 * Surchage of constructor for do what we wanted to do.
-	 * @param nom Name of the Ennemi
-	 * @param pos Position on map (tiledMap)
-	 * @see Point
+	 * Construtor overload of Personnage without x and y
+	 * @param nom name of the current ennemi
+	 * @param pos abscissa and ordinate of the character on the map
+	 * @param w "w" width of current object
+	 * @param h "h" heigth of current object
+	 * @param pointDeVie max Life point of current
+	 * @param direction movement patern
+	 * @param t timer befor switch direction
+	 * @param vitesse speed of current object
+	 * @param ennemiImages drawable pic
+	 * @param niveau level of current
 	 */
 	public Ennemi(
 			String nom,
@@ -203,22 +217,24 @@ public class Ennemi extends Personnage implements StoryElement {
 	}
 
 	/**
-	 *
-	 * @param nom
-	 * @param position
-	 * @param width
-	 * @param height
+	 * Test constructor
+	 * @param nom Name of the current instance
+	 * @param position abscissa and ordinate of the character on the map
+	 * @param width character width on the map
+	 * @param height height of the character on the map
 	 */
 	public Ennemi(String nom, Point position, int width, int height) {
-		super(nom, position.getX(), position.getY(), width, height, 100, 0.1f);
+		this(nom, position.getX(), position.getY(), width, height, 100, Direction.IMMOBILE, 100, 0f, null, 1);
 	}
 
 	/**
-	 * This function manage the movement of an instance of this class.
-	 * Ennemi movement can be :
-	 * Random, Vertical, horizontal or immobile(static)
+	 * This function manage the movement of the character
+	 * HORIZONTAL = 0
+	 * VERTICAL = 1
+	 * RANDOM = 2
+	 * IMMOBILE = 3
 	 *
-	 * @param delta slick shared timer.
+	 * @param delta slick timer.
 	 *
 	 * @see Direction
 	 */
@@ -262,10 +278,10 @@ public class Ennemi extends Personnage implements StoryElement {
 	}
 
 	/**
-	 * This function manage the movement of an instance of this class.
+	 * This function manage the movement of the character
 	 *
-	 * @param delta slick shared timer.
-	 * @param map current map for collsition
+	 * @param delta slick timer.
+	 * @param map card on which the character evolves
 	 *
 	 * @see TiledMap
 	 */
@@ -289,10 +305,9 @@ public class Ennemi extends Personnage implements StoryElement {
 	}
 
 	/**
-	 * add to collision list a new Personnage
+	 * add a character to the character list for collisions
 	 *
 	 * @param unPersonnage instance of Personnage
-	 *
 	 * @see Personnage
 	 */
 	public void addCollision(Personnage unPersonnage) {
@@ -300,21 +315,15 @@ public class Ennemi extends Personnage implements StoryElement {
 	}
 
 	/**
-	 * Test if a collision is appened with Personnage list.
-	 * @param x next postion of current instance of Ennemi
-	 * @param y next position of current instance of Ennemi
+	 * test if a collision occurs with a character
+	 * @param x future position for collision management
+	 * @param y future position for collision management
 	 * @return {@code true} if a collision is detected {@code false} otherwise
 	 */
 	public boolean isCollisionPersonnage(float x, float y) {
 		for(Personnage p : lesPersonnages) {
 			boolean collision = new Rectangle(x - getCenterX(), y - getCenterY() - (getHeight() - getCenterY()), getWidth(), getHeight() + (getHeight() - getCenterY())).intersects(p.getBoundingBox());
-			// new Rectangle(x - 16, y - 20 - (32 - 20), 32, 32 + (32 - 20)).intersects(p.getBoundingBox());
-
 			if(collision) {
-
-				System.out.println(this.getBoundingBox().getX() + " = " + x + " & " +
-						this.getBoundingBox().getY() + " = " + y + "  => " + p.getBoundingBox().getX());
-
 				MyStdOut.write(MyStdColor.RED, "<" + this.getNom() + "> collision with : " + p.getNom());
 				this.stop();
 
@@ -324,7 +333,6 @@ public class Ennemi extends Personnage implements StoryElement {
 						lesMessages.add(this.parle());
 					this.startCombat();
 				}
-
 				return true;
 			}
 		}
@@ -392,8 +400,8 @@ public class Ennemi extends Personnage implements StoryElement {
 	}
 
 	/**
-	 * Retourne l'etat d'hostilité de l'ennemi.
-	 * @return boolean value (true : when fiendly| false : when not friendly)
+	 * Return the hostile state of the enemy
+	 * @return Return the hostile state of the enemy {@code true} if appened
 	 **/
 	public boolean isFriendly() {
 		return this.friendly;
