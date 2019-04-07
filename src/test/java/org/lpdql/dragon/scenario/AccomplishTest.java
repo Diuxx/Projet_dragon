@@ -1,4 +1,4 @@
-package scenario;
+package org.lpdql.dragon.scenario;
 
 import org.junit.After;
 import org.junit.Before;

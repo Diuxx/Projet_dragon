@@ -144,12 +144,7 @@ public class Scenario {
         InterStateComm.getLeHero().removeObjets();
     }
 
-    /**
-     * Mouvement des personnages.ennemis sur la map.
-     * @param map
-     * @param delta
-     * @param lesMessages transmet les messages des personnages.ennemis */
-    public void mouvement(Carte map, int delta, Message lesMessages) {
+    /*public void mouvement(Carte map, int delta, Message lesMessages) {
         for(Ennemi unEnnemi : this.lesEnnemis) {
             if(unEnnemi.isMort())
                 continue;
@@ -182,7 +177,7 @@ public class Scenario {
                     unEnnemi.setBouge(true);
             }
         }
-    }
+    }*/
 
     /**
      *

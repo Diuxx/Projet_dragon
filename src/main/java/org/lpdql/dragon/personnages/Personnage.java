@@ -1,8 +1,6 @@
 package org.lpdql.dragon.personnages;
 
-import org.lpdql.dragon.ecrans.EcranJeu;
-import org.lpdql.dragon.system.Point;
-import org.lpdql.dragon.system.Taille;
+import org.lpdql.dragon.system.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
@@ -10,296 +8,352 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Personnage {
 
-	// animation du personnage
-	private List<Animation> animation;
+    /**
+     * Array containing all animations of the object
+     * @see Animation
+     */
+    private List<Animation> animation;
 
-	// ajout de collision avec d'autre personnage
-	private List<Personnage> lesAutre;
+    /**
+     * Name of the current {@code Personnage}
+     */
+    private String nom;
 
-	// information sur le personnage
-	private String nom;
-	private float pointDeVie;
+    /**
+     * {@code Personnage} total life Points
+     */
+    private float pointDeVie;
 
+    /**
+     * Current {@code Personnage} life Points
+     */
+    private float pointDeVieActuel;
 
-	private float pointDeVieActuel;
+    /**
+     * {@code Personnage} position on map.
+     */
+    protected float x;
+    protected float y;
 
-	// mouvement du personnage
-	protected float x = 0, y = 0;
-	protected int direction = 0;
-	protected boolean moving = false;
+    /**
+     *
+     */
+    protected int direction = 0;
+    protected boolean moving = false;
 
-	// gestion des collisions
-	private Rectangle box;
+    /**
+     * Debug box managing collision
+     * @see Rectangle
+     */
+    private Rectangle box;
 
-	private float futurX = 0;
-	private float futurY = 0;
-	private boolean collision = false;
+    /**
+     * Future calculated position for collisions
+     */
+    private float futurX = 0;
+    private float futurY = 0;
 
-	// taille de la tile
-	private int width;
-	private int height;
-	private int centerX;
-	private int centerY;
+    /**
+     * If collision appened this variable value switch to {@code true}
+     */
+    private boolean collision = false;
 
-	// vitesse des personnages
-	private float vitesse = 0.1f;
+    // taille de la tile
+    private int width;
+    private int height;
+    private int centerX;
+    private int centerY;
 
-	private boolean dynamicCollision;
+    // vitesse des personnages
+    private float vitesse = 0.1f;
 
-	// --
-	public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse, int niveau) {
-		this.nom = nom;
-		this.x = x;
-		this.y = y;
-		this.width = w;
-		this.height = h;
+    private boolean dynamicCollision;
 
-		this.centerX = (int) (w / 2);
-		this.centerY = (int) (h - (h / 5));
+    /**
+     * Main Constructor of Personnage class.
+     * @param nom
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     * @param pointDeVie
+     * @param vitesse
+     */
+    public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse) {
+        this.nom = nom;
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
 
-		this.pointDeVieActuel = pointDeVie;
+        // default center
+        this.centerX = (int)(w / 2);
+        this.centerY = (int)(h - (h / 5));
 
-		this.vitesse = vitesse;
+        this.pointDeVie = pointDeVie;
+        this.pointDeVieActuel = pointDeVie;
 
-		this.animation = new ArrayList<Animation>();
+        this.vitesse = vitesse;
 
-		this.dynamicCollision = false;
+        this.animation = new ArrayList<Animation>();
 
-		box = new Rectangle(x - this.centerX, y - this.centerY, w, h);
-	}
+        this.dynamicCollision = false;
 
-	// --
-	public Personnage(String nom, Point pos, int w, int h, float pointDeVie, float vitesse, int niveau) {
-		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, vitesse, niveau);
-	}
+        box = new Rectangle(x - this.centerX, y - this.centerY, w, h);
+    }
 
-	// --
-	public Personnage(String nom, Point pos, Taille t, float pointDeVie, float vitesse, int niveau) {
-		this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse, niveau);
-	}
+    // --
+    public Personnage(String nom, Point pos, int w, int h, float pointDeVie, float vitesse) {
+        this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, vitesse);
+    }
 
-	public float getX() {
-		return this.x;
-	}
+    // --
+    public Personnage(String nom, Point pos, Taille t, float pointDeVie, float vitesse) {
+        this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse);
+    }
 
-	public float getY() {
-		return this.y;
-	}
+    // mouvement du personnage
+    public void mouvement(int delta, TiledMap map) {
+        if (this.moving) {
+            futurX = this.getFuturX(delta);
+            futurY = this.getFuturY(delta);
 
-	public void setX(float x) {
-		this.x = x;
-	}
+            collision = iscollisionLogic(map, futurX, futurY);
+            if(collision) {
+                if(!(this instanceof Ennemi))
+                    this.moving = false;
+                this.dynamicCollision = false;
+            } else {
+                this.x = futurX;
+                this.y = futurY;
+                box.setBounds(futurX - centerX, futurY - centerY, this.width, this.height);
+            }
+        }
+    }
 
-	public void setY(float y) {
-		this.y = y;
-	}
+    // changement de direction du personnage
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
 
-	// mouvement du personnage
-	public void mouvement(int delta, TiledMap map) {
-		if (this.moving) {
-			futurX = this.getFuturX(delta);
-			futurY = this.getFuturY(delta);
+    // le personnage est en mouvement
+    public void marcher() {
+        this.moving = true;
+    }
 
-			// float savedX = box.getX();
-			// float savedY = box.getY();
-			// box.setBounds(futurX - centerX, futurY - centerY, this.width, this.height);
+    // le personnage ne bouge pas
+    public void stop() {
+        this.moving = false;
+    }
 
-			collision = iscollisionLogic(map, futurX, futurY);
-			if (collision) {
-				this.moving = false;
-				this.dynamicCollision = false; // test
-				// box.setBounds(savedX, savedY, this.width, this.height);
-			} else {
-				this.x = futurX;
-				this.y = futurY;
-				box.setBounds(futurX - centerX, futurY - centerY, this.width, this.height);
-			}
-		}
-	}
+    /**
+     * affichage du personnage dans le graphique
+     */
+    public void afficher(Graphics g) {
+        // no annimation..
+        if( this.animation.size() > 0) {
 
-	// changement de direction du personnage
-	public void setDirection(int direction) {
-		this.direction = direction;
-	}
+            g.drawAnimation(this.animation.get(direction + (moving ? 4 : 0)), x - centerX, y - centerY);
+        } else {
+            g.setColor(Color.black);
+            g.fill(new Rectangle(x - centerX, y - centerY, this.width, this.height));
+        }
+        if(EcranJeu.DEBUG) {
+            g.setColor(Color.red);
+            g.draw(this.box);
 
-	// le personnage est en mouvement
-	public void marcher() {
-		this.moving = true;
-	}
+            if(this instanceof Ennemi) {
+                g.setColor(Color.cyan);
+                // g.draw(new Rectangle(x - 16, y - 20 - (32 - 20), 32, 32 + (32 - 20)));
+                g.draw(new Rectangle(x - centerX, y - centerY - (getHeight() - centerY), getWidth(), getHeight() + (getHeight() - centerY)));
+                g.setColor(Color.red);
+            }
 
-	// le personnage ne bouge pas
-	public void stop() {
-		this.moving = false;
-	}
+            g.drawString(this.nom, x, y);
+        }
+    }
 
-	/**
-	 * affichage du personnage dans le graphique
-	 */
-	public void afficher(Graphics g) {
-		/**
-		 * Quand il n'y a pas d'animation
-		 */
-		if (this.animation.size() > 0) {
-			g.drawAnimation(this.animation.get(direction + (moving ? 4 : 0)), x - centerX, y - centerY);
+    // collision logic
+    public boolean iscollisionLogic(TiledMap map, float x, float y) {
+        int tileW = map.getTileWidth();
+        int tileH = map.getTileHeight();
 
-		} else {
-			g.setColor(Color.black);
-			g.fill(new Rectangle(x - centerX, y - centerY, this.width, this.height));
-		}
-		if (EcranJeu.DEBUG) {
-			g.setColor(Color.red);
-			g.draw(this.box);
-			g.drawString(this.nom, x, y);
-		}
-	}
+        int logicLayer = map.getLayerIndex("solide");
+        Image tile = map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
+        boolean collision = tile != null;
+        if(collision) {
+            Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+            collision = color.getAlpha() > 0;
+        }
+        // test
+        return collision || this.dynamicCollision;
+    }
 
-	// collision logic
-	public boolean iscollisionLogic(TiledMap map, float x, float y) {
-		int tileW = map.getTileWidth();
-		int tileH = map.getTileHeight();
+    public Rectangle getBoundingBox() {
+        return this.box;
+    }
 
-		int logicLayer = map.getLayerIndex("solide");
-		Image tile = map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
-		boolean collision = tile != null;
-		if (collision) {
-			Color color = tile.getColor((int) x % tileW, (int) y % tileH);
-			collision = color.getAlpha() > 0;
-		}
-		// test
-		return collision || this.dynamicCollision;
-	}
+    /**
+     *
+     * @param spriteSheet
+     * @param startX
+     * @param endX
+     * @param y
+     */
+    public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
+        Animation animation = new Animation();
+        for (int x = startX; x < endX; x++) {
+            animation.addFrame(spriteSheet.getSprite(x, y), 150);
+        }//return animation;
+        this.animation.add(animation);
+    }
 
-	public Rectangle getBoundingBox() {
-		return this.box;
-	}
+    /**
+     *
+     * @param delta
+     * @return
+     */
+    private float getFuturX(int delta) {
+        float futurX = this.x;
+        float vitesse = (!this.isMoving()) ? 0f : this.vitesse;
 
-	// chargement des animations pour un personnage.
-	public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
-		Animation animation = new Animation();
-		for (int x = startX; x < endX; x++) {
-			animation.addFrame(spriteSheet.getSprite(x, y), 150);
-		} // return animation;
-		this.animation.add(animation);
-	}
+        switch (this.direction) {
+            case 1:
+                futurX = this.x - vitesse * delta;
+                break;
+            case 3:
+                futurX = this.x + vitesse * delta;
+                break;
+        }
+        return futurX;
+    }
 
-	// clacule de la position (x) futur
-	private float getFuturX(int delta) {
-		float futurX = this.x;
-		switch (this.direction) {
-		case 1:
-			futurX = this.x - this.vitesse * delta;
-			break;
-		case 3:
-			futurX = this.x + this.vitesse * delta;
-			break;
-		}
-		return futurX;
-	}
+    /**
+     *
+     * @param delta
+     * @return
+     */
+    private float getFuturY(int delta) {
+        float futurY = this.y;
+        float vitesse = (!this.isMoving()) ? 0f : this.vitesse;
 
-	private float getFuturY(int delta) {
-		float futurY = this.y;
-		switch (this.direction) {
-		case 0:
-			futurY = this.y - this.vitesse * delta;
-			break;
-		case 2:
-			futurY = this.y + this.vitesse * delta;
-			break;
-		}
-		return futurY;
-	}
+        switch (this.direction) {
+            case 0:
+                futurY = this.y - vitesse * delta;
+                break;
+            case 2:
+                futurY = this.y + vitesse * delta;
+                break;
+        }
+        return futurY;
+    }
 
-	public int getDirection() {
-		return direction;
-	}
+    public int getDirection() {
+        return direction;
+    }
 
-	public boolean isMoving() {
-		return moving;
-	}
+    public boolean isMoving() {
+        return moving;
+    }
 
-	public void setMoving(boolean moving) {
-		this.moving = moving;
-	}
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
 
-	public int getWidth() {
-		return width;
-	}
+    public int getWidth() {
+        return width;
+    }
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
+    public void setWidth(int width) {
+        this.width = width;
+    }
 
-	public int getHeight() {
-		return height;
-	}
+    public int getHeight() {
+        return height;
+    }
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
-	public float getPointDeVie() {
-		return pointDeVie;
-	}
+    public float getPointDeVie() {
+        return pointDeVie;
+    }
 
-	public void setPointDeVie(float pointDeVie) {
-		this.pointDeVie = pointDeVie;
-	}
+    public void setPointDeVie(float pointDeVie) {
+        this.pointDeVie = pointDeVie;
+    }
 
-	// Level UP HERO
-	public void setHeroStatistques(int niveau) {
-		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 50.0 + 250);
-		System.out.println("Hero --------------------------------> " + this.pointDeVie);
-	}
+    public float getPointDeVieActuel() {
+        return pointDeVieActuel;
+    }
 
-	// Level UP Ennemi
-	public void setEnnemiStatistques(int niveau) {
-		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 30.0 + 150);
-		System.out.println("Ennemi --------------------------------> " + this.pointDeVie);
-	}
+    public void setPointDeVieActuel(float f) {
+        this.pointDeVieActuel = f;
+    }
 
-	public float getPointDeVieActuel() {
-		return pointDeVieActuel;
-	}
+    public float getVitesse() {
+        return vitesse;
+    }
 
-	public void setPointDeVieActuel(float f) {
-		this.pointDeVieActuel = f;
-	}
+    public void setVitesse(float vitesse) {
+        this.vitesse = vitesse;
+    }
+    
+    public String getNom() {
+    	return this.nom;
+    }
+    
+    public void setNom(String nom) {
+    	this.nom = nom;
+    }
 
-	public float getVitesse() {
-		return vitesse;
-	}
+    public float getX() {
+        return this.x;
+    }
 
-	public void setVitesse(float vitesse) {
-		this.vitesse = vitesse;
-	}
+    public float getY() {
+        return this.y;
+    }
 
-	public String getNom() {
-		return this.nom;
-	}
+    public int getCenterX() {
+        return centerX;
+    }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    public int getCenterY() {
+        return centerY;
+    }
 
-	public void setPosition(Point p) {
-		this.x = p.getX();
-		this.y = p.getY();
-		box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
-	}
+    public void setX(float x) {
+        this.x = x;
+    }
 
-	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-		box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
-	}
+    public void setY(float y) {
+        this.y = y;
+    }
 
-	public boolean isDynamicCollision() {
-		return dynamicCollision;
-	}
+    public void setPosition(Point p) {
+        this.x = p.getX();
+        this.y = p.getY();
+        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
+    }
 
-	public void setDynamicCollision(boolean dynamicCollision) {
-		this.dynamicCollision = dynamicCollision;
-	}
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
+    }
+
+    public boolean isDynamicCollision() {
+        return dynamicCollision;
+    }
+
+    public void setDynamicCollision(boolean dynamicCollision) {
+        this.dynamicCollision = dynamicCollision;
+    }
 }

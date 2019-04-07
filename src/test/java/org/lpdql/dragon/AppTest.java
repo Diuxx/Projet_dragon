@@ -1,20 +1,15 @@
 package org.lpdql.dragon;
 
-import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.lpdql.dragon.scenario.AccomplishTest;
+import org.lpdql.dragon.scenario.ScenarioTest;
 
-import static org.junit.Assert.assertTrue;
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        AccomplishTest.class,
+        ScenarioTest.class
+})
+public class AppTest {
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
-    }
 }
