@@ -117,6 +117,8 @@ public class Scenario {
             case "monde_pouvoir":
                 chargerMondePouvoir(map);
                 break;
+            default:
+                break;
         }
 
         this.findObjets(map.getMap());
@@ -126,6 +128,7 @@ public class Scenario {
 
         InterStateComm.getLeHero().addPnj(this.getLesPnj());
         InterStateComm.getLeHero().addObjets(this.getLesObjets());
+        InterStateComm.getLeHero().addEnnemis(this.lesEnnemis);
     }
 
     /**
@@ -208,6 +211,7 @@ public class Scenario {
 
         InterStateComm.getLeHero().removePnj();
         InterStateComm.getLeHero().removeObjets();
+        InterStateComm.getLeHero().removeEnnemis();
     }
 
     /**
@@ -232,6 +236,8 @@ public class Scenario {
             if(unEnnemi.isMort())
                 continue;
 
+            unEnnemi.mouvement(delta, map.getMap());
+            /*
             // Passe l'ennemi de friendly à hostile quand le timer firendly est écoulé.
             unEnnemi.checkTimerFriendly();
             if(unEnnemi.veutCombattre() && !unEnnemi.isFriendly())
@@ -259,7 +265,7 @@ public class Scenario {
             } else {
                 if(!unEnnemi.isBouge())
                     unEnnemi.setBouge(true);
-            }
+            }*/
         }
     }
 
@@ -317,7 +323,7 @@ public class Scenario {
         {
             String type = uneCarte.getObjectType(0, o);
             if ("heal".equals(type)) {
-                System.err.println("heal found !");
+                // System.err.println("heal found !");
                 x = uneCarte.getObjectX(0, o);
                 y = uneCarte.getObjectY(0, o);
                 this.lesObjets.add(new Heal(new Point(x, y), o));
@@ -421,6 +427,7 @@ public class Scenario {
                     break;
                 default:
             }
+            lesEnnemis.get(i).addCollision(InterStateComm.getLeHero());
         }
     }
 
@@ -521,14 +528,19 @@ public class Scenario {
         }
     }
 
-    /**
-     *
+    /***
+     * Reset current map and go on the spawn
+     * @param map
      */
-    protected Carte chargerMap(Carte map) {
+    protected void resetOnCurrentMap(Carte map) {
+        // --
+        Point pCheckPoint = map.getCheckPoint();
+        InterStateComm.getLeHero().setPosition(
+                map.getCheckPoint().getX(), map.getCheckPoint().getY());
 
+        this.resetScenario();
         this.charger(map);
-
-        return null;
+        return;
     }
 
     /**
@@ -639,8 +651,8 @@ public class Scenario {
     }
 
     /**
-     *
-     * @return
+     * check current authorization befor do thinks
+     * @return {@code true} if we can go on destMap
      */
     protected boolean laodMapAuthorization(String originMap, String destMap) {
         MyStdOut.write(MyStdColor.YELLOW, "<" + this.getClass().getSimpleName() + "> performing autorization");

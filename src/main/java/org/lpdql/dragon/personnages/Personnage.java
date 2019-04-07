@@ -1,8 +1,6 @@
 package org.lpdql.dragon.personnages;
 
-import org.lpdql.dragon.system.EcranJeu;
-import org.lpdql.dragon.system.Point;
-import org.lpdql.dragon.system.Taille;
+import org.lpdql.dragon.system.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
@@ -93,6 +91,7 @@ public class Personnage {
         this.width = w;
         this.height = h;
 
+        // default center
         this.centerX = (int)(w / 2);
         this.centerY = (int)(h - (h / 5));
 
@@ -118,38 +117,17 @@ public class Personnage {
         this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse);
     }
 
-
-    public float getX() {
-        return this.x;
-    }
-
-    public float getY() {
-        return this.y;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
     // mouvement du personnage
     public void mouvement(int delta, TiledMap map) {
         if (this.moving) {
             futurX = this.getFuturX(delta);
             futurY = this.getFuturY(delta);
 
-            // float savedX = box.getX();
-            // float savedY = box.getY();
-            // box.setBounds(futurX - centerX, futurY - centerY, this.width, this.height);
-
             collision = iscollisionLogic(map, futurX, futurY);
             if(collision) {
-                this.moving = false;
-                this.dynamicCollision = false; // test
-                // box.setBounds(savedX, savedY, this.width, this.height);
+                if(!(this instanceof Ennemi))
+                    this.moving = false;
+                this.dynamicCollision = false;
             } else {
                 this.x = futurX;
                 this.y = futurY;
@@ -177,12 +155,10 @@ public class Personnage {
      * affichage du personnage dans le graphique
      */
     public void afficher(Graphics g) {
-        /**
-         * Quand il n'y a pas d'animation
-         */
+        // no annimation..
         if( this.animation.size() > 0) {
-            g.drawAnimation(this.animation.get(direction + (moving ? 4 : 0)), x - centerX, y - centerY);
 
+            g.drawAnimation(this.animation.get(direction + (moving ? 4 : 0)), x - centerX, y - centerY);
         } else {
             g.setColor(Color.black);
             g.fill(new Rectangle(x - centerX, y - centerY, this.width, this.height));
@@ -190,6 +166,14 @@ public class Personnage {
         if(EcranJeu.DEBUG) {
             g.setColor(Color.red);
             g.draw(this.box);
+
+            if(this instanceof Ennemi) {
+                g.setColor(Color.cyan);
+                // g.draw(new Rectangle(x - 16, y - 20 - (32 - 20), 32, 32 + (32 - 20)));
+                g.draw(new Rectangle(x - centerX, y - centerY - (getHeight() - centerY), getWidth(), getHeight() + (getHeight() - centerY)));
+                g.setColor(Color.red);
+            }
+
             g.drawString(this.nom, x, y);
         }
     }
@@ -214,7 +198,13 @@ public class Personnage {
         return this.box;
     }
 
-    // chargement des animations pour un personnage.
+    /**
+     *
+     * @param spriteSheet
+     * @param startX
+     * @param endX
+     * @param y
+     */
     public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
         Animation animation = new Animation();
         for (int x = startX; x < endX; x++) {
@@ -223,28 +213,41 @@ public class Personnage {
         this.animation.add(animation);
     }
 
-    // clacule de la position (x) futur
+    /**
+     *
+     * @param delta
+     * @return
+     */
     private float getFuturX(int delta) {
         float futurX = this.x;
+        float vitesse = (!this.isMoving()) ? 0f : this.vitesse;
+
         switch (this.direction) {
             case 1:
-                futurX = this.x - this.vitesse * delta;
+                futurX = this.x - vitesse * delta;
                 break;
             case 3:
-                futurX = this.x + this.vitesse * delta;
+                futurX = this.x + vitesse * delta;
                 break;
         }
         return futurX;
     }
 
+    /**
+     *
+     * @param delta
+     * @return
+     */
     private float getFuturY(int delta) {
         float futurY = this.y;
+        float vitesse = (!this.isMoving()) ? 0f : this.vitesse;
+
         switch (this.direction) {
             case 0:
-                futurY = this.y - this.vitesse * delta;
+                futurY = this.y - vitesse * delta;
                 break;
             case 2:
-                futurY = this.y + this.vitesse * delta;
+                futurY = this.y + vitesse * delta;
                 break;
         }
         return futurY;
@@ -308,6 +311,30 @@ public class Personnage {
     
     public void setNom(String nom) {
     	this.nom = nom;
+    }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
+    public int getCenterX() {
+        return centerX;
+    }
+
+    public int getCenterY() {
+        return centerY;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 
     public void setPosition(Point p) {

@@ -90,14 +90,14 @@ public class ScenarioEpee extends Scenario {
         PersonnageNonJoueur pnjOldMan = new PersonnageNonJoueur("Old man", pChasseur, 32, 32);
 
         pnjOldMan.addDialogue("aaahhh ! il y a plein de monstres.. tues les tu gagnera en puissance !");
-        if(!Story.TUTOEND.getState())
+        if(!Story.TUTOFIRSTENNEMIWASKILLED.getState())
             pnjOldMan.addDialogue("Prends cette épée et va tuer ce monstre pour t'entrainer..");
         pnjOldMan.setStoryElement(Story.TUTOPARLEROLDMAN);
         super.getLesPnj().add(pnjOldMan);
 
 
         if(!Story.TUTOEND.getState()) {
-
+            // --
             MyStdOut.write(MyStdColor.GREEN, "<" + getClass().getSimpleName() + ">" + map.getLastMapName());
 
             if(!Story.TUTOPARLEROLDMAN.getState() && map.getLastMapName().equals("maison"))
@@ -107,11 +107,14 @@ public class ScenarioEpee extends Scenario {
                 Story.TUTOPARLEROLDMAN.setState(false);
                 Story.TUTOSPAWNENNEMI.setState(false);
             }
-
             loadTuto();
         }
     }
 
+    /**
+     *
+     * @param map
+     */
     @Override
     public void update(Carte map) {
         if(Story.TUTOPARLEROLDMAN.getState())
@@ -120,6 +123,8 @@ public class ScenarioEpee extends Scenario {
                 Point pFirstEnnemi = findPnjPosition(map, "first_ennemi");
                 Squelette firstEnnemi = new Squelette(pFirstEnnemi, Direction.VERTICAL);
                 firstEnnemi.setStoryElement(Story.TUTOFIRSTENNEMIWASKILLED);
+                firstEnnemi.addCollision(InterStateComm.getLeHero());
+                firstEnnemi.marcher();
                 super.getLesEnnemis().add(firstEnnemi);
 
                 Story.TUTOSPAWNENNEMI.done();
@@ -127,32 +132,23 @@ public class ScenarioEpee extends Scenario {
         }
         if(Story.TUTOEND.getState() && !Story.GAMESTART.getState())
         {
-            Point pCheckPoint = map.getCheckPoint();
-            //InterStateComm.getLeHero().se
-
-            MyStdOut.write(MyStdColor.YELLOW, "(" + map.getCheckPoint().getX() + " " + map.getCheckPoint().getY() + ")");
-            InterStateComm.getLeHero().setPosition(map.getCheckPoint().getX(), map.getCheckPoint().getY());
-
-            // this.charger("maison");
-            // this.loadMap(map, int gateId, Camera camera);
-            super.chargerMap(map);
-
+            super.resetOnCurrentMap(map);
             Story.GAMESTART.done();
         }
-
+        // --
     }
 
+    /**
+     *
+     */
     private void checkEvents() {
+
     }
 
     /**
      *
      */
     private void loadTuto() {
-
-
-
-
 
     }
 

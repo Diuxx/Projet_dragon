@@ -1,12 +1,13 @@
 package org.lpdql.dragon.personnages;
 
+import org.lpdql.dragon.bataille.Bataille;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.scenario.Accomplish;
-import org.lpdql.dragon.system.Point;
-import org.lpdql.dragon.system.Taille;
+import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
@@ -14,6 +15,8 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static org.lpdql.dragon.system.EcranJeu.lesMessages;
 
 
 public class Hero extends Personnage {
@@ -61,8 +64,8 @@ public class Hero extends Personnage {
      */
     public Hero(String nom, Point positon) {
         super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
-        this.lesPnj = new ArrayList<PersonnageNonJoueur>();
-        this.lesObjets = new ArrayList<Objet>();
+        this.lesPnj = new ArrayList<>();
+        this.lesObjets = new ArrayList<>();
         this.experience = 0;
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
@@ -85,45 +88,6 @@ public class Hero extends Personnage {
          * Load sprite tiles from sprite sheet.
          */
         this.chargerImage();
-    }
-
-    public Accomplish getAccomplishement() {
-        return this.accomplishement;
-    }
-
-    public void setAccomplishement(Accomplish accomplishement) {
-        this.accomplishement = accomplishement;
-    }
-
-    /**
-     * Update some elements to match the last game backup
-     * @param savedData
-     */
-    public void setSavedData(Save savedData) {
-        if(savedData.getSavedHero() == null)
-            return;
-
-        System.out.println("Performing loading on saved data!");
-
-        Hero savedHero = savedData.getSavedHero();
-        this.setNom(savedHero.getNom());
-        this.setPointDeVie(savedHero.getPointDeVie());
-        this.setPointDeVieActuel(savedHero.getPointDeVieActuel());
-        super.setPosition(savedHero.getX(), savedHero.getY());
-        this.setDirection(savedHero.getDirection());
-        this.setExperience(savedHero.getExperience());
-        this.setNiveau(savedHero.getNiveau());
-        this.setCurrentGold(savedHero.getCurrentGold());
-
-
-        this.setArtEpee(savedHero.getArtEpee());
-        this.setArtBouclier(savedHero.getArtBouclier());
-        this.setArtFeu(savedHero.getArtFeu());
-        this.setArtVoler(savedHero.getArtVoler());
-
-        this.accomplishement = savedHero.getAccomplishement();
-
-        this.accomplishement.getLog();
     }
 
     /**
@@ -168,6 +132,10 @@ public class Hero extends Personnage {
      */
     public void addEnnemis(List<Ennemi> lesEnnemis) {
         this.lesEnnemis = lesEnnemis;
+    }
+
+    public void removeEnnemis() {
+        this.lesEnnemis = new ArrayList<>();
     }
 
     public void addObjets(List<Objet> lesObjets) {
@@ -231,9 +199,19 @@ public class Hero extends Personnage {
      */
     private boolean isCollisionEnnemi(float x, float y) {
         for(Ennemi unEnnemi : lesEnnemis) {
-            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unEnnemi.getBoundingBox());
+            if(unEnnemi.isMort())
+                continue;
+
+            boolean collision = new Rectangle(x - getCenterX(), y - getCenterY(), getWidth(), getHeight()).intersects(unEnnemi.getBoundingBox());
             if(collision) {
-                // --
+                // MyStdOut.write(MyStdColor.RED,"<" + this.getClass().getSimpleName() + "> to " + unEnnemi.getNom());
+                unEnnemi.stop();
+
+                if(!unEnnemi.isFriendly()) {
+                    if(!unEnnemi.veutCombattre()) lesMessages.add(unEnnemi.parle());
+                    unEnnemi.startCombat(); // request fight ?
+                    unEnnemi.requestFight();
+                }
                 return true;
             }
         }
@@ -252,7 +230,7 @@ public class Hero extends Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        return collision || isCollisionPnj( x, y) || isCollisionObjets(x, y) || super.isDynamicCollision()/* || isCollisionEnnemi( x, y)*/;
+        return collision || isCollisionPnj( x, y) || isCollisionObjets(x, y) || super.isDynamicCollision() || isCollisionEnnemi( x, y);
     }
 
     /**
@@ -361,5 +339,44 @@ public class Hero extends Personnage {
     }
     public boolean getMuted() {
         return muted;
+    }
+
+    public Accomplish getAccomplishement() {
+        return this.accomplishement;
+    }
+
+    public void setAccomplishement(Accomplish accomplishement) {
+        this.accomplishement = accomplishement;
+    }
+
+    /**
+     * Update some elements to match the last game backup
+     * @param savedData
+     */
+    public void setSavedData(Save savedData) {
+        if(savedData.getSavedHero() == null)
+            return;
+
+        System.out.println("Performing loading on saved data!");
+
+        Hero savedHero = savedData.getSavedHero();
+        this.setNom(savedHero.getNom());
+        this.setPointDeVie(savedHero.getPointDeVie());
+        this.setPointDeVieActuel(savedHero.getPointDeVieActuel());
+        super.setPosition(savedHero.getX(), savedHero.getY());
+        this.setDirection(savedHero.getDirection());
+        this.setExperience(savedHero.getExperience());
+        this.setNiveau(savedHero.getNiveau());
+        this.setCurrentGold(savedHero.getCurrentGold());
+
+
+        this.setArtEpee(savedHero.getArtEpee());
+        this.setArtBouclier(savedHero.getArtBouclier());
+        this.setArtFeu(savedHero.getArtFeu());
+        this.setArtVoler(savedHero.getArtVoler());
+
+        this.accomplishement = savedHero.getAccomplishement();
+
+        this.accomplishement.getLog();
     }
 }
