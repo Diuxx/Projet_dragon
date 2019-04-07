@@ -10,45 +10,58 @@ import org.lpdql.dragon.system.MyStdOut;
 
 /**
  * Class InterStateComm (communication entre les States du jeu).
- * Classe contenant des m�thodes pour transmettre des donn�es entre les States du jeu (map, bataille...)
- * Les variables sont effac�es apr�s lecture pour �viter l'utilisation de donn�es "p�rim�es"
+ * Classe contenant des methodes pour transmettre des donnees entre les States du jeu (map, bataille...)
+ * Les variables sont effacees apres lecture pour eviter l'utilisation de donnees "perimees"
+ *
+ * source : https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)
  */
 public final class InterStateComm {
 
-    // screen width x height
+    /**
+     * width of the game screen
+     */
     public final static int gX = 1200;
+
+    /**
+     * height of the game screen
+     */
     public final static int gY = 600;
 
-    // volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
-    // mais pas encore instancié :
-    // https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)
+    /**
+     * volatile permet d'éviter le cas ou InterStateComm.leHero est non nul
+     * mais pas encore instancié :
+     */
     private static volatile Hero leHero = null;
 
     /**
-     * Variable battleEnnemy : ennemi rencontre sur la map et qui lance la bataille */
+     * This variable refers to an enemy against whom we have to fight
+     **/
     private static volatile Ennemi unEnnemi = null;
 
     // ??
     private static volatile Carte laCarte = null;
 
-    // sauvegarde des informations sur le hero
-    /** ...  */
-
     /**
      * Constructeur de l'objet
      */
     private InterStateComm() {
-        // La présence d'un constructeur privé supprime le constructeur public
+        // La présence d'un constructeur privé
+        // supprime le constructeur public pas d'instanciation
         super();
     }
 
+    /**
+     * returns the current instance of the hero
+     * @return
+     */
     public final static Hero getLeHero() {
-        if(InterStateComm.leHero == null) {
-
-        }
         return InterStateComm.leHero;
     }
 
+    /**
+     * modifies the current instance of the hero
+     * @param leHero
+     */
     public static void setLeHero(Hero leHero) {
         // Synchronized empêche toute instanciation multiple
         // même par différents threads
@@ -60,7 +73,7 @@ public final class InterStateComm {
     }
 
     /**
-     * Ecriture BattleEnnemy
+     * add an enemy for a battle
      */
     public final static void setUnEnnemi(Ennemi unEnnemi) {
         synchronized (InterStateComm.class) {
@@ -74,7 +87,7 @@ public final class InterStateComm {
     }
 
     /**
-     * Methode qui declare mort l'ennemi de la dernière bataille
+     * Method that declares dead the enemy of the last battle
      */
     public final static void tuerUnEnnemi() {
         if (InterStateComm.unEnnemi != null) {

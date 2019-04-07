@@ -14,92 +14,110 @@ import java.util.List;
 public class Personnage {
 
     /**
-     * Array containing all animations of the object
+     * Array who contains all the animations of the character
      * @see Animation
      */
     private List<Animation> animation;
 
     /**
-     * Name of the current {@code Personnage}
+     * Name of the current instance
      */
     private String nom;
 
     /**
-     * {@code Personnage} total life Points
+     * total life point of the character
      */
     private float pointDeVie;
 
     /**
-     * Current {@code Personnage} life Points
+     * current point of life of the character
      */
     private float pointDeVieActuel;
 
     /**
-     * {@code Personnage} position on map.
+     * character position on the map
      */
-    protected float x;
-    protected float y;
+    protected float x, y;
 
     /**
-     *
+     * direction du personnage
+     * {0, 1, 2, 3}
      */
     protected int direction = 0;
+
+    /**
+     * Character movement management
+     */
     protected boolean moving = false;
 
     /**
-     * Debug box managing collision
+     * debug rectangle and collision management
      * @see Rectangle
      */
     private Rectangle box;
 
     /**
-     * Future calculated position for collisions
+     * Calculated future position for collision management
      */
-    private float futurX = 0;
-    private float futurY = 0;
+    private float futurX = 0, futurY = 0;
 
     /**
-     * If collision appened this variable value switch to {@code true}
+     * variable collision
+     * {@code true} if a collision occurs
      */
     private boolean collision = false;
 
-    // taille de la tile
-    private int width;
-    private int height;
-    private int centerX;
-    private int centerY;
+    /**
+     * character size
+     */
+    private int width, height;
 
-    // vitesse des personnages
-    private float vitesse = 0.1f;
+    /**
+     * center of gravity of the character
+     */
+    private int centerX, centerY;
 
+    /**
+     * character speed
+     */
+    private float vitesse;
+
+    /**
+     * variable collision
+     * {@code true} if a collision occurs
+     */
     private boolean dynamicCollision;
 
     /**
      * Main Constructor of Personnage class.
-     * @param nom
-     * @param x
-     * @param y
-     * @param w
-     * @param h
-     * @param pointDeVie
-     * @param vitesse
+     * @param nom Name of the current instance
+     * @param x abscissa of the character on the map
+     * @param y ordinate of the character on the map
+     * @param w character width on the map
+     * @param h height of the character on the map
+     * @param pointDeVie total life point of the character
+     * @param vitesse character speed
      */
-    public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse) {
+    public Personnage(String nom, float x, float y, int w, int h, float pointDeVie, float vitesse)
+    {
+        // default information
         this.nom = nom;
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
 
-        // default center
+        // center of gravity calculated automatically
         this.centerX = (int)(w / 2);
         this.centerY = (int)(h - (h / 5));
 
+        // life point
         this.pointDeVie = pointDeVie;
         this.pointDeVieActuel = pointDeVie;
 
         this.vitesse = vitesse;
 
+        // Array of animations
         this.animation = new ArrayList<Animation>();
 
         this.dynamicCollision = false;
@@ -107,17 +125,45 @@ public class Personnage {
         box = new Rectangle(x - this.centerX, y - this.centerY, w, h);
     }
 
-    // --
+    /**
+     * Construtor overload of Personnage without x and y
+     * @param nom Name of the current instance
+     * @param pos abscissa and ordinate of the character on the map
+     * @param w character width on the map
+     * @param h height of the character on the map
+     * @param pointDeVie total life point of the character
+     * @param vitesse character speed
+     *
+     * @see Point
+     */
     public Personnage(String nom, Point pos, int w, int h, float pointDeVie, float vitesse) {
         this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, vitesse);
     }
 
-    // --
+    /**
+     * Construtor overload of Personnage without height and width
+     * @param nom Name of the current instance
+     * @param pos abscissa and ordinate of the character on the map
+     * @param t character width & height on the map
+     * @param pointDeVie total life point of the character
+     * @param vitesse character speed
+     *
+     * @see Point
+     * @see Taille
+     */
     public Personnage(String nom, Point pos, Taille t, float pointDeVie, float vitesse) {
         this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse);
     }
 
-    // mouvement du personnage
+    /**
+     * This method manages the movement of the character.
+     * She also deals with the collision with the map and
+     * with the different characters.
+     * @param delta Slick timer
+     * @param map card on which the character evolves
+     *
+     * @see TiledMap
+     */
     public void mouvement(int delta, TiledMap map) {
         if (this.moving) {
             futurX = this.getFuturX(delta);
@@ -136,49 +182,72 @@ public class Personnage {
         }
     }
 
-    // changement de direction du personnage
+    /**
+     * change of direction of the character
+     * HORIZONTAL = 0
+     * VERTICAL = 1
+     * RANDOM = 2
+     * IMMOBILE = 3
+     * @param direction
+     *
+     * @see Direction
+     */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
-    // le personnage est en mouvement
+    /**
+     * This method allows the character to move
+     */
     public void marcher() {
         this.moving = true;
     }
 
-    // le personnage ne bouge pas
+    /**
+     * This method prevents the character from moving
+     */
     public void stop() {
         this.moving = false;
     }
 
-    /**
-     * affichage du personnage dans le graphique
-     */
-    public void afficher(Graphics g) {
-        // no annimation..
-        if( this.animation.size() > 0) {
 
+    /**
+     * This method show the character on the graphics
+     * displays a black square with the character's dimention
+     * if there is no animation.
+     * @param g Slick graphics
+     *
+     * @see Graphics
+     */
+    public void afficher(Graphics g)
+    {
+        // --
+        if( this.animation.size() > 0) {
             g.drawAnimation(this.animation.get(direction + (moving ? 4 : 0)), x - centerX, y - centerY);
         } else {
+            // if there is no animation
             g.setColor(Color.black);
             g.fill(new Rectangle(x - centerX, y - centerY, this.width, this.height));
         }
         if(EcranJeu.DEBUG) {
             g.setColor(Color.red);
             g.draw(this.box);
-
             if(this instanceof Ennemi) {
                 g.setColor(Color.cyan);
-                // g.draw(new Rectangle(x - 16, y - 20 - (32 - 20), 32, 32 + (32 - 20)));
                 g.draw(new Rectangle(x - centerX, y - centerY - (getHeight() - centerY), getWidth(), getHeight() + (getHeight() - centerY)));
                 g.setColor(Color.red);
             }
-
             g.drawString(this.nom, x, y);
         }
     }
 
-    // collision logic
+    /**
+     * This class manages collisison with map elements
+     * @param map map on which evolves the character
+     * @param x future position for collision management
+     * @param y future position for collision management
+     * @return {@code true} if collsion appened {@code false} otherwise
+     */
     public boolean iscollisionLogic(TiledMap map, float x, float y) {
         int tileW = map.getTileWidth();
         int tileH = map.getTileHeight();
@@ -190,33 +259,30 @@ public class Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        // test
         return collision || this.dynamicCollision;
     }
 
-    public Rectangle getBoundingBox() {
-        return this.box;
-    }
-
     /**
+     * load the different animations of the character
+     * @param spriteSheet loaded images
+     * @param startX beginning abscissa
+     * @param endX end abscissa
+     * @param y position
      *
-     * @param spriteSheet
-     * @param startX
-     * @param endX
-     * @param y
+     * @see SpriteSheet
      */
     public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
         Animation animation = new Animation();
         for (int x = startX; x < endX; x++) {
             animation.addFrame(spriteSheet.getSprite(x, y), 150);
-        }//return animation;
+        }
         this.animation.add(animation);
     }
 
     /**
-     *
-     * @param delta
-     * @return
+     * calculate with speed the future position of the character
+     * @param delta slick timer
+     * @return float future "x" of the character
      */
     private float getFuturX(int delta) {
         float futurX = this.x;
@@ -234,9 +300,9 @@ public class Personnage {
     }
 
     /**
-     *
-     * @param delta
-     * @return
+     * calculate with speed the future position of the character
+     * @param delta slick timer
+     * @return float future "y" of the character
      */
     private float getFuturY(int delta) {
         float futurY = this.y;
@@ -251,6 +317,18 @@ public class Personnage {
                 break;
         }
         return futurY;
+    }
+
+    public void setPosition(Point p) {
+        this.x = p.getX();
+        this.y = p.getY();
+        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
+    }
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
     }
 
     public int getDirection() {
@@ -337,16 +415,8 @@ public class Personnage {
         this.y = y;
     }
 
-    public void setPosition(Point p) {
-        this.x = p.getX();
-        this.y = p.getY();
-        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
-    }
-
-    public void setPosition(float x, float y) {
-        this.x = x;
-        this.y = y;
-        box.setBounds(this.x - centerX, this.y - centerY, this.width, this.height);
+    public Rectangle getBoundingBox() {
+        return this.box;
     }
 
     public boolean isDynamicCollision() {
