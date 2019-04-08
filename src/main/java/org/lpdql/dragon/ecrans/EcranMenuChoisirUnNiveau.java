@@ -1,6 +1,7 @@
 package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -118,7 +119,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 		if ((posX > text2X && posX < text2X + textwidth2)
 				&& (posY > (600 - text2Y - textheight2) && posY < (600 - text2Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-				EcranMenuChoisirUnNiveau.niveau = "Facile";
+				InterStateComm.setNiveauDuJeu(Difficulty.FACILE);
 				stageGame.enterState(EcranMenuChoisirUnNom.ID);
 			}
 			color2 = Color.red;
@@ -129,7 +130,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 		if ((posX > text3X && posX < text3X + textwidth3)
 				&& (posY > (600 - text3Y - textheight3) && posY < (600 - text3Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-				EcranMenuChoisirUnNiveau.niveau = "Difficile";
+				InterStateComm.setNiveauDuJeu(Difficulty.DIFFICILE);
 				stageGame.enterState(EcranMenuChoisirUnNom.ID);
 			}
 			color3 = Color.red;
@@ -140,7 +141,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 		if ((posX > text4X && posX < text4X + textwidth4)
 				&& (posY > (600 - text4Y - textheight4) && posY < (600 - text4Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-				EcranMenuChoisirUnNiveau.niveau = "Tres difficile";
+				InterStateComm.setNiveauDuJeu(Difficulty.TRES_DIFFICILE);
 				stageGame.enterState(EcranMenuChoisirUnNom.ID);
 			}
 			color4 = Color.red;

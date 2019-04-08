@@ -1,6 +1,7 @@
 package org.lpdql.dragon.objets;
 
 import org.lpdql.dragon.interfaces.StoryElement;
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.system.EcranJeu;

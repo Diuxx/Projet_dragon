@@ -52,7 +52,12 @@ public class Hero extends Personnage {
     /**
      * current money of the character
      */
+    private float atk;
+
+	private int niveau;
     private int currentGold;
+
+    private float pointDeVie;
 
     /**
      * a delete!
@@ -70,7 +75,9 @@ public class Hero extends Personnage {
     /**
      * Tests values for the hero statistics
      */
-    private static final int HEROLIFE = 1120;
+    // private static final int HEROLIFE = 1120;
+    // hero information
+    private static final float HEROLIFE = (float) 300.0;
     private static final float HEROSPEED = 0.1f;
     private static final int HEROLEVEL = 1;
     private static final int HEROGOLD = 500;
@@ -89,6 +96,7 @@ public class Hero extends Personnage {
      * this variable manage the character's level up
      */
     private HashMap levelExperience;
+
 
     /**
      * Construtor of Hero without height and width
@@ -120,12 +128,12 @@ public class Hero extends Personnage {
         // Load sprite tiles from sprite sheet
         this.chargerImage();
     }
-    
+
     public Hero(String nom) {
     	super(nom);
     	this.niveau = HEROLEVEL;
     }
-    
+
     /**
      * this method manages the control of the character by the user
      * Only an Hero can be controled.
@@ -383,6 +391,30 @@ public class Hero extends Personnage {
     public boolean getMuted() {
         return muted;
     }
+
+    public float getATK() {
+		return this.atk;
+	}
+
+	public void setAtk(float atk) {
+		this.atk = atk;
+	}
+
+	public void rafraichirLePouvoirATK() {
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.atk = (float) (getLevel() * 5.0 + 35);
+			break;
+		case Difficulty.DIFFICILE:
+			this.atk = (float) (getLevel() * 4.0 + 25);
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.atk = (float) (getLevel() * 4.0 + 20);
+			break;
+		default:
+			this.atk =  0;
+		}
+	}
 
     public Accomplish getAccomplishement() {
         return this.accomplishement;

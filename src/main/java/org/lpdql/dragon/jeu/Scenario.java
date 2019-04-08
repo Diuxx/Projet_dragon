@@ -2,6 +2,7 @@ package org.lpdql.dragon.jeu;
 
 import org.lpdql.dragon.bataille.Bataille;
 import org.lpdql.dragon.carte.Carte;
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.objets.Heal;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
@@ -13,7 +14,6 @@ import org.lpdql.dragon.personnages.ennemis.Goblin;
 import org.lpdql.dragon.personnages.ennemis.Squelette;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Direction;
-import org.lpdql.dragon.system.EcranJeu;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.Graphics;
@@ -305,7 +305,9 @@ public class Scenario {
             y = carte.getMap().getObjectY(layerIndex, i);
             switch(ennemiName) {
                 case "Squelette":
-                    lesEnnemis.add(new Squelette(new Point(x, y), getDirectionFromString(direction)));
+                	lesEnnemis.add(new Goblin(new Point(x, y), getDirectionFromString(direction)));
+                	lesEnnemis.add(new Squelette(new Point(x, y), getDirectionFromString(direction)));
+                	lesEnnemis.add(new Squelette(new Point(x, y), getDirectionFromString(direction)));
                     break;
                 case "Goblin":
                     lesEnnemis.add(new Goblin(new Point(x, y), getDirectionFromString(direction)));

@@ -14,7 +14,6 @@ public class Bataille extends BasicGameState{
 	private Image background;
 	private BatailleEnnemi batailleEnnemi;
 	private BatailleJoueur batailleJoueur;
-	private Ennemi ennemi;
 	public static final int ATTAQUER = 0;
 	
 	
@@ -25,6 +24,7 @@ public class Bataille extends BasicGameState{
 		this.batailleJoueur = new BatailleJoueur();
 		batailleEnnemi.init();
 		batailleJoueur.init();
+		
 		
 		InputProvider provider = new InputProvider(fenetreDeBataille.getInput());
 		provider.bindCommand(new KeyControl(Input.KEY_A), BatailleCommande.ATTAQUER);

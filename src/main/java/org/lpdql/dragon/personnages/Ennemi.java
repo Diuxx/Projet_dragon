@@ -85,9 +85,9 @@ public class Ennemi extends Personnage implements StoryElement {
 	 * Enemy statistics
 	 */
 	private int niveau;
-	private double atk;
-	private double maxHP;
+
 	protected int experience;
+	private float atk;
 
 	/**
 	 * this variable manage the aggressiveness of an enemy
@@ -144,9 +144,19 @@ public class Ennemi extends Personnage implements StoryElement {
 
 		// Statistiques des Ennemis
 		this.niveau = niveau;
-		setAtk(niveau);
-		setMaxHP(niveau);
-		this.experience = 40; // test
+		setEnnemiStatistques(this.niveau);
+		setAtk(this.niveau);
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.experience = niveau * 5 + 50;
+			break;
+		case Difficulty.DIFFICILE:
+			this.experience = niveau * 5 + 40;
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.experience = niveau * 5 + 20;
+			break;
+		}
 
         // when an instance of ennemi is created
 		// he is alive (drawable)
@@ -462,19 +472,24 @@ public class Ennemi extends Personnage implements StoryElement {
 		return niveau;
 	}
 
-	public double getATK() {
-		return atk;
+    public float getATK() {
+		return this.atk;
 	}
 
-	public double getHP() {
-		return maxHP;
-	}
-	
 	public void setAtk(int niveau) {
-		this.atk = niveau * 5.0 + 20;
-	}
-	public void setMaxHP(int niveau) {
-		this.maxHP = niveau * 50.0 + 400;
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.atk = (int) (niveau * 5.0 + 15);
+			break;
+		case Difficulty.DIFFICILE:
+			this.atk = (int) (niveau * 6.0 + 20);
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.atk = (int) (niveau * 6.0 + 25);
+			break;
+		default:
+			this.atk =  0;
+		}
 	}
 
 	/**

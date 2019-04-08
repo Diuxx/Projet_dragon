@@ -109,7 +109,10 @@ public class BatailleControlle implements InputProviderListener {
 			if(!InterStateComm.getLeHero().getMuted() && swing != null) {
 				swing.play();
 			}
-			ennemi.setBarreVie(50);
+			ennemi.setBarreVie((int) joueur.getATK());
+			System.out.println("Hero ATK power      ----> " + (int) joueur.getATK());
+			System.out.println("ennemi restant vie  ----> " + (int) ennemi.getBarreVie());
+			System.out.println();
 			break;
 			default:
 		}
@@ -120,6 +123,7 @@ public class BatailleControlle implements InputProviderListener {
 	 *
 	 */
 	private void endPlayerAttack() {
+		boolean levelUP = false;
 		if(ennemi.getBarreVie() <= 0) {
 			if(!InterStateComm.getLeHero().getMuted() && victory != null)
 			{
@@ -135,11 +139,14 @@ public class BatailleControlle implements InputProviderListener {
 
 			// on ajoute l'experience de l'ennemi dans le joueur
 			InterStateComm.getLeHero().setExperience(ennemi.getExperience() + InterStateComm.getLeHero().getExperience());
-			
-			// on check s'il y a level up
-			levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience(), InterStateComm.getLeHero());
-			
 
+			// on check s'il y a level up
+            levelUP = levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience(), InterStateComm.getLeHero());
+
+			if (levelUP) {
+				InterStateComm.getLeHero().rafraichirLePouvoirATK();
+				InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
+			}
 			mode = BatailleCommande.NONE;
 		} else {
 			switch (mode) {
@@ -166,7 +173,10 @@ public class BatailleControlle implements InputProviderListener {
 	 *
 	 */
 	private void ennemiAssignDamage() {
-		joueur.setBarreVie(10);
+		joueur.setBarreVie((int) ennemi.getATK());
+		System.out.println("ennemi ATK power    ----> " + (int) ennemi.getATK());
+		System.out.println("Hero restant vie    ----> " + (int) joueur.getBarreVie());
+		System.out.println();
 		if(!InterStateComm.getLeHero().getMuted() && swing != null) {
 			swing.play();
 		}
