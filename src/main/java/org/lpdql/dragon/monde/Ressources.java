@@ -14,6 +14,8 @@ public class Ressources {
     public static SpriteSheet spriteSheet_PNJ;
     public static SpriteSheet spriteSheet_Dragon;
     public static SpriteSheet healSheet;
+
+    public static SpriteSheet spriteSheet_vieilHomme;
     private static boolean charger = false;
 
     public static void charger() throws SlickException {
@@ -25,8 +27,11 @@ public class Ressources {
             spriteSheet_Dragon = new SpriteSheet("data/Dragon.png", 96, 96);
             healSheet = new SpriteSheet("data/heal.png", 16, 16);
             spriteSheet_PNJ = new SpriteSheet("data/PNJ.png", 32, 32);
+
+            spriteSheet_vieilHomme = new SpriteSheet("data/sprites/vieux_sage32x32.png", 32, 32);
+
             charger = true;
-            
+
             // chargement du personnage
             InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
         }

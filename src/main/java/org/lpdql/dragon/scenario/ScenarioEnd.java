@@ -2,6 +2,7 @@ package org.lpdql.dragon.scenario;
 
 
 import org.lpdql.dragon.carte.Carte;
+import org.lpdql.dragon.system.Camera;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -54,7 +55,7 @@ public class ScenarioEnd extends Scenario {
     }
 
     @Override
-    public void update(Carte map) {
+    public void update(Carte map, Camera camera) {
 
     }
 }
