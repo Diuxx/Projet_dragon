@@ -1,6 +1,7 @@
 package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.EcranJeu;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;

@@ -1,7 +1,7 @@
 package org.lpdql.dragon.personnages;
 
-import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.EcranJeu;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
@@ -197,7 +197,7 @@ public class Personnage {
      * IMMOBILE = 3
      * @param direction
      *
-     * @see Direction
+     * @see org.lpdql.dragon.system.Direction
      */
     public void setDirection(int direction) {
         this.direction = direction;

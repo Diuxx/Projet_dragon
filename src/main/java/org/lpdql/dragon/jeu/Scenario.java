@@ -1,8 +1,6 @@
 package org.lpdql.dragon.jeu;
 
-import org.lpdql.dragon.bataille.Bataille;
 import org.lpdql.dragon.carte.Carte;
-import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.objets.Heal;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;

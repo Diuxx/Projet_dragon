@@ -5,6 +5,7 @@ import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.scenario.Accomplish;
+import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -53,10 +54,7 @@ public class Hero extends Personnage {
      * current money of the character
      */
     private float atk;
-
-	private int niveau;
     private int currentGold;
-
     private float pointDeVie;
 
     /**

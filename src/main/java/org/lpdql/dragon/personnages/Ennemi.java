@@ -5,6 +5,7 @@ import org.lpdql.dragon.interfaces.StoryElement;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
+import org.lpdql.dragon.system.EcranJeu;
 import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
@@ -218,12 +219,10 @@ public class Ennemi extends Personnage implements StoryElement {
 			int t,
 			float vitesse,
 			Image ennemiImages,
-			double atk,
+			float atk,
 			double maxHP)
 	{
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, 0);
-		this.atk = atk;
-		this.maxHP = maxHP;
 	}
 
 

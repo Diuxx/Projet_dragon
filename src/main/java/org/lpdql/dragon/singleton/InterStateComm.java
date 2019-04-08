@@ -3,6 +3,10 @@ package org.lpdql.dragon.singleton;
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
+import org.lpdql.dragon.scenario.Story;
+import org.lpdql.dragon.system.EcranJeu;
+import org.lpdql.dragon.system.MyStdColor;
+import org.lpdql.dragon.system.MyStdOut;
 
 /**
  * Class InterStateComm (communication entre les States du jeu).
@@ -106,8 +110,19 @@ public final class InterStateComm {
         }
     }
 
-
     public final static void enleverUnEnnemi() {
         InterStateComm.unEnnemi = null;
     }
+
+    // Niveau du jeu
+    private static int niveauDuJeu;
+
+    public static int getNiveauDuJeu() {
+        return niveauDuJeu;
+    }
+
+    public static void setNiveauDuJeu(int niveauDuJeu) {
+        InterStateComm.niveauDuJeu = niveauDuJeu;
+    }
+
 }

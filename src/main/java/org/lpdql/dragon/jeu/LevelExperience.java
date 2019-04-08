@@ -41,7 +41,8 @@ public class LevelExperience {
 			System.out.println("Level :"+i+ ", ExperienceMax :"+new LevelExperience().levelsExperiences.get(i));
 	}
 	
-	public void checkUpLevelEtExperience(int experienceAajouter, Hero hero) {
+	public boolean checkUpLevelEtExperience(int experienceAajouter, Hero hero) {
+		boolean levelUp = false;
 		Iterator itLevelExperience = this.levelsExperiences.entrySet().iterator();
 		
 		while (itLevelExperience.hasNext()) {
@@ -49,6 +50,7 @@ public class LevelExperience {
 			
 			if(hero.getLevel() == entry.getKey()) {
 				if(experienceAajouter >= entry.getValue()) {
+					levelUp = true;
 					int nouveauExp = experienceAajouter - this.levelsExperiences.get(entry.getKey());
 					hero.setExperience(nouveauExp);
 					hero.setLevel(entry.getKey() + 1);
@@ -56,5 +58,6 @@ public class LevelExperience {
 				}
 			}
 		}
+		return levelUp;
 	}
 }

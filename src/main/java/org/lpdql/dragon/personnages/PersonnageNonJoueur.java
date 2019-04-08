@@ -61,7 +61,7 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
      * add the message to display after interaction
      */
     public void addDialogue(String text) {
-        // this.dialogue = new Message();
+        this.dialogue = new Message();
         this.dialogue.add(text);
     }
 
