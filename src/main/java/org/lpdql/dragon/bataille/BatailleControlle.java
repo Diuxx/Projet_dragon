@@ -1,7 +1,6 @@
 package org.lpdql.dragon.bataille;
 
 import org.lpdql.dragon.jeu.LevelExperience;
-import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -26,7 +25,6 @@ public class BatailleControlle implements InputProviderListener {
 	private BatailleCommande mode = BatailleCommande.NONE;
 	private Sound swing;
 	private Sound victory;
-	private LevelExperience levelExperience;
 
 	public BatailleControlle(BatailleJoueur joueur, BatailleEnnemi ennemi, StateBasedGame game) {
 
@@ -38,11 +36,11 @@ public class BatailleControlle implements InputProviderListener {
 		} finally {
 			System.err.println("data/sound -> loaded");
 		}
+
 		this.joueur = joueur;
 		this.ennemi = ennemi;
 		this.game = game;
 		initAnimationListeners();
-		this.levelExperience = new LevelExperience();
 	}
 
 	public void controlPressed(Command commande) {
@@ -137,13 +135,27 @@ public class BatailleControlle implements InputProviderListener {
 
 			game.enterState(GameOver.GameOver);
 
-			// on ajoute l'experience de l'ennemi dans le joueur
-			InterStateComm.getLeHero().setExperience(ennemi.getExperience() + InterStateComm.getLeHero().getExperience());
-			
-			// on check s'il y a level up
-			levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience(), InterStateComm.getLeHero());
-			
+			// Augmenter l'experience et eventuellement le level
+			int experienceAjouter = ennemi.getExperience() + InterStateComm.getLeHero().getExperience();
+			InterStateComm.getLeHero().setExperience(experienceAjouter);
 
+			int experience  = InterStateComm.getLeHero().getExperience() ;
+			HashMap<Integer, Integer> lesLevelsExperiences = new LevelExperience().getLevelsExperiences();
+			Iterator itLevelExperience = lesLevelsExperiences.entrySet().iterator();
+
+			while (itLevelExperience.hasNext()) {
+				Map.Entry<Integer,Integer> entry =  (Entry<Integer, Integer>) itLevelExperience.next();
+
+				if(InterStateComm.getLeHero().getLevel() == entry.getKey()) {
+					if(experience >= entry.getValue()) {
+						int nouveauExp = experience - lesLevelsExperiences.get(entry.getKey());
+						InterStateComm.getLeHero().setExperience(nouveauExp);
+						InterStateComm.getLeHero().setLevel(entry.getKey() + 1);
+						experience -= lesLevelsExperiences.get(entry.getKey());
+					}
+				}
+			}
+			InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
 			mode = BatailleCommande.NONE;
 		} else {
 			switch (mode) {
