@@ -120,7 +120,12 @@ public class Hero extends Personnage {
         // Load sprite tiles from sprite sheet
         this.chargerImage();
     }
-
+    
+    public Hero(String nom) {
+    	super(nom);
+    	this.niveau = HEROLEVEL;
+    }
+    
     /**
      * this method manages the control of the character by the user
      * Only an Hero can be controled.

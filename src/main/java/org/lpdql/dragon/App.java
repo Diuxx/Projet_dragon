@@ -35,8 +35,9 @@ public class App {
         System.setProperty(LIBRARY_PATH, javaLibraryPath + File.pathSeparatorChar + dir.getAbsolutePath());
 
         resetJavaLibraryPath();
+        
     }
-
+    
     /**
      * Supprime le cache du "java.library.path".
      * Cela forcera le classloader à revérifier sa valeur lors du prochaine chargement de librairie.

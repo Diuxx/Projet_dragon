@@ -1,6 +1,8 @@
 package org.lpdql.dragon.personnages;
 
-import org.lpdql.dragon.system.*;
+import org.lpdql.dragon.system.EcranJeu;
+import org.lpdql.dragon.system.Point;
+import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
@@ -123,6 +125,10 @@ public class Personnage {
         this.dynamicCollision = false;
 
         box = new Rectangle(x - this.centerX, y - this.centerY, w, h);
+    }
+
+    public Personnage(String nom) {
+    	this.nom = nom;
     }
 
     /**
@@ -259,6 +265,7 @@ public class Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
+        // test
         return collision || this.dynamicCollision;
     }
 
@@ -275,7 +282,7 @@ public class Personnage {
         Animation animation = new Animation();
         for (int x = startX; x < endX; x++) {
             animation.addFrame(spriteSheet.getSprite(x, y), 150);
-        }
+        }//return animation;
         this.animation.add(animation);
     }
 

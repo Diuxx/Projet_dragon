@@ -216,6 +216,7 @@ public class Ennemi extends Personnage implements StoryElement {
 		this.maxHP = maxHP;
 	}
 
+
 	/**
 	 * Test constructor
 	 * @param nom Name of the current instance
