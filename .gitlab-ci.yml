@@ -1,7 +1,5 @@
 image: maven:latest
 
-before_script:
-  - apt-get install default-jre default-jdk openjdk-7-jre openjdk-7-jdk
 build:
   stage: build
   script:
