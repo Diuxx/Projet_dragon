@@ -50,6 +50,15 @@ public class Message {
 
     /**
      *
+     * @param message
+     */
+    public Message(String message) {
+        this();
+        this.add(message);
+    }
+
+    /**
+     *
      * @param text
      */
     public void add(String text) {

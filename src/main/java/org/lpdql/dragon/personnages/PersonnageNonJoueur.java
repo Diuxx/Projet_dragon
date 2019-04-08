@@ -41,8 +41,8 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
      */
     public PersonnageNonJoueur(String nom, float x, float y, int w, int h) {
         super(nom, x, y, w, h, 0, 0.0f);
-        this.dialogue = new Message();
-        this.dialogue.add("");
+        /*this.dialogue = new Message();
+        this.dialogue.add("");*/
         this.parle = false;
     }
 
@@ -108,6 +108,9 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
     }
 
     public Message getDialogue() {
+        if(this.dialogue == null)
+            return new Message("");
+
         return this.dialogue;
     }
 
