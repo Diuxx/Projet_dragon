@@ -22,7 +22,7 @@ public class App {
 
     /**
      * Ajoute un nouveau répertoire dans le java.library.path.
-     * @param dir Le nouveau répertoire à ajouter.
+     * @param dir Le nouveau répertoire à ajouter. bb
      */
     public static void addToJavaLibraryPath(File dir) {
         final String LIBRARY_PATH = "java.library.path";
