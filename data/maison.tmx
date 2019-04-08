@@ -27,16 +27,16 @@
    H4sIAAAAAAAACmNgGAWjYBSMVAAALq+17wAEAAA=
   </data>
  </layer>
- <objectgroup id="6" name="map-teleport" width="16" height="16">
+ <objectgroup id="6" name="map-teleport">
   <object id="1" name="dragon" type="change-map" x="144" y="208" width="48" height="16"/>
   <object id="2" name="dragon" type="position-map" x="157" y="181" width="16" height="16"/>
   <object id="4" name="hero" type="check-point" x="64" y="64" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="7" name="ennemis" width="16" height="16"/>
- <objectgroup id="8" name="pnjs" width="16" height="16">
+ <objectgroup id="7" name="ennemis"/>
+ <objectgroup id="8" name="pnjs">
   <object id="11" name="servante" x="70" y="157" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="9" name="objets" width="16" height="16">
+ <objectgroup id="9" name="objets">
   <object id="7" name="lettre" x="128" y="63" width="16" height="16"/>
  </objectgroup>
 </map>
