@@ -2,6 +2,7 @@ package org.lpdql.dragon;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.lpdql.dragon.jeu.TestLevelExperience;
 import org.lpdql.dragon.personnages.EnnemiTest;
 import org.lpdql.dragon.scenario.AccomplishTest;
 import org.lpdql.dragon.scenario.ScenarioTest;
@@ -10,7 +11,8 @@ import org.lpdql.dragon.scenario.ScenarioTest;
 @Suite.SuiteClasses({
         AccomplishTest.class,
         ScenarioTest.class,
-        EnnemiTest.class
+        EnnemiTest.class,
+        TestLevelExperience.class,
 })
 public class AppTest {
 

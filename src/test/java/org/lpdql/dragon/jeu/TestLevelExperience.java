@@ -1,4 +1,4 @@
-package org.lpdql.dragon;
+package org.lpdql.dragon.jeu;
 
 import org.junit.Test;
 
