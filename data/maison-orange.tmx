@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="9">
+ <tileset firstgid="1" source="map/minish_chip_inside_03.tsx"/>
+ <tileset firstgid="481" source="solide16x16.tsx"/>
+ <layer id="1" name="background1" width="16" height="16">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACpXTW07CQBSA4ekCUFFBFFgBXlBJvMK7NxLxhpd3FUxA9iCg20B5wFWgktRVKJq4C8W/yTSOTZtpH75kbmfOOZ10QwixiTVDiHVkkTP08y1itnGOCxyzdoJTnBn6+SUxJeyiADOAV+xhHxVU8egjrqOcu0YNEUTlnX5zm0r+RWRc7tex84cwhGGMBIifQAwpTGMGs7I+P3XEkVD69+rTywpWlf791m07QhGTmArw/Z39L2E5YKzlBT0c4FBztosnPCtrH/h0vP8O8i7xb3hHH1/i//vfoI4wyriS41GMYRzf+MFA2WugiRbuMYdb3MlxGvNYsN6a/y2BpPG394A2fgEwkIvnAAQAAA==
+  </data>
+ </layer>
+ <layer id="2" name="background2" width="16" height="16">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNggIAWRgaGViBuY0RlEwsWAdUuBuIljKhsYsEBoNqDQHyIEZU9kkE10P81QFxLZjjMBOqbBcSz6RCOO4F27KLAnutAvTeGQHwPN38CAM0X4NAABAAA
+  </data>
+ </layer>
+ <layer id="3" name="overground1" width="16" height="16">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYBSMVAAALq+17wAEAAA=
+  </data>
+ </layer>
+ <layer id="4" name="solide" width="16" height="16" opacity="0.27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACnvIyMDwcBDjl0D8DA2/IlIdCH8HYnTwGov+N1jU4QLE6P8I5D9Hwp8YSdOPruYNnfWT6n9SzKGFflj8Y4tvZACKi/c0cPc7tPhGxg+hZlOSDyjVjwsDAAiKTFEABAAA
+  </data>
+ </layer>
+ <layer id="5" name="position" width="16" height="16">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYBSMVAAALq+17wAEAAA=
+  </data>
+ </layer>
+ <objectgroup id="6" name="map-teleport" width="16" height="16">
+  <object id="7" name="dragon" type="change-map" x="156" y="211" width="26" height="30"/>
+  <object id="8" name="dragon" type="position-map" x="155" y="181" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="7" name="ennemis" width="16" height="16"/>
+ <objectgroup id="8" name="pnjs" width="16" height="16"/>
+ <objectgroup id="9" name="objets" width="16" height="16"/>
+</map>
