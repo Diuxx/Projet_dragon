@@ -61,7 +61,7 @@ public class Message {
     }
 
     /**
-     *
+     * test
      */
     public void add(Message text) {
         this.text = text.getText();
