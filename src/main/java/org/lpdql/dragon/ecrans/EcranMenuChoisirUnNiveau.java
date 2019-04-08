@@ -19,7 +19,7 @@ import java.awt.geom.AffineTransform;
  * @author: eZ
  */
 public class EcranMenuChoisirUnNiveau extends BasicGameState {
-
+// --
 	public static final int ID = 11;
 	public static String niveau;
 	private StateBasedGame stageGame;
