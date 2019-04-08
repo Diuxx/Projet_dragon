@@ -152,10 +152,12 @@ public class BatailleControlle implements InputProviderListener {
 						InterStateComm.getLeHero().setExperience(nouveauExp);
 						InterStateComm.getLeHero().setLevel(entry.getKey() + 1);
 						experience -= lesLevelsExperiences.get(entry.getKey());
+						InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
+						System.err.println("Hero Level UP++");
 					}
 				}
 			}
-			InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
+			
 			mode = BatailleCommande.NONE;
 		} else {
 			switch (mode) {
