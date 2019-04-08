@@ -40,7 +40,9 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
      * @param h height of the character on the map
      */
     public PersonnageNonJoueur(String nom, float x, float y, int w, int h) {
-        super(nom, x, y, w, h, 0, 0.0f, 0);
+        super(nom, x, y, w, h, 0, 0.0f);
+        this.dialogue = new Message();
+        this.dialogue.add("");
         this.parle = false;
     }
 
@@ -52,15 +54,14 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
      * @param h height of the character on the map
      */
     public PersonnageNonJoueur(String nom, Point pos, int w, int h) {
-        super(nom, pos, w, h, 0, 0.0f, 0);
-        this.parle = false;
+        this(nom, pos.getX(), pos.getY(), w, h);
     }
 
     /**
      * add the message to display after interaction
      */
     public void addDialogue(String text) {
-        this.dialogue = new Message();
+        // this.dialogue = new Message();
         this.dialogue.add(text);
     }
 

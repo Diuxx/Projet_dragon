@@ -77,6 +77,8 @@ public class ScenarioEpee extends Scenario {
      */
     @Override
     protected void chargerMainMap(Carte map) {
+        super.chargerMainMap(map);
+
         Point pServante = findPnjPosition(map, "servante");
         if(null == pServante)
             return;
