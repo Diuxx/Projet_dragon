@@ -46,7 +46,7 @@ public class Heal extends Objet {
             return;
 
         h.setPointDeVieActuel(h.getPointDeVie());
-        System.out.println("Heal ++++" + h.getPointDeVie());
+        System.out.println("Heal Max point de vie (" + h.getPointDeVie() + "+)");
 
         setDisponible(false);
         tempsDerniereAction = System.currentTimeMillis();
