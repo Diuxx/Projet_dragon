@@ -8,6 +8,10 @@
   <artifactId>projet-dragon</artifactId>
   <version>1.0-SNAPSHOT</version>
 
+  <name>projet-dragon</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -79,7 +83,7 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
- </plugins>
+      </plugins>
     </pluginManagement>
   </build>
 </project>
