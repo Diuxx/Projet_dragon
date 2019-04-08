@@ -9,6 +9,7 @@ import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.SlickException;
 
+import static org.lpdql.dragon.monde.Ressources.spriteSheet_letter;
 import static org.lpdql.dragon.monde.Ressources.spriteSheet_vieilHomme;
 
 /**
@@ -63,6 +64,7 @@ public class ScenarioEpee extends Scenario {
                 "Tu vas devoir les explorer et obtenir l'artéfact présent dans chacun d'eux#" +
                 "Une fois cela fait rend toi au chateau et élimines le vil Roi Dragon qui menace ce monde\n"
             );
+            lettre.loadAnimation(spriteSheet_letter, 0, 6, 0);
 
             // set a story element who should be donne if interact
             lettre.setStoryElement(Story.LIRELETTRE);
@@ -108,8 +110,8 @@ public class ScenarioEpee extends Scenario {
             pnjOldMan.addDialogue(
                 "Prends cette épée et vas tuer ce monstre pour t'entrainer..#" +
                 "utilises la touche \"a\" pour lancer un attaque..\nLa touche \"f\" sert à fuir le combat..#" +
-                "Saches qu'un vrais héro ne fuit jamais...." +
-                "................." +
+                "Saches qu'un vrais héro ne fuit jamais....#" +
+                ".................#" +
                 "JAMAIS......"
             );
         }

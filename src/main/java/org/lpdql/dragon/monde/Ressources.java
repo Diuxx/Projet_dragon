@@ -16,6 +16,7 @@ public class Ressources {
     public static SpriteSheet healSheet;
 
     public static SpriteSheet spriteSheet_vieilHomme;
+    public static SpriteSheet spriteSheet_letter;
     private static boolean charger = false;
 
     public static void charger() throws SlickException {
@@ -29,6 +30,7 @@ public class Ressources {
             spriteSheet_PNJ = new SpriteSheet("data/PNJ.png", 32, 32);
 
             spriteSheet_vieilHomme = new SpriteSheet("data/sprites/vieux_sage32x32.png", 32, 32);
+            spriteSheet_letter = new SpriteSheet("data/sprites/letter.png", 16, 16);
 
             charger = true;
 
