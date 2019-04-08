@@ -14,7 +14,7 @@ test_with_lab:
   stage: test
   script: maven test
   
-create jar file:
+create_jar_file:
     stage: package
     script:
     - maven package
