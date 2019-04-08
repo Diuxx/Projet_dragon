@@ -185,6 +185,12 @@ public class Scenario {
      */
     protected void chargerMainMap(Carte map) {
 
+        Point pOldWoman = findPnjPosition(map, "old_woman");
+
+        PersonnageNonJoueur pnjOldWoman = new PersonnageNonJoueur("Old woman", pOldWoman, 32, 32);
+        pnjOldWoman.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 11, 12,  5);
+
+        getLesPnj().add(pnjOldWoman);
     }
 
     /**
