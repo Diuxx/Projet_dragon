@@ -341,13 +341,13 @@ public class Hero extends Personnage {
 	public void rafraichirLePouvoirATK() {
 		switch (InterStateComm.getNiveauDuJeu()) {
 		case Difficulty.FACILE:
-			this.atk = (float) (InterStateComm.getLeHero().getLevel() * 5.0 + 35);
+			this.atk = (float) (getLevel() * 5.0 + 35);
 			break;
 		case Difficulty.DIFFICILE:
-			this.atk = (float) (InterStateComm.getLeHero().getLevel() * 4.0 + 25);
+			this.atk = (float) (getLevel() * 4.0 + 25);
 			break;
 		case Difficulty.TRES_DIFFICILE:
-			this.atk = (float) (InterStateComm.getLeHero().getLevel() * 3.0 + 20);
+			this.atk = (float) (getLevel() * 4.0 + 20);
 			break;
 		default:
 			this.atk =  0;
