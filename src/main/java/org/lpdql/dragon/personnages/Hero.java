@@ -36,7 +36,7 @@ public class Hero extends Personnage {
     private boolean artVoler;
 
     // hero information
-    private static final int HEROLIFE = 60;
+    private static final float HEROLIFE = (float) 300.0;
     private static final float HEROSPEED = 0.1f;
     private static final int HEROLEVEL = 1;
     private static final int HEROGOLD = 500;
@@ -58,7 +58,7 @@ public class Hero extends Personnage {
      * @param positon
      */
     public Hero(String nom, Point positon) {
-        super(nom, positon, Taille.LARGE_SIZE, (float) 300.0,  HEROSPEED, 2);
+        super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED, 2);
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
         this.lesObjets = new ArrayList<Objet>();
         this.experience = 0;

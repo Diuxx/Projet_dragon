@@ -76,7 +76,6 @@ public class Ennemi extends Personnage {
 		this.veutCombattre = false;
 		this.friendly = false;
 		this.friendlyTimer = 0l;
-		super.setHeroStatistques(niveau);
 
 		/*
 		 * Statistiques des personnages.ennemis */
