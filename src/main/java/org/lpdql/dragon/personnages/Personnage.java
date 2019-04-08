@@ -1,6 +1,7 @@
 package org.lpdql.dragon.personnages;
 
 import org.lpdql.dragon.ecrans.EcranJeu;
+import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
@@ -247,11 +248,19 @@ public class Personnage {
 
 	// Level UP HERO
 	public void setHeroStatistques(int niveau) {
+		System.out.println("-----------------------------------");
+		System.err.println("Hero Level UP++  ===> New hero statistiques : ");
+		System.out.println("ATK power			  		: " + InterStateComm.getLeHero().getATK());
+		// level up hero point de vie
 		this.pointDeVie = (int) (niveau * 50.0 + 250);
-		System.err.println("pointDeVieActuel avant" + this.pointDeVieActuel);
-		System.err.println("Générer 10% vie = " + this.pointDeVie * 0.10);
+		System.out.println("Total point de vie  				: " + this.pointDeVie);
+		// bonus 10% vie for level up
+		System.out.println("Point de vie actuel				: " + this.pointDeVieActuel);
+		System.out.println("Bonus for level up 10% vie 			: " + this.pointDeVie * 0.10);
 		this.pointDeVieActuel += (this.pointDeVie * 0.10);
-		System.err.println("pointDeVieActuel apres" + this.pointDeVieActuel);
+		System.out.println("Point de vie actuel after the bouns : 	" + this.pointDeVieActuel);
+		System.out.println("-----------------------------------");
+		
 	}
 
 	// Level UP Ennemi

@@ -122,6 +122,7 @@ public class BatailleControlle implements InputProviderListener {
 	 *
 	 */
 	private void endPlayerAttack() {
+		boolean levelUP = false;
 		if(ennemi.getBarreVie() <= 0) {
 			if(!InterStateComm.getLeHero().getMuted() && victory != null)
 			{
@@ -148,16 +149,18 @@ public class BatailleControlle implements InputProviderListener {
 
 				if(InterStateComm.getLeHero().getLevel() == entry.getKey()) {
 					if(experience >= entry.getValue()) {
+						levelUP = true;
 						int nouveauExp = experience - lesLevelsExperiences.get(entry.getKey());
 						InterStateComm.getLeHero().setExperience(nouveauExp);
 						InterStateComm.getLeHero().setLevel(entry.getKey() + 1);
 						experience -= lesLevelsExperiences.get(entry.getKey());
-						InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
-						System.err.println("Hero Level UP++");
 					}
 				}
 			}
-			
+			if (levelUP) {
+				InterStateComm.getLeHero().rafraichirLePouvoirATK();
+				InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
+			}
 			mode = BatailleCommande.NONE;
 		} else {
 			switch (mode) {

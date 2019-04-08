@@ -47,17 +47,8 @@ public class BatailleJoueur {
 	}
 
 	public float getATK() {
-		switch (InterStateComm.getNiveauDuJeu()) {
-		case Difficulty.FACILE:
-			return ((int) (InterStateComm.getLeHero().getLevel() * 5.0 + 35));
-		case Difficulty.DIFFICILE:
-			return ((int) (InterStateComm.getLeHero().getLevel() * 4.0 + 25));
-		case Difficulty.TRES_DIFFICILE:
-			return ((int) (InterStateComm.getLeHero().getLevel() * 3.0 + 20));
-		default:
-			return 0;
-		}
-
+		InterStateComm.getLeHero().rafraichirLePouvoirATK();
+		return ((int) (InterStateComm.getLeHero().getATK()));
 	}
 
 	public void addAnimationListener(AnimationListener assignDamage, AnimationListener endAttack) {

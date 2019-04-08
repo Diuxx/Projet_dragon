@@ -4,6 +4,8 @@ import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
+import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
@@ -327,11 +329,28 @@ public class Hero extends Personnage {
     public boolean getMuted() {
         return muted;
     }
-    public float getAtk() {
-		return atk;
+    
+    public float getATK() {
+		return this.atk;
 	}
 
 	public void setAtk(float atk) {
 		this.atk = atk;
+	}
+	
+	public void rafraichirLePouvoirATK() {
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.atk = (float) (InterStateComm.getLeHero().getLevel() * 5.0 + 35);
+			break;
+		case Difficulty.DIFFICILE:
+			this.atk = (float) (InterStateComm.getLeHero().getLevel() * 4.0 + 25);
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.atk = (float) (InterStateComm.getLeHero().getLevel() * 3.0 + 20);
+			break;
+		default:
+			this.atk =  0;
+		}
 	}
 }
