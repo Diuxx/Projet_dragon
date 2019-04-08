@@ -1,23 +1,11 @@
-image: maven:3-jdk-7
+image: maven:latest
 
 build:
-  script: "mvn install -B"
-  
-stages:
-  - compile
-  - test
-  - package
-
-install_dependencies:
-  stage: compile
+  stage: build
   script:
-    - maven compile 
-    
-test_with_lab:
+    - mvn compile
+
+test:
   stage: test
-  script: maven test
-  
-create_jar_file:
-    stage: package
-    script:
-    - maven package
+  script:
+    - mvn test
