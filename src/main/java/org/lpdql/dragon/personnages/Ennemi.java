@@ -338,7 +338,7 @@ public class Ennemi extends Personnage {
 			this.atk = (int) (niveau * 6.0 + 20);
 			break;
 		case Difficulty.TRES_DIFFICILE:
-			this.atk = (int) (niveau * 7.0 + 25);
+			this.atk = (int) (niveau * 6.0 + 25);
 			break;
 		default:
 			this.atk =  0;

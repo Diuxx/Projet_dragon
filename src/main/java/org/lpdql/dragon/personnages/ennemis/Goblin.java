@@ -18,7 +18,7 @@ public class Goblin extends Ennemi {
     private static final int TIMER = 1000;
     private static final float VITESSE = 0.1f;
     private static final Image ENNEMI_IMAGE = Ressources.spriteSheet_goblin.getSubImage(9, 3);
-    private static final int NIVEAU = 5;
+    private static final int NIVEAU = 3;
     /**
      * Class constructor
      */
