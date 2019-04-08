@@ -1,9 +1,13 @@
+before_script:
+apt-get update
+apt-get install -y openjfx
+
 image: maven:latest
 
 build:
   stage: build
   script:
-    - mvn compile
+    - mvn clean compile 
 
 test:
   stage: test
