@@ -13,22 +13,31 @@ import org.lpdql.dragon.system.Point;
 public class PersonnageNonJoueur extends Personnage implements StoryElement {
 
     /**
-     * That a pointer to a Story Element
+     * this variable points to a Story Element
+     * a story can be activated or not
+     * @see StoryElement
      */
     private Story storyElement;
 
     /**
-     * Dialogue entre le personnage et le pnj
+     * this variable allows the character to display a message
+     * @see Message
      */
     private Message dialogue;
 
     /**
-     * detecte si le personnage parle
+     * detects if the character is speaking
      */
     private boolean parle;
 
     /**
-     * Class constructor
+     * Default constructor of Pnj class.
+     *
+     * @param nom Name of the current instance
+     * @param x abscissa of the character on the map
+     * @param y ordinate of the character on the map
+     * @param w character width on the map
+     * @param h height of the character on the map
      */
     public PersonnageNonJoueur(String nom, float x, float y, int w, int h) {
         super(nom, x, y, w, h, 0, 0.0f);
@@ -36,9 +45,11 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
     }
 
     /**
-     *
-     * @param nom
-     * @param pos
+     * Construtor overload of PNJ without x and y
+     * @param nom Name of the current instance
+     * @param pos abscissa and ordinate of the character on the map
+     * @param w character width on the map
+     * @param h height of the character on the map
      */
     public PersonnageNonJoueur(String nom, Point pos, int w, int h) {
         super(nom, pos, w, h, 0, 0.0f);
@@ -46,7 +57,7 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
     }
 
     /**
-     *
+     * add the message to display after interaction
      */
     public void addDialogue(String text) {
         this.dialogue = new Message();
@@ -54,7 +65,8 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
     }
 
     /**
-     * This class ends a story element if it exist.
+     * this method puts an end to an element of the story
+     * @see Story
      */
     @Override
     public void storyDone() {
@@ -68,6 +80,8 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
     /**
      * fill the pointer if needed
      * @param element
+     *
+     * @see Story
      */
     @Override
     public void setStoryElement(Story element) {
@@ -84,8 +98,8 @@ public class PersonnageNonJoueur extends Personnage implements StoryElement {
     }
 
     /**
-     *
-     * @return
+     * return current storyElement stored in this instance of class
+     * @return return current storyElement stored in this instance of class
      */
     @Override
     public Story getStoryElement() {

@@ -58,7 +58,7 @@ public class ScenarioEpee extends Scenario {
             ObjetMessage lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
             lettre.setMessage(
                 "Si tu lis cette lettre c'est que les 4 royaumes font faces à une grande menace#" +
-                "Tu va devoir les explorer et obtenir l'artéfact présent dans chacun d'eux\n" +
+                "Tu vas devoir les explorer et obtenir l'artéfact présent dans chacun d'eux\n" +
                 "une fois cela fait rend toi au chateau et élimine le vil Roi Dragon qui menace ce monde\n"
             );
 
@@ -91,7 +91,7 @@ public class ScenarioEpee extends Scenario {
 
         pnjOldMan.addDialogue("aaahhh ! il y a plein de monstres.. tues les tu gagnera en puissance !");
         if(!Story.TUTOFIRSTENNEMIWASKILLED.getState())
-            pnjOldMan.addDialogue("Prends cette épée et va tuer ce monstre pour t'entrainer..");
+            pnjOldMan.addDialogue("Prends cette épée et vas tuer ce monstre pour t'entrainer..");
         pnjOldMan.setStoryElement(Story.TUTOPARLEROLDMAN);
         super.getLesPnj().add(pnjOldMan);
 
