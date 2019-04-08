@@ -250,6 +250,7 @@ public class Personnage {
 	public void setHeroStatistques(int niveau) {
 		System.out.println("-----------------------------------");
 		System.out.println("Hero Level UP++  ===> New hero statistiques : ");
+		System.out.println("Hero Level				  	: " + InterStateComm.getLeHero().getLevel());
 		System.out.println("ATK power			  		: " + InterStateComm.getLeHero().getATK());
 		// level up hero point de vie
 		this.pointDeVie = (int) (niveau * 50.0 + 250);

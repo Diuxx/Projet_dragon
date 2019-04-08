@@ -1,5 +1,9 @@
 package org.lpdql.dragon.bataille;
 
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
+
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.singleton.InterStateComm;
@@ -10,7 +14,9 @@ public class BatailleJoueur {
 	private Hero joueur;
 	private Image joueurImage;
 	private PathAnimation animation;
-
+//	Font font;
+//	TrueTypeFont trueTypeFont;
+	
 	public void init() throws SlickException {
 		this.joueur = InterStateComm.getLeHero();
 		this.joueurImage = Ressources.spriteSheet.getSubImage(6, 10);
@@ -20,6 +26,11 @@ public class BatailleJoueur {
 
 	public void render(GameContainer container, Graphics g) {
 		Vector2f p = animation.currentLocation();
+//		font = new Font("Arial Rounded MT", Font.PLAIN, 10);
+//		AffineTransform affinetransform = new AffineTransform();
+//		trueTypeFont = new TrueTypeFont(font, true);
+//		g.setFont(trueTypeFont);
+		
 		joueurImage.drawCentered(p.x + container.getWidth() * 1 / 4, p.y + container.getHeight() / 2);
 
 		g.setColor(new Color(255, 255, 255));
@@ -27,9 +38,11 @@ public class BatailleJoueur {
 
 		g.setColor(new Color(255, 0, 0));
 		g.fillRect(container.getWidth() * 1 / 4 - 80, container.getHeight() / 2 - joueurImage.getHeight() / 2 - 30,
-				(joueur.getPointDeVieActuel() / joueur.getPointDeVie()) * 130,
+				Math.max(0, (joueur.getPointDeVieActuel() / joueur.getPointDeVie())) * 130,
 				20);
-
+		g.setColor(new Color(Color.white));
+		g.drawString("" + (int) Math.max(0, (int) joueur.getPointDeVieActuel()), container.getWidth() * 1 / 4 - 30 , container.getHeight() / 2 - joueurImage.getHeight() / 2 - 29);
+		
 	}
 
 	public void update(int delta) {

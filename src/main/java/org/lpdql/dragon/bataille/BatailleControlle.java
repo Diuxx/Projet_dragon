@@ -1,5 +1,6 @@
 package org.lpdql.dragon.bataille;
 
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.jeu.LevelExperience;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.newdawn.slick.SlickException;
@@ -26,8 +27,11 @@ public class BatailleControlle implements InputProviderListener {
 	private Sound swing;
 	private Sound victory;
 
+	// --
+	private StateBasedGame stageGame;
+	
 	public BatailleControlle(BatailleJoueur joueur, BatailleEnnemi ennemi, StateBasedGame game) {
-
+		this.stageGame = game;
 		try {
 			swing = new Sound("data/sound/swing.wav");
 			victory = new Sound("data/sound/ff7victory.wav");
@@ -131,7 +135,7 @@ public class BatailleControlle implements InputProviderListener {
 			System.out.println(InterStateComm.getUnEnnemi().getNom() + " est mort !");
 			InterStateComm.tuerUnEnnemi();
 
-			game.enterState(GameOver.GameOver);
+			game.enterState(EcranJeu.ID);
 
 			// Augmenter l'experience et eventuellement le level
 			int experienceAjouter = ennemi.getExperience() + InterStateComm.getLeHero().getExperience();
@@ -171,7 +175,7 @@ public class BatailleControlle implements InputProviderListener {
                     // on enlève l'ennemi de la bataille
                     InterStateComm.enleverUnEnnemi();
 
-					game.enterState(GameOver.GameOver);
+                    game.enterState(EcranJeu.ID);
 					ennemi.regenVie();
 					mode = BatailleCommande.NONE;
 					break;
@@ -198,7 +202,7 @@ public class BatailleControlle implements InputProviderListener {
 	 */
 	private void endEnnemiAttack() {
 		if (joueur.getBarreVie() <= 0) {
-			game.enterState(GameOver.GameOver);
+			game.enterState(GameOver.ID);
 		}
 		mode = BatailleCommande.NONE;
 	}
