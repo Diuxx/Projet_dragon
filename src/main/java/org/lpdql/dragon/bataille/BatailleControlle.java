@@ -155,7 +155,7 @@ public class BatailleControlle implements InputProviderListener {
 					}
 				}
 			}
-
+			InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
 			mode = BatailleCommande.NONE;
 		} else {
 			switch (mode) {

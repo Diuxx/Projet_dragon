@@ -20,10 +20,10 @@ public class Personnage {
 
 	// information sur le personnage
 	private String nom;
-	private float pointDeVie;
+	protected float pointDeVie;
 
 
-	private float pointDeVieActuel;
+	protected float pointDeVieActuel;
 
 	// mouvement du personnage
 	protected float x = 0, y = 0;
@@ -58,9 +58,7 @@ public class Personnage {
 
 		this.centerX = (int) (w / 2);
 		this.centerY = (int) (h - (h / 5));
-
-		this.pointDeVieActuel = pointDeVie;
-
+		this.pointDeVieActuel = this.pointDeVie = pointDeVie;
 		this.vitesse = vitesse;
 
 		this.animation = new ArrayList<Animation>();
@@ -249,7 +247,7 @@ public class Personnage {
 
 	// Level UP HERO
 	public void setHeroStatistques(int niveau) {
-		this.pointDeVieActuel = this.pointDeVie = (int) (niveau * 50.0 + 250);
+		this.pointDeVie = (int) (niveau * 50.0 + 250);
 		System.out.println("Hero --------------------------------> " + this.pointDeVie);
 	}
 
