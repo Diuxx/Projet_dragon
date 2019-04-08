@@ -1,0 +1,20 @@
+image: maven:latest
+
+stages:
+  - compile
+  - test
+  - package
+
+install_dependencies:
+  stage: compile
+  script:
+    - maven compile 
+    
+test_with_lab:
+  stage: test
+  script: maven test
+  
+create_jar_file:
+    stage: package
+    script:
+    - maven package
