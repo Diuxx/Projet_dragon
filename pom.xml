@@ -7,8 +7,6 @@
   <groupId>org.lpdql.dragon</groupId>
   <artifactId>projet-dragon</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>projet-dragon</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -81,22 +79,6 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-         <plugin>
-             <groupId>org.apache.maven.plugins</groupId>
-             <artifactId>maven-jar-plugin</artifactId>
-             <version>3.0.2</version>
-         </plugin>
-         <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.lpdql.dragon.App</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
  </plugins>
     </pluginManagement>
   </build>
