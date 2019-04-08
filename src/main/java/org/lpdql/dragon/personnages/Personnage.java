@@ -258,7 +258,7 @@ public class Personnage {
 		System.out.println("Point de vie actuel				: " + this.pointDeVieActuel);
 		System.out.println("Bonus for level up 10% vie 			: " + this.pointDeVie * 0.10);
 		this.pointDeVieActuel += (this.pointDeVie * 0.10);
-		System.out.println("Point de vie actuel after the bouns : 	" + this.pointDeVieActuel);
+		System.out.println("Point de vie actuel after the bouns 		: " + this.pointDeVieActuel);
 		System.out.println("-----------------------------------");
 		
 	}
