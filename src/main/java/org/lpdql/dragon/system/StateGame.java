@@ -23,8 +23,8 @@ public class StateGame extends StateBasedGame {
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
 //    	addState(new EcranMenuPrincipale());
-//    	addState(new EcranMenuChoisirUnNiveau());
-//    	addState(new EcranMenuChoisirUnNom());
+    	addState(new EcranMenuChoisirUnNiveau());
+    	addState(new EcranMenuChoisirUnNom());
         addState(new EcranJeu());
         addState(new Bataille());
     }

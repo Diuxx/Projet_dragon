@@ -87,7 +87,7 @@ public final class InterStateComm {
      */
     public final static void tuerUnEnnemi() {
         if (InterStateComm.unEnnemi != null) {
-            System.err.println("Un ennemi est sur le point de mourir !");
+ //           System.err.println("Un ennemi est sur le point de mourir !");
             InterStateComm.unEnnemi.setMort(true);
             InterStateComm.unEnnemi = null;
         }

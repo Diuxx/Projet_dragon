@@ -34,20 +34,21 @@ public class Ennemi extends Personnage {
 	private boolean veutCombattre;
 
 	private Image ennemiImages;
-    private Image imageCombat;
+	private Image imageCombat;
 	private int niveau;
 
 	protected int experience;
+	private float atk;
 
 	/**
-	 * L'ennemi est naturellement hostile et attaquer.
-	 * firendly = false */
+	 * L'ennemi est naturellement hostile et attaquer. firendly = false
+	 */
 	private boolean friendly;
 
 	/**
-	 * L'ennemi peut ne plus être hostile et ne pas attaquer
-	 * Variables qui gère la durée durant laquel l'ennemi n'est
-	 * pas hostile */
+	 * L'ennemi peut ne plus être hostile et ne pas attaquer Variables qui gère la
+	 * durée durant laquel l'ennemi n'est pas hostile
+	 */
 	private long friendlyTimer;
 	private long targetFriendlyTimer;
 
@@ -78,11 +79,11 @@ public class Ennemi extends Personnage {
 		this.friendlyTimer = 0l;
 
 		/*
-		 * Statistiques des personnages.ennemis */
+		 * Statistiques des personnages.ennemis
+		 */
 		this.niveau = niveau;
-		super.setEnnemiStatistques(niveau);
-		this.experience = niveau * 5 + 25; // test
-		
+		setEnnemiStatistques(this.niveau);
+		setAtk(this.niveau);
 		switch (InterStateComm.getNiveauDuJeu()) {
 		case Difficulty.FACILE:
 			this.experience = niveau * 5 + 50;
@@ -95,13 +96,14 @@ public class Ennemi extends Personnage {
 			break;
 		}
 
-        /**
-         * L'ennemi quand il est crée est vivant ! (visible) */
-        this.mort = false;
-        lesPersonnages = new ArrayList<Personnage>();
-        this.ennemiImages = ennemiImages;
-        imageCombat = ennemiImages;
-    }
+		/**
+		 * L'ennemi quand il est crée est vivant ! (visible)
+		 */
+		this.mort = false;
+		lesPersonnages = new ArrayList<Personnage>();
+		this.ennemiImages = ennemiImages;
+		imageCombat = ennemiImages;
+	}
 
 	/**
 	 *
@@ -238,12 +240,13 @@ public class Ennemi extends Personnage {
 
 	/**
 	 * changement d'état fiendly or not !
+	 * 
 	 * @param h
 	 * @param timer
 	 */
 	public void setFriendly(boolean h, int timer) {
 		this.friendly = h;
-		if(h) {
+		if (h) {
 			this.targetFriendlyTimer = timer;
 			this.friendlyTimer = System.currentTimeMillis();
 			System.out.println(this.getNom() + " n'est plus une menace !");
@@ -252,23 +255,25 @@ public class Ennemi extends Personnage {
 
 	/**
 	 * Retourne l'etat d'hostilité de l'ennemi.
-	 * @return boolean value (true : when fiendly| false : when not friendly) */
+	 * 
+	 * @return boolean value (true : when fiendly| false : when not friendly)
+	 */
 	public boolean isFriendly() {
 		return this.friendly;
 	}
 
 	/**
-	 * Gère le changement d'état fiendly/malicious d'un ennemi */
+	 * Gère le changement d'état fiendly/malicious d'un ennemi
+	 */
 	public void checkTimerFriendly() {
-		if(!this.friendly)
+		if (!this.friendly)
 			return;
 
-		if(System.currentTimeMillis() - this.friendlyTimer >= this.targetFriendlyTimer)
-        {
-            // --
-            System.out.println(this.getNom() + " redevient une menace !");
-            this.friendly = false;
-        }
+		if (System.currentTimeMillis() - this.friendlyTimer >= this.targetFriendlyTimer) {
+			// --
+			System.out.println(this.getNom() + " redevient une menace !");
+			this.friendly = false;
+		}
 	}
 
 	public boolean isMort() {
@@ -309,6 +314,7 @@ public class Ennemi extends Personnage {
 
 	/**
 	 * Important !
+	 * 
 	 * @return
 	 */
 	public String parle() {
@@ -317,6 +323,26 @@ public class Ennemi extends Personnage {
 
 	public int getNiveau() {
 		return niveau;
+	}
+	
+    public float getATK() {
+		return this.atk;
+	}
+
+	public void setAtk(int niveau) {
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.atk = (int) (niveau * 5.0 + 15);
+			break;
+		case Difficulty.DIFFICILE:
+			this.atk = (int) (niveau * 6.0 + 20);
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.atk = (int) (niveau * 7.0 + 25);
+			break;
+		default:
+			this.atk =  0;
+		}
 	}
 
 }

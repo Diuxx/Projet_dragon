@@ -88,7 +88,6 @@ public class EcranJeu extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 
         camera.translate(graphics, gameContainer);
-
         // affichage de la carte
         carte.afficher(carte.getMap().getLayerIndex("background1"));
         carte.afficher(carte.getMap().getLayerIndex("background2"));
@@ -111,7 +110,7 @@ public class EcranJeu extends BasicGameState {
             if(this.isUpdatePaused())
                 this.setUpdatePaused(false);
         }
-
+      
         // images positionné de telle façon
         // que les personnages/personnages.ennemis/pnjs puissent passer derrière.
         carte.afficher(carte.getMap().getLayerIndex("overground1"));

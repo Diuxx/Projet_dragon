@@ -2,7 +2,6 @@ package org.lpdql.dragon.bataille;
 
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Difficulty;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -63,16 +62,7 @@ public class BatailleEnnemi {
 	}
 	
 	public float getATK() {
-		switch (InterStateComm.getNiveauDuJeu()) {
-		case Difficulty.FACILE:
-			return ((int) (ennemi.getNiveau() * 5.0 + 15));
-		case Difficulty.DIFFICILE:
-			return ((int) (ennemi.getNiveau() * 6.0 + 20));
-		case Difficulty.TRES_DIFFICILE:
-			return ((int) (ennemi.getNiveau() * 7.0 + 25));
-		default:
-			return 0;
-		}
+		return ennemi.getATK();
 	}
 	
 	public void setBarreVie(int degat) {
