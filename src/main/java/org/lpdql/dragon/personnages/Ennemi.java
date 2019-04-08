@@ -1,9 +1,12 @@
 package org.lpdql.dragon.personnages;
 
+import org.lpdql.dragon.bataille.Bataille;
+import org.lpdql.dragon.interfaces.StoryElement;
+import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Difficulty;
-import org.lpdql.dragon.system.Direction;
-import org.lpdql.dragon.system.Point;
+import org.lpdql.dragon.system.*;
+import org.lpdql.dragon.system.EcranJeu;
+import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -12,75 +15,135 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.lpdql.dragon.system.EcranJeu.lesMessages;
+
 /**
- * class personnages.Ennemi
+ * class Ennemi
  *
  * @author: Diuxx
  */
-public class Ennemi extends Personnage {
+public class Ennemi extends Personnage implements StoryElement {
 
-	// --
-	private float timeSinceTrigger = 0;
-	private Direction direction;
-	private Direction directionTransition;
+	/**
+	 * this variable points to a Story Element
+	 * a story can be activated or not
+	 * @see StoryElement
+	 */
+	private Story storyElement;
 
+	/**
+	 * this varibale manages the movement of an enemy
+	 */
+	private float timeSinceTrigger = 0f;
+
+	/**
+	 * these variables manages the directions that the enemy can take
+	 * @see Direction
+	 */
+	private Direction direction, directionTransition;
+
+	/**
+	 * the starting position saved from the enemy
+	 * it's not the variables managing the movement
+	 */
 	private float x, y;
+
+	/**
+	 * this variable represents the time elapsed before changing direction
+	 */
 	private int tempsChangerDirection;
 
+	/**
+	 * objects that can collide with an enemy
+	 * @see Personnage
+	 */
 	private List<Personnage> lesPersonnages;
+
+	/**
+	 * Enemy states. if element can interact with?
+	 * {@code true} if it exists
+	 * {@code false} if it not exists
+	 */
 	private boolean mort;
 
-	private boolean bouge;
+	/**
+	 * just before the start of a fight this variable goes to {@code true}
+	 */
 	private boolean veutCombattre;
 
-	private Image ennemiImages;
-	private Image imageCombat;
+	/**
+	 * if the hero collides, to post a message you must request a fight
+	 * when it's the enemy that collides not need
+	 */
+	private boolean requestFight;
+
+	/**
+	 * image representing the enemy
+	 */
+	private Image ennemiImages, imageCombat;
+
+	/**
+	 * Enemy statistics
+	 */
 	private int niveau;
 
 	protected int experience;
 	private float atk;
 
 	/**
-	 * L'ennemi est naturellement hostile et attaquer. firendly = false
-	 */
+	 * this variable manage the aggressiveness of an enemy
+	 * by default it set to true for all ennemis
+	 * {@code false} considered as fiendly
+	 **/
 	private boolean friendly;
 
 	/**
-	 * L'ennemi peut ne plus être hostile et ne pas attaquer Variables qui gère la
-	 * durée durant laquel l'ennemi n'est pas hostile
-	 */
-	private long friendlyTimer;
-	private long targetFriendlyTimer;
+	 * Variables that manages the duration during which the enemy is
+	 * not hostile
+	 * The enemy may no longer be hostile and not attack
+	 **/
+	private long friendlyTimer, targetFriendlyTimer;
 
 	/**
-	 *
-	 * @param nom
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param pointDeVie
-	 * @param direction
-	 * @param t
-	 * @param vitesse
-	 * @param ennemiImages
-	 * @param niveau
+	 * This manage a timer who allows the enemy to move after a collision.
 	 */
-	public Ennemi(String nom, float x, float y, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
-			Image ennemiImages, int niveau) {
-		super(nom, x, y, w, h, niveau * pointDeVie, vitesse, niveau);
+	private long timerCanMoveAfterCollision;
+
+	/**
+	 * Default constructor of Ennemi class.
+	 *
+	 * @param nom name of the current ennemi
+	 * @param x "x" position on map
+	 * @param y "y" position on map
+	 * @param w "w" width of current object
+	 * @param h "h" heigth of current object
+	 * @param pointDeVie max Life point of current
+	 * @param direction movement patern
+	 * @param t timer befor switch direction
+	 * @param vitesse speed of current object
+	 * @param ennemiImages drawable pic
+	 * @param niveau level of current
+	 */
+	public Ennemi(String nom, float x, float y, int w, int h,
+	  int pointDeVie, Direction direction, int t, float vitesse, Image ennemiImages, int niveau)
+	{
+		// need to call super constructor..
+		super(nom, x, y, w, h, pointDeVie, vitesse);
 		this.direction = this.directionTransition = direction;
 		this.x = x;
 		this.y = y;
 		this.tempsChangerDirection = t;
-		this.bouge = true;
+
 		this.veutCombattre = false;
+		this.requestFight = false; // collision hero -> ennemi
+
+		// firendly gestionnary
 		this.friendly = false;
 		this.friendlyTimer = 0l;
 
-		/*
-		 * Statistiques des personnages.ennemis
-		 */
+		this.timerCanMoveAfterCollision = 0l;
+
+		// Statistiques des Ennemis
 		this.niveau = niveau;
 		setEnnemiStatistques(this.niveau);
 		setAtk(this.niveau);
@@ -96,41 +159,94 @@ public class Ennemi extends Personnage {
 			break;
 		}
 
-		/**
-		 * L'ennemi quand il est crée est vivant ! (visible)
-		 */
-		this.mort = false;
-		lesPersonnages = new ArrayList<Personnage>();
-		this.ennemiImages = ennemiImages;
-		imageCombat = ennemiImages;
-	}
+        // when an instance of ennemi is created
+		// he is alive (drawable)
+        this.mort = false;
+
+        // "Personnage" who can collid with
+        lesPersonnages = new ArrayList<>();
+
+        this.ennemiImages = ennemiImages;
+        imageCombat = ennemiImages;
+    }
 
 	/**
-	 *
-	 * @return
+	 * Construtor overload of Personnage without x and y
+	 * @param nom name of the current ennemi
+	 * @param pos abscissa and ordinate of the character on the map
+	 * @param w "w" width of current object
+	 * @param h "h" heigth of current object
+	 * @param pointDeVie max Life point of current
+	 * @param direction movement patern
+	 * @param t timer befor switch direction
+	 * @param vitesse speed of current object
+	 * @param ennemiImages drawable pic
+	 * @param niveau level of current
 	 */
-	public int getExperience() {
-		return experience;
-	}
-
-	/**
-	 *
-	 * @param nom
-	 * @param pos
-	 */
-	public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
-			Image ennemiImages, int niveau) {
+	public Ennemi(
+			String nom,
+			Point pos,
+			int w, int h,
+	  		int pointDeVie,
+			Direction direction,
+			int t,
+			float vitesse,
+			Image ennemiImages,
+			int niveau)
+	{
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, niveau);
 	}
 
-	public Ennemi(String nom, Point pos, int w, int h, int pointDeVie, Direction direction, int t, float vitesse,
-			Image ennemiImages, double atk, double maxHP) {
+	/**
+	 * Surchage of constructor including somes statistics
+	 * @param nom name of the current ennemi
+	 * @param w "w" width of current object
+	 * @param h "h" heigth of current object
+	 * @param pointDeVie max Life point of current
+	 * @param direction movement patern
+	 * @param t timer befor switch direction
+	 * @param vitesse speed of current object
+	 * @param ennemiImages drawable pic
+	 * @param atk current atk of Ennemi
+	 * @param maxHP max life point of Ennemi
+	 */
+	public Ennemi(
+			String nom,
+			Point pos,
+			int w, int h,
+			int pointDeVie,
+			Direction direction,
+			int t,
+			float vitesse,
+			Image ennemiImages,
+			float atk,
+			double maxHP)
+	{
 		this(nom, pos.getX(), pos.getY(), w, h, pointDeVie, direction, t, vitesse, ennemiImages, 0);
 	}
 
+
 	/**
+	 * Test constructor
+	 * @param nom Name of the current instance
+	 * @param position abscissa and ordinate of the character on the map
+	 * @param width character width on the map
+	 * @param height height of the character on the map
+	 */
+	public Ennemi(String nom, Point position, int width, int height) {
+		this(nom, position.getX(), position.getY(), width, height, 100, Direction.IMMOBILE, 100, 0f, null, 1);
+	}
+
+	/**
+	 * This function manage the movement of the character
+	 * HORIZONTAL = 0
+	 * VERTICAL = 1
+	 * RANDOM = 2
+	 * IMMOBILE = 3
 	 *
-	 * @param delta
+	 * @param delta slick timer.
+	 *
+	 * @see Direction
 	 */
 	public void move(int delta) {
 		switch (((this.direction != this.directionTransition) ? this.directionTransition : this.direction)) {
@@ -164,65 +280,106 @@ public class Ennemi extends Personnage {
 		this.timeSinceTrigger += delta;
 		super.moving = true;
 		if (this.timeSinceTrigger > (tempsChangerDirection * 2)) {
-			super.moving = false;
+			// super.moving = false;
 			super.x = this.x;
 			super.y = this.y;
 			this.timeSinceTrigger = 0;
 		}
 	}
 
+	/**
+	 * This function manage the movement of the character
+	 *
+	 * @param delta slick timer.
+	 * @param map card on which the character evolves
+	 *
+	 * @see TiledMap
+	 */
 	@Override
 	public void mouvement(int delta, TiledMap map) {
-		if (!this.isBouge())
-			return;
+
+		this.checkTimerFriendly();
+
+		if(this.veutCombattre() && !this.requestFight) {
+			InterStateComm.setUnEnnemi(this);
+			EcranJeu.gameState.enterState(Bataille.ID);
+		}
+
+		if(this.requestFight) this.requestFight = false;
+
+		if(!isMoving()) this.marcher();
+
 		super.mouvement(delta, map);
-		this.move(delta);
+		if (this.moving)
+			this.move(delta);
 	}
 
 	/**
+	 * add a character to the character list for collisions
 	 *
-	 * @return
-	 */
-	public float getTimeSinceTrigger() {
-		return timeSinceTrigger;
-	}
-
-	/**
-	 *
-	 * @param timeSinceTrigger
-	 */
-	public void setTimeSinceTrigger(float timeSinceTrigger) {
-		this.timeSinceTrigger = timeSinceTrigger;
-	}
-
-	/**
-	 *
-	 * @param
+	 * @param unPersonnage instance of Personnage
+	 * @see Personnage
 	 */
 	public void addCollision(Personnage unPersonnage) {
 		this.lesPersonnages.add(unPersonnage);
 	}
 
 	/**
-	 *
-	 * @param x
-	 * @param y
-	 * @return
+	 * test if a collision occurs with a character
+	 * @param x future position for collision management
+	 * @param y future position for collision management
+	 * @return {@code true} if a collision is detected {@code false} otherwise
 	 */
-	private boolean isCollisionPersonnage(float x, float y) {
-		for (Personnage unPersonnage : lesPersonnages) {
-			boolean collision = new Rectangle(x - 16, y - 20, this.getWidth(), this.getHeight())
-					.intersects(unPersonnage.getBoundingBox());
-			if (collision) {
-				System.out.println("Ennemi -> Personnage");
+	public boolean isCollisionPersonnage(float x, float y) {
+		for(Personnage p : lesPersonnages) {
+			boolean collision = new Rectangle(x - getCenterX(), y - getCenterY() - (getHeight() - getCenterY()), getWidth(), getHeight() + (getHeight() - getCenterY())).intersects(p.getBoundingBox());
+			if(collision) {
+				MyStdOut.write(MyStdColor.RED, "<" + this.getNom() + "> collision with : " + p.getNom());
+				this.stop();
+
+				if( (p instanceof Hero) && !this.isFriendly()) {
+					// --
+					if(!this.veutCombattre())
+						lesMessages.add(this.parle());
+					this.startCombat();
+				}
 				return true;
-			} else {
-				this.directionTransition = this.direction;
 			}
 		}
 		return false;
 	}
 
+	/**
+	 * Stop all movement of current.
+	 */
+	@Override
+	public void stop() {
+		super.stop();
+		this.timerCanMoveAfterCollision = System.currentTimeMillis();
+		this.timeSinceTrigger = 0;
+	}
+
+	/**
+	 * Enable movmeent for current
+	 */
+	@Override
+	public void marcher() {
+		long timeElapsed = System.currentTimeMillis() - this.timerCanMoveAfterCollision;
+		if(timeElapsed < 2000)
+			return;
+		super.marcher();
+		this.timerCanMoveAfterCollision = 0l;
+	}
+
+	/**
+	 * This class manage Collision with the World.
+	 * we are trying to find in specific layer(solide) of TiledMap a color.
+	 * if we are in a color with alpha > 0 collision with world is detected.
+	 * @param map Current map
+	 * @param x next position of current.
+	 * @param y next position of current.
+	 * @return {@code true} id collision appened {@code false} otherwise.
+	 */
 	@Override
 	public boolean iscollisionLogic(TiledMap map, float x, float y) {
 		int tileW = map.getTileWidth();
@@ -239,14 +396,13 @@ public class Ennemi extends Personnage {
 	}
 
 	/**
-	 * changement d'état fiendly or not !
-	 * 
+	 * This function manage firendly stats.
 	 * @param h
 	 * @param timer
 	 */
 	public void setFriendly(boolean h, int timer) {
 		this.friendly = h;
-		if (h) {
+		if(h) {
 			this.targetFriendlyTimer = timer;
 			this.friendlyTimer = System.currentTimeMillis();
 			System.out.println(this.getNom() + " n'est plus une menace !");
@@ -254,26 +410,25 @@ public class Ennemi extends Personnage {
 	}
 
 	/**
-	 * Retourne l'etat d'hostilité de l'ennemi.
-	 * 
-	 * @return boolean value (true : when fiendly| false : when not friendly)
-	 */
+	 * Return the hostile state of the enemy
+	 * @return Return the hostile state of the enemy {@code true} if appened
+	 **/
 	public boolean isFriendly() {
 		return this.friendly;
 	}
 
 	/**
-	 * Gère le changement d'état fiendly/malicious d'un ennemi
-	 */
+	 * This function manage firendly stats
+	 **/
 	public void checkTimerFriendly() {
-		if (!this.friendly)
+		if(!this.friendly)
 			return;
 
-		if (System.currentTimeMillis() - this.friendlyTimer >= this.targetFriendlyTimer) {
-			// --
-			System.out.println(this.getNom() + " redevient une menace !");
-			this.friendly = false;
-		}
+		if(System.currentTimeMillis() - this.friendlyTimer >= this.targetFriendlyTimer)
+        {
+            System.out.println(this.getNom() + " redevient une menace !");
+            this.friendly = false;
+        }
 	}
 
 	public boolean isMort() {
@@ -282,14 +437,6 @@ public class Ennemi extends Personnage {
 
 	public void setMort(boolean mort) {
 		this.mort = mort;
-	}
-
-	public boolean isBouge() {
-		return bouge;
-	}
-
-	public void setBouge(boolean bouge) {
-		this.bouge = bouge;
 	}
 
 	public void startCombat() {
@@ -314,7 +461,6 @@ public class Ennemi extends Personnage {
 
 	/**
 	 * Important !
-	 * 
 	 * @return
 	 */
 	public String parle() {
@@ -324,7 +470,7 @@ public class Ennemi extends Personnage {
 	public int getNiveau() {
 		return niveau;
 	}
-	
+
     public float getATK() {
 		return this.atk;
 	}
@@ -345,4 +491,55 @@ public class Ennemi extends Personnage {
 		}
 	}
 
+	/**
+	 * This class ends a story element if it exist.
+	 */
+	@Override
+	public void storyDone() {
+		// --
+		if(this.storyElement == null)
+			return;
+
+		this.storyElement.done();
+	}
+
+	/**
+	 * fill the pointer if needed
+	 * @param element
+	 */
+	@Override
+	public void setStoryElement(Story element) {
+		this.storyElement = element;
+	}
+
+	/**
+	 * return {@code true} if storyElement is not Empty
+	 * @return
+	 */
+	@Override
+	public boolean containStoryElement() {
+		return (this.storyElement != null);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public Story getStoryElement() {
+		return this.storyElement;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public int getExperience() {
+		return experience;
+	}
+
+
+	public void requestFight() {
+		this.requestFight = true;
+	}
 }

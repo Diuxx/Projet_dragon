@@ -4,10 +4,9 @@ import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
+import org.lpdql.dragon.scenario.Accomplish;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Difficulty;
-import org.lpdql.dragon.system.Point;
-import org.lpdql.dragon.system.Taille;
+import org.lpdql.dragon.system.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
@@ -16,27 +15,65 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.lpdql.dragon.system.EcranJeu.lesMessages;
 
+/**
+ * Class managing a character controlled by the user.
+ *
+ * notice : the character knows where the objects, the enemy and the non-player characters are.
+ * this class handles every possible collision on the map.
+ */
 public class Hero extends Personnage {
 
+    /**
+     * list des personnages non joueur sur la map sur lequel il se trouve
+     */
     private List<PersonnageNonJoueur> lesPnj;
+
+    /**
+     * list of objects on the map on which it is located
+     */
     private List<Objet> lesObjets;
 
+    /**
+     * list of enemies on the map on which it is located
+     */
     private List<Ennemi> lesEnnemis;
-    private int experience;
-    private float atk;
 
-	private int niveau;
+    /**
+     * this variable is the current instance experience
+     */
+    private int experience;
+
+    /**
+     * current level of the character
+     */
+    private int niveau;
+
+    /**
+     * current money of the character
+     */
+    private float atk;
     private int currentGold;
-    
     private float pointDeVie;
 
-
-	private boolean artEpee;
+    /**
+     * a delete!
+     */
+    private boolean artEpee;
     private boolean artBouclier;
     private boolean artFeu;
     private boolean artVoler;
 
+    /**
+     * State of events related to history
+     */
+    private Accomplish accomplishement;
+
+    /**
+     * Tests values for the hero statistics
+     */
+    // private static final int HEROLIFE = 1120;
     // hero information
     private static final float HEROLIFE = (float) 300.0;
     private static final float HEROSPEED = 0.1f;
@@ -45,65 +82,63 @@ public class Hero extends Personnage {
 
     private boolean nouvellePartie;
 
-    // interstate ? instead of hero !
+    /**
+     * is it in the right place?
+     */
     private Music music;
     private Music pausedMusic;
     private Sound sound;
     private boolean muted = false;
 
+    /**
+     * this variable manage the character's level up
+     */
     private HashMap levelExperience;
-    
+
 
     /**
-     * Constructeur de la class Hero (projet InterStateComm);
-     * @param nom
-     * @param positon
+     * Construtor of Hero without height and width
+     * @param nom Name of the current instance
+     * @param position abscissa and ordinate of the character on the map
      */
-    public Hero(String nom, Point positon) {
-        super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED, 2);
-        this.lesPnj = new ArrayList<PersonnageNonJoueur>();
-        this.lesObjets = new ArrayList<Objet>();
+    public Hero(String nom, Point position)
+    {
+        super(nom, position, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
+        this.lesPnj = new ArrayList<>();
+        this.lesObjets = new ArrayList<>();
         this.experience = 0;
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
+
+        // a delete
         this.artEpee = true;
         this.artBouclier = false;
         this.artFeu = false;
         this.artVoler = false;
 
         nouvellePartie = true;
-        // --
+
         levelExperience = new HashMap<>();
+
+        // Load accomplishement
+        this.accomplishement = new Accomplish();
+
+        // Load sprite tiles from sprite sheet
         this.chargerImage();
     }
 
-    /**
-     *
-     * @param savedData
-     */
-    public void setSavedData(Save savedData) {
-        if(savedData.getSavedHero() == null)
-            return;
-
-        System.out.println("Somes Data is loading !");
-
-        Hero savedHero = savedData.getSavedHero();
-        this.setNom(savedHero.getNom());
-        this.setPointDeVie(savedHero.getPointDeVie());
-        this.setPointDeVieActuel(savedHero.getPointDeVieActuel());
-        super.setPosition(savedHero.getX(), savedHero.getY());
-        this.setDirection(savedHero.getDirection());
-        this.setExperience(savedHero.getExperience());
-        this.setNiveau(savedHero.getNiveau());
-        this.setCurrentGold(savedHero.getCurrentGold());
-        this.setArtEpee(savedHero.getArtEpee());
-        this.setArtBouclier(savedHero.getArtBouclier());
-        this.setArtFeu(savedHero.getArtFeu());
-        this.setArtVoler(savedHero.getArtVoler());
+    public Hero(String nom) {
+    	super(nom);
+    	this.niveau = HEROLEVEL;
     }
 
-
-    // seul le hero peut être contrôlé
+    /**
+     * this method manages the control of the character by the user
+     * Only an Hero can be controled.
+     * @param container slick gameContainer
+     *
+     * @see GameContainer
+     */
     public void controle(GameContainer container) {
         if(container.getInput().isKeyDown(Input.KEY_UP)) {
             super.setDirection(0);
@@ -123,30 +158,39 @@ public class Hero extends Personnage {
     }
 
     /**
+     * this method add a list of non-player characters
+     * @param lesPnj list of PersonnageNonJoueur
      *
-     * @param lesPnj
+     * @see PersonnageNonJoueur
      */
     public void addPnj(List<PersonnageNonJoueur> lesPnj)
     {
         this.lesPnj = lesPnj;
     }
 
-
+    /**
+     * this method remove the existing non-player character list
+     */
     public void removePnj() {
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
     }
+
     /**
-     *
-     * @param lesEnnemis
+     * this method add a list of ennemy characters
+     * @param lesEnnemis list of Ennemi
      */
     public void addEnnemis(List<Ennemi> lesEnnemis) {
         this.lesEnnemis = lesEnnemis;
     }
 
+    public void removeEnnemis() {
+        this.lesEnnemis = new ArrayList<>();
+    }
 
     public void addObjets(List<Objet> lesObjets) {
         this.lesObjets = lesObjets;
     }
+
     public void removeObjets() {
         this.lesObjets = new ArrayList<Objet>();
     }
@@ -161,6 +205,9 @@ public class Hero extends Personnage {
        for(PersonnageNonJoueur unPnj : lesPnj) {
            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unPnj.getBoundingBox());
            if(collision) {
+               if(unPnj.containStoryElement())
+                   unPnj.storyDone();
+
                unPnj.setParle();
                return true;
            }
@@ -181,6 +228,9 @@ public class Hero extends Personnage {
 
             boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unObjet.getBoundingBox());
             if(collision) {
+                if(unObjet.containStoryElement())
+                    unObjet.storyDone();
+
                 if(unObjet instanceof ObjetMessage) {
                     ((ObjetMessage) unObjet).setParle(true);
                 }
@@ -198,9 +248,19 @@ public class Hero extends Personnage {
      */
     private boolean isCollisionEnnemi(float x, float y) {
         for(Ennemi unEnnemi : lesEnnemis) {
-            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unEnnemi.getBoundingBox());
+            if(unEnnemi.isMort())
+                continue;
+
+            boolean collision = new Rectangle(x - getCenterX(), y - getCenterY(), getWidth(), getHeight()).intersects(unEnnemi.getBoundingBox());
             if(collision) {
-                // --
+                // MyStdOut.write(MyStdColor.RED,"<" + this.getClass().getSimpleName() + "> to " + unEnnemi.getNom());
+                unEnnemi.stop();
+
+                if(!unEnnemi.isFriendly()) {
+                    if(!unEnnemi.veutCombattre()) lesMessages.add(unEnnemi.parle());
+                    unEnnemi.startCombat(); // request fight ?
+                    unEnnemi.requestFight();
+                }
                 return true;
             }
         }
@@ -219,7 +279,7 @@ public class Hero extends Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
-        return collision || isCollisionPnj( x, y) || isCollisionObjets(x, y) || super.isDynamicCollision()/* || isCollisionEnnemi( x, y)*/;
+        return collision || isCollisionPnj( x, y) || isCollisionObjets(x, y) || super.isDynamicCollision() || isCollisionEnnemi( x, y);
     }
 
     /**
@@ -329,7 +389,7 @@ public class Hero extends Personnage {
     public boolean getMuted() {
         return muted;
     }
-    
+
     public float getATK() {
 		return this.atk;
 	}
@@ -337,7 +397,7 @@ public class Hero extends Personnage {
 	public void setAtk(float atk) {
 		this.atk = atk;
 	}
-	
+
 	public void rafraichirLePouvoirATK() {
 		switch (InterStateComm.getNiveauDuJeu()) {
 		case Difficulty.FACILE:
@@ -353,4 +413,43 @@ public class Hero extends Personnage {
 			this.atk =  0;
 		}
 	}
+
+    public Accomplish getAccomplishement() {
+        return this.accomplishement;
+    }
+
+    public void setAccomplishement(Accomplish accomplishement) {
+        this.accomplishement = accomplishement;
+    }
+
+    /**
+     * Update some elements to match the last game backup
+     * @param savedData
+     */
+    public void setSavedData(Save savedData) {
+        if(savedData.getSavedHero() == null)
+            return;
+
+        System.out.println("Performing loading on saved data!");
+
+        Hero savedHero = savedData.getSavedHero();
+        this.setNom(savedHero.getNom());
+        this.setPointDeVie(savedHero.getPointDeVie());
+        this.setPointDeVieActuel(savedHero.getPointDeVieActuel());
+        super.setPosition(savedHero.getX(), savedHero.getY());
+        this.setDirection(savedHero.getDirection());
+        this.setExperience(savedHero.getExperience());
+        this.setNiveau(savedHero.getNiveau());
+        this.setCurrentGold(savedHero.getCurrentGold());
+
+
+        this.setArtEpee(savedHero.getArtEpee());
+        this.setArtBouclier(savedHero.getArtBouclier());
+        this.setArtFeu(savedHero.getArtFeu());
+        this.setArtVoler(savedHero.getArtVoler());
+
+        this.accomplishement = savedHero.getAccomplishement();
+
+        this.accomplishement.getLog();
+    }
 }
