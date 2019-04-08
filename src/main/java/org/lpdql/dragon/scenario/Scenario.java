@@ -532,11 +532,18 @@ public class Scenario {
      * Reset current map and go on the spawn
      * @param map
      */
-    protected void resetOnCurrentMap(Carte map) {
+    protected void resetOnCurrentMap(Carte map, Camera camera) {
         // --
         Point pCheckPoint = map.getCheckPoint();
-        InterStateComm.getLeHero().setPosition(
-                map.getCheckPoint().getX(), map.getCheckPoint().getY());
+
+        int x = pCheckPoint.getX();
+        int y = pCheckPoint.getY();
+
+        InterStateComm.getLeHero().setPosition(x, y);
+
+        // that camera position
+        camera.setX(x);
+        camera.setY(y);
 
         this.resetScenario();
         this.charger(map);
@@ -646,7 +653,7 @@ public class Scenario {
                h.getY() > ygate && h.getY() < ygate + hgate;
     }
 
-    public void update(Carte map) {
+    public void update(Carte map, Camera camera) {
         /* do somes mushibuchy */
     }
 

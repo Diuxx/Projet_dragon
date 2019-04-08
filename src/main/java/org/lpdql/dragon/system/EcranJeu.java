@@ -208,7 +208,7 @@ public class EcranJeu extends BasicGameState {
             return; // no update when game paused
         // test();
         scenario.detectMapChanged(this.carte, this.camera);
-        scenario.update(this.carte); // --
+        scenario.update(this.carte, this.camera); // --
 
         // updating position + collisions
         InterStateComm.getLeHero().controle(gameContainer);

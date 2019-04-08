@@ -9,6 +9,8 @@ import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.SlickException;
 
+import static org.lpdql.dragon.monde.Ressources.spriteSheet_vieilHomme;
+
 /**
  * class ScenarioEpee
  *
@@ -58,8 +60,8 @@ public class ScenarioEpee extends Scenario {
             ObjetMessage lettre = new ObjetMessage("Lettre", pLettre, BASIC_SIZE, 1);
             lettre.setMessage(
                 "Si tu lis cette lettre c'est que les 4 royaumes font faces à une grande menace#" +
-                "Tu vas devoir les explorer et obtenir l'artéfact présent dans chacun d'eux\n" +
-                "une fois cela fait rend toi au chateau et élimine le vil Roi Dragon qui menace ce monde\n"
+                "Tu vas devoir les explorer et obtenir l'artéfact présent dans chacun d'eux#" +
+                "Une fois cela fait rend toi au chateau et élimines le vil Roi Dragon qui menace ce monde\n"
             );
 
             // set a story element who should be donne if interact
@@ -80,18 +82,37 @@ public class ScenarioEpee extends Scenario {
         PersonnageNonJoueur pnjServante = new PersonnageNonJoueur("Servante", pServante, 32, 32);
         pnjServante.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 3, 4,  4);
 
-        pnjServante.addDialogue("Tu devrais commencer par te rendre au pays de l'Epee#Leur trésor te sera utile pour obtenir les 3 autres.");
-        if(!Story.TUTOPARLEROLDMAN.getState())
-            pnjServante.addDialogue("Il y a un vielle homme la bas... il veut te parler !#Apparement c'est important..");
+        pnjServante.addDialogue(
+           "Tu devrais commencer par te rendre au pays de l'Epee#" +
+                "Leur trésor te sera utile pour obtenir les 3 autres." +
+                "#tu veux savoir ou trouver le pays de l'épé ?" +
+                "#c'est la porte qui se trouve le plus à l'est d'ici.."
+        );
+        if(!Story.TUTOPARLEROLDMAN.getState()) {
+            pnjServante.addDialogue(
+                    "Bonjour " + InterStateComm.getLeHero().getNom() +
+                    ", Bienvenu chez toi.#" +
+                    "Il y a un vieil homme la bas... il veut te parler !#" +
+                    "Apparement c'est important.."
+            );
+        }
 
         super.getLesPnj().add(pnjServante);
 
         Point pChasseur = findPnjPosition(map, "old_man");// 362 870
         PersonnageNonJoueur pnjOldMan = new PersonnageNonJoueur("Old man", pChasseur, 32, 32);
+        pnjOldMan.loadAnimation(spriteSheet_vieilHomme, 0, 1,  0);
 
         pnjOldMan.addDialogue("aaahhh ! il y a plein de monstres.. tues les tu gagnera en puissance !");
-        if(!Story.TUTOFIRSTENNEMIWASKILLED.getState())
-            pnjOldMan.addDialogue("Prends cette épée et vas tuer ce monstre pour t'entrainer..");
+        if(!Story.TUTOFIRSTENNEMIWASKILLED.getState()) {
+            pnjOldMan.addDialogue(
+                "Prends cette épée et vas tuer ce monstre pour t'entrainer..#" +
+                "utilises la touche \"a\" pour lancer un attaque..\nLa touche \"f\" sert à fuir le combat..#" +
+                "Saches qu'un vrais héro ne fuit jamais...." +
+                "................." +
+                "JAMAIS......"
+            );
+        }
         pnjOldMan.setStoryElement(Story.TUTOPARLEROLDMAN);
         super.getLesPnj().add(pnjOldMan);
 
@@ -116,7 +137,7 @@ public class ScenarioEpee extends Scenario {
      * @param map
      */
     @Override
-    public void update(Carte map) {
+    public void update(Carte map, Camera camera) {
         if(Story.TUTOPARLEROLDMAN.getState())
         {
             if(!Story.TUTOSPAWNENNEMI.getState()) {
@@ -132,7 +153,7 @@ public class ScenarioEpee extends Scenario {
         }
         if(Story.TUTOEND.getState() && !Story.GAMESTART.getState())
         {
-            super.resetOnCurrentMap(map);
+            super.resetOnCurrentMap(map, camera);
             Story.GAMESTART.done();
         }
         // --
