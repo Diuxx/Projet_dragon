@@ -1,6 +1,6 @@
 image: maven:latest
 
- build:
+build:
   stage: build
   script:
     - mvn compile 
