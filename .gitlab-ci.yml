@@ -1,8 +1,4 @@
-before_script:
-apt-get update
-apt-get install -y openjfx
-
-image: maven:latest
+image: maven:3-jdk-8
 
 build:
   stage: build
