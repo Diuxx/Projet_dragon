@@ -1,12 +1,10 @@
 package org.lpdql.dragon.personnages;
 
-import org.lpdql.dragon.bataille.Bataille;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.scenario.Accomplish;
-import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -18,17 +16,47 @@ import java.util.List;
 
 import static org.lpdql.dragon.system.EcranJeu.lesMessages;
 
-
+/**
+ * Class managing a character controlled by the user.
+ *
+ * notice : the character knows where the objects, the enemy and the non-player characters are.
+ * this class handles every possible collision on the map.
+ */
 public class Hero extends Personnage {
 
+    /**
+     * list des personnages non joueur sur la map sur lequel il se trouve
+     */
     private List<PersonnageNonJoueur> lesPnj;
+
+    /**
+     * list of objects on the map on which it is located
+     */
     private List<Objet> lesObjets;
 
+    /**
+     * list of enemies on the map on which it is located
+     */
     private List<Ennemi> lesEnnemis;
+
+    /**
+     * this variable is the current instance experience
+     */
     private int experience;
+
+    /**
+     * current level of the character
+     */
     private int niveau;
+
+    /**
+     * current money of the character
+     */
     private int currentGold;
 
+    /**
+     * a delete!
+     */
     private boolean artEpee;
     private boolean artBouclier;
     private boolean artFeu;
@@ -49,50 +77,56 @@ public class Hero extends Personnage {
 
     private boolean nouvellePartie;
 
-    // interstate ? instead of hero !
+    /**
+     * is it in the right place?
+     */
     private Music music;
     private Music pausedMusic;
     private Sound sound;
     private boolean muted = false;
 
+    /**
+     * this variable manage the character's level up
+     */
     private HashMap levelExperience;
 
     /**
-     * Constructeur de la class Hero (projet InterStateComm);
-     * @param nom
-     * @param positon
+     * Construtor of Hero without height and width
+     * @param nom Name of the current instance
+     * @param position abscissa and ordinate of the character on the map
      */
-    public Hero(String nom, Point positon) {
-        super(nom, positon, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
+    public Hero(String nom, Point position)
+    {
+        super(nom, position, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
         this.lesPnj = new ArrayList<>();
         this.lesObjets = new ArrayList<>();
         this.experience = 0;
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
 
+        // a delete
         this.artEpee = true;
         this.artBouclier = false;
         this.artFeu = false;
         this.artVoler = false;
 
         nouvellePartie = true;
-        // --
+
         levelExperience = new HashMap<>();
 
-        /**
-         * Load accomplishement.
-         */
+        // Load accomplishement
         this.accomplishement = new Accomplish();
 
-        /**
-         * Load sprite tiles from sprite sheet.
-         */
+        // Load sprite tiles from sprite sheet
         this.chargerImage();
     }
 
     /**
+     * this method manages the control of the character by the user
      * Only an Hero can be controled.
-     * @param container
+     * @param container slick gameContainer
+     *
+     * @see GameContainer
      */
     public void controle(GameContainer container) {
         if(container.getInput().isKeyDown(Input.KEY_UP)) {
@@ -113,22 +147,26 @@ public class Hero extends Personnage {
     }
 
     /**
+     * this method add a list of non-player characters
+     * @param lesPnj list of PersonnageNonJoueur
      *
-     * @param lesPnj
+     * @see PersonnageNonJoueur
      */
     public void addPnj(List<PersonnageNonJoueur> lesPnj)
     {
         this.lesPnj = lesPnj;
     }
 
-
+    /**
+     * this method remove the existing non-player character list
+     */
     public void removePnj() {
         this.lesPnj = new ArrayList<PersonnageNonJoueur>();
     }
 
     /**
-     *
-     * @param lesEnnemis
+     * this method add a list of ennemy characters
+     * @param lesEnnemis list of Ennemi
      */
     public void addEnnemis(List<Ennemi> lesEnnemis) {
         this.lesEnnemis = lesEnnemis;
