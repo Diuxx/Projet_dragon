@@ -7,7 +7,6 @@ import org.lpdql.dragon.jeu.Message;
 import org.lpdql.dragon.jeu.Scenario;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.sauvegarde.Save;
-import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Camera;
 import org.lpdql.dragon.system.MenuItem;
@@ -19,170 +18,104 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-
-/**
- *
- */
 public class EcranJeu extends BasicGameState {
 
-    /**
-     * Slick game State id
-     */
-    public static final int ID = 2;
-
-    /**
-     *
-     */
     private boolean updatePaused = false;
 
-    /**
-     *
-     */
     private Save savedData;
 
     /**
-     * debug variable
-     * Modify some elements in game
-     **/
+     * Variable de debug
+     * Modifie certains élements d'affichage dans l'environnement */
     public static final boolean DEBUG = true;
+    public static final int ID = 2;
 
     /**
-     * game display management
-     **/
+     * Gestion de la fenetre et de l'affichage */
     private GameContainer container;
-
-    /**
-     * This variable is a slick game state
-     * @see BasicGameState
-     **/
     public static StateBasedGame gameState;
 
     /**
-     * This variable manages the display of messages in game
-     * @see Message
-     */
-    public static Message lesMessages; // test();
-
-    /**
-     * This valiable manages the different maps of the game
-     * @see Carte
-     */
+     * Variable de jeu et d'affichage */
+    private Message lesMessages; /* test */
     private Carte carte;
-
-    /**
-     * This variable manage the game the points of view
-     */
     private Camera camera;
 
     /**
-     * Version 0 de la class scenario / histoire du jeu.
-     * à modifier commit 30-03
-     **/
-    private  org.lpdql.dragon.scenario.Scenario scenario;
+     * Version 0 de la class scenario / histoire du jeu. */
+    private Scenario scenario;
 
-    /**
-     * This variable manage the game Head up display
-     * show progress bars for example.
-     * @see Hud
-     */
     private Hud hud = new Hud();
-
-    /**
-     * This variable manage the game menu
-     * see this menu means that the game is paused.
-     * @see Hud_menu
-     */
     private Hud_menu menu = new Hud_menu();
 
-    /**
-     *
-     * @param gameContainer
-     * @param stateBasedGame
-     * @throws SlickException
-     */
     @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
-            throws SlickException
-    {
-        // instantiation of the environment
+    public int getID() {
+        return EcranJeu.ID;
+    }
+
+    @Override
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        // initalisation de la fenètre
         this.container = gameContainer;
         this.gameState = stateBasedGame;
 
-        // Texture loading
+        // chargement des textures
         Ressources.charger();
-
-        // instantiation of the message manager
         lesMessages = new Message();
 
-        savedData = Save.detectSavedData(); // Loading saved data
-        carte = new Carte(savedData.getCarteName()); // Map definition
+        /**
+         * Chargement des données sauvegardés du jeu
+         */
+        savedData = Save.detectSavedData();
+        carte = new Carte(savedData.getCarteName());
 
-        // Loading the hero of the story
+        // Chargement du hero de l'histoire
         InterStateComm.getLeHero().setPosition(carte.getCheckPoint());
         InterStateComm.getLeHero().setSavedData(savedData);
 
-        // initialization of camera position
-        camera = new Camera(
-                InterStateComm.getLeHero().getX(),
-                InterStateComm.getLeHero().getY());
+        // initialisation de la camera
+        camera = new Camera(InterStateComm.getLeHero().getX(), InterStateComm.getLeHero().getY());
 
         // chargement du scenario..
-        /*scenario = new Scenario();
-        scenario.charger(carte);*/
+        scenario = new Scenario();
+        scenario.charger(carte);
 
-        // loading the scenario
-        scenario = org.lpdql.dragon.scenario.Charger.charger_scenario(carte);
-
-        hud.init(); // loading h U D
-        menu.init(gameContainer); // loading Menu
+        hud.init(); // --
+        menu.init(gameContainer);
     }
 
-    /**
-     *
-     * @param gameContainer
-     * @param stateBasedGame
-     * @param graphics
-     * @throws SlickException
-     */
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
-            throws SlickException
-    {
-        // updated point of view
-        camera.translate(graphics, gameContainer);
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 
-        // drawing background layer from map
+        camera.translate(graphics, gameContainer);
+        // affichage de la carte
         carte.afficher(carte.getMap().getLayerIndex("background1"));
         carte.afficher(carte.getMap().getLayerIndex("background2"));
 
-        // display non-player characters and enemies
+        // affichage des personnages non joueurs et des personnages.ennemis
         if(scenario != null) {
             scenario.afficherPnj(graphics, this.lesMessages);
             scenario.afficherEnnemis(graphics);
             scenario.afficherObjets(graphics, this.lesMessages);
         }
 
-        // drawing Hero
+        // Affichage du hero
         InterStateComm.getLeHero().afficher(graphics);
 
-        // drawing message
+        // affichage des messages
         if(lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
         {
-            // when we are displaying menu or message
-            // we put the game on pause.
             this.setUpdatePaused(true);
         } else {
-            // disable pause
-            if(this.isUpdatePaused()) this.setUpdatePaused(false);
+            if(this.isUpdatePaused())
+                this.setUpdatePaused(false);
         }
-
-        // drawing overground layer from map
+      
+        // images positionné de telle façon
+        // que les personnages/personnages.ennemis/pnjs puissent passer derrière.
         carte.afficher(carte.getMap().getLayerIndex("overground1"));
-
-        // drawing hud
         hud.render(graphics, InterStateComm.getLeHero());
 
-        // drawing menu
         if(menu.isShowing()) {
             MenuItem menustats = menu.render(gameContainer, graphics);
             switch(menustats) {
@@ -208,45 +141,108 @@ public class EcranJeu extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         if(this.isUpdatePaused())
-            return; // no update when game paused
-        // test();
-        scenario.detectMapChanged(this.carte, this.camera);
-        scenario.update(this.carte, this.camera); // --
+            return;
+        updateTrigger();
 
-        // updating position + collisions
+         // Gestion des mouvements et des collisions du hero
+         // Les collisions sont géré automatiquement dans la class du herp
         InterStateComm.getLeHero().controle(gameContainer);
         InterStateComm.getLeHero().mouvement(delta, carte.getMap());
 
-        // scenario all movement (ennemis/object) collision
+        // affichage des mouvement des ennemi
         this.scenario.mouvement(this.carte, delta, this.lesMessages);
 
-        // updating camera position
+        // mouvement de la camera
         this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
     }
 
-
     @Override
     public void keyReleased(int key, char c) {
-
         if(Input.KEY_W == key) {
             if(lesMessages != null) lesMessages.next();
         }
-
-        // request the menu
-        if(Input.KEY_ENTER == key && !menu.isShowing() && this.menu.getDiff() > 1500 && lesMessages.containMessage()) {
+        // Affichage du menu du jeu.
+        if(Input.KEY_ENTER == key && !menu.isShowing() && this.menu.getDiff() > 1000) {
             menu.setShowing(true);
-            this.setUpdatePaused(true); // game paused
+            this.setUpdatePaused(true);
 
-            System.out.println("<game> is paused : " + this.isUpdatePaused());
-        }
-
-        if(Input.KEY_A == key) {
-            Story.TUTOEND.done(); // test()
+            System.out.println("is paused : " + this.isUpdatePaused());
         }
     }
 
     @Override
     public void keyPressed(int key, char c) { }
+
+    /**
+     *
+     */
+    private void updateTrigger() throws SlickException {
+        String type;
+        for(int o=0; o<this.carte.getMap().getObjectCount(0); o++) {
+            if(isInTrigger(o)) {
+                type = this.carte.getMap().getObjectType(0, o);
+                if ("change-map".equals(type)) {
+                    changeMap(o);
+                }
+                if ("heal".equals(type)) {
+                    this.scenario.getHeals(o).interaction(InterStateComm.getLeHero());
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    private boolean isInTrigger(int id) {
+        return InterStateComm.getLeHero().getX() > this.carte.getMap().getObjectX(0, id)
+        && InterStateComm.getLeHero().getX() < this.carte.getMap().getObjectX(0, id) + this.carte.getMap().getObjectWidth(0, id)
+        && InterStateComm.getLeHero().getY() > this.carte.getMap().getObjectY(0, id)
+        && InterStateComm.getLeHero().getY() < this.carte.getMap().getObjectY(0, id) + this.carte.getMap().getObjectHeight(0, id);
+    }
+
+    /**
+     *
+     * @param objectID
+     * @throws SlickException
+     */
+    private void changeMap(int objectID) throws SlickException {
+        String ancienNomMap = this.carte.getFileName();
+        String dest_map = this.carte.getMap().getObjectName(0, objectID);
+
+        System.err.println(this.getClass().getSimpleName() + " : ancienNom -> " + ancienNomMap);
+        if (!"undefined".equals(dest_map)) {
+            this.carte.changeMap("data/" + dest_map + ".tmx");
+            for(int o=0; o<this.carte.getMap().getObjectCount(0); o++)
+            {
+                String type = this.carte.getMap().getObjectType(0, o);
+                if("position-map".equals(type)) {
+                    if(this.carte.getMap().getObjectName(0, o).equals(ancienNomMap)) {
+                        positionMap(o);
+                        this.scenario.resetScenario();
+                        this.scenario.charger(this.carte);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param objectID
+     * @throws SlickException
+     */
+    private void positionMap(int objectID) throws SlickException {
+        int x = this.carte.getMap().getObjectX(0, objectID);
+        int y = this.carte.getMap().getObjectY(0, objectID);
+        InterStateComm.getLeHero().setPosition(new Point(x, y));
+        this.camera.setX(x);
+        this.camera.setY(y);
+
+        System.err.println(this.getClass().getSimpleName() + " : position hero (" + x + "; " + y + ")");
+    }
 
     public boolean isUpdatePaused() {
         return updatePaused;
@@ -254,10 +250,5 @@ public class EcranJeu extends BasicGameState {
 
     public void setUpdatePaused(boolean updatePaused) {
         this.updatePaused = updatePaused;
-    }
-
-    @Override
-    public int getID() {
-        return EcranJeu.ID;
     }
 }

@@ -108,8 +108,8 @@ public class BatailleControlle implements InputProviderListener {
 				swing.play();
 			}
 			ennemi.setBarreVie((int) joueur.getATK());
-			System.out.println("Hero ATK power       ----> " + (int) joueur.getATK());
-			System.out.println("ennemi restant vie   ----> " + (int) ennemi.getBarreVie());
+			System.out.println("Hero ATK power      ----> " + (int) joueur.getATK());
+			System.out.println("ennemi restant vie  ----> " + (int) ennemi.getBarreVie());
 			System.out.println();
 			break;
 			default:
@@ -130,8 +130,6 @@ public class BatailleControlle implements InputProviderListener {
 
 			System.out.println(InterStateComm.getUnEnnemi().getNom() + " est mort !");
 			InterStateComm.tuerUnEnnemi();
-
-			System.out.println(InterStateComm.getUnEnnemi());
 
 			game.enterState(GameOver.GameOver);
 

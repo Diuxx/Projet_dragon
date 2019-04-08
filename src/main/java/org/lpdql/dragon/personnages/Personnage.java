@@ -17,7 +17,7 @@ public class Personnage {
 	private List<Animation> animation;
 
 	// ajout de collision avec d'autre personnage
-	private List<Personnage> lesAutre;
+//	private List<Personnage> lesAutre;
 
 	// information sur le personnage
 	private String nom;
@@ -249,7 +249,7 @@ public class Personnage {
 	// Level UP HERO
 	public void setHeroStatistques(int niveau) {
 		System.out.println("-----------------------------------");
-		System.err.println("Hero Level UP++  ===> New hero statistiques : ");
+		System.out.println("Hero Level UP++  ===> New hero statistiques : ");
 		System.out.println("ATK power			  		: " + InterStateComm.getLeHero().getATK());
 		// level up hero point de vie
 		this.pointDeVie = (int) (niveau * 50.0 + 250);
