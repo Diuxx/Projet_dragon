@@ -17,7 +17,7 @@ import java.util.List;
 import static org.lpdql.dragon.ecrans.EcranJeu.lesMessages;
 
 /**
- * class Ennemi
+ * class personnages.Ennemi
  *
  * @author: Diuxx
  */

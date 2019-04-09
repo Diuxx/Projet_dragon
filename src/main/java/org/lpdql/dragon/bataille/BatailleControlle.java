@@ -25,6 +25,7 @@ public class BatailleControlle implements InputProviderListener {
 	private BatailleCommande mode = BatailleCommande.NONE;
 	private Sound swing;
 	private Sound victory;
+	private LevelExperience levelExperience;
 
 	public BatailleControlle(BatailleJoueur joueur, BatailleEnnemi ennemi, StateBasedGame game) {
 
@@ -36,11 +37,11 @@ public class BatailleControlle implements InputProviderListener {
 		} finally {
 			System.err.println("data/sound -> loaded");
 		}
-
 		this.joueur = joueur;
 		this.ennemi = ennemi;
 		this.game = game;
 		initAnimationListeners();
+		this.levelExperience = new LevelExperience();
 	}
 
 	public void controlPressed(Command commande) {
@@ -121,7 +122,6 @@ public class BatailleControlle implements InputProviderListener {
 	 *
 	 */
 	private void endPlayerAttack() {
-		boolean levelUP = false;
 		if(ennemi.getBarreVie() <= 0) {
 			if(!InterStateComm.getLeHero().getMuted() && victory != null)
 			{
@@ -131,29 +131,16 @@ public class BatailleControlle implements InputProviderListener {
 			System.out.println(InterStateComm.getUnEnnemi().getNom() + " est mort !");
 			InterStateComm.tuerUnEnnemi();
 
+			System.out.println(InterStateComm.getUnEnnemi());
+
 			game.enterState(GameOver.GameOver);
 
-			// Augmenter l'experience et eventuellement le level
-			int experienceAjouter = ennemi.getExperience() + InterStateComm.getLeHero().getExperience();
-			InterStateComm.getLeHero().setExperience(experienceAjouter);
+			// on ajoute l'experience de l'ennemi dans le joueur
+			InterStateComm.getLeHero().setExperience(ennemi.getExperience() + InterStateComm.getLeHero().getExperience());
 
-			int experience  = InterStateComm.getLeHero().getExperience() ;
-			HashMap<Integer, Integer> lesLevelsExperiences = new LevelExperience().getLevelsExperiences();
-			Iterator itLevelExperience = lesLevelsExperiences.entrySet().iterator();
+			// on check s'il y a level up
+            boolean levelUP = levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience(), InterStateComm.getLeHero());
 
-			while (itLevelExperience.hasNext()) {
-				Map.Entry<Integer,Integer> entry =  (Entry<Integer, Integer>) itLevelExperience.next();
-
-				if(InterStateComm.getLeHero().getLevel() == entry.getKey()) {
-					if(experience >= entry.getValue()) {
-						levelUP = true;
-						int nouveauExp = experience - lesLevelsExperiences.get(entry.getKey());
-						InterStateComm.getLeHero().setExperience(nouveauExp);
-						InterStateComm.getLeHero().setLevel(entry.getKey() + 1);
-						experience -= lesLevelsExperiences.get(entry.getKey());
-					}
-				}
-			}
 			if (levelUP) {
 				InterStateComm.getLeHero().rafraichirLePouvoirATK();
 				InterStateComm.getLeHero().setHeroStatistques(InterStateComm.getLeHero().getLevel());
