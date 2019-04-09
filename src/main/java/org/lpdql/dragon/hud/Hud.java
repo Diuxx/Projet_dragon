@@ -59,15 +59,13 @@ public class Hud {
         Font fontG = g.getFont();
         String nomJoeur = hero.getNom();
         fontG.drawString(60,8, nomJoeur, Color.black);
-        
-        
+
         // -----  Vie ----
         g.setColor(LIFE_COLOR);
         g.fillRect(BAR_X, BAR_Y , ((hero.getPointDeVieActuel() / hero.getPointDeVie()) * BAR_W), BAR_H);
         g.setColor(XP_COLOR_FOND);
         g.fillRect(40, 64, 190, 13);
         g.fillRoundRect(19, 58, 23, 23, 30);
-    
         
         //-- Arte de combat
         if(hero.getArtEpee()) {

@@ -5,8 +5,7 @@ import org.lpdql.dragon.interfaces.StoryElement;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
-import org.lpdql.dragon.system.EcranJeu;
-import org.lwjgl.Sys;
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -15,7 +14,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lpdql.dragon.system.EcranJeu.lesMessages;
+import static org.lpdql.dragon.ecrans.EcranJeu.lesMessages;
 
 /**
  * class Ennemi

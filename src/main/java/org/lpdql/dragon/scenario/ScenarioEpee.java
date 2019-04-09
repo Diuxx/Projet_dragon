@@ -2,6 +2,7 @@ package org.lpdql.dragon.scenario;
 
 
 import org.lpdql.dragon.carte.Carte;
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
 import org.lpdql.dragon.personnages.ennemis.Squelette;

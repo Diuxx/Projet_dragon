@@ -1,7 +1,7 @@
 package org.lpdql.dragon.scenario;
 
-import org.lpdql.dragon.bataille.Bataille;
 import org.lpdql.dragon.carte.Carte;
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.jeu.Message;
 import org.lpdql.dragon.objets.Heal;
 import org.lpdql.dragon.objets.Objet;
@@ -18,8 +18,6 @@ import org.lpdql.dragon.system.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
-
-import org.lpdql.dragon.scenario.Story;
 
 import java.util.ArrayList;
 import java.util.List;

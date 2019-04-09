@@ -9,6 +9,7 @@
         <module name="framagit_PjDragon" />
         <module name="pjDragon" />
         <module name="projet-dragon" />
+        <module name="Projet_dragon" />
         <module name="projetdragon" />
       </profile>
     </annotationProcessing>

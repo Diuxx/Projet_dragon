@@ -4,7 +4,7 @@ import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.scenario.Story;
-import org.lpdql.dragon.system.EcranJeu;
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.system.MyStdColor;
 import org.lpdql.dragon.system.MyStdOut;
 

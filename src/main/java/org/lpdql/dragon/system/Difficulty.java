@@ -17,3 +17,9 @@ public class Difficulty {
 	}
 
 }
+
+/*public enum Difficultyy {
+	FACILE,
+	DIFFICILE,
+	TRES_DIFFICILE
+}*/

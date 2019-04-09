@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.lpdql.dragon.system.EcranJeu.lesMessages;
+import static org.lpdql.dragon.ecrans.EcranJeu.lesMessages;
 
 /**
  * Class managing a character controlled by the user.
