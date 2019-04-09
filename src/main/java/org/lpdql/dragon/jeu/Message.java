@@ -34,13 +34,13 @@ public class Message {
     private final int MESSAGE_ESPACE = 5;
 
     /**
-     * Rectange d'affichage des messages
+     * Rectangle d'affichage des messages
      */
     private Rectangle rect;
 
 
     /**
-     * Constructeur de la class message
+     * Constructor of class message
      */
     public Message() {
         this.posisition = 0;
@@ -49,8 +49,8 @@ public class Message {
     }
 
     /**
-     *
-     * @param message
+     * constructor in which we can directly add a message
+     * @param message the text that needs to be added
      */
     public Message(String message) {
         this();
@@ -58,33 +58,37 @@ public class Message {
     }
 
     /**
-     *
-     * @param text
+     * this method adds text to the text Array to display
+     * @param text the text that needs to be added
      */
     public void add(String text) {
         int ligne = 0;
         String[] listDeChaine = text.split("#");
         for(String chaine : listDeChaine)
         {
-            this.text.add(chaine + "(appuyez sur [w] pour continuer...)");
+            this.text.add(chaine + " (appuyez sur [w] pour continuer...)");
         }
         this.posisition = 0;
     }
 
     /**
+     * add Message in this instance of Message
+     * @param text Message instance
      *
-     * @param text
+     * @see Message
      */
     public void add(Message text) {
         this.text = text.getText();
     }
 
     /**
-     * Affichage d'un message sur le graphics
-     * @param g
-     * @param c
-     * @param camera
-     * @return
+     * display messages on the graph
+     * @param g Graphics where the message will be displayed
+     * @param c slick gameContainer
+     * @param camera the dragon game variable
+     * @return {@code true} if the message are correctly displayed
+     *
+     * @see Camera
      */
     public boolean afficher(Graphics g, GameContainer c, Camera camera) {
         if(this.containMessage()) {
@@ -110,16 +114,16 @@ public class Message {
     }
 
     /**
-     *
-     * @return
+     * this function return {@code true} if text contain no more messages.
+     * @return {@code true} if all messages have been displayed
      */
     public boolean containMessage() {
         return (this.posisition >= this.text.size());
     }
 
     /**
-     *
-     * @return
+     * this function goes to the next message
+     * @return {@code true} if the text Array still contains messages
      */
     public boolean next() {
         if(posisition <= this.text.size()) {
@@ -129,7 +133,28 @@ public class Message {
         return false;
     }
 
+    /**
+     * return the message Array
+     * @return the message Array
+     */
     public ArrayList<String> getText() {
         return this.text;
+    }
+
+
+    /***
+     * this function returns the number of messages in the Array
+     * @return returns the number of messages in the Array
+     */
+    public int getTextSize() {
+        return this.text.size();
+    }
+
+
+    /**
+     * @return Postion of the message currently displayed
+     */
+    public int getPosisition() {
+        return posisition;
     }
 }
