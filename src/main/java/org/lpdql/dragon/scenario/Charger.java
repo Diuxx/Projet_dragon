@@ -36,7 +36,8 @@ public class Charger {
         /**
          * We can test somes things here !
          */
-        String art = InterStateComm.getLeHero().getAccomplishement().getCurrentArt();
+        //String art = InterStateComm.getLeHero().getAccomplishement().getCurrentArt();
+        String art = InterStateComm.getLeHero().getCurrentArt();
         switch(art)
         {
             case "Epee":

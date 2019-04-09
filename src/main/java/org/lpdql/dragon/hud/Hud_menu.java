@@ -32,8 +32,7 @@ public class Hud_menu {
     // public static boolean test = false;
     public long s = 0;
 
-    public Hud_menu() {
-    }
+    public Hud_menu() { /** */ }
 
     /**
      *
@@ -77,7 +76,7 @@ public class Hud_menu {
         if(gc.getInput().isKeyPressed(Input.KEY_DOWN)) {
             lesBoutons.get(this.currentButton).setSelected(false);
             this.currentButton = (this.currentButton + 1) % lesBoutons.size();
-            System.out.println(this.currentButton);
+            // System.out.println(this.currentButton);
             lesBoutons.get(this.currentButton).setSelected(true);
         }
 
@@ -86,10 +85,8 @@ public class Hud_menu {
             b.render(gc, g);
 
         if(gc.getInput().isKeyDown(Input.KEY_ENTER)) {
-
             this.s = System.currentTimeMillis();
-
-            System.out.println(lesBoutons.get(this.currentButton).getMenuItem());
+            // System.out.println(lesBoutons.get(this.currentButton).getMenuItem());
             return lesBoutons.get(this.currentButton).getMenuItem();
         }
 

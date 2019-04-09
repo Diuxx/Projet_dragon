@@ -19,7 +19,14 @@ public enum Story {
     ACTIVATEBOUCLIER("activation_monde_bouclier", "activation du monde des bouclier", "Le scenario épe doit être terminé pour poursuivre..", false),
     ACTIVATEFEU("activation_monde_feu", "activation du monde de feu", "Le scenario bouclier doit être terminé pour poursuivre..", false),
     ACTIVATEPOUVOIR("activation_monde_pouvoir", "activation du monde des pouvoir", "Le scenario Feu doit être terminé pour poursuivre..", false),
-    TESTSTORYELEMENT("test", "unit test on it", "", true);
+    TESTSTORYELEMENT("test", "unit test on it", "", true),
+
+
+    ARTEPEE("Epee", "", "", false),
+    ARTBOUCLIER("Bouclier", "", "", false),
+    ARTFEU("Feu", "", "", false),
+    ARTVOLER("Voler", "", "", false);
+
 
     /**
      *

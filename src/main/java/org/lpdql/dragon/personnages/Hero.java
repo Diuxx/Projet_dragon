@@ -4,7 +4,7 @@ import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.sauvegarde.Save;
-import org.lpdql.dragon.scenario.Accomplish;
+import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.*;
@@ -55,32 +55,14 @@ public class Hero extends Personnage {
      */
     private float atk;
     private int currentGold;
-    private float pointDeVie;
-
-    /**
-     * a delete!
-     */
-    private boolean artEpee;
-    private boolean artBouclier;
-    private boolean artFeu;
-    private boolean artVoler;
-
-    /**
-     * State of events related to history
-     */
-    private Accomplish accomplishement;
 
     /**
      * Tests values for the hero statistics
      */
-    // private static final int HEROLIFE = 1120;
-    // hero information
     private static final float HEROLIFE = (float) 300.0;
     private static final float HEROSPEED = 0.1f;
     private static final int HEROLEVEL = 1;
     private static final int HEROGOLD = 500;
-
-    private boolean nouvellePartie;
 
     /**
      * is it in the right place?
@@ -110,21 +92,8 @@ public class Hero extends Personnage {
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
 
-        // a delete
-        this.artEpee = true;
-        this.artBouclier = false;
-        this.artFeu = false;
-        this.artVoler = false;
-
-        nouvellePartie = true;
-
         levelExperience = new HashMap<>();
-
-        // Load accomplishement
-        this.accomplishement = new Accomplish();
-
-        // Load sprite tiles from sprite sheet
-        this.chargerImage();
+        this.chargerImage(); // Load sprite tiles from sprite sheet
     }
 
     public Hero(String nom) {
@@ -328,48 +297,48 @@ public class Hero extends Personnage {
         this.niveau = levelGagne;
     }
 
-    public boolean getArtEpee() { return artEpee ; }
-
-    public boolean getArtBouclier() { return artBouclier; }
-
-    public boolean getArtFeu() {
-        return artFeu;
-    }
-
-    public boolean getArtVoler() {
-        return artVoler;
-    }
+    public boolean getArtEpee() { return Story.ARTEPEE.getState(); }
 
     public boolean isArtEpee() {
-        return artEpee;
+        return Story.ARTEPEE.getState();
     }
 
     public void setArtEpee(boolean artEpee) {
-        this.artEpee = artEpee;
+        Story.ARTEPEE.setState(artEpee);
     }
 
+    public boolean getArtBouclier() { return Story.ARTBOUCLIER.getState(); }
+
     public boolean isArtBouclier() {
-        return artBouclier;
+        return Story.ARTBOUCLIER.getState();
     }
 
     public void setArtBouclier(boolean artBouclier) {
-        this.artBouclier = artBouclier;
+        Story.ARTBOUCLIER.setState(artBouclier);
+    }
+
+    public boolean getArtFeu() {
+        return Story.ARTFEU.getState();
     }
 
     public boolean isArtFeu() {
-        return artFeu;
+        return Story.ARTFEU.getState();
     }
 
     public void setArtFeu(boolean artFeu) {
-        this.artFeu = artFeu;
+        Story.ARTFEU.setState(artFeu);
+    }
+
+    public boolean getArtVoler() {
+        return Story.ARTVOLER.getState();
     }
 
     public boolean isArtVoler() {
-        return artVoler;
+        return Story.ARTVOLER.getState();
     }
 
     public void setArtVoler(boolean artVoler) {
-        this.artVoler = artVoler;
+        Story.ARTVOLER.setState(artVoler);
     }
 
     public void changerMusic(String musique) throws SlickException {
@@ -414,12 +383,20 @@ public class Hero extends Personnage {
 		}
 	}
 
-    public Accomplish getAccomplishement() {
-        return this.accomplishement;
-    }
+	public String getCurrentArt() {
+        if(!Story.ARTEPEE.getState())
+            return Story.ARTEPEE.getSavedId();
 
-    public void setAccomplishement(Accomplish accomplishement) {
-        this.accomplishement = accomplishement;
+        if(!Story.ARTBOUCLIER.getState())
+            return Story.ARTBOUCLIER.getSavedId();
+
+        if(!Story.ARTFEU.getState())
+            return Story.ARTFEU.getSavedId();
+
+        if(!Story.ARTVOLER.getState())
+            return Story.ARTVOLER.getSavedId();
+
+        return "unknow";
     }
 
     /**
@@ -447,9 +424,5 @@ public class Hero extends Personnage {
         this.setArtBouclier(savedHero.getArtBouclier());
         this.setArtFeu(savedHero.getArtFeu());
         this.setArtVoler(savedHero.getArtVoler());
-
-        this.accomplishement = savedHero.getAccomplishement();
-
-        this.accomplishement.getLog();
     }
 }

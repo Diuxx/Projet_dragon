@@ -3,11 +3,7 @@ package org.lpdql.dragon.sauvegarde;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.lpdql.dragon.personnages.Hero;
-import org.lpdql.dragon.scenario.Accomplish;
-import org.lpdql.dragon.scenario.Scenario;
-import org.lpdql.dragon.scenario.Art;
 import org.lpdql.dragon.scenario.Story;
-import org.lpdql.dragon.scenario.errors.ScenarioError;
 import org.lpdql.dragon.system.Point;
 
 import java.io.*;
@@ -29,11 +25,6 @@ public class Save {
     private Hero savedHero;
 
     /**
-     *
-     */
-    private Accomplish accomplishement;
-
-    /**
      * Map par défault
      */
     private String defaultMapName = "data/maison.tmx";
@@ -50,7 +41,6 @@ public class Save {
      */
     public Save(Hero savedHero, String savedMap) {
         this.savedHero = savedHero;
-        this.accomplishement = savedHero.getAccomplishement();
         this.defaultMapName = "data/" + savedMap + ".tmx";
     }
 
@@ -83,10 +73,6 @@ public class Save {
             int playerExperience = playerData.get("experience").getAsInt();
             int playerLevel = playerData.get("level").getAsInt();
             int playerGold = playerData.get("gold").getAsInt();
-            boolean playerSwordArt = playerData.get("epeeArt").getAsBoolean();
-            boolean playerShiedArt = playerData.get("shieldArt").getAsBoolean();
-            boolean playerFireArt = playerData.get("fireArt").getAsBoolean();
-            boolean playerFlyArt = playerData.get("flyArt").getAsBoolean();
 
             Hero savedHero = new Hero("savedName", new Point(0, 0));
             savedHero.setNom(playerName);
@@ -99,32 +85,10 @@ public class Save {
             savedHero.setNiveau(playerLevel);
             savedHero.setCurrentGold(playerGold);
 
-            savedHero.setArtEpee(playerSwordArt);
-            savedHero.setArtBouclier(playerShiedArt);
-            savedHero.setArtFeu(playerFireArt);
-            savedHero.setArtVoler(playerFlyArt);
-
-            // accomplishement
-            Accomplish savedAccomplishement = savedHero.getAccomplishement();
-            if(accomplishement.get(Art.ENUM.EPEE.toString()).getAsBoolean())
-                savedAccomplishement.setEndArt(Art.ENUM.EPEE.toString());
-
-            if(accomplishement.get(Art.ENUM.BOUCLIER.toString()).getAsBoolean())
-                savedAccomplishement.setEndArt(Art.ENUM.BOUCLIER.toString());
-
-            if(accomplishement.get(Art.ENUM.FEU.toString()).getAsBoolean())
-                savedAccomplishement.setEndArt(Art.ENUM.FEU.toString());
-
-            if(accomplishement.get(Art.ENUM.VOLER.toString()).getAsBoolean())
-                savedAccomplishement.setEndArt(Art.ENUM.VOLER.toString());
-
-            // chargement des elements de la Story
             for(Story s : Story.values()) {
                 if(accomplishement.get(s.getSavedId()).getAsBoolean())
                     s.done();
             }
-
-            savedHero.setAccomplishement(savedAccomplishement);
 
             return new Save(savedHero, mapName);
 
@@ -136,10 +100,7 @@ public class Save {
                     .getStackTrace()[0]
                     .getMethodName();
 
-            System.err.println(nameofCurrMethod + " : saved data has been corrupted");
-        } catch (ScenarioError scenarioError) {
-
-            scenarioError.printStackTrace();
+            System.err.println("<" + nameofCurrMethod + "> : saved data has been corrupted");
         }
         return new Save();
     }
@@ -158,14 +119,6 @@ public class Save {
     public Hero getSavedHero()
     {
         return this.savedHero;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Accomplish getAccomplishement() {
-        return this.accomplishement;
     }
 
     /**
@@ -193,27 +146,13 @@ public class Save {
         playerData.addProperty("experience", hero.getExperience());
         playerData.addProperty("level", hero.getNiveau());
         playerData.addProperty("gold", hero.getCurrentGold());
-
-        // a delete
-        playerData.addProperty("epeeArt", hero.isArtEpee());
-        playerData.addProperty("shieldArt", hero.isArtBouclier());
-        playerData.addProperty("fireArt", hero.isArtFeu());
-        playerData.addProperty("flyArt", hero.isArtVoler());
         save.add("playerData", playerData);
 
-
         JsonObject accomplishement = new JsonObject();
-
-        accomplishement.addProperty(Art.ENUM.EPEE.toString(), hero.getAccomplishement().isArtAccomplished(Art.ENUM.EPEE));
-        accomplishement.addProperty(Art.ENUM.BOUCLIER.toString(), hero.getAccomplishement().isArtAccomplished(Art.ENUM.BOUCLIER));
-        accomplishement.addProperty(Art.ENUM.FEU.toString(), hero.getAccomplishement().isArtAccomplished(Art.ENUM.FEU));
-        accomplishement.addProperty(Art.ENUM.VOLER.toString(), hero.getAccomplishement().isArtAccomplished(Art.ENUM.VOLER));
-
         for(Story s : Story.values()) {
             // sauvegarde
             accomplishement.addProperty(s.getSavedId(), s.getState());
         }
-
         save.add("accomplishement", accomplishement);
 
         try {
