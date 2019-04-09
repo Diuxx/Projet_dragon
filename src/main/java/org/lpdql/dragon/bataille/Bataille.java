@@ -1,6 +1,5 @@
 package org.lpdql.dragon.bataille;
 
-import org.lpdql.dragon.personnages.Ennemi;
 import org.newdawn.slick.*;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.KeyControl;

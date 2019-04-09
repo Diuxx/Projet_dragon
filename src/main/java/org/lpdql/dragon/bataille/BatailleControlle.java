@@ -1,5 +1,6 @@
 package org.lpdql.dragon.bataille;
 
+import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.jeu.LevelExperience;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.newdawn.slick.SlickException;
@@ -27,8 +28,11 @@ public class BatailleControlle implements InputProviderListener {
 	private Sound victory;
 	private LevelExperience levelExperience;
 
-	public BatailleControlle(BatailleJoueur joueur, BatailleEnnemi ennemi, StateBasedGame game) {
+	// --
+	private StateBasedGame stageGame;
 
+	public BatailleControlle(BatailleJoueur joueur, BatailleEnnemi ennemi, StateBasedGame game) {
+		this.stageGame = game;
 		try {
 			swing = new Sound("data/sound/swing.wav");
 			victory = new Sound("data/sound/ff7victory.wav");
@@ -37,6 +41,7 @@ public class BatailleControlle implements InputProviderListener {
 		} finally {
 			System.err.println("data/sound -> loaded");
 		}
+
 		this.joueur = joueur;
 		this.ennemi = ennemi;
 		this.game = game;
@@ -122,6 +127,7 @@ public class BatailleControlle implements InputProviderListener {
 	 *
 	 */
 	private void endPlayerAttack() {
+		boolean levelUP = false;
 		if(ennemi.getBarreVie() <= 0) {
 			if(!InterStateComm.getLeHero().getMuted() && victory != null)
 			{
@@ -131,15 +137,13 @@ public class BatailleControlle implements InputProviderListener {
 			System.out.println(InterStateComm.getUnEnnemi().getNom() + " est mort !");
 			InterStateComm.tuerUnEnnemi();
 
-			System.out.println(InterStateComm.getUnEnnemi());
-
-			game.enterState(GameOver.GameOver);
+			game.enterState(EcranJeu.ID);
 
 			// on ajoute l'experience de l'ennemi dans le joueur
 			InterStateComm.getLeHero().setExperience(ennemi.getExperience() + InterStateComm.getLeHero().getExperience());
 
 			// on check s'il y a level up
-            boolean levelUP = levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience(), InterStateComm.getLeHero());
+            levelUP = levelExperience.checkUpLevelEtExperience(InterStateComm.getLeHero().getExperience(), InterStateComm.getLeHero());
 
 			if (levelUP) {
 				InterStateComm.getLeHero().rafraichirLePouvoirATK();
@@ -158,7 +162,7 @@ public class BatailleControlle implements InputProviderListener {
                     // on enlève l'ennemi de la bataille
                     InterStateComm.enleverUnEnnemi();
 
-					game.enterState(GameOver.GameOver);
+                    game.enterState(EcranJeu.ID);
 					ennemi.regenVie();
 					mode = BatailleCommande.NONE;
 					break;
@@ -185,7 +189,7 @@ public class BatailleControlle implements InputProviderListener {
 	 */
 	private void endEnnemiAttack() {
 		if (joueur.getBarreVie() <= 0) {
-			game.enterState(GameOver.GameOver);
+			game.enterState(GameOver.ID);
 		}
 		mode = BatailleCommande.NONE;
 	}
