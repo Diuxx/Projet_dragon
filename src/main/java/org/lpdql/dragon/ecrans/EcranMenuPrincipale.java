@@ -1,5 +1,6 @@
 package org.lpdql.dragon.ecrans;
 
+import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
@@ -114,6 +115,9 @@ public class EcranMenuPrincipale extends BasicGameState {
 				&& (posY > (600 - text2Y - textheight2) && posY < (600 - text2Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				// Charger un jeu ///////////////////////
+
+				if(Save.detectSavedData().getSavedHero() != null)
+					stageGame.enterState(EcranJeu.ID);
 			}
 			color2 = Color.red;
 		} else {

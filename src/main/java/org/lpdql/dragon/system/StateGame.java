@@ -23,10 +23,13 @@ public class StateGame extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
+		/**
+		 * add stats here for team description..
+		 */
 
-//		addState(new EcranMenuPrincipale());
-//		addState(new EcranMenuChoisirUnNiveau());
-//		addState(new EcranMenuChoisirUnNom());
+		addState(new EcranMenuPrincipale());
+		addState(new EcranMenuChoisirUnNiveau());
+		addState(new EcranMenuChoisirUnNom());
 		addState(new EcranJeu());
 		addState(new Bataille());
 		addState(new GameOver());

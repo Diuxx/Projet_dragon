@@ -3,6 +3,7 @@ package org.lpdql.dragon.monde;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Point;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -19,6 +20,9 @@ public class Ressources {
     public static SpriteSheet spriteSheet_letter;
     private static boolean charger = false;
 
+
+    public static Image fondMessage;
+
     public static void charger() throws SlickException {
         if(!charger) {
             // chargement des textures
@@ -32,6 +36,7 @@ public class Ressources {
             spriteSheet_vieilHomme = new SpriteSheet("data/sprites/vieux_sage32x32.png", 32, 32);
             spriteSheet_letter = new SpriteSheet("data/sprites/letter.png", 16, 16);
 
+            fondMessage = new Image("data/menu/uimessage.png");
             charger = true;
 
             // chargement du personnage

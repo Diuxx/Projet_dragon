@@ -1,9 +1,9 @@
 package org.lpdql.dragon.jeu;
 
+import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.system.Camera;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import org.lwjgl.Sys;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
@@ -38,14 +38,13 @@ public class Message {
      */
     private Rectangle rect;
 
-
     /**
      * Constructor of class message
      */
     public Message() {
         this.posisition = 0;
         this.rect = new Rectangle(0, 0, 0, 0);
-        this.text = new ArrayList<String>();
+        this.text = new ArrayList<String>();// uimessage
     }
 
     /**
@@ -66,7 +65,7 @@ public class Message {
         String[] listDeChaine = text.split("#");
         for(String chaine : listDeChaine)
         {
-            this.text.add(chaine + " (appuyez sur [w] pour continuer...)");
+            this.text.add(chaine + ((chaine.length() > 0) ? " ":"") + "(appuyez sur [w] pour continuer...)");
         }
         this.posisition = 0;
     }
@@ -99,16 +98,25 @@ public class Message {
             return false; // --
         }
         int i = 0;
-        g.setColor(Color.white);
-        rect.setBounds((int) camera.getX() - (c.getWidth() / 2) + MESSAGE_ESPACE,
-                       (int) camera.getY() + (c.getHeight() / 2) - this.taille + MESSAGE_ESPACE,
-                    c.getWidth() - (MESSAGE_ESPACE + MESSAGE_ESPACE), this.taille - 10);
-        g.fill(rect);
+
+        int x = (int) camera.getX() - (c.getWidth() / 2) + MESSAGE_ESPACE;
+        int y = (int) camera.getY() + (c.getHeight() / 2) - this.taille + MESSAGE_ESPACE;
+        int w = c.getWidth() - (MESSAGE_ESPACE + MESSAGE_ESPACE);
+        int h = this.taille - 10;
+        rect.setBounds(x, y, w, h);
+
+        if(Ressources.fondMessage != null)
+        {
+            Ressources.fondMessage.draw(x, y);
+        } else {
+            g.setColor(Color.orange);
+            g.fill(rect);
+        }
 
         g.setColor(Color.black);
         for(String uneLigne : this.text.get(this.posisition).split("/n"))
         {
-            g.drawString(uneLigne, rect.getX() + 5, rect.getY() + 5 + (15 * (i++)));
+            g.drawString(uneLigne, rect.getX() + 8, rect.getY() + 5 + (15 * (i++)));
         }
         return true;
     }
@@ -150,6 +158,12 @@ public class Message {
         return this.text.size();
     }
 
+    public String getText(int position) {
+        if(position >= this.text.size())
+            throw new IndexOutOfBoundsException("no more text in the Message array");
+
+        return this.text.get(position);
+    }
 
     /**
      * @return Postion of the message currently displayed
