@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Bataille extends BasicGameState{
 
-	public static final int ID = 3;
+	public static final int ID = 6;
 	
 	private Image background;
 	private BatailleEnnemi batailleEnnemi;
