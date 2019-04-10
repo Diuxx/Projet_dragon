@@ -7,50 +7,50 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class EcranLogo extends BasicGameState {
-	public static final int ID = 23;
-	private Image logo_1;
-	float logo_1_X;
-	float logo_1_Y;
+public class EcranLogoIUT extends BasicGameState {
+	public static final int ID = 24;
+	private Image logo;
+	private float logoX;
+	private float logoY;
+	private long current = System.currentTimeMillis();
+	private float alpha = 0.01f;
+	private boolean f = false;
 
 	@Override
 	public void init(GameContainer game, StateBasedGame stateBasedGame) throws SlickException {
-		logo_1 = new Image("Data/logos/UT3_Logo.png");
-		logo_1.setAlpha(0.1f);
-		logo_1_X = (game.getWidth() / 2) - (logo_1.getWidth() / 2);
-		logo_1_Y = (game.getHeight() / 2) - (logo_1.getHeight() / 2);
+		logo = new Image("Data/logos/IUT_Logo.png");
+		logo.setAlpha(0.1f);
+		logoX = (game.getWidth() / 2) - (logo.getWidth() / 2);
+		logoY = (game.getHeight() / 2) - (logo.getHeight() / 2);
 	}
 
 	@Override
 	public void render(GameContainer game, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-		logo_1.draw(logo_1_X, logo_1_Y);
+		logo.draw(logoX, logoY);
 	}
 
-	long current = System.currentTimeMillis();
-	float alpha = 0.1f;
-	boolean f = false;
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-		
-		if (System.currentTimeMillis() - current > 100 && !f) {
-			logo_1.setAlpha(logo_1.getAlpha() + this.alpha);
+
+		if (System.currentTimeMillis() - current > 10 && !f) {
+			logo.setAlpha(logo.getAlpha() + this.alpha);
 			current = System.currentTimeMillis();
 		}
 
-		if (logo_1.getAlpha() > 1f && !f) {
+		if (logo.getAlpha() > 1f && !f) {
 			f = true;
-			this.alpha = -0.1f;
+			this.alpha = -0.01f;
 		}
-		
-		if (logo_1.getAlpha() <= 0.0F) {
-			System.exit(0);
+
+		if (logo.getAlpha() <= 0.0F) {
+			stateBasedGame.enterState(EcranMenuPrincipale.ID);
 		}
 
 		if (System.currentTimeMillis() - current > 1000 && f) {
 			f = false;
-			logo_1.setAlpha(logo_1.getAlpha() - 0.01f);
+			logo.setAlpha(logo.getAlpha() - 0.01f);
 			current = System.currentTimeMillis();
-		}			
+		}
 
 	}
 

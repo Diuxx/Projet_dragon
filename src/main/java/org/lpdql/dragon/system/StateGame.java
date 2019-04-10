@@ -25,7 +25,8 @@ public class StateGame extends StateBasedGame {
 		/**
 		 * add stats here for team description..
 		 */
-		addState(new EcranLogo());
+		addState(new EcranLogoUT3());
+		addState(new EcranLogoIUT());
 		addState(new EcranMenuPrincipale());
 		addState(new EcranMenuChoisirUnNiveau());
 		addState(new EcranMenuChoisirUnNom());
