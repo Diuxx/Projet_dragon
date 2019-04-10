@@ -1,6 +1,7 @@
 package org.lpdql.dragon.bataille;
 
 import org.lpdql.dragon.ecrans.EcranJeu;
+import org.lpdql.dragon.ecrans.EcranGameOver;
 import org.lpdql.dragon.jeu.LevelExperience;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.newdawn.slick.SlickException;
@@ -189,7 +190,7 @@ public class BatailleControlle implements InputProviderListener {
 	 */
 	private void endEnnemiAttack() {
 		if (joueur.getBarreVie() <= 0) {
-			game.enterState(GameOver.ID);
+			game.enterState(EcranGameOver.ID);
 		}
 		mode = BatailleCommande.NONE;
 	}

@@ -1,7 +1,6 @@
 package org.lpdql.dragon.system;
 
 import org.lpdql.dragon.bataille.Bataille;
-import org.lpdql.dragon.bataille.GameOver;
 import org.lpdql.dragon.ecrans.*;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -26,13 +25,13 @@ public class StateGame extends StateBasedGame {
 		/**
 		 * add stats here for team description..
 		 */
-
+		addState(new EcranLogo());
 		addState(new EcranMenuPrincipale());
 		addState(new EcranMenuChoisirUnNiveau());
 		addState(new EcranMenuChoisirUnNom());
 		addState(new EcranJeu());
 		addState(new Bataille());
-		addState(new GameOver());
+		addState(new EcranGameOver());
 
 	}
 }

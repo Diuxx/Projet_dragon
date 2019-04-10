@@ -1,10 +1,9 @@
-package org.lpdql.dragon.bataille;
+package org.lpdql.dragon.ecrans;
 
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
-import org.lpdql.dragon.ecrans.EcranMenuChoisirUnNiveau;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
@@ -17,7 +16,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class GameOver extends BasicGameState {
+public class EcranGameOver extends BasicGameState {
 	public static final int ID = 22;
 	private StateBasedGame stageGame;
 	private Image background;
