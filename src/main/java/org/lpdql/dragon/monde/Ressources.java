@@ -22,6 +22,7 @@ public class Ressources {
 
 
     public static Image fondMessage;
+    public static Image fondMenu;
 
     public static void charger() throws SlickException {
         if(!charger) {
@@ -37,6 +38,7 @@ public class Ressources {
             spriteSheet_letter = new SpriteSheet("data/sprites/letter.png", 16, 16);
 
             fondMessage = new Image("data/menu/uimessage.png");
+            fondMenu = new Image("data/menu/uimenu.png");
             charger = true;
 
             // chargement du personnage

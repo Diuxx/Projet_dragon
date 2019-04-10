@@ -1,5 +1,6 @@
 package org.lpdql.dragon.ecrans;
 
+import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lwjgl.input.Mouse;
@@ -100,6 +101,9 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 			if (!inputNom.getText().equals("")) {
 				if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 					InterStateComm.getLeHero().setNom(inputNom.getText());
+					// new game..
+					Save.newGame();
+
 					stageGame.enterState(EcranJeu.ID);
 				}
 				color2 = Color.red;
