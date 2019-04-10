@@ -6,10 +6,12 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
@@ -19,7 +21,7 @@ import org.w3c.dom.css.Rect;
 
 public class EcranLogoDev extends BasicGameState {
 	public static final int ID = 25;
-	private StateBasedGame stageGame;
+	private StateBasedGame stateBasedGame;
 	private Image backgroundImage;
 	private Image flecheDeRetour;
 	private Font font1;
@@ -57,7 +59,7 @@ public class EcranLogoDev extends BasicGameState {
 
 	@Override
 	public void init(GameContainer game, StateBasedGame stateBasedGame) throws SlickException {
-		this.stageGame = stateBasedGame;
+		this.stateBasedGame = stateBasedGame;
 		font1 = new Font("Matura MT Script Capitals", Font.PLAIN, 19);
 		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
@@ -133,7 +135,7 @@ public class EcranLogoDev extends BasicGameState {
 
 		if (System.currentTimeMillis() - current > 2000 && f) {
 			f = false;
-			stateBasedGame.enterState(EcranMenuPrincipale.ID);
+			stateBasedGame.enterState(EcranJeu.ID);
 			current = System.currentTimeMillis();
 		}
 
@@ -142,6 +144,17 @@ public class EcranLogoDev extends BasicGameState {
 	@Override
 	public int getID() {
 		return this.ID;
+	}
+	
+	@Override
+	public void keyReleased(int key, char c) {
+		if (Input.KEY_ENTER == key) {
+			nextStateGame();
+		}
+	}
+	
+	public void nextStateGame() {
+		this.stateBasedGame.enterState(EcranJeu.ID);
 	}
 
 }

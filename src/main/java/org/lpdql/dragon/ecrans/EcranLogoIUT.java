@@ -3,12 +3,14 @@ package org.lpdql.dragon.ecrans;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class EcranLogoIUT extends BasicGameState {
 	public static final int ID = 24;
+	private StateBasedGame stateBasedGame;
 	private Image logo;
 	private float logoX;
 	private float logoY;
@@ -18,6 +20,7 @@ public class EcranLogoIUT extends BasicGameState {
 
 	@Override
 	public void init(GameContainer game, StateBasedGame stateBasedGame) throws SlickException {
+		this.stateBasedGame = stateBasedGame;
 		logo = new Image("Data/logos/IUT_Logo.png");
 		logo.setAlpha(0.1f);
 		logoX = (game.getWidth() / 2) - (logo.getWidth() / 2);
@@ -43,7 +46,7 @@ public class EcranLogoIUT extends BasicGameState {
 		}
 
 		if (logo.getAlpha() <= 0.0F) {
-			stateBasedGame.enterState(EcranMenuPrincipale.ID);
+			nextStateGame();
 		}
 
 		if (System.currentTimeMillis() - current > 1000 && f) {
@@ -57,6 +60,17 @@ public class EcranLogoIUT extends BasicGameState {
 	@Override
 	public int getID() {
 		return this.ID;
+	}
+	
+	@Override
+	public void keyReleased(int key, char c) {
+		if (Input.KEY_ENTER == key) {
+			nextStateGame();
+		}
+	}
+	
+	public void nextStateGame() {
+		this.stateBasedGame.enterState(EcranMenuPrincipale.ID);
 	}
 
 }

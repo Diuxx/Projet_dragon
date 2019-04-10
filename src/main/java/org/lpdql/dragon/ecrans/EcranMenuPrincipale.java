@@ -2,10 +2,8 @@ package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -22,7 +20,7 @@ import java.awt.geom.AffineTransform;
 public class EcranMenuPrincipale extends BasicGameState {
 
 	public static final int ID = 12;
-	private StateBasedGame stageGame;
+	private StateBasedGame stateBasedGame;
 	private Image backgroundImage;
 	private Font font1;
 	private Font font2;
@@ -55,7 +53,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 	}
 
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		this.stageGame = stateBasedGame;
+		this.stateBasedGame = stateBasedGame;
 		font1 = new Font("Matura MT Script Capitals", Font.PLAIN, 35);
 		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
@@ -104,7 +102,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 		if ((posX > text1X && posX < text1X + textwidth1)
 				&& (posY > (600 - text1Y - textheight1) && posY < (600 - text1Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-				stageGame.enterState(EcranMenuChoisirUnNiveau.ID);
+				nextStateGame();
 			}
 			color1 = Color.red;
 		} else {
@@ -117,7 +115,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 				// Charger un jeu ///////////////////////
 
 				if(Save.detectSavedData().getSavedHero() != null)
-					stageGame.enterState(EcranJeu.ID);
+					stateBasedGame.enterState(EcranJeu.ID);
 			}
 			color2 = Color.red;
 		} else {
@@ -134,5 +132,16 @@ public class EcranMenuPrincipale extends BasicGameState {
 			color3 = Color.white;
 		}
 
+	}
+	
+	@Override
+	public void keyReleased(int key, char c) {
+		if (Input.KEY_ENTER == key) {
+			nextStateGame();
+		}
+	}
+	
+	public void nextStateGame() {
+		this.stateBasedGame.enterState(EcranMenuChoisirUnNiveau.ID);
 	}
 }

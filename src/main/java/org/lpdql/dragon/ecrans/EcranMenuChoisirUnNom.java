@@ -1,17 +1,16 @@
 package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.Font;
+import java.awt.RenderingHints.Key;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
@@ -23,7 +22,7 @@ import java.awt.geom.AffineTransform;
 public class EcranMenuChoisirUnNom extends BasicGameState {
 
 	public static final int ID = 13;
-	private StateBasedGame stageGame;
+	private StateBasedGame stateBasedGame;
 	Image backgroundImage;
 	Image flecheDeRetour;
 	TextField inputNom;
@@ -52,7 +51,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 	}
 
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		this.stageGame = stateBasedGame;
+		this.stateBasedGame = stateBasedGame;
 		font1 = new Font("Matura MT Script Capitals", Font.PLAIN, 35);
 		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
@@ -82,6 +81,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		graphics.setColor(color1);
 		graphics.drawString(this.text1, text1X, text1Y);
 		inputNom.render(gameContainer, graphics);
+		inputNom.setFocus(true);
 		graphics.setColor(color2);
 		graphics.drawString(this.text2, text2X, text2Y);
 		graphics.setFont(trueTypeFont2);
@@ -100,7 +100,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 			if (!inputNom.getText().equals("")) {
 				if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 					InterStateComm.getLeHero().setNom(inputNom.getText());
-					stageGame.enterState(EcranJeu.ID);
+					stateBasedGame.enterState(EcranLogoDev.ID);
 				}
 				color2 = Color.red;
 			}
@@ -112,8 +112,22 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 				&& (posY > (600 - flecheDeRetour.getHeight()) && posY < 600)) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				EcranMenuChoisirUnNiveau.timer = 0;
-				stageGame.enterState(EcranMenuChoisirUnNiveau.ID);
+				stateBasedGame.enterState(EcranMenuChoisirUnNiveau.ID);
 			}
 		}
+	}
+
+	@Override
+	public void keyReleased(int key, char c) {
+		if (Input.KEY_ENTER == key) {
+			if (!inputNom.getText().equals("")) {
+				InterStateComm.getLeHero().setNom(inputNom.getText());
+				nextStateGame();
+			}
+		}
+	}
+
+	public void nextStateGame() {
+		this.stateBasedGame.enterState(EcranLogoDev.ID);
 	}
 }

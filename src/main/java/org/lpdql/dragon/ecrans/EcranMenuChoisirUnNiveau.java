@@ -3,9 +3,6 @@ package org.lpdql.dragon.ecrans;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Difficulty;
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -23,7 +20,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 // --
 	public static final int ID = 11;
 	public static String niveau;
-	private StateBasedGame stageGame;
+	private StateBasedGame stateBasedGame;
 	private Image backgroundImage;
 	private Image flecheDeRetour;
 	private Font font1;
@@ -62,7 +59,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 	}
 
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		this.stageGame = stateBasedGame;
+		this.stateBasedGame = stateBasedGame;
 		font1 = new Font("Matura MT Script Capitals", Font.PLAIN, 35);
 		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
@@ -120,7 +117,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 				&& (posY > (600 - text2Y - textheight2) && posY < (600 - text2Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				InterStateComm.setNiveauDuJeu(Difficulty.FACILE);
-				stageGame.enterState(EcranMenuChoisirUnNom.ID);
+				stateBasedGame.enterState(EcranMenuChoisirUnNom.ID);
 			}
 			color2 = Color.red;
 		} else {
@@ -131,7 +128,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 				&& (posY > (600 - text3Y - textheight3) && posY < (600 - text3Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				InterStateComm.setNiveauDuJeu(Difficulty.DIFFICILE);
-				stageGame.enterState(EcranMenuChoisirUnNom.ID);
+				nextStateGame();
 			}
 			color3 = Color.red;
 		} else {
@@ -142,7 +139,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 				&& (posY > (600 - text4Y - textheight4) && posY < (600 - text4Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				InterStateComm.setNiveauDuJeu(Difficulty.TRES_DIFFICILE);
-				stageGame.enterState(EcranMenuChoisirUnNom.ID);
+				nextStateGame();
 			}
 			color4 = Color.red;
 		} else {
@@ -153,10 +150,22 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 			if ((posX > 0 && posX < flecheDeRetour.getWidth())
 					&& (posY > (600 - flecheDeRetour.getHeight()) && posY < 600)) {
 				if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-					stageGame.enterState(EcranMenuPrincipale.ID);
+					nextStateGame();
 				}
 			}
 		}
 
+	}
+
+	@Override
+	public void keyReleased(int key, char c) {
+		if (Input.KEY_ENTER == key) {
+			InterStateComm.setNiveauDuJeu(Difficulty.FACILE);
+			nextStateGame();
+		}
+	}
+	
+	public void nextStateGame() {
+		this.stateBasedGame.enterState(EcranMenuChoisirUnNom.ID);
 	}
 }
