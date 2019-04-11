@@ -144,14 +144,14 @@ public class EcranLogoDev extends BasicGameState {
 	public int getID() {
 		return EcranLogoDev.ID;
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key || Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			nextStateGame();
 		}
 	}
-	
+
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(EcranJeu.ID);
 	}

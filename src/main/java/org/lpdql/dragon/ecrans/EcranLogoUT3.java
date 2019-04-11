@@ -1,6 +1,5 @@
 package org.lpdql.dragon.ecrans;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -61,10 +60,6 @@ public class EcranLogoUT3 extends BasicGameState {
 			logo.setAlpha(logo.getAlpha() - 0.01f);
 			current = System.currentTimeMillis();
 		}
-		
-		if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-			nextStateGame();
-		}
 
 	}
 
@@ -72,14 +67,14 @@ public class EcranLogoUT3 extends BasicGameState {
 	public int getID() {
 		return EcranLogoUT3.ID;
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key) {
 			nextStateGame();
 		}
 	}
-	
+
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(EcranLogoIUT.ID);
 	}

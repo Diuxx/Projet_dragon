@@ -1,6 +1,5 @@
 package org.lpdql.dragon.ecrans;
 
-
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lwjgl.input.Mouse;
@@ -70,7 +69,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 		text2Y = text1Y + 90;
 		text3X = text2X;
 		text3Y = text2Y + 90;
-		
+
 	}
 
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
@@ -115,7 +114,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				// Charger un jeu ///////////////////////
 
-				if(Save.detectSavedData().getSavedHero() != null)
+				if (Save.detectSavedData().getSavedHero() != null)
 					stateBasedGame.enterState(EcranJeu.ID);
 			}
 			color2 = Color.red;
@@ -134,7 +133,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 		}
 
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key) {
@@ -143,7 +142,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 			System.exit(0);
 		}
 	}
-	
+
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(EcranMenuChoisirUnNiveau.ID);
 	}

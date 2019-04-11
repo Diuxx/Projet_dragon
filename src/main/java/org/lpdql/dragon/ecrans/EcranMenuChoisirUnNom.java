@@ -134,7 +134,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(NEXT_STATE_GAME);
 	}
-	
+
 	public void previousStateGame() {
 		this.stateBasedGame.enterState(PREVIOUS_STATE_GAME);
 	}

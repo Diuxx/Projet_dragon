@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author: Ez
  */
 
-public class EcranLevelUP extends BasicGameState{
+public class EcranLevelUP extends BasicGameState {
 
 	public static final int YouWin = 3;
 	private Image background;
@@ -25,19 +25,18 @@ public class EcranLevelUP extends BasicGameState{
 
 	@Override
 	public void render(GameContainer fenetreDeJeu, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		background.draw(0, 0, fenetreDeJeu.getWidth(), fenetreDeJeu.getHeight());	
+		background.draw(0, 0, fenetreDeJeu.getWidth(), fenetreDeJeu.getHeight());
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		
+
 	}
-	
+
 	@Override
 	public int getID() {
-		
+
 		return 3;
 	}
 
 }
-

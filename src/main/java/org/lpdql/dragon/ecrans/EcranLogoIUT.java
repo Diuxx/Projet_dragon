@@ -68,14 +68,14 @@ public class EcranLogoIUT extends BasicGameState {
 	public int getID() {
 		return EcranLogoIUT.ID;
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key || Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			nextStateGame();
 		}
 	}
-	
+
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(EcranMenuPrincipale.ID);
 	}
