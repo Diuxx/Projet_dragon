@@ -134,7 +134,7 @@ public class EcranLogoDev extends BasicGameState {
 
 		if (System.currentTimeMillis() - current > 2000 && f) {
 			f = false;
-			stateBasedGame.enterState(EcranJeu.ID);
+			nextStateGame();
 			current = System.currentTimeMillis();
 		}
 
@@ -153,6 +153,7 @@ public class EcranLogoDev extends BasicGameState {
 	}
 
 	public void nextStateGame() {
+		EcranJeu.fade = true;
 		this.stateBasedGame.enterState(EcranJeu.ID);
 	}
 

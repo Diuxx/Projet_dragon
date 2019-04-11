@@ -10,9 +10,9 @@ import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Camera;
 import org.lpdql.dragon.system.MenuItem;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -94,6 +94,13 @@ public class EcranJeu extends BasicGameState {
 	 */
 	private Hud_menu menu = new Hud_menu();
 
+	// fade in effect
+	private long current = System.currentTimeMillis();
+	Image fadeImage;
+	public static boolean fade;
+	private float alpha = 1f;
+	//
+
 	/**
 	 *
 	 * @param gameContainer
@@ -102,6 +109,11 @@ public class EcranJeu extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+		
+		// fade in effect
+		this.fadeImage = new Image("Data/logos/fade.png");
+		this.fadeImage.setAlpha(alpha);
+		
 		// instantiation of the environment
 		this.container = gameContainer;
 
@@ -199,10 +211,11 @@ public class EcranJeu extends BasicGameState {
 				break;
 			}
 		}
-
-		// fade in effect
-		graphics.setColor(Color.black);
-		graphics.fillRect(0, 0, InterStateComm.gX, InterStateComm.gY);
+		
+		if (EcranJeu.fade) {
+			fadeImage.draw();
+		}
+		
 	}
 
 	@Override
@@ -222,6 +235,17 @@ public class EcranJeu extends BasicGameState {
 
 		// updating camera position
 		this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
+		
+		// fade in effect
+		if (System.currentTimeMillis() - current > 5 && EcranJeu.fade) {
+			this.fadeImage.setAlpha(this.fadeImage.getAlpha() - 0.005f);
+			current = System.currentTimeMillis();
+		}
+		
+		if (this.fadeImage.getAlpha() <= 0) {
+			this.fadeImage.destroy();
+			EcranJeu.fade = false;
+		}
 	}
 
 	@Override
