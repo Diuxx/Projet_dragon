@@ -53,7 +53,7 @@ public class EcranJeu extends BasicGameState {
 	 * 
 	 * @see BasicGameState
 	 **/
-	public static StateBasedGame stateBasedGame;
+	public static StateBasedGame gameState;
 
 	/**
 	 * This variable manages the display of messages in game
@@ -109,13 +109,14 @@ public class EcranJeu extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		
+
 		// fade in effect
 		this.fadeImage = new Image("Data/logos/fade.png");
 		this.fadeImage.setAlpha(alpha);
-		
+
 		// instantiation of the environment
 		this.container = gameContainer;
+		EcranJeu.gameState = stateBasedGame;
 
 		// Texture loading
 		Ressources.charger();
@@ -155,7 +156,6 @@ public class EcranJeu extends BasicGameState {
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
 			throws SlickException {
-
 		// updated point of view
 		camera.translate(graphics, gameContainer);
 
@@ -174,7 +174,7 @@ public class EcranJeu extends BasicGameState {
 		InterStateComm.getLeHero().afficher(graphics);
 
 		// drawing message
-		if (lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing()) {
+		if (EcranJeu.lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing()) {
 			// when we are displaying menu or message
 			// we put the game on pause.
 			this.setUpdatePaused(true);
@@ -205,17 +205,15 @@ public class EcranJeu extends BasicGameState {
 				savedData.save(InterStateComm.getLeHero(), carte.getFileName());
 				menu.setShowing(false);
 				this.setUpdatePaused(false);
-				lesMessages.add("Une sauvegarde à été effectué...");
+				EcranJeu.lesMessages.add("Une sauvegarde à été effectué...");
 				break;
 			case NONE:
 				break;
 			}
 		}
-		
 		if (EcranJeu.fade) {
 			fadeImage.draw();
 		}
-		
 	}
 
 	@Override
@@ -235,13 +233,14 @@ public class EcranJeu extends BasicGameState {
 
 		// updating camera position
 		this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
-		
+
 		// fade in effect
 		if (System.currentTimeMillis() - current > 5 && EcranJeu.fade) {
 			this.fadeImage.setAlpha(this.fadeImage.getAlpha() - 0.005f);
 			current = System.currentTimeMillis();
 		}
-		
+
+		// fade in effect
 		if (this.fadeImage.getAlpha() <= 0) {
 			this.fadeImage.destroy();
 			EcranJeu.fade = false;
