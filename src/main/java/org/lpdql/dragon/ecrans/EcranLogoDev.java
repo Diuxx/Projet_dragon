@@ -1,30 +1,23 @@
 package org.lpdql.dragon.ecrans;
 
 import java.awt.Font;
-import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Difficulty;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.Rect;
 
 public class EcranLogoDev extends BasicGameState {
 	public static final int ID = 6;
 	private StateBasedGame stateBasedGame;
-	private Image backgroundImage;
-	private Image flecheDeRetour;
 	private Font font1;
 	private Font font2;
 	private TrueTypeFont trueTypeFont1;
@@ -67,7 +60,6 @@ public class EcranLogoDev extends BasicGameState {
 		trueTypeFont1 = new TrueTypeFont(font1, true);
 		trueTypeFont2 = new TrueTypeFont(font2, true);
 		tTypeFont = new FontRenderContext(affinetransform, true, true);
-		flecheDeRetour = new Image("Data/arrow.png");
 		text1 = "SCRUM MASTER";
 		text2 = "Zohal Akabr";
 		text3 = "PRODUCT OWNER";
@@ -144,7 +136,7 @@ public class EcranLogoDev extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranLogoDev.ID;
 	}
 	
 	@Override

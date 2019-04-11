@@ -301,7 +301,7 @@ public class Ennemi extends Personnage implements StoryElement {
 
 		if(this.veutCombattre() && !this.requestFight) {
 			InterStateComm.setUnEnnemi(this);
-			EcranJeu.gameState.enterState(EcranBataille.ID);
+			EcranJeu.stateBasedGame.enterState(EcranBataille.ID);
 		}
 
 		if(this.requestFight) this.requestFight = false;

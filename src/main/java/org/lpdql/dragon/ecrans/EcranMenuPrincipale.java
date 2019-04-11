@@ -3,7 +3,6 @@ package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Difficulty;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -12,7 +11,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
 /**
  * class EcranMenuPrincipale
@@ -48,14 +46,10 @@ public class EcranMenuPrincipale extends BasicGameState {
 	private Color color1 = Color.white;
 	private Color color2 = Color.white;
 	private Color color3 = Color.white;
-	
-	
-    private ArrayList<String> lesOptions;
-    private int currentOption;
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranMenuPrincipale.ID;
 	}
 
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {

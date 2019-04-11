@@ -57,7 +57,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranMenuChoisirUnNiveau.ID;
 	}
 
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {

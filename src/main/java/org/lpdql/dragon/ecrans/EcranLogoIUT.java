@@ -60,7 +60,7 @@ public class EcranLogoIUT extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranLogoIUT.ID;
 	}
 	
 	@Override

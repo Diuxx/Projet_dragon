@@ -10,12 +10,14 @@ import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Camera;
 import org.lpdql.dragon.system.MenuItem;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
 
 
 /**
@@ -53,7 +55,7 @@ public class EcranJeu extends BasicGameState {
      * This variable is a slick game state
      * @see BasicGameState
      **/
-    public static StateBasedGame gameState;
+    public static StateBasedGame stateBasedGame;
 
     /**
      * This variable manages the display of messages in game
@@ -104,7 +106,6 @@ public class EcranJeu extends BasicGameState {
     {
         // instantiation of the environment
         this.container = gameContainer;
-        this.gameState = stateBasedGame;
 
         // Texture loading
         Ressources.charger();
@@ -146,6 +147,11 @@ public class EcranJeu extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException
     {
+    	// fade in effect
+    	graphics.setColor(Color.black);
+    	graphics.drawRect(6, 6, InterStateComm.gX, InterStateComm.gY);
+		graphics.fillRect(6, 6, InterStateComm.gX, InterStateComm.gY);
+		
         // updated point of view
         camera.translate(graphics, gameContainer);
 
@@ -155,9 +161,9 @@ public class EcranJeu extends BasicGameState {
 
         // display non-player characters and enemies
         if(scenario != null) {
-            scenario.afficherPnj(graphics, this.lesMessages);
+            scenario.afficherPnj(graphics, EcranJeu.lesMessages);
             scenario.afficherEnnemis(graphics);
-            scenario.afficherObjets(graphics, this.lesMessages);
+            scenario.afficherObjets(graphics, EcranJeu.lesMessages);
         }
 
         // drawing Hero
@@ -216,7 +222,7 @@ public class EcranJeu extends BasicGameState {
         InterStateComm.getLeHero().mouvement(delta, carte.getMap());
 
         // scenario all movement (ennemis/object) collision
-        this.scenario.mouvement(this.carte, delta, this.lesMessages);
+        this.scenario.mouvement(this.carte, delta, EcranJeu.lesMessages);
 
         // updating camera position
         this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());

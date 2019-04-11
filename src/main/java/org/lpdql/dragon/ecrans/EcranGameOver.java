@@ -128,7 +128,7 @@ public class EcranGameOver extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranGameOver.ID;
 	}
 
 }
