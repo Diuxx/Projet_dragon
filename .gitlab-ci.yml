@@ -2,12 +2,12 @@ image: maven:3.6.0-jdk-8
 
 stages:
   - compilation
-  - tests
+  - tests_unitaires
 
 build:
   stage: compilation
   script: mvn clean compile
   
 tests:
-  stage: tests
+  stage: tests_unitaires
   script: mvn test
