@@ -26,7 +26,7 @@ public class EcranJeu extends BasicGameState {
     /**
      * Slick game State id
      */
-    public static final int ID = 2;
+    public static final int ID = 8;
 
     /**
      *

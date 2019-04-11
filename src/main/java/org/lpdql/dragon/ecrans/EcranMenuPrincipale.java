@@ -19,7 +19,7 @@ import java.awt.geom.AffineTransform;
  */
 public class EcranMenuPrincipale extends BasicGameState {
 
-	public static final int ID = 12;
+	public static final int ID = 3;
 	private StateBasedGame stateBasedGame;
 	private Image backgroundImage;
 	private Font font1;

@@ -21,7 +21,7 @@ import java.awt.geom.AffineTransform;
  */
 public class EcranMenuChoisirUnNom extends BasicGameState {
 
-	public static final int ID = 13;
+	public static final int ID = 5;
 	private StateBasedGame stateBasedGame;
 	Image backgroundImage;
 	Image flecheDeRetour;

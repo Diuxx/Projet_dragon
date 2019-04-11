@@ -1,5 +1,9 @@
-package org.lpdql.dragon.bataille;
+package org.lpdql.dragon.ecrans;
 
+import org.lpdql.dragon.bataille.BatailleCommande;
+import org.lpdql.dragon.bataille.BatailleControlle;
+import org.lpdql.dragon.bataille.BatailleEnnemi;
+import org.lpdql.dragon.bataille.BatailleJoueur;
 import org.newdawn.slick.*;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.KeyControl;
@@ -8,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Bataille extends BasicGameState{
 
-	public static final int ID = 6;
+	public static final int ID = 9;
 	
 	private Image background;
 	private BatailleEnnemi batailleEnnemi;

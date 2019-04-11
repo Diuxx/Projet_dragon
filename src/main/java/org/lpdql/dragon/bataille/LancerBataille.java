@@ -1,5 +1,6 @@
 package org.lpdql.dragon.bataille;
 
+import org.lpdql.dragon.ecrans.Bataille;
 import org.lpdql.dragon.ecrans.EcranGameOver;
 import org.lpdql.dragon.ecrans.YouWin;
 import org.newdawn.slick.AppGameContainer;

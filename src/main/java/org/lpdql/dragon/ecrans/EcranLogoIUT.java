@@ -9,7 +9,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class EcranLogoIUT extends BasicGameState {
-	public static final int ID = 24;
+	public static final int ID = 2;
 	private StateBasedGame stateBasedGame;
 	private Image logo;
 	private float logoX;

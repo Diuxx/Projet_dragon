@@ -17,7 +17,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class EcranGameOver extends BasicGameState {
-	public static final int ID = 22;
+	public static final int ID = 10;
 	private StateBasedGame stageGame;
 	private Image background;
 	private Font font1;

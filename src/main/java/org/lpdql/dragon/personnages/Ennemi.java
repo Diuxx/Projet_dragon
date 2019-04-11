@@ -1,10 +1,10 @@
 package org.lpdql.dragon.personnages;
 
-import org.lpdql.dragon.bataille.Bataille;
 import org.lpdql.dragon.interfaces.StoryElement;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
+import org.lpdql.dragon.ecrans.Bataille;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;

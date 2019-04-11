@@ -20,7 +20,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.Rect;
 
 public class EcranLogoDev extends BasicGameState {
-	public static final int ID = 25;
+	public static final int ID = 6;
 	private StateBasedGame stateBasedGame;
 	private Image backgroundImage;
 	private Image flecheDeRetour;
