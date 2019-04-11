@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class EcranLevelUP extends BasicGameState {
 
-	public static final int YouWin = 3;
+	public static final int ID = 11;
 	private Image background;
 
 	@Override
@@ -35,8 +35,7 @@ public class EcranLevelUP extends BasicGameState {
 
 	@Override
 	public int getID() {
-
-		return 3;
+		return EcranLevelUP.ID;
 	}
 
 }
