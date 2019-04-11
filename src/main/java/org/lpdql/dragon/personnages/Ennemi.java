@@ -4,7 +4,7 @@ import org.lpdql.dragon.interfaces.StoryElement;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
-import org.lpdql.dragon.ecrans.Bataille;
+import org.lpdql.dragon.ecrans.EcranBataille;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
@@ -301,7 +301,7 @@ public class Ennemi extends Personnage implements StoryElement {
 
 		if(this.veutCombattre() && !this.requestFight) {
 			InterStateComm.setUnEnnemi(this);
-			EcranJeu.gameState.enterState(Bataille.ID);
+			EcranJeu.gameState.enterState(EcranBataille.ID);
 		}
 
 		if(this.requestFight) this.requestFight = false;

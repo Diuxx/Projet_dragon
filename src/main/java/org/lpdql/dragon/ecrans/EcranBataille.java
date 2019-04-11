@@ -10,7 +10,7 @@ import org.newdawn.slick.command.KeyControl;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Bataille extends BasicGameState{
+public class EcranBataille extends BasicGameState{
 
 	public static final int ID = 9;
 	

@@ -1,6 +1,6 @@
 package org.lpdql.dragon.bataille;
 
-import org.lpdql.dragon.ecrans.Bataille;
+import org.lpdql.dragon.ecrans.EcranBataille;
 import org.lpdql.dragon.ecrans.EcranGameOver;
 import org.lpdql.dragon.ecrans.YouWin;
 import org.newdawn.slick.AppGameContainer;
@@ -20,7 +20,7 @@ class LancerBataille extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		addState(new Bataille());
+		addState(new EcranBataille());
 		addState(new EcranGameOver());
 		addState(new YouWin());
 	}
