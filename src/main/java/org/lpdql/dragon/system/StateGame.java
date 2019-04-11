@@ -28,8 +28,8 @@ public class StateGame extends StateBasedGame {
 //		addState(new EcranLogoIUT());
 //		addState(new EcranMenuPrincipale());
 //		addState(new EcranMenuChoisirUnNiveau());
-		addState(new EcranMenuChoisirUnNom());
-		addState(new EcranLogoDev());
+//		addState(new EcranMenuChoisirUnNom());
+//		addState(new EcranLogoDev());
 		addState(new EcranJeu());
 		addState(new EcranBataille());
 		addState(new EcranGameOver());
