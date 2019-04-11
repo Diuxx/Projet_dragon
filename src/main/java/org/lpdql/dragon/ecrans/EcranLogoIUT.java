@@ -1,5 +1,6 @@
 package org.lpdql.dragon.ecrans;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -64,7 +65,7 @@ public class EcranLogoIUT extends BasicGameState {
 	
 	@Override
 	public void keyReleased(int key, char c) {
-		if (Input.KEY_ENTER == key) {
+		if (Input.KEY_ENTER == key || Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			nextStateGame();
 		}
 	}

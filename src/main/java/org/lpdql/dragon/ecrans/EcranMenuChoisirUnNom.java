@@ -114,7 +114,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		if ((posX > 0 && posX < flecheDeRetour.getWidth())
 				&& (posY > (600 - flecheDeRetour.getHeight()) && posY < 600)) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-				EcranMenuChoisirUnNiveau.timer = 0;
+				EcranMenuChoisirUnNiveau.TIMER = 0;
 				previousStateGame();
 			}
 		}

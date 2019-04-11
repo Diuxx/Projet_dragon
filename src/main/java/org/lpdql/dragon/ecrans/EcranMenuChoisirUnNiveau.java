@@ -48,7 +48,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 	private int textheight3;
 	private int textwidth4;
 	private int textheight4;
-	protected static int timer = 0;
+	protected static int TIMER = 0;
 
 	private Color color1 = Color.white;
 	private Color color2 = Color.white;
@@ -114,7 +114,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
 		float posX = Mouse.getX();
 		float posY = Mouse.getY();
-		timer += delta;
+		TIMER += delta;
 		if ((posX > text2X && posX < text2X + textwidth2)
 				&& (posY > (600 - text2Y - textheight2) && posY < (600 - text2Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
@@ -148,11 +148,11 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 			color4 = Color.white;
 		}
 
-		if (timer > 500) {
+		if (TIMER > 500) {
 			if ((posX > 0 && posX < flecheDeRetour.getWidth())
 					&& (posY > (600 - flecheDeRetour.getHeight()) && posY < 600)) {
 				if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-					nextStateGame();
+					previousStateGame();
 				}
 			}
 		}

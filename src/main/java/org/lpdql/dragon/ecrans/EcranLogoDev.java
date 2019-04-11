@@ -7,6 +7,7 @@ import java.awt.geom.AffineTransform;
 
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Difficulty;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -148,7 +149,7 @@ public class EcranLogoDev extends BasicGameState {
 	
 	@Override
 	public void keyReleased(int key, char c) {
-		if (Input.KEY_ENTER == key) {
+		if (Input.KEY_ENTER == key || Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			nextStateGame();
 		}
 	}
