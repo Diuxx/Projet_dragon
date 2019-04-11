@@ -21,8 +21,8 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 	public static final int ID = 4;
 	public static String niveau;
 	private StateBasedGame stateBasedGame;
-	private static final int nextStateGame = EcranMenuChoisirUnNom.ID;
-	private static final int previousStateGame = EcranMenuPrincipale.ID;
+	private static final int NEXT_STATE_GAME = EcranMenuChoisirUnNom.ID;
+	private static final int PREVIOUS_STATE_GAME = EcranMenuPrincipale.ID;
 	private Image backgroundImage;
 	private Image flecheDeRetour;
 	private Font font1;
@@ -170,10 +170,10 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 	}
 	
 	public void nextStateGame() {
-		this.stateBasedGame.enterState(nextStateGame);
+		this.stateBasedGame.enterState(NEXT_STATE_GAME);
 	}
 	
 	public void previousStateGame() {
-		this.stateBasedGame.enterState(previousStateGame);
+		this.stateBasedGame.enterState(PREVIOUS_STATE_GAME);
 	}
 }
