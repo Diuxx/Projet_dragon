@@ -9,9 +9,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>projet-dragon</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
-
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -26,20 +24,28 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.slick2d/slick2d-core -->
-    <dependency>
-      <groupId>org.slick2d</groupId>
-      <artifactId>slick2d-core</artifactId>
-      <version>1.0.2</version>
-    </dependency>
+<dependency>
+    <groupId>org.slick2d</groupId>
+    <artifactId>slick2d-core</artifactId>
+    <version>1.0.2</version>
+</dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.8.0</version>
     </dependency>
+
+<dependency>
+    <groupId>javax.jnlp</groupId>
+		<artifactId>jnlp-api</artifactId>
+		<version>5.0</version>
+		<scope>system</scope>
+    <systemPath>${project.basedir}/lib/jnlp.jar</systemPath>
+</dependency>
+    
   </dependencies>
+
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -48,6 +54,7 @@
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
+          
         </plugin>
         <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
@@ -74,7 +81,6 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>3.7.1</version>
