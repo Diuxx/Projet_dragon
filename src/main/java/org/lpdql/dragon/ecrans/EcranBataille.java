@@ -22,7 +22,7 @@ public class EcranBataille extends BasicGameState{
 	
 	@Override
 	public void init(GameContainer fenetreDeBataille, StateBasedGame game) throws SlickException {
-		this.background = new Image("data/bataille/background.jpg");
+		this.background = new Image("data/bataille/Forest_background.png");
 		this.batailleEnnemi = new BatailleEnnemi();
 		this.batailleJoueur = new BatailleJoueur();
 		batailleEnnemi.init();
