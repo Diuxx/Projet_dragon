@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.scenario.Story;
+import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Point;
 
 import java.io.*;
@@ -60,6 +61,7 @@ public class Save {
             JsonObject mapData = jsonObject.getAsJsonObject("mapData");
             JsonObject playerData = jsonObject.getAsJsonObject("playerData");
             JsonObject accomplishement = jsonObject.getAsJsonObject("accomplishement");
+            JsonObject difficulte = jsonObject.getAsJsonObject("difficulte");
 
             // get all data
             String mapName = mapData.get("map").getAsString();
@@ -89,6 +91,8 @@ public class Save {
                 if(accomplishement.get(s.getSavedId()).getAsBoolean())
                     s.done();
             }
+
+            InterStateComm.setNiveauDuJeu(difficulte.get("niveau").getAsInt());
 
             return new Save(savedHero, mapName);
 
@@ -122,12 +126,15 @@ public class Save {
     }
 
     /**
-     * sauvegarde les données
+     * this function manages the backup of game data
+     * @param hero current hero instance
+     * @param currentMapName the map on which the hero is
+     * @return {@code true} if everything went well {@code false} otherwise
+     *
+     * @see Hero
      */
     public boolean save(Hero hero, String currentMapName) {
-        File file = new File(Save.savedFileName);
-        if(file.exists())
-            file.delete();
+        this.deleteSave();
 
         JsonObject save = new JsonObject();
         save.addProperty("gameName", "DragonProject");
@@ -155,19 +162,54 @@ public class Save {
         }
         save.add("accomplishement", accomplishement);
 
+        JsonObject difficulte = new JsonObject();
+        difficulte.addProperty("niveau", InterStateComm.getNiveauDuJeu());
+        save.add("difficulte", difficulte);
+
+        return this.writeSave(save);
+    }
+
+    /**
+     *
+     */
+    public static void newGame() {
+        Save.deleteSave();
+    }
+
+    /**
+     * This function write saved data in savedFile
+     * @param jsonObject
+     * @return {@code true} if everything went well {@code false} otherwise
+     *
+     * @see JsonObject
+     */
+    private boolean writeSave(JsonObject jsonObject) {
+        boolean status = true;
         try {
             Writer writer = new FileWriter(Save.savedFileName);
-            String test = save.toString();
-            System.out.println(cleanJsonString(test));
-
-            writer.write(cleanJsonString(test));
+            writer.write(cleanJsonString(jsonObject.toString()));
             writer.close();
+            // message d'execution
+            System.out.println("<Save> game successfully saved as : " + Save.savedFileName);
         } catch (IOException e) {
             e.printStackTrace();
+            status = false;
         } finally {
-            System.err.println("Successfully game saved...");
+            // --
         }
-        return true;
+        return status;
+    }
+
+    /**
+     * delete current saved game if exist
+     * @return @return {@code true} if everything went well {@code false} otherwise
+     */
+    public static boolean deleteSave() {
+        File file = new File(Save.savedFileName);
+        if(file.exists()) {
+            file.delete();
+        }
+        return file.exists();
     }
 
     /**

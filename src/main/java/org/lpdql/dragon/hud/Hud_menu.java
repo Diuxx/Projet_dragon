@@ -1,5 +1,6 @@
 package org.lpdql.dragon.hud;
 
+import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.system.MenuItem;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -70,7 +71,11 @@ public class Hud_menu {
     public MenuItem render(GameContainer gc, Graphics g) throws SlickException {
         g.resetTransform();
         g.setColor(UHD_COLOR);
-        g.fillRect(hud_x, hud_y, hud_w, hud_h);
+        if(Ressources.fondMenu == null) {
+            g.fillRect(hud_x, hud_y, hud_w, hud_h);
+        } else {
+            Ressources.fondMenu.draw(hud_x, hud_y);
+        }
 
         menuUp(gc);
         if(gc.getInput().isKeyPressed(Input.KEY_DOWN)) {

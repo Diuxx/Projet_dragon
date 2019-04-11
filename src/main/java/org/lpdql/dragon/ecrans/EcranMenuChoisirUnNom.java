@@ -1,16 +1,17 @@
 package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Difficulty;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.Font;
-import java.awt.RenderingHints.Key;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
@@ -137,7 +138,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(NEXT_STATE_GAME);
 	}
-	
+
 	public void previousStateGame() {
 		this.stateBasedGame.enterState(PREVIOUS_STATE_GAME);
 	}

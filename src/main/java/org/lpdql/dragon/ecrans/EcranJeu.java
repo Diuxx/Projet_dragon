@@ -10,6 +10,8 @@ import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Camera;
 import org.lpdql.dragon.system.MenuItem;
+import org.lpdql.dragon.system.MyStdColor;
+import org.lpdql.dragon.system.MyStdOut;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -112,6 +114,19 @@ public class EcranJeu extends BasicGameState {
         // instantiation of the message manager
         lesMessages = new Message();
 
+        hud.init(); // loading h U D
+        menu.init(gameContainer); // loading Menu
+    }
+
+    private boolean init = false;
+
+    /**
+     * Cette fonction permet d'initialiser les données du jeu quand on en a besoin.
+     * Slick charge les GameStats(init) automatiquement au lancement du jeu, pour detecter
+     * et charger une nouvelle partie ce n'est pas pratique.
+     * @throws SlickException
+     */
+    private void init() throws SlickException {
         savedData = Save.detectSavedData(); // Loading saved data
         carte = new Carte(savedData.getCarteName()); // Map definition
 
@@ -124,15 +139,9 @@ public class EcranJeu extends BasicGameState {
                 InterStateComm.getLeHero().getX(),
                 InterStateComm.getLeHero().getY());
 
-        // chargement du scenario..
-        /*scenario = new Scenario();
-        scenario.charger(carte);*/
-
         // loading the scenario
         scenario = org.lpdql.dragon.scenario.Charger.charger_scenario(carte);
-
-        hud.init(); // loading h U D
-        menu.init(gameContainer); // loading Menu
+        init = true;
     }
 
     /**
@@ -146,6 +155,8 @@ public class EcranJeu extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException
     {
+        if(!init) this.init();
+
         // updated point of view
         camera.translate(graphics, gameContainer);
 
@@ -205,8 +216,10 @@ public class EcranJeu extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+        if(!init) this.init();
         if(this.isUpdatePaused())
             return; // no update when game paused
+
         // test();
         scenario.detectMapChanged(this.carte, this.camera);
         scenario.update(this.carte, this.camera); // --
@@ -239,7 +252,8 @@ public class EcranJeu extends BasicGameState {
         }
 
         if(Input.KEY_A == key) {
-            Story.TUTOEND.done(); // test()
+            // Story.TUTOEND.done(); // test()
+            MyStdOut.write(MyStdColor.BLUE, "<difficulte> " + InterStateComm.getNiveauDuJeu());
         }
     }
 
