@@ -16,6 +16,12 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
+
 public class EcranGameOver extends BasicGameState {
 	public static final int ID = 10;
 	private StateBasedGame stageGame;

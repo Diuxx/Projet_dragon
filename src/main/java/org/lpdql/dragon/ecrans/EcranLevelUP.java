@@ -7,7 +7,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class YouWin extends BasicGameState{
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
+
+public class EcranLevelUP extends BasicGameState{
 
 	public static final int YouWin = 3;
 	private Image background;

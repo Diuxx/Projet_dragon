@@ -9,6 +9,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
+
 public class EcranLogoIUT extends BasicGameState {
 	public static final int ID = 2;
 	private StateBasedGame stateBasedGame;
