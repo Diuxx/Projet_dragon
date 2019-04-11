@@ -23,6 +23,8 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 
 	public static final int ID = 5;
 	private StateBasedGame stateBasedGame;
+	private static final int nextStateGame = EcranLogoDev.ID;
+	private static final int previousStateGame = EcranMenuChoisirUnNiveau.ID;
 	Image backgroundImage;
 	Image flecheDeRetour;
 	TextField inputNom;
@@ -125,9 +127,16 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 				nextStateGame();
 			}
 		}
+		if (Input.KEY_ESCAPE == key) {
+			previousStateGame();
+		}
 	}
 
 	public void nextStateGame() {
-		this.stateBasedGame.enterState(EcranLogoDev.ID);
+		this.stateBasedGame.enterState(nextStateGame);
+	}
+	
+	public void previousStateGame() {
+		this.stateBasedGame.enterState(previousStateGame);
 	}
 }

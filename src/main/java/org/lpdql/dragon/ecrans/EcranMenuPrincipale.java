@@ -138,6 +138,8 @@ public class EcranMenuPrincipale extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key) {
 			nextStateGame();
+		} else if (Input.KEY_ESCAPE == key) {
+			System.exit(0);
 		}
 	}
 	

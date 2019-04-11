@@ -21,6 +21,8 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 	public static final int ID = 4;
 	public static String niveau;
 	private StateBasedGame stateBasedGame;
+	private static final int nextStateGame = EcranMenuChoisirUnNom.ID;
+	private static final int previousStateGame = EcranMenuPrincipale.ID;
 	private Image backgroundImage;
 	private Image flecheDeRetour;
 	private Font font1;
@@ -117,7 +119,7 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 				&& (posY > (600 - text2Y - textheight2) && posY < (600 - text2Y))) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				InterStateComm.setNiveauDuJeu(Difficulty.FACILE);
-				stateBasedGame.enterState(EcranMenuChoisirUnNom.ID);
+				nextStateGame();
 			}
 			color2 = Color.red;
 		} else {
@@ -162,10 +164,16 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 		if (Input.KEY_ENTER == key) {
 			InterStateComm.setNiveauDuJeu(Difficulty.FACILE);
 			nextStateGame();
+		} else if (Input.KEY_ESCAPE == key) {
+			previousStateGame();
 		}
 	}
 	
 	public void nextStateGame() {
-		this.stateBasedGame.enterState(EcranMenuChoisirUnNom.ID);
+		this.stateBasedGame.enterState(nextStateGame);
+	}
+	
+	public void previousStateGame() {
+		this.stateBasedGame.enterState(previousStateGame);
 	}
 }
