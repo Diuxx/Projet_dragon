@@ -13,6 +13,9 @@ public class BatailleEnnemi {
 	public Ennemi ennemi;
 	private PathAnimation animation;
 	private int experience;
+	GameContainer gameContainer;
+	Vector2f position;
+	Graphics graphics;
 
 	public int getExperience() {
 		return experience;
@@ -22,23 +25,44 @@ public class BatailleEnnemi {
 		this.animation = new PathAnimation(new BezierPath(0, 0, -400, 1, 50, 20, 0, 0), 1000);
 	}
 
-	public void render(GameContainer container, Graphics g) {
-		if(InterStateComm.getUnEnnemi() == null)
+	public void render(GameContainer gameContainer, Graphics graphics) {
+
+		if (InterStateComm.getUnEnnemi() == null)
 			return;
 
-		if(InterStateComm.getUnEnnemi() != this.ennemi)
+		if (InterStateComm.getUnEnnemi() != this.ennemi)
 			this.ennemi = InterStateComm.getUnEnnemi();
-
+		this.gameContainer = gameContainer;
+		this.graphics = graphics;
 		this.experience = ennemi.getExperience();
-		Vector2f p = animation.currentLocation();
-		ennemi.getEnnemiImages().drawCentered(p.x + container.getWidth() * 3 / 4, p.y + container.getHeight() / 2);
-		g.setColor(new Color(255,255,255));
-		g.drawRect(container.getWidth() * 3 / 4 - 50, container.getHeight() / 2 - ennemi.getEnnemiImages().getHeight() / 2-30, 130, 20);
-		g.setColor(new Color(255,0,0));
-		g.fillRect(container.getWidth() * 3 / 4 - 50, container.getHeight() / 2 - ennemi.getEnnemiImages().getHeight() / 2-30, Math.max(0, (ennemi.getPointDeVieActuel()/ennemi.getPointDeVie())) *130, 20);
-		g.setColor(new Color(Color.white));
-		g.drawString("" +  Math.max(0, (int) ennemi.getPointDeVieActuel()), container.getWidth() * 3 / 4 - 4 , container.getHeight() / 2 - ennemi.getEnnemiImages().getHeight() / 2 - 29);
+		this.position = animation.currentLocation();
 		
+		drawEnnemi();
+		drawBarHP();
+		drawNbHP();
+
+	}
+
+	private void drawBarHP() {
+		this.graphics.setColor(new Color(255, 255, 255));
+		this.graphics.drawRect(this.gameContainer.getWidth() * 3 / 4 - 50,
+				this.gameContainer.getHeight() / 2 - this.ennemi.getEnnemiImages().getHeight() / 2 - 30, 130, 20);
+		this.graphics.setColor(new Color(255, 0, 0));
+		this.graphics.fillRect(this.gameContainer.getWidth() * 3 / 4 - 50,
+				this.gameContainer.getHeight() / 2 - this.ennemi.getEnnemiImages().getHeight() / 2 - 30,
+				Math.max(0, (this.ennemi.getPointDeVieActuel() / this.ennemi.getPointDeVie())) * 130, 20);
+	}
+
+	private void drawNbHP() {
+		this.graphics.setColor(new Color(Color.white));
+		this.graphics.drawString("" + Math.max(0, (int) this.ennemi.getPointDeVieActuel()),
+				this.gameContainer.getWidth() * 3 / 4 - 4,
+				this.gameContainer.getHeight() / 2 - this.ennemi.getEnnemiImages().getHeight() / 2 - 29);
+	}
+
+	private void drawEnnemi() {
+		ennemi.getEnnemiImages().drawCentered(this.position.x + this.gameContainer.getWidth() * 3 / 4,
+				this.position.y + this.gameContainer.getHeight() / 2);
 	}
 
 	public void update(int delta) {
