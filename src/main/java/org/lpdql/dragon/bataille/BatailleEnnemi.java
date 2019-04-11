@@ -9,7 +9,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 public class BatailleEnnemi {
-
+// ez
 	public Ennemi ennemi;
 	private PathAnimation animation;
 	private int experience;

@@ -1,8 +1,5 @@
 package org.lpdql.dragon.bataille;
 
-import java.awt.Font;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.AffineTransform;
 
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Hero;
@@ -14,8 +11,6 @@ public class BatailleJoueur {
 	private Hero joueur;
 	private Image joueurImage;
 	private PathAnimation animation;
-//	Font font;
-//	TrueTypeFont trueTypeFont;
 	
 	public void init() throws SlickException {
 		this.joueur = InterStateComm.getLeHero();
@@ -26,10 +21,6 @@ public class BatailleJoueur {
 
 	public void render(GameContainer container, Graphics g) {
 		Vector2f p = animation.currentLocation();
-//		font = new Font("Arial Rounded MT", Font.PLAIN, 10);
-//		AffineTransform affinetransform = new AffineTransform();
-//		trueTypeFont = new TrueTypeFont(font, true);
-//		g.setFont(trueTypeFont);
 		
 		joueurImage.drawCentered(p.x + container.getWidth() * 1 / 4, p.y + container.getHeight() / 2);
 
