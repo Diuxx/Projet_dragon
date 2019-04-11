@@ -102,7 +102,8 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 			if (!inputNom.getText().equals("")) {
 				if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 					InterStateComm.getLeHero().setNom(inputNom.getText());
-					stateBasedGame.enterState(EcranLogoDev.ID);
+					inputNom.setFocus(false);
+					nextStateGame();
 				}
 				color2 = Color.red;
 			}
@@ -114,7 +115,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 				&& (posY > (600 - flecheDeRetour.getHeight()) && posY < 600)) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				EcranMenuChoisirUnNiveau.timer = 0;
-				stateBasedGame.enterState(EcranMenuChoisirUnNiveau.ID);
+				previousStateGame();
 			}
 		}
 	}
@@ -124,6 +125,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		if (Input.KEY_ENTER == key) {
 			if (!inputNom.getText().equals("")) {
 				InterStateComm.getLeHero().setNom(inputNom.getText());
+				inputNom.setFocus(false);
 				nextStateGame();
 			}
 		}

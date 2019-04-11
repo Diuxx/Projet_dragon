@@ -1,5 +1,6 @@
 package org.lpdql.dragon.ecrans;
 
+
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Difficulty;
@@ -11,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 /**
  * class EcranMenuPrincipale
@@ -46,6 +48,10 @@ public class EcranMenuPrincipale extends BasicGameState {
 	private Color color1 = Color.white;
 	private Color color2 = Color.white;
 	private Color color3 = Color.white;
+	
+	
+    private ArrayList<String> lesOptions;
+    private int currentOption;
 
 	@Override
 	public int getID() {
@@ -70,6 +76,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 		text2Y = text1Y + 90;
 		text3X = text2X;
 		text3Y = text2Y + 90;
+		
 	}
 
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
