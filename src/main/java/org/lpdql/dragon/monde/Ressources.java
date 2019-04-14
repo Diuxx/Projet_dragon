@@ -2,6 +2,7 @@ package org.lpdql.dragon.monde;
 
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.sound.MySound;
 import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -20,6 +21,7 @@ public class Ressources {
     public static SpriteSheet spriteSheet_letter;
     private static boolean charger = false;
 
+    public static MySound sounds;
 
     public static Image fondMessage;
     public static Image fondMenu;
@@ -39,6 +41,11 @@ public class Ressources {
 
             fondMessage = new Image("data/menu/uimessage.png");
             fondMenu = new Image("data/menu/uimenu.png");
+
+            sounds = new MySound();
+            // sounds.addSound("choc", "data/sound/chocchoc.ogg", 1);
+            // sounds.addSound("ambiant", "data/sound/menu-soundtrack.ogg", 0);
+
             charger = true;
 
             // chargement du personnage

@@ -7,9 +7,9 @@
 		"name":"LPDQL",
 		"lifePoint":350.0,
 		"currentLifePoint":210.0,
-		"x":686.40063,
-		"y":338.49924,
-		"direction":0,
+		"x":838.7002,
+		"y":434.60068,
+		"direction":2,
 		"experience":0,
 		"level":2,
 		"gold":500
@@ -30,5 +30,8 @@
 		"Bouclier":false,
 		"Feu":false,
 		"Voler":false
+	},
+	"difficulte":{
+		"niveau":0
 	}
 }

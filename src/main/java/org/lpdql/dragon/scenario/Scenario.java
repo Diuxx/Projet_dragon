@@ -3,6 +3,7 @@ package org.lpdql.dragon.scenario;
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.jeu.Message;
+import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Heal;
 import org.lpdql.dragon.objets.Objet;
 import org.lpdql.dragon.objets.ObjetMessage;
@@ -96,6 +97,8 @@ public class Scenario {
         MyStdOut.write(MyStdColor.BLUE, "Chargement du Scenario : " + this.getClass().getSimpleName());
         MyStdOut.write(MyStdColor.BLUE, "Chargement de la map : " + map.getFileName());
 
+        Ressources.sounds.stopAll();
+
         switch(map.getFileName()) {
             case "maison":
                 chargerMaison(map);
@@ -182,6 +185,9 @@ public class Scenario {
      * @param map the map on which the player is located
      */
     protected void chargerMainMap(Carte map) {
+
+        // --
+        Ressources.sounds.loopSound("ambiant");
 
         Point pOldWoman = findPnjPosition(map, "old_woman");
 
