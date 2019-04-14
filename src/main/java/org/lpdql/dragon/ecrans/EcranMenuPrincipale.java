@@ -1,6 +1,7 @@
 package org.lpdql.dragon.ecrans;
 
 
+import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Difficulty;
@@ -13,6 +14,8 @@ import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+
+import static org.lpdql.dragon.monde.Ressources.sounds;
 
 /**
  * class EcranMenuPrincipale
@@ -76,7 +79,18 @@ public class EcranMenuPrincipale extends BasicGameState {
 		text2Y = text1Y + 90;
 		text3X = text2X;
 		text3Y = text2Y + 90;
-		
+
+		Ressources.loadSound();
+	}
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+	}
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		if(!sounds.playing("menu"))
+			sounds.loopZik("menu");
 	}
 
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
@@ -140,7 +154,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 		}
 
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key) {

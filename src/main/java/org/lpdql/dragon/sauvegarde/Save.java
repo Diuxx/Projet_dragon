@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.MyStdColor;
+import org.lpdql.dragon.system.MyStdOut;
 import org.lpdql.dragon.system.Point;
 
 import java.io.*;
@@ -210,6 +212,21 @@ public class Save {
             file.delete();
         }
         return file.exists();
+    }
+
+    private long timer = 0l;
+
+    public boolean autoSave(long delay, String currentMapName) {
+        if(timer == 0l)
+            timer = System.currentTimeMillis();
+
+        if(System.currentTimeMillis() - timer >= delay) {
+            this.save(InterStateComm.getLeHero(), currentMapName);
+            MyStdOut.write(MyStdColor.RED, "<Save> game auto saved");
+
+            timer = System.currentTimeMillis();
+        }
+        return true;
     }
 
     /**

@@ -97,10 +97,12 @@ public class Scenario {
         MyStdOut.write(MyStdColor.BLUE, "Chargement du Scenario : " + this.getClass().getSimpleName());
         MyStdOut.write(MyStdColor.BLUE, "Chargement de la map : " + map.getFileName());
 
+        InterStateComm.getLeHero().setInner(false);
         Ressources.sounds.stopAll();
 
         switch(map.getFileName()) {
             case "maison":
+                InterStateComm.getLeHero().setInner(true);
                 chargerMaison(map);
                 break;
             case "dragon":
@@ -185,9 +187,8 @@ public class Scenario {
      * @param map the map on which the player is located
      */
     protected void chargerMainMap(Carte map) {
-
         // --
-        Ressources.sounds.loopSound("ambiant");
+        Ressources.sounds.loopZik("ambiant");
 
         Point pOldWoman = findPnjPosition(map, "old_woman");
 
@@ -247,35 +248,10 @@ public class Scenario {
                 continue;
 
             unEnnemi.mouvement(delta, map.getMap());
-            /*
-            // Passe l'ennemi de friendly à hostile quand le timer firendly est écoulé.
-            unEnnemi.checkTimerFriendly();
-            if(unEnnemi.veutCombattre() && !unEnnemi.isFriendly())
-            {
-                System.out.println(unEnnemi.getNom() + " veut se battre !");
-                InterStateComm.setUnEnnemi(unEnnemi);
-                // l'ennemi ne déclanche plus de combat.
-                unEnnemi.seCalme();
+        }
 
-                // Battle Start
-                EcranJeu.gameState.enterState(Bataille.ID);
-                continue;
-            }
-            unEnnemi.mouvement(delta, map.getMap());
-
-            // détection de l'intersection avec un ennemi
-            if(unEnnemi.getBoundingBox().intersects(InterStateComm.getLeHero().getBoundingBox()))
-            {
-                if(!unEnnemi.isFriendly()) {
-                    System.out.println("intersect avec " + unEnnemi.getNom());
-                    lesMessages.add(unEnnemi.parle());
-                    unEnnemi.startCombat();
-                }
-                unEnnemi.setBouge(false);
-            } else {
-                if(!unEnnemi.isBouge())
-                    unEnnemi.setBouge(true);
-            }*/
+        if(map.getNomMap().equals("dragon")) {
+            if(!Ressources.sounds.playing("ambiant")) Ressources.sounds.loopZik("ambiant");
         }
     }
 

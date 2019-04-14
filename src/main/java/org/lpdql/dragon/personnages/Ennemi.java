@@ -338,6 +338,8 @@ public class Ennemi extends Personnage implements StoryElement {
 
 				if( (p instanceof Hero) && !this.isFriendly()) {
 					// --
+					InterStateComm.getLeHero().stopWalkingSound();
+
 					if(!this.veutCombattre())
 						lesMessages.add(this.parle());
 					this.startCombat();

@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
+import static org.lpdql.dragon.monde.Ressources.sounds;
+
 /**
  * class EcranMenuChoisirUnNiveau
  *
@@ -109,6 +111,13 @@ public class EcranMenuChoisirUnNiveau extends BasicGameState {
 				(int) (InterStateComm.gX - (InterStateComm.gX * 0.515)
 						- (int) (font2.getStringBounds("The Dragon King ", tTypeFont).getWidth() * 0.5)),
 				(int) (InterStateComm.gY - (InterStateComm.gY * 0.98)));
+	}
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+
+		if(!sounds.playing("menu"))
+			sounds.loopZik("menu");
 	}
 
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {

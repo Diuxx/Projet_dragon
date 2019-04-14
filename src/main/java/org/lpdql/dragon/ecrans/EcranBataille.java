@@ -10,6 +10,8 @@ import org.newdawn.slick.command.KeyControl;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import static org.lpdql.dragon.monde.Ressources.sounds;
+
 public class EcranBataille extends BasicGameState{
 
 	public static final int ID = 9;
@@ -27,12 +29,25 @@ public class EcranBataille extends BasicGameState{
 		this.batailleJoueur = new BatailleJoueur();
 		batailleEnnemi.init();
 		batailleJoueur.init();
-		
-		
+
 		InputProvider provider = new InputProvider(fenetreDeBataille.getInput());
 		provider.bindCommand(new KeyControl(Input.KEY_A), BatailleCommande.ATTAQUER);
 		provider.bindCommand(new KeyControl(Input.KEY_F), BatailleCommande.FUIRE);
 		provider.addListener(new BatailleControlle(batailleJoueur, batailleEnnemi, game));
+	}
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        sounds.playZik("battle");
+
+	}
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		sounds.stopAll();
+
+
+
 	}
 	
 	@Override

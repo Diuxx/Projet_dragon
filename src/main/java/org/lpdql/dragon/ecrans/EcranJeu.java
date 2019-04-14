@@ -19,6 +19,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import static org.lpdql.dragon.monde.Ressources.sounds;
+
 
 /**
  *
@@ -108,7 +110,6 @@ public class EcranJeu extends BasicGameState {
         this.container = gameContainer;
         this.gameState = stateBasedGame;
 
-        // Texture loading
         Ressources.charger();
 
         // instantiation of the message manager
@@ -144,6 +145,22 @@ public class EcranJeu extends BasicGameState {
         init = true;
     }
 
+    public static boolean victory = false;
+
+    @Override
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        if(!init) this.init();
+
+        if(victory) {
+            sounds.playZik("victory");
+            this.victory = false;
+        }
+    }
+
+    @Override
+    public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+        sounds.stopAll();
+    }
     /**
      *
      * @param gameContainer
@@ -155,8 +172,6 @@ public class EcranJeu extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException
     {
-        if(!init) this.init();
-
         // updated point of view
         camera.translate(graphics, gameContainer);
 
@@ -216,7 +231,6 @@ public class EcranJeu extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-        if(!init) this.init();
         if(this.isUpdatePaused())
             return; // no update when game paused
 
@@ -231,6 +245,9 @@ public class EcranJeu extends BasicGameState {
         // scenario all movement (ennemis/object) collision
         this.scenario.mouvement(this.carte, delta, this.lesMessages);
 
+        // dangereux
+        savedData.autoSave(206000, this.carte.getNomMap()); // 3minute 26 seconde
+
         // updating camera position
         this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
     }
@@ -240,7 +257,13 @@ public class EcranJeu extends BasicGameState {
     public void keyReleased(int key, char c) {
 
         if(Input.KEY_W == key) {
-            if(lesMessages != null) lesMessages.next();
+            if(lesMessages != null && !lesMessages.containMessage()) {
+                if(sounds.playing("beep")) {
+                    sounds.stop("beep");
+                }
+                sounds.playZik("beep");
+                lesMessages.next();
+            }
         }
 
         // request the menu

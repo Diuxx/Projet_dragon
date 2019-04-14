@@ -7,6 +7,7 @@ import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
@@ -57,6 +58,11 @@ public class Hero extends Personnage {
     private int currentGold;
 
     /**
+     * how sound we should play
+     */
+    private boolean inner;
+
+    /**
      * Tests values for the hero statistics
      */
     private static final float HEROLIFE = (float) 300.0;
@@ -92,6 +98,8 @@ public class Hero extends Personnage {
         this.niveau = HEROLEVEL;
         this.currentGold = HEROGOLD;
 
+        boolean inner = true;
+
         levelExperience = new HashMap<>();
         this.chargerImage(); // Load sprite tiles from sprite sheet
     }
@@ -109,6 +117,13 @@ public class Hero extends Personnage {
      * @see GameContainer
      */
     public void controle(GameContainer container) {
+        // System.out.println(this.isMoving());
+
+        if(this.inner)
+            walkInner();
+        else
+            walkOuter();
+
         if(container.getInput().isKeyDown(Input.KEY_UP)) {
             super.setDirection(0);
             super.marcher();
@@ -125,6 +140,38 @@ public class Hero extends Personnage {
             super.stop();
         }
     }
+
+    private void walkOuter() {
+        if(this.isMoving()) {
+            if(!Ressources.sounds.playing("run")) {
+                Ressources.sounds.stop("run");
+                Ressources.sounds.playZik("run");
+            }
+        } else {
+            if (Ressources.sounds.playing("run")) {
+                Ressources.sounds.stop("run");
+            }
+        }
+    }
+
+    private void walkInner() {
+        if(this.isMoving()) {
+            if(!Ressources.sounds.playing("run-inner")) {
+                Ressources.sounds.stop("run-inner");
+                Ressources.sounds.playZik("run-inner");
+            }
+        } else {
+            if (Ressources.sounds.playing("run-inner")) {
+                Ressources.sounds.stop("run-inner");
+            }
+        }
+    }
+
+    public void stopWalkingSound() {
+        Ressources.sounds.stop("run-inner");
+        Ressources.sounds.stop("run");
+    }
+
 
     /**
      * this method add a list of non-player characters
@@ -174,6 +221,8 @@ public class Hero extends Personnage {
        for(PersonnageNonJoueur unPnj : lesPnj) {
            boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unPnj.getBoundingBox());
            if(collision) {
+               this.stopWalkingSound();
+
                if(unPnj.containStoryElement())
                    unPnj.storyDone();
 
@@ -197,6 +246,8 @@ public class Hero extends Personnage {
 
             boolean collision = new Rectangle(x - 16, y - 20, 32, 32).intersects(unObjet.getBoundingBox());
             if(collision) {
+                this.stopWalkingSound();
+
                 if(unObjet.containStoryElement())
                     unObjet.storyDone();
 
@@ -224,6 +275,7 @@ public class Hero extends Personnage {
             if(collision) {
                 // MyStdOut.write(MyStdColor.RED,"<" + this.getClass().getSimpleName() + "> to " + unEnnemi.getNom());
                 unEnnemi.stop();
+                this.stopWalkingSound();
 
                 if(!unEnnemi.isFriendly()) {
                     if(!unEnnemi.veutCombattre()) lesMessages.add(unEnnemi.parle());
@@ -248,6 +300,12 @@ public class Hero extends Personnage {
             Color color = tile.getColor((int) x % tileW, (int) y % tileH);
             collision = color.getAlpha() > 0;
         }
+
+        if(collision) {
+            if(!Ressources.sounds.playing("test"))
+                Ressources.sounds.playZik("test");
+        }
+
         return collision || isCollisionPnj( x, y) || isCollisionObjets(x, y) || super.isDynamicCollision() || isCollisionEnnemi( x, y);
     }
 
@@ -397,6 +455,10 @@ public class Hero extends Personnage {
             return Story.ARTVOLER.getSavedId();
 
         return "unknow";
+    }
+
+    public void setInner(boolean b) {
+        this.inner = b;
     }
 
     /**

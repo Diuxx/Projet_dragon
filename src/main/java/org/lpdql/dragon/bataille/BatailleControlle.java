@@ -3,6 +3,7 @@ package org.lpdql.dragon.bataille;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.ecrans.EcranGameOver;
 import org.lpdql.dragon.jeu.LevelExperience;
+import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -25,8 +26,6 @@ public class BatailleControlle implements InputProviderListener {
 	private BatailleJoueur joueur;
 	private StateBasedGame game;
 	private BatailleCommande mode = BatailleCommande.NONE;
-	private Sound swing;
-	private Sound victory;
 	private LevelExperience levelExperience;
 
 	// --
@@ -34,15 +33,6 @@ public class BatailleControlle implements InputProviderListener {
 
 	public BatailleControlle(BatailleJoueur joueur, BatailleEnnemi ennemi, StateBasedGame game) {
 		this.stageGame = game;
-		try {
-			swing = new Sound("data/sound/swing.wav");
-			victory = new Sound("data/sound/ff7victory.wav");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		} finally {
-			System.err.println("data/sound -> loaded");
-		}
-
 		this.joueur = joueur;
 		this.ennemi = ennemi;
 		this.game = game;
@@ -111,9 +101,7 @@ public class BatailleControlle implements InputProviderListener {
 	private void playerAssignDamage() {
 		switch (mode) {
 			case ATTAQUER:
-			if(!InterStateComm.getLeHero().getMuted() && swing != null) {
-				swing.play();
-			}
+			Ressources.sounds.playZik("attaque");
 			ennemi.setBarreVie((int) joueur.getATK());
 			System.out.println("Hero ATK power      ----> " + (int) joueur.getATK());
 			System.out.println("ennemi restant vie  ----> " + (int) ennemi.getBarreVie());
@@ -130,10 +118,9 @@ public class BatailleControlle implements InputProviderListener {
 	private void endPlayerAttack() {
 		boolean levelUP = false;
 		if(ennemi.getBarreVie() <= 0) {
-			if(!InterStateComm.getLeHero().getMuted() && victory != null)
-			{
-				victory.play();
-			}
+
+			//Ressources.sounds.playZik("victory");
+			EcranJeu.victory = true;
 
 			System.out.println(InterStateComm.getUnEnnemi().getNom() + " est mort !");
 			InterStateComm.tuerUnEnnemi();
@@ -180,9 +167,7 @@ public class BatailleControlle implements InputProviderListener {
 		System.out.println("ennemi ATK power    ----> " + (int) ennemi.getATK());
 		System.out.println("Hero restant vie    ----> " + (int) joueur.getBarreVie());
 		System.out.println();
-		if(!InterStateComm.getLeHero().getMuted() && swing != null) {
-			swing.play();
-		}
+		Ressources.sounds.playZik("attaque");
 	}
 
 	/**

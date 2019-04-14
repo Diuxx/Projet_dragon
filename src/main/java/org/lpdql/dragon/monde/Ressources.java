@@ -2,7 +2,11 @@ package org.lpdql.dragon.monde;
 
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.sound.MySound;
+import org.lpdql.dragon.sound.JMusic;
+import org.lpdql.dragon.sound.JSound;
+import org.lpdql.dragon.sound.MyJSound;
+import org.lpdql.dragon.system.MyStdColor;
+import org.lpdql.dragon.system.MyStdOut;
 import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -19,9 +23,11 @@ public class Ressources {
 
     public static SpriteSheet spriteSheet_vieilHomme;
     public static SpriteSheet spriteSheet_letter;
-    private static boolean charger = false;
 
-    public static MySound sounds;
+    private static boolean charger = false;
+    private static boolean chargerSound = false;
+
+    public static MyJSound sounds;
 
     public static Image fondMessage;
     public static Image fondMenu;
@@ -42,14 +48,35 @@ public class Ressources {
             fondMessage = new Image("data/menu/uimessage.png");
             fondMenu = new Image("data/menu/uimenu.png");
 
-            sounds = new MySound();
-            // sounds.addSound("choc", "data/sound/chocchoc.ogg", 1);
-            // sounds.addSound("ambiant", "data/sound/menu-soundtrack.ogg", 0);
-
             charger = true;
 
             // chargement du personnage
             InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
         }
     }
+
+
+    public static void loadSound() throws SlickException {
+        if(chargerSound)
+            return;
+
+        sounds = new MyJSound();
+        sounds.setVolumeMusic(4f);
+        sounds.setVolumeEffect(1f);
+        // sounds.addSound("choc", "data/sound/chocchoc.ogg", 1);
+        sounds.addSound(new JMusic("menu", "data/sound/menu-soundtrack.ogg"));
+        sounds.addSound(new JMusic("ambiant", "data/sound/ambiant.ogg"));
+        sounds.addSound(new JSound("run", "data/sound/run.wav"));
+        sounds.addSound(new JSound("run-inner", "data/sound/run_inner.ogg"));
+        sounds.addSound(new JSound("test", "data/sound/test.wav"));
+        sounds.addSound(new JSound("attaque", "data/sound/swing.wav"));
+        sounds.addSound(new JSound("victory", "data/sound/victory.ogg"));
+        sounds.addSound(new JSound("beep", "data/sound/beep.wav"));
+
+        sounds.addSound(new JMusic("battle", "data/sound/battle.ogg"));
+
+        MyStdOut.write(MyStdColor.YELLOW, "<Ressources> Sounds loaded");
+        chargerSound = true;
+    }
+
 }

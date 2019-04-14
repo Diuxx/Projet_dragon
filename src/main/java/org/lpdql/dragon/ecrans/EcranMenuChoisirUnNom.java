@@ -1,5 +1,6 @@
 package org.lpdql.dragon.ecrans;
 
+import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lwjgl.input.Mouse;
@@ -14,6 +15,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+
+import static org.lpdql.dragon.monde.Ressources.sounds;
 
 /**
  * class EcranMenuChoisirUnNom
@@ -135,7 +138,24 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		}
 	}
 
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+
+		if(!sounds.playing("menu"))
+			sounds.loopZik("menu");
+	}
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		//
+		// sounds.stopAll();
+	}
+
 	public void nextStateGame() {
+		// début d'un nouveau jeu..
+		sounds.stopAll();
+		Save.deleteSave();
+
 		this.stateBasedGame.enterState(NEXT_STATE_GAME);
 	}
 
