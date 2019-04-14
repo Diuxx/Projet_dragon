@@ -6,6 +6,7 @@ import org.lpdql.dragon.jeu.MessageTest;
 import org.lpdql.dragon.jeu.TestLevelExperience;
 import org.lpdql.dragon.personnages.EnnemiTest;
 import org.lpdql.dragon.scenario.ScenarioTest;
+import org.lpdql.dragon.sound.MyJSoundTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -13,6 +14,7 @@ import org.lpdql.dragon.scenario.ScenarioTest;
         EnnemiTest.class,
         TestLevelExperience.class,
         MessageTest.class,
+        MyJSoundTest.class,
 })
 public class AppTest {
 
