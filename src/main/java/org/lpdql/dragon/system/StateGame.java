@@ -1,5 +1,6 @@
 package org.lpdql.dragon.system;
 
+import org.lpdql.dragon.bigBataille.Bataille;
 import org.lpdql.dragon.ecrans.*;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
