@@ -1,5 +1,8 @@
 package org.lpdql.dragon.ecrans;
 
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+
 import org.lpdql.dragon.bataille.BatailleCommande;
 import org.lpdql.dragon.bataille.BatailleControlle;
 import org.lpdql.dragon.bataille.BatailleEnnemi;
@@ -29,6 +32,7 @@ public class EcranBataille extends BasicGameState {
 
 		InputProvider provider = new InputProvider(fenetreDeBataille.getInput());
 		provider.bindCommand(new KeyControl(Input.KEY_A), BatailleCommande.ATTAQUER);
+		provider.bindCommand(new KeyControl(Input.KEY_D), BatailleCommande.DEFENCE);
 		provider.bindCommand(new KeyControl(Input.KEY_F), BatailleCommande.FUIRE);
 		provider.addListener(new BatailleControlle(batailleJoueur, batailleEnnemi, game));
 	}

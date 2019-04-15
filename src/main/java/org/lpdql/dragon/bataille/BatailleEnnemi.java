@@ -1,5 +1,9 @@
 package org.lpdql.dragon.bataille;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.lpdql.dragon.ecrans.AttaqueAnimation;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.newdawn.slick.Color;
@@ -9,13 +13,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 public class BatailleEnnemi {
-// ez
 	public Ennemi ennemi;
 	private PathAnimation animation;
 	private int experience;
 	GameContainer gameContainer;
 	Vector2f position;
-	Graphics graphics;
+	Graphics graphics; List<AttaqueAnimation> attaqueAnimations;
 
 	public int getExperience() {
 		return experience;
@@ -23,6 +26,7 @@ public class BatailleEnnemi {
 
 	public void init() {
 		this.animation = new PathAnimation(new BezierPath(0, 0, -400, 1, 50, 20, 0, 0), 1000);
+		attaqueAnimations = new ArrayList<>();
 	}
 
 	public void render(GameContainer gameContainer, Graphics graphics) {
@@ -32,14 +36,24 @@ public class BatailleEnnemi {
 
 		if (InterStateComm.getUnEnnemi() != this.ennemi)
 			this.ennemi = InterStateComm.getUnEnnemi();
+
 		this.gameContainer = gameContainer;
 		this.graphics = graphics;
 		this.experience = ennemi.getExperience();
 		this.position = animation.currentLocation();
-		
+
 		drawEnnemi();
 		drawBarHP();
 		drawNbHP();
+
+		for (AttaqueAnimation attaqueAnimation : attaqueAnimations) {
+			attaqueAnimation.drawAtq(graphics);
+		}
+		
+		for (int i = 0; i < attaqueAnimations.size(); i++) {
+			if (attaqueAnimations.get(i).isEnd())
+				attaqueAnimations.remove(i);
+		}
 
 	}
 
@@ -96,5 +110,10 @@ public class BatailleEnnemi {
 
 	public void regenVie() {
 		ennemi.setPointDeVieActuel(ennemi.getPointDeVie());
+	}
+
+	public void addAttaqueAnimation(String text) {
+		this.attaqueAnimations.add(new AttaqueAnimation(text , 500, this.gameContainer.getWidth() * 3 / 4 - 8,
+				this.gameContainer.getHeight() / 2 - this.ennemi.getEnnemiImages().getHeight() / 2 - 50));
 	}
 }
