@@ -1,6 +1,5 @@
 package org.lpdql.dragon.singleton;
 
-import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.scenario.Story;
@@ -38,8 +37,6 @@ public final class InterStateComm {
      **/
     private static volatile Ennemi unEnnemi = null;
 
-    // ??
-    private static volatile Carte laCarte = null;
 
     /**
      * Constructeur de l'objet

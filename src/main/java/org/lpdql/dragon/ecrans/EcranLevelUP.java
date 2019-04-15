@@ -7,9 +7,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class YouWin extends BasicGameState{
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
 
-	public static final int YouWin = 3;
+public class EcranLevelUP extends BasicGameState {
+
+	public static final int ID = 11;
 	private Image background;
 
 	@Override
@@ -19,19 +25,17 @@ public class YouWin extends BasicGameState{
 
 	@Override
 	public void render(GameContainer fenetreDeJeu, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		background.draw(0, 0, fenetreDeJeu.getWidth(), fenetreDeJeu.getHeight());	
+		background.draw(0, 0, fenetreDeJeu.getWidth(), fenetreDeJeu.getHeight());
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		
+
 	}
-	
+
 	@Override
 	public int getID() {
-		
-		return 3;
+		return EcranLevelUP.ID;
 	}
 
 }
-

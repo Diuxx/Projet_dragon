@@ -20,8 +20,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
 import static org.lpdql.dragon.monde.Ressources.sounds;
+=======
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
+
 
 public class EcranGameOver extends BasicGameState {
 	public static final int ID = 10;
@@ -160,7 +166,7 @@ public class EcranGameOver extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranGameOver.ID;
 	}
 
 }
