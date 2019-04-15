@@ -20,6 +20,9 @@ public class HeroBataille {
     private Hero hero;
     private Point position;
     private Image image;
+    private Point mouvement;
+
+    private long timer;
 
     /**
      * Class constructor
@@ -28,24 +31,25 @@ public class HeroBataille {
         this.hero = e;
         this.position = new Point(gc.getWidth() * 1 / 4, gc.getHeight() / 2);
         this.image = Ressources.spriteSheet.getSubImage(6, 10);
+        this.mouvement = new Point(0, 0);
     }
 
     public void draw(Graphics g, GameContainer gc) {
         this.drawBarHp(g, gc);
         this.drawCurrentHp(g, gc);
-        image.draw(position.getX(), position.getY());
+        image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY());
     }
 
     private void drawBarHp(Graphics g, GameContainer gc) {
         g.setColor(Color.white);
-        g.drawRect(gc.getWidth() * 1 / 4,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30, 130, 20);
+        g.drawRect(gc.getWidth() * 1 / 4 - 80,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30, 130, 20);
         g.setColor(Color.red);
-        g.fillRect(gc.getWidth() * 1 / 4,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30,Math.max(0, (hero.getPointDeVieActuel() / hero.getPointDeVie())) * 130, 20);
+        g.fillRect(gc.getWidth() * 1 / 4 - 80 + 1,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30 + 1,Math.max(0, (hero.getPointDeVieActuel() / hero.getPointDeVie())) * 130, 20);
     }
 
     private void drawCurrentHp(Graphics g, GameContainer gc) {
         g.setColor(Color.white);
-        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), gc.getWidth() * 1 / 4, gc.getHeight() / 2 - this.image.getHeight() / 2 - 29);
+        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), gc.getWidth() * 1 / 4 - 30 , gc.getHeight() / 2 - this.image.getHeight() / 2 - 29);
     }
 
     public Hero getEnnemi() {
@@ -62,5 +66,21 @@ public class HeroBataille {
 
     public void setPosition(Point position) {
         this.position = position;
+    }
+
+    public Point getMouvement() {
+        return mouvement;
+    }
+
+    public void setMouvement(Point mouvement) {
+        this.mouvement = mouvement;
+    }
+
+    public long getTimer() {
+        return timer;
+    }
+
+    public void setTimer(long timer) {
+        this.timer = timer;
     }
 }

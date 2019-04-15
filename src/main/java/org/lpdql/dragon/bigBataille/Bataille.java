@@ -46,7 +46,7 @@ public class Bataille extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         background.draw(0, 0, gameContainer.getWidth(), gameContainer.getHeight());
 
-        ennemiBataille.draw(graphics);
+        ennemiBataille.draw(graphics, gameContainer);
         heroBataille.draw(graphics, gameContainer);
     }
 
