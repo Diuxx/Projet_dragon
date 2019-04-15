@@ -55,5 +55,13 @@ public class Bataille extends BasicGameState {
 
     }
 
+    @Override
+    public void keyReleased(int key, char c) {
+        if (Input.KEY_A == key) {
+            System.out.println("<Bataille> attaque -> ");
+            this.heroBataille.attaque(ennemiBataille);
+        }
+    }
+
 
 }

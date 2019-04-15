@@ -3,6 +3,7 @@ package org.lpdql.dragon.bigBataille;
 
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Ennemi;
+import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -31,6 +32,10 @@ public class EnnemiBataille {
         this.position = new Point(gc.getWidth() * 3 / 4, gc.getHeight() / 2);
         this.image = e.getEnnemiImages();
         this.mouvement = new Point(0, 0);
+    }
+
+    public void attaque(Hero e) {
+
     }
 
     public void draw(Graphics g, GameContainer gc) {

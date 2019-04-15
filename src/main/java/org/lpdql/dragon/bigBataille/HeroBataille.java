@@ -34,6 +34,10 @@ public class HeroBataille {
         this.mouvement = new Point(0, 0);
     }
 
+    public void attaque(EnnemiBataille e) {
+
+    }
+
     public void draw(Graphics g, GameContainer gc) {
         this.drawBarHp(g, gc);
         this.drawCurrentHp(g, gc);
@@ -50,6 +54,10 @@ public class HeroBataille {
     private void drawCurrentHp(Graphics g, GameContainer gc) {
         g.setColor(Color.white);
         g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), gc.getWidth() * 1 / 4 - 30 , gc.getHeight() / 2 - this.image.getHeight() / 2 - 29);
+    }
+
+    public void attaqueAnimation() {
+
     }
 
     public Hero getEnnemi() {
