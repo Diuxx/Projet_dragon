@@ -1,8 +1,5 @@
 package org.lpdql.dragon.ecrans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.newdawn.slick.Graphics;
 
 public class AttaqueAnimation {
