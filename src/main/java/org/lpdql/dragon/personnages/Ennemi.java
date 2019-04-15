@@ -1,5 +1,6 @@
 package org.lpdql.dragon.personnages;
 
+import org.lpdql.dragon.ecrans.Bataille;
 import org.lpdql.dragon.interfaces.StoryElement;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
@@ -301,7 +302,8 @@ public class Ennemi extends Personnage implements StoryElement {
 
 		if(this.veutCombattre() && !this.requestFight) {
 			InterStateComm.setUnEnnemi(this);
-			EcranJeu.gameState.enterState(EcranBataille.ID);
+			//EcranJeu.gameState.enterState(EcranBataille.ID);
+			EcranJeu.gameState.enterState(Bataille.ID);
 		}
 
 		if(this.requestFight) this.requestFight = false;
@@ -387,13 +389,19 @@ public class Ennemi extends Personnage implements StoryElement {
 		int tileH = map.getTileHeight();
 
 		int logicLayer = map.getLayerIndex("solide");
-		Image tile = map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
-		boolean collision = tile != null;
-		if (collision) {
-			Color color = tile.getColor((int) x % tileW, (int) y % tileH);
-			collision = color.getAlpha() > 0;
+
+		try {
+			Image tile = map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
+			boolean collision = tile != null;
+			if (collision) {
+				Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+				collision = color.getAlpha() > 0;
+			}
+			return collision || isCollisionPersonnage(x, y);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
 		}
-		return collision || isCollisionPersonnage(x, y);
+		return false;
 	}
 
 	/**

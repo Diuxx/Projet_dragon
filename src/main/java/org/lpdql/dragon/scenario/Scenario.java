@@ -291,7 +291,7 @@ public class Scenario {
     }
 
     /**
-     * Drawing {@code Objet} ellement from lesObjets. somes objets can
+     * Drawing {@code Objet} element from lesObjets. somes objets can
      * share messages.
      *
      * @param g Slick current graphic

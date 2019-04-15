@@ -2,6 +2,7 @@ package org.lpdql.dragon.ecrans;
 
 
 import org.lpdql.dragon.monde.Ressources;
+import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.Difficulty;
@@ -52,7 +53,6 @@ public class EcranMenuPrincipale extends BasicGameState {
 	private Color color2 = Color.white;
 	private Color color3 = Color.white;
 	
-	
     private ArrayList<String> lesOptions;
     private int currentOption;
 
@@ -87,10 +87,13 @@ public class EcranMenuPrincipale extends BasicGameState {
 	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
 	}
 
+	// private Hero h = null;
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		if(!sounds.playing("menu"))
 			sounds.loopZik("menu");
+
+		// h = Save.detectSavedData().getSavedHero();
 	}
 
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
@@ -105,7 +108,11 @@ public class EcranMenuPrincipale extends BasicGameState {
 		graphics.setFont(trueTypeFont1);
 		graphics.setColor(color1);
 		graphics.drawString(this.text1, text1X, text1Y);
+
+
+
 		graphics.setColor(color2);
+
 		graphics.drawString(this.text2, text2X, text2Y);
 		graphics.setColor(color3);
 		graphics.drawString(this.text3, text3X, text3Y);
@@ -135,7 +142,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 				// Charger un jeu ///////////////////////
 
-				if(Save.detectSavedData().getSavedHero() != null)
+				if (Save.detectSavedData().getSavedHero() != null)
 					stateBasedGame.enterState(EcranJeu.ID);
 			}
 			color2 = Color.red;

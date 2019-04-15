@@ -17,37 +17,35 @@ public class EcranBataille extends BasicGameState{
 	public static final int ID = 9;
 	
 	private Image background;
-	private BatailleEnnemi batailleEnnemi;
-	private BatailleJoueur batailleJoueur;
+	public static BatailleEnnemi batailleEnnemi;
+	public static BatailleJoueur batailleJoueur;
 	public static final int ATTAQUER = 0;
 	
 	
 	@Override
 	public void init(GameContainer fenetreDeBataille, StateBasedGame game) throws SlickException {
 		this.background = new Image("data/bataille/Forest_background.png");
+
+	}
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		sounds.playZik("battle");
+
 		this.batailleEnnemi = new BatailleEnnemi();
 		this.batailleJoueur = new BatailleJoueur();
 		batailleEnnemi.init();
 		batailleJoueur.init();
 
-		InputProvider provider = new InputProvider(fenetreDeBataille.getInput());
+		InputProvider provider = new InputProvider(container.getInput());
 		provider.bindCommand(new KeyControl(Input.KEY_A), BatailleCommande.ATTAQUER);
 		provider.bindCommand(new KeyControl(Input.KEY_F), BatailleCommande.FUIRE);
 		provider.addListener(new BatailleControlle(batailleJoueur, batailleEnnemi, game));
 	}
 
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-        sounds.playZik("battle");
-
-	}
-
-	@Override
 	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
 		sounds.stopAll();
-
-
-
 	}
 	
 	@Override

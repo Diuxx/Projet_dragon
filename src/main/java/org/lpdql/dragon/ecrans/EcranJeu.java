@@ -6,13 +6,11 @@ import org.lpdql.dragon.hud.Hud;
 import org.lpdql.dragon.hud.Hud_menu;
 import org.lpdql.dragon.jeu.Message;
 import org.lpdql.dragon.monde.Ressources;
+import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Camera;
-import org.lpdql.dragon.system.MenuItem;
-import org.lpdql.dragon.system.MyStdColor;
-import org.lpdql.dragon.system.MyStdOut;
+import org.lpdql.dragon.system.*;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -115,6 +113,7 @@ public class EcranJeu extends BasicGameState {
         this.gameState = stateBasedGame;
 
         Ressources.charger();
+        InterStateComm.setLeHero(new Hero("", new Point(0, 0)));
 
         // instantiation of the message manager
         lesMessages = new Message();
@@ -123,7 +122,7 @@ public class EcranJeu extends BasicGameState {
         menu.init(gameContainer); // loading Menu
     }
 
-    private boolean init = false;
+    public static boolean init = false;
 
     /**
      * Cette fonction permet d'initialiser les données du jeu quand on en a besoin.
@@ -132,6 +131,9 @@ public class EcranJeu extends BasicGameState {
      * @throws SlickException
      */
     private void init() throws SlickException {
+        System.out.println("init out");
+
+        // InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
         savedData = Save.detectSavedData(); // Loading saved data
         carte = new Carte(savedData.getCarteName()); // Map definition
 

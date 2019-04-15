@@ -22,6 +22,10 @@ public class BatailleEnnemi {
 		this.animation = new PathAnimation(new BezierPath(0, 0, -400, 1, 50, 20, 0, 0), 1000);
 	}
 
+	public void setValue(int v) {
+		this.animation = new PathAnimation(new BezierPath(0, 0, 10, 1, v, 20, 0, 0), 1000);
+	}
+
 	public void render(GameContainer container, Graphics g) {
 		if(InterStateComm.getUnEnnemi() == null)
 			return;

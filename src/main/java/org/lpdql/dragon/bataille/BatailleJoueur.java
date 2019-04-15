@@ -11,12 +11,17 @@ public class BatailleJoueur {
 	private Hero joueur;
 	private Image joueurImage;
 	private PathAnimation animation;
+	private int value = -50;
 	
 	public void init() throws SlickException {
 		this.joueur = InterStateComm.getLeHero();
 		this.joueurImage = Ressources.spriteSheet.getSubImage(6, 10);
-		this.animation = new PathAnimation(new BezierPath(0, 0, 400, 1, -50, 20, 0, 0), 1000);
+		this.animation = new PathAnimation(new BezierPath(0, 0, 10, 1, value, 20, 0, 0), 1000);
 
+	}
+
+	public void setValue(int v) {
+		this.animation = new PathAnimation(new BezierPath(0, 0, 10, 1, v, 20, 0, 0), 1000);
 	}
 
 	public void render(GameContainer container, Graphics g) {

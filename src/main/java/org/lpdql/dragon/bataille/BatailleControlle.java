@@ -52,6 +52,7 @@ public class BatailleControlle implements InputProviderListener {
 	}
 
 	private void attaqueJoeur() {
+		this.joueur.setValue((int)(Math.random() % 1000));
 		this.joueur.attaquer( this.ennemi);
 	}
 
@@ -175,7 +176,9 @@ public class BatailleControlle implements InputProviderListener {
 	 */
 	private void endEnnemiAttack() {
 		if (joueur.getBarreVie() <= 0) {
+			mode = BatailleCommande.NONE;
 			game.enterState(EcranGameOver.ID);
+			System.out.println( "---->dead");
 		}
 		mode = BatailleCommande.NONE;
 	}

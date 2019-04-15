@@ -61,11 +61,11 @@ public final class InterStateComm {
     public static void setLeHero(Hero leHero) {
         // Synchronized empêche toute instanciation multiple
         // même par différents threads
-        synchronized (InterStateComm.class) {
-            if (InterStateComm.leHero == null) {
+        //synchronized (InterStateComm.class) {
+            //if (InterStateComm.leHero == null) {
                 InterStateComm.leHero = leHero;
-            }
-        }
+            //}
+        //}
     }
 
     /**

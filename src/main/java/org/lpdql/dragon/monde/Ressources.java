@@ -55,7 +55,7 @@ public class Ressources {
             charger = true;
 
             // chargement du personnage
-            InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
+            // InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
         }
     }
 
@@ -65,8 +65,8 @@ public class Ressources {
             return;
 
         sounds = new MyJSound();
-        sounds.setVolumeMusic(4f);
-        sounds.setVolumeEffect(1f);
+        sounds.setVolumeMusic(15f);
+        sounds.setVolumeEffect(7f);
         // sounds.addSound("choc", "data/sound/chocchoc.ogg", 1);
         sounds.addSound(new JMusic("menu", "data/sound/menu-soundtrack.ogg"));
         sounds.addSound(new JMusic("ambiant", "data/sound/ambiant.ogg"));

@@ -162,6 +162,7 @@ public class ScenarioEpee extends Scenario {
 
                 Story.TUTOSPAWNENNEMI.done();
             }
+            //--
         }
         if(Story.TUTOEND.getState() && !Story.GAMESTART.getState())
         {

@@ -33,6 +33,7 @@ public class StateGame extends StateBasedGame {
 		addState(new EcranJeu());
 		addState(new EcranBataille());
 		addState(new EcranGameOver());
+		addState(new Bataille());
 
 	}
 }
