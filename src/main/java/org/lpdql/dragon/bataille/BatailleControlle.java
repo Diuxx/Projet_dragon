@@ -144,11 +144,10 @@ public class BatailleControlle implements InputProviderListener {
 			this.defance = (int) (ennemi.getATK() * r / 100);
 			System.out.println("defance blocke : " + this.defance);
 
-			// augmenter la prochine joueur atk 0% ~ 50%
-			int s = (int) (Math.random() * (50)) + 0;
+			// augmenter la prochine joueur attaque 25% ~ 75%
+			int s = (int) (Math.random() * (50)) + 25;
 			System.out.println("Atk : " + s + "%");
 			this.atk = (int) (joueur.getATK() * s / 100);
-
 			System.out.println("atk augmenter " + this.atk);
 			System.out.println();
 			break;
