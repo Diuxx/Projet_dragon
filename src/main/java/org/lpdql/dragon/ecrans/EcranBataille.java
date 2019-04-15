@@ -1,8 +1,5 @@
 package org.lpdql.dragon.ecrans;
 
-import java.awt.Font;
-import java.awt.font.FontRenderContext;
-
 import org.lpdql.dragon.bataille.BatailleCommande;
 import org.lpdql.dragon.bataille.BatailleControlle;
 import org.lpdql.dragon.bataille.BatailleEnnemi;
