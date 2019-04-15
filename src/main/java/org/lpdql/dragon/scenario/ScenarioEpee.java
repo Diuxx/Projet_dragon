@@ -3,6 +3,7 @@ package org.lpdql.dragon.scenario;
 
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.ecrans.EcranJeu;
+import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
 import org.lpdql.dragon.personnages.ennemis.Squelette;
@@ -10,8 +11,7 @@ import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.SlickException;
 
-import static org.lpdql.dragon.monde.Ressources.spriteSheet_letter;
-import static org.lpdql.dragon.monde.Ressources.spriteSheet_vieilHomme;
+import static org.lpdql.dragon.monde.Ressources.*;
 
 /**
  * class ScenarioEpee
@@ -88,19 +88,22 @@ public class ScenarioEpee extends Scenario {
         pnjServante.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 3, 4,  4);
 
         pnjServante.addDialogue(
-           "Tu devrais commencer par te rendre au pays de l'Epee#" +
+           "Tu devrais commencer par te rendre au pays de l'Epée#" +
                 "Leur trésor te sera utile pour obtenir les 3 autres." +
                 "#tu veux savoir ou trouver le pays de l'épé ?" +
                 "#c'est la porte qui se trouve le plus à l'est d'ici.."
         );
         if(!Story.TUTOPARLEROLDMAN.getState()) {
+
             pnjServante.addDialogue(
-                    "Bonjour " + InterStateComm.getLeHero().getNom() +
-                    ", Bienvenu chez toi.#" +
+                    "Bonjour " + InterStateComm.getLeHero().getNom() + ", Bienvenu chez toi.#" +
                     "Il y a un vieil homme la bas... il veut te parler !#" +
                     "Apparement c'est important.."
             );
         }
+        Effet importantServante = new Effet("iservante", new Point((int)pnjServante.getX() - 8, (int)pnjServante.getY() - pnjServante.getHeight() - 24), new Taille(16, 24));
+        importantServante.loadAnimation(spriteSheet_important, 0, 4, 0);
+        this.getLesEffets().add(importantServante);
 
         super.getLesPnj().add(pnjServante);
 
@@ -110,12 +113,17 @@ public class ScenarioEpee extends Scenario {
 
         pnjOldMan.addDialogue("aaahhh ! il y a plein de monstres.. tues les tu gagnera en puissance !");
         if(!Story.TUTOFIRSTENNEMIWASKILLED.getState()) {
+
+            Effet importantOldMan = new Effet("ivieuxMonsieur", new Point((int)pnjOldMan.getX() - 8, (int)pnjOldMan.getY() - pnjOldMan.getHeight() - 24), new Taille(16, 24));
+            importantOldMan.loadAnimation(spriteSheet_important, 0, 4, 0);
+            this.getLesEffets().add(importantOldMan);
+
             pnjOldMan.addDialogue(
                 "Prends cette épée et vas tuer ce monstre pour t'entrainer..#" +
                 "utilises la touche \"a\" pour lancer un attaque..\nLa touche \"f\" sert à fuir le combat..#" +
                 "Saches qu'un vrais héro ne fuit jamais....#" +
                 ".................#" +
-                "JAMAIS......"
+                "...............jamais"
             );
         }
         pnjOldMan.setStoryElement(Story.TUTOPARLEROLDMAN);
@@ -133,19 +141,18 @@ public class ScenarioEpee extends Scenario {
                 Story.TUTOPARLEROLDMAN.setState(false);
                 Story.TUTOSPAWNENNEMI.setState(false);
             }
-            loadTuto();
         }
     }
 
     /**
-     *
+     * permet d'effectuer des changement sans recharger le scenario
      * @param map
      */
     @Override
     public void update(Carte map, Camera camera) {
         if(Story.TUTOPARLEROLDMAN.getState())
         {
-            if(!Story.TUTOSPAWNENNEMI.getState()) {
+            if(!Story.TUTOSPAWNENNEMI.getState() && !Story.TUTOEND.getState()) {
                 Point pFirstEnnemi = findPnjPosition(map, "first_ennemi");
                 Squelette firstEnnemi = new Squelette(pFirstEnnemi, Direction.VERTICAL);
                 firstEnnemi.setStoryElement(Story.TUTOFIRSTENNEMIWASKILLED);
@@ -158,7 +165,7 @@ public class ScenarioEpee extends Scenario {
         }
         if(Story.TUTOEND.getState() && !Story.GAMESTART.getState())
         {
-            super.resetOnCurrentMap(map, camera);
+            super.resetOnCurrentMap(map, camera); // teleport sur un point de spawn
             Story.GAMESTART.done();
         }
         // --
@@ -168,13 +175,6 @@ public class ScenarioEpee extends Scenario {
      *
      */
     private void checkEvents() {
-
-    }
-
-    /**
-     *
-     */
-    private void loadTuto() {
 
     }
 

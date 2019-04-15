@@ -24,7 +24,7 @@ public class Dragon extends Ennemi {
      * Class constructor
      */
     public Dragon(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages, int niveau) {
-        super("Dragon", x, y, taille.getLargeur(), taille.getLongeur(),
+        super("Dragon", x, y, taille.getLargeur(), taille.getHauteur(),
                 50, direction, timer, vitesse, ennemiImages, niveau);
         this.chargerImage();
     }

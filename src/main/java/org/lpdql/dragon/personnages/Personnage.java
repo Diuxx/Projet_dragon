@@ -159,7 +159,7 @@ public class Personnage {
      * @see Taille
      */
     public Personnage(String nom, Point pos, Taille t, float pointDeVie, float vitesse) {
-        this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getLongeur(), pointDeVie, vitesse);
+        this(nom, pos.getX(), pos.getY(), t.getLargeur(), t.getHauteur(), pointDeVie, vitesse);
     }
 
     /**

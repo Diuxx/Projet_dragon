@@ -28,9 +28,9 @@ public class BatailleJoueur {
 		g.drawRect(container.getWidth() * 1 / 4 - 80, container.getHeight() / 2 - joueurImage.getHeight() / 2 - 30, 130, 20);
 
 		g.setColor(new Color(255, 0, 0));
-		g.fillRect(container.getWidth() * 1 / 4 - 80, container.getHeight() / 2 - joueurImage.getHeight() / 2 - 30,
-				Math.max(0, (joueur.getPointDeVieActuel() / joueur.getPointDeVie())) * 130,
-				20);
+		g.fillRect(container.getWidth() * 1 / 4 - 80 + 1, container.getHeight() / 2 - joueurImage.getHeight() / 2 - 30 + 1,
+				Math.max(0, (joueur.getPointDeVieActuel() / joueur.getPointDeVie())) * 129,
+				19);
 		g.setColor(new Color(Color.white));
 		g.drawString("" + (int) Math.max(0, (int) joueur.getPointDeVieActuel()), container.getWidth() * 1 / 4 - 30 , container.getHeight() / 2 - joueurImage.getHeight() / 2 - 29);
 		

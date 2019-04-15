@@ -23,7 +23,7 @@ public class DarkMaster extends Ennemi {
      * Class constructor
      */
     public DarkMaster(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages, int niveau) {
-        super("Dark Master", x, y, taille.getLargeur(), taille.getLongeur(),
+        super("Dark Master", x, y, taille.getLargeur(), taille.getHauteur(),
                 50, direction, timer, vitesse, ennemiImages, niveau);
 
         this.chargerImage();

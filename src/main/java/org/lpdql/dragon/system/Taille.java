@@ -12,14 +12,14 @@ public class Taille {
     public static final Taille BIG_SIZE = new Taille(64, 64);
 
     private int largeur;
-    private int longeur;
+    private int hauteur;
 
     /**
      * Class constructor
      */
-    public Taille(int largeur, int longeur) {
+    public Taille(int largeur, int hauteur) {
         this.largeur = largeur;
-        this.longeur = longeur;
+        this.hauteur = hauteur;
     }
 
     public int getLargeur() {
@@ -30,8 +30,8 @@ public class Taille {
         largeur = largeur;
     }
 
-    public int getLongeur() {
-        return longeur;
+    public int getHauteur() {
+        return hauteur;
     }
 
     public void setLongeur(int longeur) {

@@ -24,6 +24,8 @@ public class Ressources {
     public static SpriteSheet spriteSheet_vieilHomme;
     public static SpriteSheet spriteSheet_letter;
 
+    public static SpriteSheet spriteSheet_important;
+
     private static boolean charger = false;
     private static boolean chargerSound = false;
 
@@ -47,6 +49,8 @@ public class Ressources {
 
             fondMessage = new Image("data/menu/uimessage.png");
             fondMenu = new Image("data/menu/uimenu.png");
+
+            spriteSheet_important = new SpriteSheet("data/sprites/important-blue.png", 16, 24);
 
             charger = true;
 

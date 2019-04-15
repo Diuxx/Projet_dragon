@@ -2,6 +2,7 @@ package org.lpdql.dragon.scenario;
 
 import org.lpdql.dragon.carte.Carte;
 import org.lpdql.dragon.ecrans.EcranJeu;
+import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.jeu.Message;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.objets.Heal;
@@ -57,6 +58,14 @@ public class Scenario {
     private List<Objet> lesObjets;
 
     /**
+     * The game Effects List. Also depend of the current game
+     * Scenario & Map
+     *
+     * @see org.lpdql.dragon.effet.Effet
+     */
+    private List<Effet> lesEffets;
+
+    /**
      * Constant, Position of "ennemis" layer on the map file.
      */
     private final int ENNEMIS_LAYER_INDEX = 1;
@@ -83,6 +92,7 @@ public class Scenario {
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
         lesObjets = new ArrayList<Objet>();
+        lesEffets = new ArrayList<>();
     }
 
     /**
@@ -219,6 +229,7 @@ public class Scenario {
         lesEnnemis = new ArrayList<Ennemi>();
         lesPnj = new ArrayList<PersonnageNonJoueur>();
         lesObjets = new ArrayList<Objet>();
+        lesEffets = new ArrayList<>();
 
         InterStateComm.getLeHero().removePnj();
         InterStateComm.getLeHero().removeObjets();
@@ -253,6 +264,11 @@ public class Scenario {
         if(map.getNomMap().equals("dragon")) {
             if(!Ressources.sounds.playing("ambiant")) Ressources.sounds.loopZik("ambiant");
         }
+    }
+
+    public void afficherEffets(Graphics g) {
+        for(Effet e : this.getLesEffets())
+            e.afficher(g);
     }
 
     /**
@@ -475,6 +491,10 @@ public class Scenario {
         return lesObjets;
     }
 
+    public List<Effet> getLesEffets() {
+        return lesEffets;
+    }
+
     /**
      * This functon detect when the Hero is on a map trigger.
      * This function should be called in StageBasedGame update.
@@ -503,6 +523,7 @@ public class Scenario {
                     teleportOnSafeTrigger(carte, i);
                     return;
                 }
+                InterStateComm.getLeHero().stop();
                 loadMap(carte, i, camera);
                 return;
             }
@@ -563,6 +584,7 @@ public class Scenario {
             int x = carte.getMap().getObjectX(changementMapGroupId, i);
             int y = carte.getMap().getObjectY(changementMapGroupId, i);
             InterStateComm.getLeHero().setPosition(new Point(x, y));
+            InterStateComm.getLeHero().stop();
 
             return;
         }
@@ -613,6 +635,7 @@ public class Scenario {
 
             this.resetScenario();
             this.charger(carte);
+
             return;
         }
     }

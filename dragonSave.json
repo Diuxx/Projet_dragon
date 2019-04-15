@@ -1,26 +1,26 @@
 {
 	"gameName":"DragonProject",
 	"mapData":{
-		"map":"maison"
+		"map":"dragon"
 	},
 	"playerData":{
 		"name":"nicolas",
-		"lifePoint":300.0,
-		"currentLifePoint":300.0,
-		"x":68.299934,
-		"y":153.39937,
+		"lifePoint":350.0,
+		"currentLifePoint":110.0,
+		"x":645.09845,
+		"y":315.49957,
 		"direction":3,
-		"experience":0,
-		"level":1,
+		"experience":60,
+		"level":2,
 		"gold":500
 	},
 	"accomplishement":{
-		"speak_to_old_man":false,
-		"tuto_spawn_ennemi":false,
-		"tuto_first_kill":false,
-		"fin_tuto":false,
-		"debut_jeu":false,
-		"lire_lettre":false,
+		"speak_to_old_man":true,
+		"tuto_spawn_ennemi":true,
+		"tuto_first_kill":true,
+		"fin_tuto":true,
+		"debut_jeu":true,
+		"lire_lettre":true,
 		"activation_monde_epe":false,
 		"activation_monde_bouclier":false,
 		"activation_monde_feu":false,

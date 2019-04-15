@@ -1,6 +1,7 @@
 package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.carte.Carte;
+import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.hud.Hud;
 import org.lpdql.dragon.hud.Hud_menu;
 import org.lpdql.dragon.jeu.Message;
@@ -18,6 +19,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lpdql.dragon.monde.Ressources.sounds;
 
@@ -46,7 +50,7 @@ public class EcranJeu extends BasicGameState {
      * debug variable
      * Modify some elements in game
      **/
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     /**
      * game display management
@@ -202,6 +206,7 @@ public class EcranJeu extends BasicGameState {
 
         // drawing overground layer from map
         carte.afficher(carte.getMap().getLayerIndex("overground1"));
+        this.scenario.afficherEffets(graphics);
 
         // drawing hud
         hud.render(graphics, InterStateComm.getLeHero());
@@ -251,7 +256,6 @@ public class EcranJeu extends BasicGameState {
         // updating camera position
         this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
     }
-
 
     @Override
     public void keyReleased(int key, char c) {

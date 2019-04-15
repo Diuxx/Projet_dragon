@@ -69,7 +69,7 @@ public class Objet implements StoryElement {
         this.animations = new ArrayList<Animation>();
         this.frames = 0;
 
-        this.box = new Rectangle(p.getX(), p.getY(), taille.getLargeur(), taille.getLongeur());
+        this.box = new Rectangle(p.getX(), p.getY(), taille.getLargeur(), taille.getHauteur());
         this.positionSurMap = positionSurMap;
     }
 
@@ -116,7 +116,7 @@ public class Objet implements StoryElement {
 
         } else {
             g.setColor(Color.black);
-            g.fill(new Rectangle(this.position.getX(), this.position.getY(), this.taille.getLargeur(), this.taille.getLongeur()));
+            g.fill(new Rectangle(this.position.getX(), this.position.getY(), this.taille.getLargeur(), this.taille.getHauteur()));
         }
         if(EcranJeu.DEBUG) {
             g.setColor(Color.blue);

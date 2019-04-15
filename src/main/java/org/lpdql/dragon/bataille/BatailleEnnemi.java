@@ -34,8 +34,9 @@ public class BatailleEnnemi {
 		ennemi.getEnnemiImages().drawCentered(p.x + container.getWidth() * 3 / 4, p.y + container.getHeight() / 2);
 		g.setColor(new Color(255,255,255));
 		g.drawRect(container.getWidth() * 3 / 4 - 50, container.getHeight() / 2 - ennemi.getEnnemiImages().getHeight() / 2-30, 130, 20);
+
 		g.setColor(new Color(255,0,0));
-		g.fillRect(container.getWidth() * 3 / 4 - 50, container.getHeight() / 2 - ennemi.getEnnemiImages().getHeight() / 2-30, Math.max(0, (ennemi.getPointDeVieActuel()/ennemi.getPointDeVie())) *130, 20);
+		g.fillRect(container.getWidth() * 3 / 4 - 50 + 1, container.getHeight() / 2 - ennemi.getEnnemiImages().getHeight() / 2 - 30 + 1, Math.max(0, (ennemi.getPointDeVieActuel()/ennemi.getPointDeVie())) * 129, 19);
 		g.setColor(new Color(Color.white));
 		g.drawString("" +  Math.max(0, (int) ennemi.getPointDeVieActuel()), container.getWidth() * 3 / 4 - 4 , container.getHeight() / 2 - ennemi.getEnnemiImages().getHeight() / 2 - 29);
 		

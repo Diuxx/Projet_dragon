@@ -23,7 +23,7 @@ public class Goblin extends Ennemi {
      * Class constructor
      */
     public Goblin(int x, int y, Taille taille, Direction direction, int timer, float vitesse, Image ennemiImages, int niveau) {
-        super("Goblin", x, y, taille.getLargeur(), taille.getLongeur(),
+        super("Goblin", x, y, taille.getLargeur(), taille.getHauteur(),
                 50, direction, timer, vitesse, ennemiImages, niveau);
         this.chargerImage();
     }
