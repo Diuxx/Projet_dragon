@@ -1,7 +1,6 @@
 package org.lpdql.dragon.bataille;
 
 import org.lpdql.dragon.ecrans.EcranJeu;
-import org.lpdql.dragon.ecrans.AttaqueAnimation;
 import org.lpdql.dragon.ecrans.EcranGameOver;
 import org.lpdql.dragon.jeu.LevelExperience;
 import org.lpdql.dragon.singleton.InterStateComm;

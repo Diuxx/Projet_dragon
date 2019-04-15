@@ -3,7 +3,6 @@ package org.lpdql.dragon.bataille;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lpdql.dragon.ecrans.AttaqueAnimation;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.newdawn.slick.Color;
@@ -18,7 +17,11 @@ public class BatailleEnnemi {
 	private int experience;
 	GameContainer gameContainer;
 	Vector2f position;
-	Graphics graphics; List<AttaqueAnimation> attaqueAnimations;
+	Graphics graphics;
+	List<AttaqueAnimation> attaqueAnimations;
+	List<BatailleAnimation> bataillelAnimation;
+	private float x;
+	private float y;
 
 	public int getExperience() {
 		return experience;
@@ -30,7 +33,6 @@ public class BatailleEnnemi {
 	}
 
 	public void render(GameContainer gameContainer, Graphics graphics) {
-
 		if (InterStateComm.getUnEnnemi() == null)
 			return;
 
@@ -41,7 +43,8 @@ public class BatailleEnnemi {
 		this.graphics = graphics;
 		this.experience = ennemi.getExperience();
 		this.position = animation.currentLocation();
-
+		this.x = position.x + (float) (gameContainer.getWidth() * 3 / 4);
+		this.y = position.y + (float) (gameContainer.getHeight() / 2);
 		drawEnnemi();
 		drawBarHP();
 		drawNbHP();
@@ -49,12 +52,11 @@ public class BatailleEnnemi {
 		for (AttaqueAnimation attaqueAnimation : attaqueAnimations) {
 			attaqueAnimation.drawAtq(graphics);
 		}
-		
+
 		for (int i = 0; i < attaqueAnimations.size(); i++) {
 			if (attaqueAnimations.get(i).isEnd())
 				attaqueAnimations.remove(i);
 		}
-
 	}
 
 	private void drawBarHP() {
@@ -75,8 +77,7 @@ public class BatailleEnnemi {
 	}
 
 	private void drawEnnemi() {
-		ennemi.getEnnemiImages().drawCentered(this.position.x + this.gameContainer.getWidth() * 3 / 4,
-				this.position.y + this.gameContainer.getHeight() / 2);
+		ennemi.getEnnemiImages().drawCentered(this.x, this.y);
 	}
 
 	public void update(int delta) {
@@ -113,7 +114,23 @@ public class BatailleEnnemi {
 	}
 
 	public void addAttaqueAnimation(String text) {
-		this.attaqueAnimations.add(new AttaqueAnimation(text , 500, this.gameContainer.getWidth() * 3 / 4 - 8,
+		this.attaqueAnimations.add(new AttaqueAnimation(text, 500, this.gameContainer.getWidth() * 3 / 4 - 8,
 				this.gameContainer.getHeight() / 2 - this.ennemi.getEnnemiImages().getHeight() / 2 - 50));
+	}
+
+	public float getX() {
+		return x;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public void setY(float y) {
+		this.y = y;
 	}
 }

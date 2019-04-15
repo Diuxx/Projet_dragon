@@ -3,7 +3,6 @@ package org.lpdql.dragon.bataille;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lpdql.dragon.ecrans.AttaqueAnimation;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.singleton.InterStateComm;

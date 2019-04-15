@@ -1,21 +1,20 @@
-package org.lpdql.dragon.ecrans;
+package org.lpdql.dragon.bataille;
 
+import org.lpdql.dragon.personnages.Ennemi;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
-public class AttaqueAnimation {
+public class BatailleAnimation {
 	
 	private long duration;
 	private long bufferDuration;
 	private long bufferEnd;
-	private String anims;
+	private Image image;
 	private float x;
 	private float y;
 	
-	public AttaqueAnimation(String text, long duration, float x, float y) {
-		this.anims = text;
-		this.duration = duration;
-		this.x = x;
-		this.y = y;
+	public BatailleAnimation(Ennemi ennemi) {
+		
 		this.bufferDuration = 50000;
 		this.bufferEnd = System.currentTimeMillis();
 	}
@@ -25,7 +24,6 @@ public class AttaqueAnimation {
 			this.y -= 1;
 			this.bufferDuration = System.currentTimeMillis();
 		}
-		graphics.drawString(anims, x, y);
 	}
 	
 	public boolean isEnd()
@@ -34,18 +32,15 @@ public class AttaqueAnimation {
 		
 	}
 
-	public String getText() {
-		// TODO Auto-generated method stub
-		return this.anims;
+	public Image getImage() {
+		return this.image;
 	}
 
 	public float getX() {
-		// TODO Auto-generated method stub
 		return this.x;
 	}
 
 	public float getY() {
-		// TODO Auto-generated method stub
 		return this.y;
 	}
 
