@@ -5,10 +5,11 @@ import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.system.Point;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class EnnemiBataille
@@ -19,10 +20,15 @@ public class HeroBataille {
 
     private Hero hero;
     private Point position;
-    private Image image;
+
+    private List<Animation> animations;
+    private int frames;
+
     private Point mouvement;
 
     private long timer;
+    private long timerRetour;
+    private int pas = 10;
 
     /**
      * Class constructor
@@ -30,41 +36,95 @@ public class HeroBataille {
     public HeroBataille(Hero e, GameContainer gc) {
         this.hero = e;
         this.position = new Point(gc.getWidth() * 1 / 4, gc.getHeight() / 2);
-        this.image = Ressources.spriteSheet.getSubImage(6, 10);
+        // this.image = Ressources.spriteSheet.getSubImage(6, 10);
+
+        this.animations = new ArrayList<>();
+        this.loadAnimation(Ressources.spriteSheet_hFight, 0, 2, 0);
+        this.frames = 0;
+
         this.mouvement = new Point(0, 0);
     }
 
     public void attaque(EnnemiBataille e) {
+        aAttaqueStart = true;
+        this.timer = System.currentTimeMillis();
+        this.timerRetour = System.currentTimeMillis();
 
+        if(pas < 0)
+            pas *= -1;
     }
 
     public void draw(Graphics g, GameContainer gc) {
         this.drawBarHp(g, gc);
-        this.drawCurrentHp(g, gc);
-        image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY());
+        this.drawCurrentHp(g, gc); // image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY());
+
+        if( this.animations.size() > 0) {
+            g.drawAnimation(this.animations.get(this.frames), mouvement.getX() + this.position.getX(), mouvement.getY() + this.position.getY());
+        } else {
+            g.setColor(Color.black);
+            g.fill(new Rectangle(this.position.getX(), this.position.getY(), 32, 32));
+        }
     }
 
     private void drawBarHp(Graphics g, GameContainer gc) {
         g.setColor(Color.white);
-        g.drawRect(gc.getWidth() * 1 / 4 - 80,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30, 130, 20);
+        g.drawRect(position.getX() - 60 + (95/2), position.getY() - 30, 130, 20);
         g.setColor(Color.red);
-        g.fillRect(gc.getWidth() * 1 / 4 - 80 + 1,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30 + 1,Math.max(0, (hero.getPointDeVieActuel() / hero.getPointDeVie())) * 130, 20);
+        g.fillRect(position.getX() - 60 + (95/2), position.getY() - 30, Math.max(0, (hero.getPointDeVieActuel() / hero.getPointDeVie())) * 130, 20);
     }
 
     private void drawCurrentHp(Graphics g, GameContainer gc) {
         g.setColor(Color.white);
-        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), gc.getWidth() * 1 / 4 - 30 , gc.getHeight() / 2 - this.image.getHeight() / 2 - 29);
+        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), position.getX() - 60 + (95/2) + 60, position.getY() - 26);
     }
 
-    public void attaqueAnimation() {
 
+    public boolean aAttaqueStart = false;
+
+    // --
+    public void attaqueAnimation(EnnemiBataille ennemi) {
+        if(System.currentTimeMillis() - this.timerRetour >= 500 && this.pas > 0) {
+            this.damageTo(ennemi);
+            this.pas *= -1;
+        }
+        if(System.currentTimeMillis() - this.timerRetour >= 1000 && this.pas < 0) {
+            this.mouvement.setX(0);
+            aAttaqueStart = false; // do damage here..
+        }
+        if(System.currentTimeMillis() - this.timer > 50) {
+            this.mouvement.setX(mouvement.getX() + this.pas);
+            this.timer = System.currentTimeMillis();
+        }
     }
 
-    public Hero getEnnemi() {
+    public void damageTo(EnnemiBataille e) {
+        // animate here
+
+        e.takeDamage(this.getATK());
+    }
+
+    public void takeDamage(int damage) {
+        this.hero.setPointDeVieActuel(this.hero.getPointDeVieActuel() - damage);
+    }
+
+    public int getATK() {
+        this.hero.rafraichirLePouvoirATK();
+        return (int) this.hero.getATK();
+    }
+
+    public boolean isAnnimationEnd() {
+        return !this.aAttaqueStart;
+    }
+
+    public void update(EnnemiBataille e) {
+        if(aAttaqueStart) attaqueAnimation(e);
+    }
+
+    public Hero getHero() {
         return hero;
     }
 
-    public void setEnnemi(Hero h) {
+    public void setHero(Hero h) {
         this.hero = h;
     }
 
@@ -90,5 +150,13 @@ public class HeroBataille {
 
     public void setTimer(long timer) {
         this.timer = timer;
+    }
+
+    public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
+        Animation animation = new Animation();
+        for (int x = startX; x < endX; x++) {
+            animation.addFrame(spriteSheet.getSprite(x, y), 350);
+        }
+        this.animations.add(animation);
     }
 }

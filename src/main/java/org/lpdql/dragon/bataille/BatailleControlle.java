@@ -148,7 +148,6 @@ public class BatailleControlle implements InputProviderListener {
 					System.out.println("> fuire ");
 					InterStateComm.getUnEnnemi().setFriendly(true, 20000); // --
                     InterStateComm.getUnEnnemi().seCalme();
-                    // on enlève l'ennemi de la bataille
                     InterStateComm.enleverUnEnnemi();
 
                     game.enterState(EcranJeu.ID);

@@ -14,7 +14,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Ressources {
 
-    public static SpriteSheet spriteSheet;
+    public static SpriteSheet spriteSheet, spriteSheet_hFight;
     public static SpriteSheet spriteSheet_goblin;
     public static SpriteSheet spriteSheet_Ennemis;
     public static SpriteSheet spriteSheet_PNJ;
@@ -51,6 +51,8 @@ public class Ressources {
             fondMenu = new Image("data/menu/uimenu.png");
 
             spriteSheet_important = new SpriteSheet("data/sprites/important-blue.png", 16, 24);
+
+            spriteSheet_hFight = new SpriteSheet("data/sprites/HeroFight.png", 95, 80);
 
             charger = true;
 
