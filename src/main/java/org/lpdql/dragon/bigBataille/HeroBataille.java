@@ -1,10 +1,12 @@
 package org.lpdql.dragon.bigBataille;
 
 
+import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.system.Point;
+import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -82,8 +84,9 @@ public class HeroBataille {
     public boolean aAttaqueStart = false;
 
     // --
-    public void attaqueAnimation(EnnemiBataille ennemi) {
+    public void attaqueAnimation(EnnemiBataille ennemi, List<Effet> effets) {
         if(System.currentTimeMillis() - this.timerRetour >= 500 && this.pas > 0) {
+
             this.damageTo(ennemi);
             this.pas *= -1;
         }
@@ -95,6 +98,14 @@ public class HeroBataille {
             this.mouvement.setX(mouvement.getX() + this.pas);
             this.timer = System.currentTimeMillis();
         }
+    }
+
+    private Effet swingEffet(EnnemiBataille ennemi) {
+        Effet e = new Effet("swing", ennemi.getPosition(), new Taille(59, 68));
+        e.loadAnimation(Ressources.spriteSheet_swordHit, 0, 2, 0);
+        e.getAnimation().stopAt(2);
+        return e;
+        // for movible effet extend a new class MovibleEffet with Effet, and add depart position & endPosition..
     }
 
     public void damageTo(EnnemiBataille e) {
@@ -116,8 +127,8 @@ public class HeroBataille {
         return !this.aAttaqueStart;
     }
 
-    public void update(EnnemiBataille e) {
-        if(aAttaqueStart) attaqueAnimation(e);
+    public void update(EnnemiBataille e, List<Effet> effets) {
+        if(aAttaqueStart) attaqueAnimation(e, effets);
     }
 
     public Hero getHero() {

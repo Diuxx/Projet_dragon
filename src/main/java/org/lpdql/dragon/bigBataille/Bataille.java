@@ -6,6 +6,7 @@ import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.jeu.LevelExperience;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -72,11 +73,19 @@ public class Bataille extends BasicGameState {
 
         ennemiBataille.draw(graphics, gameContainer);
         heroBataille.draw(graphics, gameContainer);
+
+        for(int i=0; i<this.effetsCombats.size(); i++)
+            if(this.effetsCombats.get(i).getAnimation().isStopped())
+                this.effetsCombats.remove(i);
+
+        for(Effet e : this.effetsCombats) {
+            e.afficher(graphics);
+        }
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        heroBataille.update(this.ennemiBataille);
+        heroBataille.update(this.ennemiBataille, this.effetsCombats);
         ennemiBataille.update(this.heroBataille);
 
         if(heroAttaque) {
@@ -98,6 +107,7 @@ public class Bataille extends BasicGameState {
             return;
 
         if (Input.KEY_A == key) {
+            effetsCombats.add(this.swingEffet(ennemiBataille));
             Ressources.sounds.playZik("attaque");
             this.heroBataille.attaque(ennemiBataille);
             this.heroAttaque = true;
@@ -160,5 +170,12 @@ public class Bataille extends BasicGameState {
         }
     }
 
+    private Effet swingEffet(EnnemiBataille ennemi) {
+        Effet e = new Effet("swing", ennemi.getPosition(), new Taille(59, 68));
+        e.loadAnimation(Ressources.spriteSheet_swordHit, 0, 2, 0, new int[] {200, 200});
+        e.getAnimation().stopAt(1);
+        return e;
+        // for movible effet extend a new class MovibleEffet with Effet, and add depart position & endPosition..
+    }
 
 }
