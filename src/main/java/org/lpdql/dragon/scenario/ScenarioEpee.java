@@ -67,6 +67,11 @@ public class ScenarioEpee extends Scenario {
             );
             lettre.loadAnimation(spriteSheet_letter, 0, 6, 0);
 
+            Effet importantLettre = new Effet("iLettre",
+                    new Point((int)lettre.getPosition().getX() /*- 16*/, (int)lettre.getPosition().getY() - lettre.getTaille().getHauteur() - 24), new Taille(16, 24));
+            importantLettre.loadAnimation(spriteSheet_important, 0, 4, 0);
+            this.getLesEffets().add(importantLettre);
+
             // set a story element who should be donne if interact
             lettre.setStoryElement(Story.LIRELETTRE);
             super.getLesObjets().add(lettre);
@@ -140,6 +145,7 @@ public class ScenarioEpee extends Scenario {
             if(!Story.TUTOFIRSTENNEMIWASKILLED.getState()) {
                 Story.TUTOPARLEROLDMAN.setState(false);
                 Story.TUTOSPAWNENNEMI.setState(false);
+                Story.OWNBASICSWORD.setState(false);
             }
         }
     }
@@ -150,6 +156,19 @@ public class ScenarioEpee extends Scenario {
      */
     @Override
     public void update(Carte map, Camera camera) {
+        if(!Story.GAMESTART.getState()) {//  plein de nouvelles aventures t'attendes
+
+            EcranJeu.lesMessages.add(
+                    "Bienvenue chez toi " + InterStateComm.getLeHero().getNom() + ", tu n'as plus aucunes nouvelles de ton père depuis près d'un ans.\n" +
+                    "Il semble qu'une lettre soit arrivé aujoud'hui chez toi. Lis là elle t'apportera je pense beaucoup !\n" +
+                    "J'esperes que tu es pret.. plein de nouvelles aventures t'attendes.."
+            );
+
+            Story.GAMESTART.done();
+        }
+
+
+
         if(Story.TUTOPARLEROLDMAN.getState())
         {
             if(!Story.TUTOSPAWNENNEMI.getState() && !Story.TUTOEND.getState()) {
@@ -161,6 +180,14 @@ public class ScenarioEpee extends Scenario {
                 super.getLesEnnemis().add(firstEnnemi);
 
                 Story.TUTOSPAWNENNEMI.done();
+                Story.OWNBASICSWORD.done();
+
+                // -- play sound here
+                sounds.playZik("victory");
+                EcranJeu.lesMessages.add(
+                        "Vous venez de gagner l'épée basique. Elle va vous permettre de vous defendre contre les ennemis hostiles#" +
+                        "Servez-vous-en pour terrasser votre premier ennemi.. Il est là.."
+                );
             }
             //--
         }

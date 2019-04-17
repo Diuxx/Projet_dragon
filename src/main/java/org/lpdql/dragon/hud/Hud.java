@@ -28,6 +28,7 @@ public class Hud {
      */
     private Image playerbars;
 	private Image epee;
+	private Image epeeBasic;
 	private Image bouclier;
 	private Image feu;
 	private Image air;
@@ -40,6 +41,7 @@ public class Hud {
     public void init() throws SlickException {
         this.playerbars = new Image("data/playerBar.png");
         this.epee = new Image("data/art_combat/epee.png");
+        this.epeeBasic = new Image("data/art_combat/epeeBasic.png");
         this.bouclier = new Image("data/art_combat/bouclier.png");
         this.feu = new Image("data/art_combat/feu.png");
         this.air = new Image("data/art_combat/air.png");
@@ -55,7 +57,7 @@ public class Hud {
             this.levelExperience = new LevelExperience();
     	
         g.resetTransform();
-        //---- Nom du Joeur
+        //---- Nom du Joueur
         Font fontG = g.getFont();
         String nomJoeur = hero.getNom();
         fontG.drawString(60,8, nomJoeur, Color.black);
@@ -66,7 +68,16 @@ public class Hud {
         g.setColor(XP_COLOR_FOND);
         g.fillRect(40, 64, 190, 13);
         g.fillRoundRect(19, 58, 23, 23, 30);
-        
+
+        if(hero.isOwnBasicSword()) {
+            g.setColor(Color.white);
+            g.fillRoundRect(346, 21, 28, 28, 30);
+            g.drawImage(this.epeeBasic, 352, 26);
+        } else {
+            g.setColor(Color.black);
+            g.fillRoundRect(346, 21, 28, 28, 30);
+        }
+
         //-- Arte de combat
         if(hero.getArtEpee()) {
         	g.setColor(Color.white);

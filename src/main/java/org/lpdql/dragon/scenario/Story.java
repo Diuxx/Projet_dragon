@@ -11,6 +11,8 @@ public enum Story {
     TUTOSPAWNENNEMI("tuto_spawn_ennemi", "Apparition du premier ennemi", "Un ennemi est apparu tu dois le tuer..", false),
     TUTOFIRSTENNEMIWASKILLED("tuto_first_kill", "Le premier ennemi est mort", "Bien joué vous avez tué votre premier ennemi..", false),
     TUTOEND("fin_tuto", "Fin du tuto jeu", "Le tuto doit être terminé pour poursuivre..", false),
+    OWNBASICSWORD("ownbasicsword", "Gagner l'épée basique", "Vous n'avez pas encore gagné l'épée basique..", false),
+
 
     GAMESTART("debut_jeu", "le tuto est termine", "Le tuto doit être termine pour debuter le jeu..", false),
 

@@ -182,4 +182,12 @@ public class Objet implements StoryElement {
     public Rectangle getBoundingBox() {
         return this.box;
     }
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public Taille getTaille() {
+        return this.taille;
+    }
 }

@@ -82,7 +82,7 @@ public class EcranJeu extends BasicGameState {
      * Version 0 de la class scenario / histoire du jeu.
      * à modifier commit 30-03
      **/
-    private  org.lpdql.dragon.scenario.Scenario scenario;
+    private org.lpdql.dragon.scenario.Scenario scenario;
 
     /**
      * This variable manage the game Head up display

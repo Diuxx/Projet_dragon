@@ -355,6 +355,14 @@ public class Hero extends Personnage {
         this.niveau = levelGagne;
     }
 
+    public boolean isOwnBasicSword() {
+        return Story.OWNBASICSWORD.getState();
+    }
+
+    public void setOwnBasicSword(boolean stats) {
+        Story.OWNBASICSWORD.setState(stats);
+    }
+
     public boolean getArtEpee() { return Story.ARTEPEE.getState(); }
 
     public boolean isArtEpee() {

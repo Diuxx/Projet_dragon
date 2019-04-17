@@ -7,9 +7,7 @@ package org.lpdql.dragon.ecrans;
  * @author: Diuxx
  */
 public class EcranTransition {
-    /**
-     * Class constructor
-     */
-    public EcranTransition() {
-    }
+
+    private static int to;
+
 }
