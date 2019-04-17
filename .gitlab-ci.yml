@@ -4,7 +4,7 @@ stages:
   - compilation
   - tests_unitaires
 
-build:
+compilation:
   stage: compilation
   script: mvn clean compile
   
