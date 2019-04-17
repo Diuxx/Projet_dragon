@@ -9,6 +9,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
+
 public class EcranLogoUT3 extends BasicGameState {
 	StateBasedGame stateBasedGame;
 	public static final int ID = 1;
@@ -60,16 +66,16 @@ public class EcranLogoUT3 extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranLogoUT3.ID;
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key) {
 			nextStateGame();
 		}
 	}
-	
+
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(EcranLogoIUT.ID);
 	}

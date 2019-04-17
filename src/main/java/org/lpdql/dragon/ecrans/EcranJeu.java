@@ -1,7 +1,6 @@
 package org.lpdql.dragon.ecrans;
 
 import org.lpdql.dragon.carte.Carte;
-import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.hud.Hud;
 import org.lpdql.dragon.hud.Hud_menu;
 import org.lpdql.dragon.jeu.Message;
@@ -13,6 +12,7 @@ import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -115,8 +115,8 @@ public class EcranJeu extends BasicGameState {
         Ressources.charger();
         InterStateComm.setLeHero(new Hero("", new Point(0, 0)));
 
-        // instantiation of the message manager
-        lesMessages = new Message();
+		// instantiation of the message manager
+		EcranJeu.lesMessages = new Message();
 
         hud.init(); // loading h U D
         menu.init(gameContainer); // loading Menu
@@ -196,7 +196,7 @@ public class EcranJeu extends BasicGameState {
         InterStateComm.getLeHero().afficher(graphics);
 
         // drawing message
-        if(lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
+        if(EcranJeu.lesMessages.afficher(graphics, gameContainer, this.camera) || menu.isShowing())
         {
             // when we are displaying menu or message
             // we put the game on pause.
@@ -253,7 +253,7 @@ public class EcranJeu extends BasicGameState {
         this.scenario.mouvement(this.carte, delta, this.lesMessages);
 
         // dangereux
-        savedData.autoSave(206000, this.carte.getNomMap()); // 3minute 26 seconde
+        // savedData.autoSave(206000, this.carte.getNomMap()); // 3minute 26 seconde
 
         // updating camera position
         this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());

@@ -52,13 +52,10 @@ public class EcranMenuPrincipale extends BasicGameState {
 	private Color color1 = Color.white;
 	private Color color2 = Color.white;
 	private Color color3 = Color.white;
-	
-    private ArrayList<String> lesOptions;
-    private int currentOption;
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranMenuPrincipale.ID;
 	}
 
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -161,7 +158,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 		}
 
 	}
-
+	
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key) {

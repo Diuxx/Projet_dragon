@@ -4,12 +4,7 @@ import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
-import org.lpdql.dragon.bataille.BatailleEnnemi;
-import org.lpdql.dragon.bataille.BatailleJoueur;
-import org.lpdql.dragon.personnages.Hero;
-import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Point;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -20,6 +15,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
 
 import static org.lpdql.dragon.monde.Ressources.sounds;
 
@@ -160,7 +161,7 @@ public class EcranGameOver extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranGameOver.ID;
 	}
 
 }

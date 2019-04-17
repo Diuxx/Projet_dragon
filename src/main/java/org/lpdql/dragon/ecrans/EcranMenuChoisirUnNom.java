@@ -3,8 +3,8 @@ package org.lpdql.dragon.ecrans;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
+import org.lpdql.dragon.system.Difficulty;
 import org.lpdql.dragon.ecrans.EcranJeu;
-import org.lpdql.dragon.system.Point;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -15,6 +15,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.Font;
+import java.awt.RenderingHints.Key;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
@@ -55,7 +56,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranMenuChoisirUnNom.ID;
 	}
 
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -124,7 +125,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		if ((posX > 0 && posX < flecheDeRetour.getWidth())
 				&& (posY > (600 - flecheDeRetour.getHeight()) && posY < 600)) {
 			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-				EcranMenuChoisirUnNiveau.timer = 0;
+				EcranMenuChoisirUnNiveau.TIMER = 0;
 				previousStateGame();
 			}
 		}

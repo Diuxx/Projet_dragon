@@ -1,5 +1,6 @@
 package org.lpdql.dragon.ecrans;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -7,6 +8,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+/**
+ * class StateGame
+ *
+ * @author: Ez
+ */
 
 public class EcranLogoIUT extends BasicGameState {
 	public static final int ID = 2;
@@ -59,16 +66,16 @@ public class EcranLogoIUT extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return this.ID;
+		return EcranLogoIUT.ID;
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
-		if (Input.KEY_ENTER == key) {
+		if (Input.KEY_ENTER == key || Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			nextStateGame();
 		}
 	}
-	
+
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(EcranMenuPrincipale.ID);
 	}
