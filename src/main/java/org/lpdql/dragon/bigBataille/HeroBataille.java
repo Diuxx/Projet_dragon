@@ -3,10 +3,8 @@ package org.lpdql.dragon.bigBataille;
 
 import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.monde.Ressources;
-import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.system.Point;
-import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -33,6 +31,8 @@ public class HeroBataille {
     private int pas = 10;
     
     private Image joueurImage;
+    
+    public static int ATK;
 
     /**
      * Class constructor
@@ -107,18 +107,19 @@ public class HeroBataille {
         }
     }
 
-    private Effet swingEffet(EnnemiBataille ennemi) {
-        Effet e = new Effet("swing", ennemi.getPosition(), new Taille(59, 68));
-        e.loadAnimation(Ressources.spriteSheet_swordHit, 0, 2, 0);
-        e.getAnimation().stopAt(2);
-        return e;
-        // for movible effet extend a new class MovibleEffet with Effet, and add depart position & endPosition..
-    }
+//    private Effet swingEffet(EnnemiBataille ennemi) {
+//        Effet e = new Effet("swing", ennemi.getPosition(), new Taille(59, 68));
+//        e.loadAnimation(Ressources.spriteSheet_swordHit, 0, 2, 0);
+//        e.getAnimation().stopAt(2);
+//        return e;
+//        // for movible effet extend a new class MovibleEffet with Effet, and add depart position & endPosition..
+//    }
 
     public void damageTo(EnnemiBataille e) {
         // animate here
-
-        e.takeDamage(this.getATK());
+        e.takeDamage(this.getATK() + HeroBataille.ATK);
+        printHeroAtkLog(this.getATK(), (int) e.getEnnemi().getPointDeVieActuel(), HeroBataille.ATK);
+        HeroBataille.ATK = 0;
     }
 
     public void takeDamage(int damage) {
@@ -177,4 +178,12 @@ public class HeroBataille {
         }
         this.animations.add(animation);
     }
+    
+	public void printHeroAtkLog(int atk, int pv, int crt) {
+		System.out.println();
+		System.out.println("<Bataille> Hero turn");
+		System.out.println(
+				"Hero ATK power      ----> " + atk + " Critical + " + crt);
+		System.out.println("ennemi restant vie  ----> " + pv);
+	}
 }

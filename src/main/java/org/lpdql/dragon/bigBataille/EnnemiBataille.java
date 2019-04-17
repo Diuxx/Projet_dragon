@@ -1,11 +1,8 @@
 package org.lpdql.dragon.bigBataille;
 
 import org.lpdql.dragon.personnages.Ennemi;
-import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.*;
-
-import java.util.List;
 
 /**
  * class EnnemiBataille
@@ -18,8 +15,6 @@ public class EnnemiBataille {
 	private Point position;
 
 	private Image image;
-	private List<Animation> animations;
-	private int frames;
 
 	private Point mouvement;
 
@@ -28,6 +23,8 @@ public class EnnemiBataille {
 	private int pas = -10;
 
 	public boolean aAttaqueStart = false;
+
+	public static int DEFANCE;
 
 	/**
 	 * Class constructor
@@ -74,7 +71,9 @@ public class EnnemiBataille {
 	}
 
 	public void damageTo(HeroBataille e) {
-		e.takeDamage(this.getATK());
+		e.takeDamage(this.getATK() - EnnemiBataille.DEFANCE);
+		printEnnemiAtkLog(this.getATK(), (int) (e.getHero().getPointDeVieActuel()), EnnemiBataille.DEFANCE);
+		EnnemiBataille.DEFANCE = 0;
 	}
 
 	public void takeDamage(int damage) {
@@ -138,4 +137,13 @@ public class EnnemiBataille {
 	public void setTimer(long timer) {
 		this.timer = timer;
 	}
+
+	public void printEnnemiAtkLog(int atk, int pv, int def) {
+		System.out.println();
+		System.out.println("<Bataille> Ennemi turn");
+		System.out.println("Ennemi ATK power  ----> " + atk + " Defance - " + def);
+		System.out.println("hero restant vie  ----> " + pv);
+		
+	}
+
 }
