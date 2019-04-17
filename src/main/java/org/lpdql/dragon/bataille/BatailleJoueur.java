@@ -1,6 +1,9 @@
 package org.lpdql.dragon.bataille;
 
 
+import java.util.List;
+
+import org.lpdql.dragon.bigBataille.AttaqueAnimation;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.singleton.InterStateComm;
@@ -12,6 +15,7 @@ public class BatailleJoueur {
 	private Image joueurImage;
 	private PathAnimation animation;
 	private int value = -50;
+	private List<AttaqueAnimation> attaqueAnimations;
 	
 	public void init() throws SlickException {
 		this.joueur = InterStateComm.getLeHero();

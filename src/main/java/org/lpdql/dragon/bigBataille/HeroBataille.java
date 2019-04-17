@@ -32,6 +32,10 @@ public class HeroBataille {
     private long timerRetour;
     private int pas = 10;
 
+    private Image joueurImage;
+
+    public static int ATK;
+
     // --
     private boolean def = false;
 
@@ -44,13 +48,18 @@ public class HeroBataille {
         // this.image = Ressources.spriteSheet.getSubImage(6, 10);
 
         this.animations = new ArrayList<>();
+        this.joueurImage = Ressources.spriteSheet_hFight.getSubImage(0, 0);
         this.loadAnimation(Ressources.spriteSheet_hFight, 0, 2, 0);
         this.frames = 0;
 
         this.mouvement = new Point(0, 0);
     }
 
-    public void attaque(EnnemiBataille e) {
+    public Image getJoueurImage() {
+		return joueurImage;
+	}
+
+	public void attaque(EnnemiBataille e) {
         aAttaqueStart = true;
         this.timer = System.currentTimeMillis();
         this.timerRetour = System.currentTimeMillis();
@@ -88,8 +97,9 @@ public class HeroBataille {
 
     private void drawCurrentHp(Graphics g, GameContainer gc) {
         g.setColor(Color.white);
-        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), position.getX() - 60 + (95/2) + 60, position.getY() - 26);
+        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), position.getX() - 60 + (95/2) + 50, position.getY() - 29);
     }
+
 
     public boolean aAttaqueStart = false;
     public boolean aDefenceStart = false;
@@ -135,8 +145,9 @@ public class HeroBataille {
 
     public void damageTo(EnnemiBataille e) {
         // animate here
-
-        e.takeDamage(this.getATK());
+        e.takeDamage(this.getATK() + HeroBataille.ATK);
+        printHeroAtkLog(this.getATK(), (int) e.getEnnemi().getPointDeVieActuel(), HeroBataille.ATK);
+        HeroBataille.ATK = 0;
     }
 
     public void takeDamage(int damage) {
@@ -196,4 +207,12 @@ public class HeroBataille {
         }
         this.animations.add(animation);
     }
+
+	public void printHeroAtkLog(int atk, int pv, int crt) {
+		System.out.println();
+		System.out.println("<Bataille> Hero turn");
+		System.out.println(
+				"Hero ATK power      ----> " + atk + " Critical + " + crt);
+		System.out.println("ennemi restant vie  ----> " + pv);
+	}
 }

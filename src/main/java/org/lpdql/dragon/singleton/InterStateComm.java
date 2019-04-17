@@ -85,7 +85,7 @@ public final class InterStateComm {
     public final static void tuerUnEnnemi() {
         if (InterStateComm.unEnnemi != null) {
 
-            MyStdOut.write(MyStdColor.CYAN, "<InterStateComm> Un ennemi est sur le point de mourir");
+//            MyStdOut.write(MyStdColor.CYAN, "<InterStateComm> Un ennemi est sur le point de mourir");
 
             if(unEnnemi.containStoryElement()) {
                 EcranJeu.lesMessages.add(unEnnemi.getStoryElement().getMessage());

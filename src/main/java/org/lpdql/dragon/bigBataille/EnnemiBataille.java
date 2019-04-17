@@ -30,15 +30,17 @@ public class EnnemiBataille {
 
     public boolean aAttaqueStart = false;
 
-    /**
-     * Class constructor
-     */
-    public EnnemiBataille(Ennemi e, GameContainer gc) {
-        this.ennemi = e;
-        this.position = new Point(gc.getWidth() * 3 / 4, gc.getHeight() / 2);
-        this.image = e.getEnnemiImages();
-        this.mouvement = new Point(0, 0);
-    }
+	public static int DEFANCE;
+
+	/**
+	 * Class constructor
+	 */
+	public EnnemiBataille(Ennemi e, GameContainer gc) {
+		this.ennemi = e;
+		this.position = new Point(gc.getWidth() * 3 / 4, gc.getHeight() / 2);
+		this.image = e.getEnnemiImages();
+		this.mouvement = new Point(0, 0);
+	}
 
     public void attaque(HeroBataille e) {
         aAttaqueStart = true;
@@ -51,8 +53,6 @@ public class EnnemiBataille {
     // --
     public void attaqueAnimation(HeroBataille hero) {
         if(System.currentTimeMillis() - this.timerRetour >= 500 && this.pas < 0) {
-
-
             this.damageTo(hero);
             this.pas *= -1;
         }
@@ -74,9 +74,11 @@ public class EnnemiBataille {
         if(aAttaqueStart) attaqueAnimation(e);
     }
 
-    public void damageTo(HeroBataille e) {
-        e.takeDamage(this.getATK());
-    }
+	public void damageTo(HeroBataille e) {
+		e.takeDamage(this.getATK() - EnnemiBataille.DEFANCE);
+		printEnnemiAtkLog(this.getATK(), (int) (e.getHero().getPointDeVieActuel()), EnnemiBataille.DEFANCE);
+		EnnemiBataille.DEFANCE = 0;
+	}
 
     public void takeDamage(int damage) {
         this.ennemi.setPointDeVieActuel(this.ennemi.getPointDeVieActuel() - damage);
@@ -89,21 +91,23 @@ public class EnnemiBataille {
     public void draw(Graphics g, GameContainer gc) {
         this.drawBarHp(g, gc);
         this.drawCurrentHp(g, gc);
-        image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY(),
-                this.getEnnemi().getHeight(), this.getEnnemi().getWidth());
+        image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY());
     }
 
-    private void drawBarHp(Graphics g, GameContainer gc) {
-        g.setColor(Color.white);
-        g.drawRect(gc.getWidth() * 3 / 4 - 50,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30, 130, 20);
-        g.setColor(Color.red);
-        g.fillRect(gc.getWidth() * 3 / 4 - 50 + 1,gc.getHeight() / 2 - this.image.getHeight() / 2 - 30 + 1,Math.max(0, (this.ennemi.getPointDeVieActuel() / this.ennemi.getPointDeVie())) * 130, 20);
-    }
+	private void drawBarHp(Graphics g, GameContainer gc) {
+		g.setColor(Color.white);
+		g.drawRect(gc.getWidth() * 3 / 4 - 40, gc.getHeight() / 2 - this.image.getHeight() / 2 - 15, 130, 20);
+		g.setColor(Color.red);
+		g.fillRect(gc.getWidth() * 3 / 4 - 40 + 1, gc.getHeight() / 2 - this.image.getHeight() / 2 - 15 + 1,
+				Math.max(0, (this.ennemi.getPointDeVieActuel() / this.ennemi.getPointDeVie())) * 130, 20);
 
-    private void drawCurrentHp(Graphics g, GameContainer gc) {
-        g.setColor(Color.white);
-        g.drawString("" + (int) Math.max(0, (int) this.ennemi.getPointDeVieActuel()), gc.getWidth() * 3 / 4 - 4, gc.getHeight() / 2 - this.ennemi.getEnnemiImages().getHeight() / 2 - 29);
-    }
+	}
+
+	private void drawCurrentHp(Graphics g, GameContainer gc) {
+		g.setColor(Color.white);
+		g.drawString("" + (int) Math.max(0, (int) this.ennemi.getPointDeVieActuel()), gc.getWidth() * 3 / 4 + 10,
+				gc.getHeight() / 2 - this.ennemi.getEnnemiImages().getHeight() / 2 - 13);
+	}
 
     public Ennemi getEnnemi() {
         return ennemi;
@@ -133,7 +137,16 @@ public class EnnemiBataille {
         return timer;
     }
 
-    public void setTimer(long timer) {
-        this.timer = timer;
-    }
+	public void setTimer(long timer) {
+		this.timer = timer;
+	}
+
+	public void printEnnemiAtkLog(int atk, int pv, int def) {
+		System.out.println();
+		System.out.println("<Bataille> Ennemi turn");
+		System.out.println("Ennemi ATK power  ----> " + atk + " Defance - " + def);
+		System.out.println("hero restant vie  ----> " + pv);
+
+	}
+
 }

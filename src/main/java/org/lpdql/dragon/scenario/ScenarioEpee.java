@@ -6,6 +6,7 @@ import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
+import org.lpdql.dragon.personnages.ennemis.Goblin;
 import org.lpdql.dragon.personnages.ennemis.Squelette;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
