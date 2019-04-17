@@ -1,11 +1,8 @@
 package org.lpdql.dragon.ecrans;
 
-
 import org.lpdql.dragon.monde.Ressources;
-import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
-import org.lpdql.dragon.system.Difficulty;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -14,7 +11,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
 import static org.lpdql.dragon.monde.Ressources.sounds;
 
@@ -87,7 +83,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 	// private Hero h = null;
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		if(!sounds.playing("menu"))
+		if (!sounds.playing("menu"))
 			sounds.loopZik("menu");
 
 		// h = Save.detectSavedData().getSavedHero();
@@ -105,8 +101,6 @@ public class EcranMenuPrincipale extends BasicGameState {
 		graphics.setFont(trueTypeFont1);
 		graphics.setColor(color1);
 		graphics.drawString(this.text1, text1X, text1Y);
-
-
 
 		graphics.setColor(color2);
 
@@ -158,7 +152,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 		}
 
 	}
-	
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (Input.KEY_ENTER == key) {
@@ -167,7 +161,7 @@ public class EcranMenuPrincipale extends BasicGameState {
 			System.exit(0);
 		}
 	}
-	
+
 	public void nextStateGame() {
 		this.stateBasedGame.enterState(EcranMenuChoisirUnNiveau.ID);
 	}

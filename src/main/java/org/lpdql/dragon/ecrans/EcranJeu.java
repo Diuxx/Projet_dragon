@@ -7,7 +7,6 @@ import org.lpdql.dragon.jeu.Message;
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.sauvegarde.Save;
-import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.GameContainer;
@@ -17,9 +16,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.lpdql.dragon.monde.Ressources.sounds;
 

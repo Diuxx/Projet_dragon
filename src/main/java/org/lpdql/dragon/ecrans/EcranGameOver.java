@@ -24,8 +24,6 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author: Ez
  */
 
-import static org.lpdql.dragon.monde.Ressources.sounds;
-
 public class EcranGameOver extends BasicGameState {
 	public static final int ID = 10;
 	private StateBasedGame stageGame;
