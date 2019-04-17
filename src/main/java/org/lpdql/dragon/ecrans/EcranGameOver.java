@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
+import org.lpdql.dragon.personnages.Hero;
+import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;

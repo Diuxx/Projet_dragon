@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="DDragon" />
         <module name="framagit_PjDragon" />
+        <module name="King" />
         <module name="pjDragon" />
         <module name="projet-dragon" />
         <module name="Projet_dragon" />

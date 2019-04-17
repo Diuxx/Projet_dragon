@@ -98,19 +98,29 @@ public class EcranJeu extends BasicGameState {
      */
     private Hud_menu menu = new Hud_menu();
 
-    /**
-     *
-     * @param gameContainer
-     * @param stateBasedGame
-     * @throws SlickException
-     */
-    @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
-            throws SlickException
-    {
-        // instantiation of the environment
-        this.container = gameContainer;
-        this.gameState = stateBasedGame;
+	// fade in effect
+	private long current = System.currentTimeMillis();
+	Image fadeImage;
+	public static boolean fade;
+	private float alpha = 1f;
+
+
+	/**
+	 *
+	 * @param gameContainer
+	 * @param stateBasedGame
+	 * @throws SlickException
+	 */
+	@Override
+	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+
+		// fade in effect
+		this.fadeImage = new Image("Data/logos/fade.png");
+		this.fadeImage.setAlpha(alpha);
+
+		// instantiation of the environment
+		this.container = gameContainer;
+		EcranJeu.gameState = stateBasedGame;
 
         Ressources.charger();
         InterStateComm.setLeHero(new Hero("", new Point(0, 0)));
@@ -213,28 +223,31 @@ public class EcranJeu extends BasicGameState {
         // drawing hud
         hud.render(graphics, InterStateComm.getLeHero());
 
-        // drawing menu
-        if(menu.isShowing()) {
-            MenuItem menustats = menu.render(gameContainer, graphics);
-            switch(menustats) {
-                case EXITGAME:
-                    container.exit();
-                    break;
-                case BACK:
-                    menu.setShowing(false);
-                    this.setUpdatePaused(false);
-                    break;
-                case SAVEGAME:
-                    savedData.save(InterStateComm.getLeHero(), carte.getFileName());
-                    menu.setShowing(false);
-                    this.setUpdatePaused(false);
-                    lesMessages.add("Une sauvegarde à été effectué...");
-                    break;
-                case NONE:
-                    break;
-            }
-        }
-    }
+		// drawing menu
+		if (menu.isShowing()) {
+			MenuItem menustats = menu.render(gameContainer, graphics);
+			switch (menustats) {
+			case EXITGAME:
+				container.exit();
+				break;
+			case BACK:
+				menu.setShowing(false);
+				this.setUpdatePaused(false);
+				break;
+			case SAVEGAME:
+				savedData.save(InterStateComm.getLeHero(), carte.getFileName());
+				menu.setShowing(false);
+				this.setUpdatePaused(false);
+				EcranJeu.lesMessages.add("Une sauvegarde à été effectué...");
+				break;
+			case NONE:
+				break;
+			}
+		}
+		if (EcranJeu.fade) {
+			// fadeImage.draw();
+		}
+	}
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
@@ -255,9 +268,21 @@ public class EcranJeu extends BasicGameState {
         // dangereux
         // savedData.autoSave(206000, this.carte.getNomMap()); // 3minute 26 seconde
 
-        // updating camera position
-        this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
-    }
+		// updating camera position
+		this.camera.update(gameContainer, this.carte, InterStateComm.getLeHero());
+
+		// fade in effect
+		if (System.currentTimeMillis() - current > 5 && EcranJeu.fade) {
+			this.fadeImage.setAlpha(this.fadeImage.getAlpha() - 0.005f);
+			current = System.currentTimeMillis();
+		}
+
+		// fade in effect
+		if (this.fadeImage.getAlpha() <= 0) {
+			this.fadeImage.destroy();
+			EcranJeu.fade = false;
+		}
+	}
 
     @Override
     public void keyReleased(int key, char c) {
