@@ -120,6 +120,9 @@ public class Bataille extends BasicGameState {
 
             this.stateBasedGame.enterState(EcranJeu.ID);
         }
+        if (Input.KEY_B == key) {
+            // def
+        }
     }
 
     boolean ennemiAttaque = false;

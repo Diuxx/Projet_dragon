@@ -5,13 +5,13 @@
 	},
 	"playerData":{
 		"name":"adc",
-		"lifePoint":350.0,
-		"currentLifePoint":110.0,
-		"x":865.6983,
-		"y":444.19907,
-		"direction":3,
-		"experience":60,
-		"level":2,
+		"lifePoint":400.0,
+		"currentLifePoint":50.0,
+		"x":809.3024,
+		"y":435.19983,
+		"direction":2,
+		"experience":41,
+		"level":3,
 		"gold":500
 	},
 	"accomplishement":{
