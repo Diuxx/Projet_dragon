@@ -11,10 +11,7 @@ import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
-import org.lpdql.dragon.personnages.ennemis.DarkMaster;
-import org.lpdql.dragon.personnages.ennemis.Dragon;
-import org.lpdql.dragon.personnages.ennemis.Goblin;
-import org.lpdql.dragon.personnages.ennemis.Squelette;
+import org.lpdql.dragon.personnages.ennemis.*;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
 import org.newdawn.slick.Graphics;
@@ -426,6 +423,9 @@ public class Scenario {
                     break;
                 case "Dragon":
                     lesEnnemis.add(new Dragon(new Point(x, y), getDirectionFromString(direction)));
+                    break;
+                case "Chauve":
+                    lesEnnemis.add(new Chauve(new Point(x, y), getDirectionFromString(direction)));
                     break;
                 default:
             }
