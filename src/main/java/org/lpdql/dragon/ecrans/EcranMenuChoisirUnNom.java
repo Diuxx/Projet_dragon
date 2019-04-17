@@ -166,7 +166,6 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 			EcranJeu.init = false;
 			// InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
 		}
-
 		this.stateBasedGame.enterState(NEXT_STATE_GAME);
 	}
 
