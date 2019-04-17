@@ -27,7 +27,7 @@ public class PersonnageNonJoueurTest {
     public void testGetDiablogueWithNoDialogueSet() {
         try {
             Message message = nonPlayablecharacter.getDialogue();
-            assertEquals("(appuyez sur [w] pour continuer...)", message.getText().get(0));
+            assertEquals("", message.getText().get(0));
         } catch(NullPointerException e) {
             fail("NullPointerException not should be raised..");
         } catch(IndexOutOfBoundsException f) {
