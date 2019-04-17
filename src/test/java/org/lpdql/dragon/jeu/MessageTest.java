@@ -68,8 +68,8 @@ public class MessageTest {
     @Test
     public void testGetText() {
         this.message.add("test#test22");
-        assertEquals("test (appuyez sur [w] pour continuer...)", this.message.getText(0));
-        assertEquals("test22 (appuyez sur [w] pour continuer...)", this.message.getText(1));
+        assertEquals("test", this.message.getText(0));
+        assertEquals("test22", this.message.getText(1));
 
         try {
             assertEquals(null, this.message.getText(2));

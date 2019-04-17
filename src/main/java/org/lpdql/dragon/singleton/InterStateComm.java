@@ -97,7 +97,6 @@ public final class InterStateComm {
                     Story.TUTOEND.done();
                 }
             }
-
             InterStateComm.unEnnemi.setMort(true);
             InterStateComm.unEnnemi = null;
         }
