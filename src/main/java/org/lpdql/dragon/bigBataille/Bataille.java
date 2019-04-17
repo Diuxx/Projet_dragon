@@ -1,5 +1,6 @@
 package org.lpdql.dragon.bigBataille;
 
+import org.lpdql.dragon.bataille.BatailleEnnemi;
 import org.lpdql.dragon.ecrans.EcranGameOver;
 import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.effet.Effet;
@@ -33,6 +34,15 @@ public class Bataille extends BasicGameState {
 
     private LevelExperience levelExperience;
 
+    // Attaque Animation
+    private List<AttaqueAnimation> attaqueAnimations;
+    GameContainer gameContainer;
+	Graphics graphics;
+	
+	// Bouns atk
+	private int defance;
+	private int atk;
+    
     @Override
     public int getID() {
         return this.ID;
@@ -45,14 +55,17 @@ public class Bataille extends BasicGameState {
         this.ennemiBataille = null;
         this.heroBataille = null;
         this.effetsCombats = null;
+        attaqueAnimations =null;
+        this.gameContainer = null;
+        this.graphics = null;
     }
 
     @Override
-    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-
+    public void enter(GameContainer gameContainer, StateBasedGame game) throws SlickException {
+    	attaqueAnimations = new ArrayList<>();
         sounds.playZik("battle");
-        ennemiBataille = new EnnemiBataille(InterStateComm.getUnEnnemi(), container);
-        heroBataille = new HeroBataille(InterStateComm.getLeHero(), container);
+        ennemiBataille = new EnnemiBataille(InterStateComm.getUnEnnemi(), gameContainer);
+        heroBataille = new HeroBataille(InterStateComm.getLeHero(), gameContainer);
         this.effetsCombats = new ArrayList<>();
         this.levelExperience = new LevelExperience();
     }
@@ -70,7 +83,8 @@ public class Bataille extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         background.draw(0, 0, gameContainer.getWidth(), gameContainer.getHeight());
-
+		this.gameContainer = gameContainer;
+		this.graphics = graphics;
         ennemiBataille.draw(graphics, gameContainer);
         heroBataille.draw(graphics, gameContainer);
 
@@ -81,6 +95,15 @@ public class Bataille extends BasicGameState {
         for(Effet e : this.effetsCombats) {
             e.afficher(graphics);
         }
+        
+    	for (AttaqueAnimation attaqueAnimation : attaqueAnimations) {
+			attaqueAnimation.drawAtq(graphics);
+		}
+
+		for (int i = 0; i < attaqueAnimations.size(); i++) {
+			if (attaqueAnimations.get(i).isEnd())
+				attaqueAnimations.remove(i);
+		}
     }
 
     @Override
@@ -107,11 +130,31 @@ public class Bataille extends BasicGameState {
             return;
 
         if (Input.KEY_A == key) {
-            effetsCombats.add(this.swingEffet(ennemiBataille));
-            Ressources.sounds.playZik("attaque");
-            this.heroBataille.attaque(ennemiBataille);
-            this.heroAttaque = true;
+            heroStartAttaque();
+            System.out.println("Hero ATK power      ----> " + (int) heroBataille.getATK() + " atk + " + this.atk);
+			System.out.println("ennemi restant vie  ----> " + (int) ennemiBataille.getEnnemi().getPointDeVieActuel());
+			System.out.println();
+			this.atk = 0;
         }
+        
+        if (Input.KEY_D == key) {
+        	ennemiStartAttaque();
+        	this.addAttaqueAnimationSurHero("DEFENCE");
+
+			// bloqueur 50% ~ 75% de la ennemi attaque
+			int r = (int) (Math.random() * (25)) + 50;
+			System.out.println("blocker : " + r + "%");
+			this.defance = (int) (heroBataille.getATK() * r / 100);
+			System.out.println("defance blocke : " + this.defance);
+
+			// augmenter la prochine joueur attaque 25% ~ 75%
+			int s = (int) (Math.random() * (50)) + 25;
+			System.out.println("Atk : " + s + "%");
+			this.atk = (int) (heroBataille.getATK() * s / 100);
+			System.out.println("atk augmenter " + this.atk);
+			System.out.println();
+        }
+        
         if (Input.KEY_F == key) {
             InterStateComm.getUnEnnemi().setFriendly(true, 20000); // --
             InterStateComm.getUnEnnemi().seCalme();
@@ -125,15 +168,33 @@ public class Bataille extends BasicGameState {
         }
     }
 
+	private void heroStartAttaque() {
+		effetsCombats.add(this.swingEffet(ennemiBataille));
+		Ressources.sounds.playZik("attaque");
+		this.heroBataille.attaque(ennemiBataille);
+		this.addAttaqueAnimationSurEnnemi(
+				"- " + (int) (Math.min(ennemiBataille.getEnnemi().getPointDeVieActuel(), (int) (heroBataille.getATK() + this.atk))));
+		this.heroAttaque = true;
+		this.atk = 0;
+		
+	}
+	
+	private void ennemiStartAttaque() {
+		Ressources.sounds.playZik("attaque");
+		System.out.println("<Bataille> Ennemi turn");
+		this.ennemiBataille.attaque(this.heroBataille);
+		this.addAttaqueAnimationSurHero(
+				"- " + (int) (Math.min(heroBataille.getHero().getPointDeVieActuel(), (int) (ennemiBataille.getATK() - this.defance))));
+		this.ennemiAttaque = true;
+		this.defance = 0;
+	}
+
     boolean ennemiAttaque = false;
 
     private void checkEnnemiTurn() {
         if(!heroTurn && !ennemiAttaque) {
             // here ennemi attaque
-            Ressources.sounds.playZik("attaque");
-            System.out.println("<Bataille> Ennemi turn");
-            this.ennemiBataille.attaque(this.heroBataille);
-            this.ennemiAttaque = true;
+            ennemiStartAttaque();
         }
         if(ennemiAttaque) {
             if(this.ennemiBataille.isAnnimationEnd())
@@ -173,6 +234,23 @@ public class Bataille extends BasicGameState {
         }
     }
 
+    public void addAttaqueAnimationSurEnnemi(String text) {
+    	float y = (this.gameContainer.getHeight() / 2 - ennemiBataille.getEnnemi().getEnnemiImages().getHeight() / 2 - 50);
+    	if (this.attaqueAnimations.size() > 0) {
+    		y += this.attaqueAnimations.size() * 4 + 10;
+    	}
+		this.attaqueAnimations.add(new AttaqueAnimation(text, 500, this.gameContainer.getWidth() * 3 / 4 ,y));
+	}
+
+    public void addAttaqueAnimationSurHero(String text) {
+    	float y = (this.gameContainer.getHeight() / 2 - heroBataille.getJoueurImage().getHeight() / 2 - 20);
+    	if (this.attaqueAnimations.size() > 0) {
+    		y += this.attaqueAnimations.size() * 4 + 10;
+    	}
+		this.attaqueAnimations.add(new AttaqueAnimation(text, 500, this.gameContainer.getWidth() * 1 / 4 - 60 + (95/2) + 40,
+				y));
+	}
+    
     private Effet swingEffet(EnnemiBataille ennemi) {
         Effet e = new Effet("swing", ennemi.getPosition(), new Taille(59, 68));
         e.loadAnimation(Ressources.spriteSheet_swordHit, 0, 2, 0, new int[] {200, 200});

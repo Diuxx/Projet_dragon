@@ -1,4 +1,4 @@
-package org.lpdql.dragon.bataille;
+package org.lpdql.dragon.bigBataille;
 
 import org.newdawn.slick.Graphics;
 

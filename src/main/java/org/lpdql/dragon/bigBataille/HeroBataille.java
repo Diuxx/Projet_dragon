@@ -31,23 +31,30 @@ public class HeroBataille {
     private long timer;
     private long timerRetour;
     private int pas = 10;
+    
+    private Image joueurImage;
 
     /**
      * Class constructor
      */
     public HeroBataille(Hero e, GameContainer gc) {
         this.hero = e;
-        this.position = new Point(gc.getWidth() * 1 / 4, gc.getHeight() / 2);
+        this.position = new Point(gc.getWidth() * 1 / 4 , gc.getHeight() / 2);
         // this.image = Ressources.spriteSheet.getSubImage(6, 10);
 
         this.animations = new ArrayList<>();
+        this.joueurImage = Ressources.spriteSheet_hFight.getSubImage(0, 0);
         this.loadAnimation(Ressources.spriteSheet_hFight, 0, 2, 0);
         this.frames = 0;
 
         this.mouvement = new Point(0, 0);
     }
 
-    public void attaque(EnnemiBataille e) {
+    public Image getJoueurImage() {
+		return joueurImage;
+	}
+
+	public void attaque(EnnemiBataille e) {
         aAttaqueStart = true;
         this.timer = System.currentTimeMillis();
         this.timerRetour = System.currentTimeMillis();
@@ -77,7 +84,7 @@ public class HeroBataille {
 
     private void drawCurrentHp(Graphics g, GameContainer gc) {
         g.setColor(Color.white);
-        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), position.getX() - 60 + (95/2) + 60, position.getY() - 26);
+        g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), position.getX() - 60 + (95/2) + 50, position.getY() - 29);
     }
 
 
