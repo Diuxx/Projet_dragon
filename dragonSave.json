@@ -4,13 +4,13 @@
 		"map":"dragon"
 	},
 	"playerData":{
-		"name":"vd",
+		"name":"sds",
 		"lifePoint":350.0,
-		"currentLifePoint":110.0,
-		"x":305.50015,
-		"y":750.3973,
-		"direction":1,
-		"experience":60,
+		"currentLifePoint":210.0,
+		"x":209.70213,
+		"y":978.1969,
+		"direction":3,
+		"experience":0,
 		"level":2,
 		"gold":500
 	},

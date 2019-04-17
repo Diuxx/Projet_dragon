@@ -137,9 +137,10 @@ public class Bataille extends BasicGameState {
             this.stateBasedGame.enterState(EcranJeu.ID);
         }
         if (Input.KEY_D == key) {
-            // def
+            // effetsCombats.add(this.swingEffet(ennemiBataille));
             Ressources.sounds.playZik("attaque");
-
+            this.heroBataille.defence(ennemiBataille);
+            this.heroAttaque = true;
         }
     }
 

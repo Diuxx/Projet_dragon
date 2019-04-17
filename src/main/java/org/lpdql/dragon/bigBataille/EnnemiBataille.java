@@ -89,7 +89,8 @@ public class EnnemiBataille {
     public void draw(Graphics g, GameContainer gc) {
         this.drawBarHp(g, gc);
         this.drawCurrentHp(g, gc);
-        image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY());
+        image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY(),
+                this.getEnnemi().getHeight(), this.getEnnemi().getWidth());
     }
 
     private void drawBarHp(Graphics g, GameContainer gc) {

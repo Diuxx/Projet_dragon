@@ -24,7 +24,7 @@ public class Ressources {
     public static SpriteSheet spriteSheet_vieilHomme;
     public static SpriteSheet spriteSheet_letter;
 
-    public static SpriteSheet spriteSheet_important;
+    public static SpriteSheet spriteSheet_important, sheetHero;
 
     private static boolean charger = false;
     private static boolean chargerSound = false;
@@ -37,6 +37,8 @@ public class Ressources {
     public static void charger() throws SlickException {
         if(!charger) {
             // chargement des textures
+            sheetHero = new SpriteSheet("data/sprites/sprite.png", 32, 50);
+
             spriteSheet = new SpriteSheet("data/Tiny32.png", 32, 32);
             spriteSheet_goblin = new SpriteSheet("data/goblin.png", 64, 64);
             spriteSheet_Ennemis = new SpriteSheet("data/Ennemis.png", 32, 32);

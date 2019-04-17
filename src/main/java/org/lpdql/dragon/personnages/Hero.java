@@ -313,14 +313,25 @@ public class Hero extends Personnage {
      *
      */
     private void chargerImage() {
-        this.loadAnimation(Ressources.spriteSheet, 6, 7,  11);
+        /*this.loadAnimation(Ressources.spriteSheet, 6, 7,  11);
         this.loadAnimation(Ressources.spriteSheet, 6, 7,  9);
         this.loadAnimation(Ressources.spriteSheet, 6, 7,  8);
         this.loadAnimation(Ressources.spriteSheet, 6, 7,  10);
+
         this.loadAnimation(Ressources.spriteSheet, 6, 9,  11);
         this.loadAnimation(Ressources.spriteSheet, 6, 9,  9);
         this.loadAnimation(Ressources.spriteSheet, 6, 9,  8);
-        this.loadAnimation(Ressources.spriteSheet, 6, 9,  10);
+        this.loadAnimation(Ressources.spriteSheet, 6, 9,  10);*/
+
+        this.loadAnimation(Ressources.sheetHero, 4, 5, 0);
+        this.loadAnimation(Ressources.sheetHero, 0, 1, 1);
+        this.loadAnimation(Ressources.sheetHero, 0, 1, 2);
+        this.loadAnimation(Ressources.sheetHero, 0, 1, 3);
+
+        this.loadAnimation(Ressources.sheetHero, 0, 5, 0);
+        this.loadAnimation(Ressources.sheetHero, 0, 5, 1);
+        this.loadAnimation(Ressources.sheetHero, 0, 5, 2);
+        this.loadAnimation(Ressources.sheetHero, 0, 5, 3);
     }
 
     public int getNiveau() {

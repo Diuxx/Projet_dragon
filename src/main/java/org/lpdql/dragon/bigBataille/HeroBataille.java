@@ -59,6 +59,14 @@ public class HeroBataille {
             pas *= -1;
     }
 
+    public void defence(EnnemiBataille e) {
+        aDefenceStart = true;
+        this.timer = System.currentTimeMillis();
+        this.timerRetour = System.currentTimeMillis();
+
+        if(pas > 0) pas *= -1;
+    }
+
     public void draw(Graphics g, GameContainer gc) {
         this.drawBarHp(g, gc);
         this.drawCurrentHp(g, gc); // image.draw(mouvement.getX() + position.getX(), mouvement.getY() + position.getY());
@@ -83,8 +91,8 @@ public class HeroBataille {
         g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), position.getX() - 60 + (95/2) + 60, position.getY() - 26);
     }
 
-
     public boolean aAttaqueStart = false;
+    public boolean aDefenceStart = false;
 
     // --
     public void attaqueAnimation(EnnemiBataille ennemi, List<Effet> effets) {
@@ -98,6 +106,20 @@ public class HeroBataille {
             aAttaqueStart = false; // do damage here..
         }
         if(System.currentTimeMillis() - this.timer > 50) {
+            this.mouvement.setX(mouvement.getX() + this.pas);
+            this.timer = System.currentTimeMillis();
+        }
+    }
+
+    public void defeneAnimation(EnnemiBataille ennemi, List<Effet> effets) {
+        if (System.currentTimeMillis() - this.timerRetour >= 500 && this.pas > 0) {
+            this.pas *= -1;
+        }
+        if (System.currentTimeMillis() - this.timerRetour >= 1000 && this.pas < 0) {
+            this.mouvement.setX(0);
+            aDefenceStart = false; // do damage here..
+        }
+        if (System.currentTimeMillis() - this.timer > 50) {
             this.mouvement.setX(mouvement.getX() + this.pas);
             this.timer = System.currentTimeMillis();
         }
@@ -127,11 +149,12 @@ public class HeroBataille {
     }
 
     public boolean isAnnimationEnd() {
-        return !this.aAttaqueStart;
+        return !this.aAttaqueStart && !this.aDefenceStart;
     }
 
     public void update(EnnemiBataille e, List<Effet> effets) {
         if(aAttaqueStart) attaqueAnimation(e, effets);
+        if(aDefenceStart) defeneAnimation(e, effets);
     }
 
     public Hero getHero() {
