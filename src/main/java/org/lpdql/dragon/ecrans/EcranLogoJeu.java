@@ -15,50 +15,58 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author: Ez
  */
 
-public class EcranLogoIUT extends BasicGameState {
-	public static final int ID = 2;
+public class EcranLogoJeu extends BasicGameState {
+	public static final int ID = 17;
 	private StateBasedGame stateBasedGame;
 	private Image logo;
+	private Image present;
 	private float logoX;
 	private float logoY;
 	private long current = System.currentTimeMillis();
-	private float alpha = 0.01f;
-	private boolean f = false;
+	private float alphaLogo = 0.0f;
+	private float alphaPresent = 0.01f;
 
 	@Override
 	public void init(GameContainer game, StateBasedGame stateBasedGame) throws SlickException {
 		this.stateBasedGame = stateBasedGame;
-		logo = new Image("Data/logos/IUT_Logo.png");
-		logo.setAlpha(0.1f);
+		logo = new Image("Data/logos/dragonLogo.png");
+		present = new Image("Data/logos/Present2.png");
+		logo.setAlpha(0.01f);
+		present.setAlpha(0.01f);
 		logoX = (game.getWidth() / 2) - (logo.getWidth() / 2);
 		logoY = (game.getHeight() / 2) - (logo.getHeight() / 2);
 	}
 
 	@Override
 	public void render(GameContainer game, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-		logo.draw(logoX, logoY);
+		logo.draw(logoX, logoY + 60);
+		present.draw((game.getWidth() / 2) - (present.getWidth() / 2), logoY - 50);
 	}
 
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
 
-		if (System.currentTimeMillis() - current > 10 && !f) {
-			logo.setAlpha(logo.getAlpha() + this.alpha);
+		if (System.currentTimeMillis() - current > 20) {
+			present.setAlpha(present.getAlpha() + this.alphaPresent);
+			logo.setAlpha(logo.getAlpha() + this.alphaLogo);
 			current = System.currentTimeMillis();
 		}
 
-		if (logo.getAlpha() > 1f && !f) {
-			f = true;
-			this.alpha = -0.01f;
+		if (present.getAlpha() >= 1f) {
+			this.alphaPresent = -0.01f;
+			this.alphaLogo = 0.01f;
+		}
+
+		if (present.getAlpha() <= 0.0F) {
+			this.alphaLogo = -0.01f;
 		}
 
 		if (logo.getAlpha() <= 0.0F) {
 			nextStateGame();
 		}
 
-		if (System.currentTimeMillis() - current > 1000 && f) {
-			f = false;
-			logo.setAlpha(logo.getAlpha() - 0.01f);
+		if (System.currentTimeMillis() - current > 1000) {
+			present.setAlpha(present.getAlpha() - 0.01f);
 			current = System.currentTimeMillis();
 		}
 
@@ -66,7 +74,7 @@ public class EcranLogoIUT extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return EcranLogoIUT.ID;
+		return EcranLogoJeu.ID;
 	}
 
 	@Override
@@ -77,7 +85,7 @@ public class EcranLogoIUT extends BasicGameState {
 	}
 
 	public void nextStateGame() {
-		this.stateBasedGame.enterState(EcranLogoDev.ID);
+		this.stateBasedGame.enterState(EcranMenuPrincipale.ID);
 	}
 
 }
