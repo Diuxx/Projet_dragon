@@ -51,6 +51,8 @@ public class EnnemiBataille {
     // --
     public void attaqueAnimation(HeroBataille hero) {
         if(System.currentTimeMillis() - this.timerRetour >= 500 && this.pas < 0) {
+
+
             this.damageTo(hero);
             this.pas *= -1;
         }

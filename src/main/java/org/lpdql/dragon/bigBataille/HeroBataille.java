@@ -32,6 +32,9 @@ public class HeroBataille {
     private long timerRetour;
     private int pas = 10;
 
+    // --
+    private boolean def = false;
+
     /**
      * Class constructor
      */

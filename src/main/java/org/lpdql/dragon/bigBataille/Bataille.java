@@ -33,6 +33,12 @@ public class Bataille extends BasicGameState {
 
     private LevelExperience levelExperience;
 
+    private Image BoutonA;
+    private Image BoutonF;
+    private Image BoutonD;
+    private Image BoutonBack;
+
+
     @Override
     public int getID() {
         return this.ID;
@@ -55,6 +61,11 @@ public class Bataille extends BasicGameState {
         heroBataille = new HeroBataille(InterStateComm.getLeHero(), container);
         this.effetsCombats = new ArrayList<>();
         this.levelExperience = new LevelExperience();
+
+        this.BoutonBack =  new Image("data/bataille/BoutonFond.png");
+        this.BoutonA =  new Image("data/bataille/Bouton1.png");
+        this.BoutonF =  new Image("data/bataille/BoutonFuir.png");
+        this.BoutonD =  new Image("data/bataille/BoutonDefendre.png");
     }
 
     @Override
@@ -81,6 +92,11 @@ public class Bataille extends BasicGameState {
         for(Effet e : this.effetsCombats) {
             e.afficher(graphics);
         }
+
+        this.BoutonBack.draw(-170,426);
+        this.BoutonA.draw(10,450);
+        this.BoutonD.draw(10,500);
+        this.BoutonF.draw(10,550);
     }
 
     @Override
@@ -120,8 +136,10 @@ public class Bataille extends BasicGameState {
 
             this.stateBasedGame.enterState(EcranJeu.ID);
         }
-        if (Input.KEY_B == key) {
+        if (Input.KEY_D == key) {
             // def
+            Ressources.sounds.playZik("attaque");
+
         }
     }
 

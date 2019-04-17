@@ -50,7 +50,7 @@
   <object id="25" name="maison-orange" type="position-map" x="316" y="141" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="46" name="ennemis" width="87" height="71">
-  <object id="19" name="Squelette" type="h" x="300" y="810" width="4" height="4"/>
+  <object id="19" name="Chauve" type="h" x="300" y="810" width="4" height="4"/>
   <object id="20" name="Goblin" type="v" x="124" y="950" width="4" height="4"/>
   <object id="21" name="Squelette" type="r" x="512" y="340" width="4" height="4"/>
  </objectgroup>

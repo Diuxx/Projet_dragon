@@ -55,6 +55,7 @@ public class Ressources {
             spriteSheet_hFight = new SpriteSheet("data/sprites/HeroFight.png", 95, 80);
             spriteSheet_swordHit = new SpriteSheet("data/bataille/swordHit.png", 59, 68);
 
+
             charger = true;
 
             // chargement du personnage
