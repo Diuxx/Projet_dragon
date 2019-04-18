@@ -28,6 +28,7 @@ public class EnnemiBataille {
     public boolean aAttaqueStart = false;
 
     public static int DEFANCE;
+    private int defense;
 
     /**
      * Class constructor
@@ -131,6 +132,14 @@ public class EnnemiBataille {
 
     public void setMouvement(Point mouvement) {
         this.mouvement = mouvement;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 
     public long getTimer() {

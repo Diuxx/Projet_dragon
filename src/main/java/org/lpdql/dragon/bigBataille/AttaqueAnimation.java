@@ -31,7 +31,6 @@ public class AttaqueAnimation {
 	public boolean isEnd()
 	{
 		return (System.currentTimeMillis() - this.bufferEnd) > this.duration;
-		
 	}
 
 	public String getText() {

@@ -56,13 +56,7 @@ public final class InterStateComm {
      * @param leHero
      */
     public static void setLeHero(Hero leHero) {
-        // Synchronized empêche toute instanciation multiple
-        // même par différents threads
-        //synchronized (InterStateComm.class) {
-            //if (InterStateComm.leHero == null) {
-                InterStateComm.leHero = leHero;
-            //}
-        //}
+        InterStateComm.leHero = leHero;
     }
 
     /**
@@ -85,8 +79,6 @@ public final class InterStateComm {
     public final static void tuerUnEnnemi() {
         if (InterStateComm.unEnnemi != null) {
 
-//            MyStdOut.write(MyStdColor.CYAN, "<InterStateComm> Un ennemi est sur le point de mourir");
-
             if(unEnnemi.containStoryElement()) {
                 EcranJeu.lesMessages.add(unEnnemi.getStoryElement().getMessage());
                 unEnnemi.storyDone();
@@ -107,7 +99,7 @@ public final class InterStateComm {
     }
 
     // Niveau du jeu
-    private static int niveauDuJeu;
+    private static int niveauDuJeu = 0; // test()
 
     public static int getNiveauDuJeu() {
         return niveauDuJeu;

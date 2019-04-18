@@ -36,6 +36,7 @@ public class HeroBataille {
     private Image joueurImage;
 
     public static int ATK;
+    private int attaque;
 
     /**
      * Class constructor
@@ -196,6 +197,14 @@ public class HeroBataille {
 
     public void setTimer(long timer) {
         this.timer = timer;
+    }
+
+    public int getAttaque() {
+        return attaque;
+    }
+
+    public void setAttaque(int attaque) {
+        this.attaque = attaque;
     }
 
     public boolean isDefenceModeActivated() {
