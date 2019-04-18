@@ -15,179 +15,181 @@ import java.util.ArrayList;
  */
 public class Hud_menu {
 
-    private int hud_x = 0;
-    private int hud_y = 0;
-    private int hud_w = 0;
-    private int hud_h = 0;
-    private static final Color UHD_COLOR = new Color(255, 255, 255);
-    private boolean showing;
+	private int hud_x = 0;
+	private int hud_y = 0;
+	private int hud_w = 0;
+	private int hud_h = 0;
+	private static final Color UHD_COLOR = new Color(255, 255, 255);
+	private boolean showing;
 
-    private Button exit_button;
-    private Button back_button;
-    private Button save_button;
+	private Button exit_button;
+	private Button back_button;
+	private Button save_button;
 
-    private ArrayList<Button> lesBoutons;
-    private int currentButton;
+	private ArrayList<Button> lesBoutons;
+	private int currentButton;
 
-    // --
-    // public static boolean test = false;
-    public long s = 0;
+	// --
+	// public static boolean test = false;
+	public long s = 0;
 
-    public Hud_menu() { /** */ }
+	public Hud_menu() {
+		/** */
+	}
 
-    /**
-     *
-     * @throws SlickException
-     */
-    public void init(GameContainer gc) {
-        hud_w = gc.getWidth() / 2;
-        hud_h = gc.getHeight() / 2;
-        hud_x = (gc.getWidth() / 2) - (hud_w / 2);
-        hud_y = 20;
-        showing = false;
+	/**
+	 *
+	 * @throws SlickException
+	 */
+	public void init(GameContainer gc) {
+		hud_w = gc.getWidth() / 2;
+		hud_h = gc.getHeight() / 2;
+		hud_x = (gc.getWidth() / 2) - (hud_w / 2);
+		hud_y = 20;
+		showing = false;
 
-        this.exit_button = new Button("Quitter",
-                new Rectangle(hud_x + 10, hud_y + 15, (hud_w / 4), 27), MenuItem.EXITGAME);
-        this.exit_button.setSelected(true);
+		this.exit_button = new Button("Quitter", new Rectangle(hud_x + 10, hud_y + 15, (hud_w / 4), 27),
+				MenuItem.EXITGAME);
+		this.exit_button.setSelected(true);
 
-        this.back_button = new Button("Retour au jeu",
-                new Rectangle(hud_x + 10, hud_y + 15 + 35, (hud_w / 4), 27), MenuItem.BACK);
+		this.back_button = new Button("Retour au jeu", new Rectangle(hud_x + 10, hud_y + 15 + 35, (hud_w / 4), 27),
+				MenuItem.BACK);
 
-        this.save_button = new Button("Sauvegarder",
-                new Rectangle(hud_x + 10, hud_y + 15 + 70, (hud_w / 4), 27), MenuItem.SAVEGAME);
+		this.save_button = new Button("Sauvegarder", new Rectangle(hud_x + 10, hud_y + 15 + 70, (hud_w / 4), 27),
+				MenuItem.SAVEGAME);
 
-        lesBoutons = new ArrayList<>();
-        lesBoutons.add(exit_button);
-        lesBoutons.add(back_button);
-        lesBoutons.add(save_button);
+		lesBoutons = new ArrayList<>();
+		lesBoutons.add(exit_button);
+		lesBoutons.add(back_button);
+		lesBoutons.add(save_button);
 
-        this.currentButton = 0;
-    }
+		this.currentButton = 0;
+	}
 
-    /**
-     *
-     * @param// g
-     */
-    public MenuItem render(GameContainer gc, Graphics g) throws SlickException {
-        g.resetTransform();
-        g.setColor(UHD_COLOR);
-        if(Ressources.fondMenu == null) {
-            g.fillRect(hud_x, hud_y, hud_w, hud_h);
-        } else {
-            Ressources.fondMenu.draw(hud_x, hud_y);
-        }
+	/**
+	 *
+	 * @param// g
+	 */
+	public MenuItem render(GameContainer gc, Graphics g) throws SlickException {
+		g.resetTransform();
+		g.setColor(UHD_COLOR);
+		if (Ressources.fondMenu == null) {
+			g.fillRect(hud_x, hud_y, hud_w, hud_h);
+		} else {
+			Ressources.fondMenu.draw(hud_x, hud_y);
+		}
 
-        menuUp(gc);
-        if(gc.getInput().isKeyPressed(Input.KEY_DOWN)) {
-            lesBoutons.get(this.currentButton).setSelected(false);
-            this.currentButton = (this.currentButton + 1) % lesBoutons.size();
-            // System.out.println(this.currentButton);
-            lesBoutons.get(this.currentButton).setSelected(true);
-        }
+		menuUp(gc);
+		if (gc.getInput().isKeyPressed(Input.KEY_DOWN)) {
+			lesBoutons.get(this.currentButton).setSelected(false);
+			this.currentButton = (this.currentButton + 1) % lesBoutons.size();
+			// System.out.println(this.currentButton);
+			lesBoutons.get(this.currentButton).setSelected(true);
+		}
 
-        // affichage
-        for(Button b : this.lesBoutons)
-            b.render(gc, g);
+		// affichage
+		for (Button b : this.lesBoutons)
+			b.render(gc, g);
 
-        if(gc.getInput().isKeyDown(Input.KEY_ENTER)) {
-            this.s = System.currentTimeMillis();
-            // System.out.println(lesBoutons.get(this.currentButton).getMenuItem());
-            return lesBoutons.get(this.currentButton).getMenuItem();
-        }
+		if (gc.getInput().isKeyDown(Input.KEY_ENTER)) {
+			this.s = System.currentTimeMillis();
+			// System.out.println(lesBoutons.get(this.currentButton).getMenuItem());
+			return lesBoutons.get(this.currentButton).getMenuItem();
+		}
 
-        return MenuItem.NONE;
-    }
+		return MenuItem.NONE;
+	}
 
-    private void menuUp(GameContainer gc) {
-        if(gc.getInput().isKeyPressed(Input.KEY_UP)) {
-            int nouvellePosition = ((this.currentButton - 1) < 0) ? (this.currentButton - 1) * -1 : (this.currentButton - 1);
-            lesBoutons.get(this.currentButton).setSelected(false);
-            this.currentButton = (nouvellePosition) % lesBoutons.size();
-            System.out.println(this.currentButton);
-            lesBoutons.get(this.currentButton).setSelected(true);
-        }
-    }
+	private void menuUp(GameContainer gc) {
+		if (gc.getInput().isKeyPressed(Input.KEY_UP)) {
+			int nouvellePosition = ((this.currentButton - 1) < 0) ? (this.currentButton - 1) * -1
+					: (this.currentButton - 1);
+			lesBoutons.get(this.currentButton).setSelected(false);
+			this.currentButton = (nouvellePosition) % lesBoutons.size();
+			System.out.println(this.currentButton);
+			lesBoutons.get(this.currentButton).setSelected(true);
+		}
+	}
 
-    public long getDiff() {
-        return System.currentTimeMillis() - this.s;
-    }
+	public long getDiff() {
+		return System.currentTimeMillis() - this.s;
+	}
 
-    public boolean isShowing() {
-        return showing;
-    }
+	public boolean isShowing() {
+		return showing;
+	}
 
-    public void setShowing(boolean showing) {
-        this.showing = showing;
-    }
+	public void setShowing(boolean showing) {
+		this.showing = showing;
+	}
 
-    private class Button {
-        private String text;
-        private Shape rect;
+	private class Button {
+		private String text;
+		private Shape rect;
+		private boolean selected;
+		private boolean mouseOver;
 
-        private boolean selected;
-        private boolean mouseOver;
+		private MenuItem menuItem;
 
-        private MenuItem menuItem;
+		public Button(String text, Rectangle rect, MenuItem item) {
+			this.text = text;
+			this.rect = rect;
+			this.mouseOver = false;
+			this.selected = false;
 
-        public Button(String text, Rectangle rect, MenuItem item) {
-            this.text = text;
-            this.rect = rect;
-            this.mouseOver = false;
-            this.selected = false;
+			this.menuItem = item;
+		}
 
-            this.menuItem = item;
-        }
+		public void render(GameContainer gc, Graphics g) throws SlickException {
 
-        public void render(GameContainer gc, Graphics g) throws SlickException {
+			int x = gc.getInput().getMouseX();
+			int y = gc.getInput().getMouseY();
+			
+			g.setColor(Color.transparent);
+			g.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 
-            int x = gc.getInput().getMouseX();
-            int y = gc.getInput().getMouseY();
+			if (rect.intersects(new Rectangle(x, y, 1, 1))) {
+				setMouseOver(true);
+				g.setColor(Color.black);
+				g.drawLine(rect.getX() + rect.getWidth(), rect.getY(), rect.getX() + rect.getWidth(),
+						rect.getY() + rect.getHeight());
+				// System.out.println(this.text);
 
-            g.setColor(Color.white);
-            g.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+				g.setColor(Color.red);
+			} else {
+				if (isMouseOver())
+					setMouseOver(false);
 
-            if(rect.intersects(new Rectangle(x, y, 1, 1))) {
-                setMouseOver(true);
-                g.setColor(Color.black);
-                g.drawLine(rect.getX() + rect.getWidth(), rect.getY(),
-                        rect.getX() + rect.getWidth(), rect.getY() + rect.getHeight());
-                // System.out.println(this.text);
+				g.setColor(Color.black);
+			}
+			if (isSelected()) {
+				g.setColor(Color.black);
+				g.drawLine(rect.getX() + rect.getWidth(), rect.getY(), rect.getX() + rect.getWidth(),
+						rect.getY() + rect.getHeight());
+				g.setColor(Color.red);
+			}
+			g.drawString(this.text, rect.getX(), rect.getY());
+		}
 
-                g.setColor(Color.red);
-            } else {
-                if(isMouseOver())
-                    setMouseOver(false);
+		public boolean isMouseOver() {
+			return mouseOver;
+		}
 
-                g.setColor(Color.black);
-            }
-            if(isSelected()) {
-                g.setColor(Color.black);
-                g.drawLine(rect.getX() + rect.getWidth(), rect.getY(),
-                        rect.getX() + rect.getWidth(), rect.getY() + rect.getHeight());
-                g.setColor(Color.red);
-            }
-            g.drawString(this.text, rect.getX(), rect.getY());
-        }
+		public void setMouseOver(boolean mouseOver) {
+			this.mouseOver = mouseOver;
+		}
 
-        public boolean isMouseOver() {
-            return mouseOver;
-        }
+		public boolean isSelected() {
+			return selected;
+		}
 
-        public void setMouseOver(boolean mouseOver) {
-            this.mouseOver = mouseOver;
-        }
+		public void setSelected(boolean selected) {
+			this.selected = selected;
+		}
 
-        public boolean isSelected() {
-            return selected;
-        }
+		public MenuItem getMenuItem() {
+			return menuItem;
+		}
 
-        public void setSelected(boolean selected) {
-            this.selected = selected;
-        }
-
-        public MenuItem getMenuItem() {
-            return menuItem;
-        }
-
-    }
+	}
 }
