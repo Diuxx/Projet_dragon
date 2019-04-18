@@ -1,5 +1,7 @@
 package org.lpdql.dragon.bigBataille;
 
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class AttaqueAnimation {
@@ -21,6 +23,13 @@ public class AttaqueAnimation {
 	}
 	
 	public void drawAtq(Graphics graphics) {
+		graphics.setColor(Color.white);
+		
+		if (this.anims.contains("Critical"))
+			graphics.setColor(Color.red);
+		else if (this.anims.contains("Defense")) 
+			graphics.setColor(Color.green);
+		
 		if (System.currentTimeMillis() - this.bufferDuration > 10) {
 			this.y -= 1;
 			this.bufferDuration = System.currentTimeMillis();

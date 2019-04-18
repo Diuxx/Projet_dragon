@@ -37,6 +37,8 @@ public class Bataille extends BasicGameState {
 
     boolean ennemiAttaque = false;
     boolean fuite = false;
+    
+    private int r;
 
     // Attaque Animation
     private List<AttaqueAnimation> attaqueAnimations;
@@ -175,7 +177,7 @@ public class Bataille extends BasicGameState {
             bloquerProchinEnnemiAtk(); // bloqueur 5% ~ 15% de la prochine ennemi attaque
             augmenterProchineHeroAtk(); // augmenter la prochine hero attaque 25% ~ 75%
 
-            this.addAttaqueAnimationSurHero("Defense " + ennemiBataille.getDefenseBonus() + "%");
+           // this.addAttaqueAnimationSurHero("Defense " + this.r + "%");
 
             this.heroAttaque = true;
         }
@@ -201,9 +203,9 @@ public class Bataille extends BasicGameState {
         this.ennemiBataille.attaque(this.heroBataille);
 
         this.addAttaqueAnimationSurHero("- " + (ennemiBataille.getATK() - /*EnnemiBataille.DEFANCE*/this.ennemiBataille.getDefenseBonus()));
-        /*if (EnnemiBataille.DEFANCE > 0) {
-            this.addAttaqueAnimationSurHero("Defance " + EnnemiBataille.DEFANCE + "%");
-        }*/
+        if (this.ennemiBataille.getDefenseBonus() != 0)
+        	this.addAttaqueAnimationSurHero("Defense " + this.ennemiBataille.getDefenseBonus() + "");
+
         this.ennemiAttaque = true;
     }
 
@@ -270,7 +272,7 @@ public class Bataille extends BasicGameState {
         float widthPosition = this.gameContainer.getWidth() * 1 / 4 - 60 + (95 / 2) + 40;
         int tempsDeAfficher = 500;
         if (!this.attaqueAnimations.isEmpty()) {
-            heightPostion += 15;
+            heightPostion += this.attaqueAnimations.size() * 15;
             widthPosition -= 25;
             tempsDeAfficher += 400;
         }
@@ -278,7 +280,7 @@ public class Bataille extends BasicGameState {
     }
 
     private void bloquerProchinEnnemiAtk() {
-        int r = (int) (Math.random() * (10)) + 5;
+        this.r = (int) (Math.random() * (10)) + 5;
         System.out.print("Heros blocker " + r + "%");
         this.ennemiBataille.setDefenseBonus(
                 (int)(this.heroBataille.getATK() * r / 100f)

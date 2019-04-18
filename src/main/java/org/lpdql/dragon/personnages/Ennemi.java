@@ -79,12 +79,18 @@ public class Ennemi extends Personnage implements StoryElement {
 	/**
 	 * image representing the enemy
 	 */
-	private Image ennemiImages, imageCombat;
+	private Image ennemiImages;
+	private Image imageCombat;
 
 	/**
 	 * Enemy statistics
 	 */
 	private int niveau;
+
+	public void setNiveau(int niveau) {
+		this.niveau = niveau;
+	}
+
 
 	protected int experience;
 	private float atk;
@@ -146,17 +152,7 @@ public class Ennemi extends Personnage implements StoryElement {
 		this.niveau = niveau;
 		setEnnemiStatistques(this.niveau);
 		setAtk(this.niveau);
-		switch (InterStateComm.getNiveauDuJeu()) {
-		case Difficulty.FACILE:
-			this.experience = niveau * 5 + 50;
-			break;
-		case Difficulty.DIFFICILE:
-			this.experience = niveau * 5 + 40;
-			break;
-		case Difficulty.TRES_DIFFICILE:
-			this.experience = niveau * 5 + 20;
-			break;
-		}
+		setExp(this.niveau);
 
         // when an instance of ennemi is created
 		// he is alive (drawable)
@@ -168,6 +164,21 @@ public class Ennemi extends Personnage implements StoryElement {
         this.ennemiImages = ennemiImages;
         imageCombat = ennemiImages;
     }
+
+	public void setExp(int niveau) {
+		switch (InterStateComm.getNiveauDuJeu()) {
+		case Difficulty.FACILE:
+			this.experience = niveau * 5 + 50;
+			break;
+		case Difficulty.DIFFICILE:
+			this.experience = niveau * 5 + 40;
+			break;
+		case Difficulty.TRES_DIFFICILE:
+			this.experience = niveau * 5 + 20;
+			break;
+			default:
+		}
+	}
 
 	/**
 	 * Construtor overload of Personnage without x and y
