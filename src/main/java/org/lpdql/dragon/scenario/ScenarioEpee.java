@@ -6,7 +6,6 @@ import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.objets.ObjetMessage;
 import org.lpdql.dragon.personnages.PersonnageNonJoueur;
-import org.lpdql.dragon.personnages.ennemis.Goblin;
 import org.lpdql.dragon.personnages.ennemis.Squelette;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.system.*;
@@ -22,8 +21,6 @@ import static org.lpdql.dragon.monde.Ressources.*;
 public class ScenarioEpee extends Scenario {
 
     private final Taille BASIC_SIZE = new Taille(16, 16);
-    private final Taille LARGE_SIZE = new Taille(32, 32);
-    private final Taille BIG_SIZE = new Taille(64, 64);
 
     /**
      * Class constructor
@@ -192,13 +189,6 @@ public class ScenarioEpee extends Scenario {
             Story.GAMESTART.done();
         }
         // --
-    }
-
-    /**
-     *
-     */
-    private void checkEvents() {
-
     }
 
     /**

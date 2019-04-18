@@ -80,7 +80,6 @@ public class Ennemi extends Personnage implements StoryElement {
 	 * image representing the enemy
 	 */
 	private Image ennemiImages;
-	private Image imageCombat;
 
 	/**
 	 * Enemy statistics
@@ -162,7 +161,6 @@ public class Ennemi extends Personnage implements StoryElement {
         lesPersonnages = new ArrayList<>();
 
         this.ennemiImages = ennemiImages;
-        imageCombat = ennemiImages;
     }
 
 	public void setExp(int niveau) {

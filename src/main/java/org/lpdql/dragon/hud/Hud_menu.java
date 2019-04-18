@@ -129,15 +129,6 @@ public class Hud_menu {
 
         private MenuItem menuItem;
 
-        public Button(String text, Rectangle rect) {
-            this.text = text;
-            this.rect = rect;
-            this.mouseOver = false;
-            this.selected = false;
-
-            this.menuItem = MenuItem.NONE;
-        }
-
         public Button(String text, Rectangle rect, MenuItem item) {
             this.text = text;
             this.rect = rect;
@@ -198,8 +189,5 @@ public class Hud_menu {
             return menuItem;
         }
 
-        public void setMenuItem(MenuItem menuItem) {
-            this.menuItem = menuItem;
-        }
     }
 }

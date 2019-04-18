@@ -1,13 +1,10 @@
 package org.lpdql.dragon.monde;
 
-import org.lpdql.dragon.personnages.Hero;
-import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.sound.JMusic;
 import org.lpdql.dragon.sound.JSound;
 import org.lpdql.dragon.sound.MyJSound;
 import org.lpdql.dragon.system.MyStdColor;
 import org.lpdql.dragon.system.MyStdOut;
-import org.lpdql.dragon.system.Point;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;

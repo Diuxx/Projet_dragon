@@ -63,21 +63,6 @@ public class Scenario {
     private List<Effet> lesEffets;
 
     /**
-     * Constant, Position of "ennemis" layer on the map file.
-     */
-    private final int ENNEMIS_LAYER_INDEX = 1;
-
-    /**
-     * Constant, Position of "pnjs" layer on the map file.
-     */
-    private final int PNJS_LAYER_INDEX = 2;
-
-    /**
-     * Constant, Position of "objets" layer on the map file.
-     */
-    private final int OBJETS_LAYER_INDEX = 3;
-
-    /**
      * Class constructor, instantiate each needed list
      * <tt>lesObjets</tt>
      * <tt>lesPnj</tt>

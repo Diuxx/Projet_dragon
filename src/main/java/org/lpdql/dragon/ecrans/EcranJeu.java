@@ -166,7 +166,7 @@ public class EcranJeu extends BasicGameState {
 
 		if (victory) {
 			sounds.playZik("victory");
-			this.victory = false;
+			EcranJeu.victory = false;
 		}
 	}
 
@@ -194,9 +194,9 @@ public class EcranJeu extends BasicGameState {
 
 		// display non-player characters and enemies
 		if (scenario != null) {
-			scenario.afficherPnj(graphics, this.lesMessages);
+			scenario.afficherPnj(graphics, EcranJeu.lesMessages);
 			scenario.afficherEnnemis(graphics);
-			scenario.afficherObjets(graphics, this.lesMessages);
+			scenario.afficherObjets(graphics, EcranJeu.lesMessages);
 		}
 
 		// drawing Hero

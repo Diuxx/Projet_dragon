@@ -1,7 +1,5 @@
 package org.lpdql.dragon.effet;
 
-
-import org.lpdql.dragon.ecrans.EcranJeu;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
 import org.newdawn.slick.Animation;

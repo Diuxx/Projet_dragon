@@ -136,7 +136,7 @@ public class Save {
      * @see Hero
      */
     public boolean save(Hero hero, String currentMapName) {
-        this.deleteSave();
+        Save.deleteSave();
 
         JsonObject save = new JsonObject();
         save.addProperty("gameName", "DragonProject");
