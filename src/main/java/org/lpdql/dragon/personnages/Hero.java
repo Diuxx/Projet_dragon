@@ -91,7 +91,10 @@ public class Hero extends Personnage {
      */
     public Hero(String nom, Point position)
     {
-        super(nom, position, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
+        //super(nom, position, Taille.LARGE_SIZE, HEROLIFE,  HEROSPEED);
+        super(nom, position, new Taille(32, 40), HEROLIFE,  HEROSPEED);
+        //super(nom, position, new Taille(18, 28), HEROLIFE,  HEROSPEED);
+
         this.lesPnj = new ArrayList<>();
         this.lesObjets = new ArrayList<>();
         this.experience = 0;
@@ -323,15 +326,16 @@ public class Hero extends Personnage {
         this.loadAnimation(Ressources.spriteSheet, 6, 9,  8);
         this.loadAnimation(Ressources.spriteSheet, 6, 9,  10);*/
 
+        this.loadAnimation(Ressources.sheetHero, 0, 1, 2);
         this.loadAnimation(Ressources.sheetHero, 4, 5, 0);
         this.loadAnimation(Ressources.sheetHero, 0, 1, 1);
-        this.loadAnimation(Ressources.sheetHero, 0, 1, 2);
         this.loadAnimation(Ressources.sheetHero, 0, 1, 3);
 
-        this.loadAnimation(Ressources.sheetHero, 0, 5, 0);
-        this.loadAnimation(Ressources.sheetHero, 0, 5, 1);
-        this.loadAnimation(Ressources.sheetHero, 0, 5, 2);
-        this.loadAnimation(Ressources.sheetHero, 0, 5, 3);
+        this.loadAnimation(Ressources.sheetHero, 1, 5, 2);
+        this.loadAnimation(Ressources.sheetHero, 1, 5, 0);
+        this.loadAnimation(Ressources.sheetHero, 1, 5, 1);
+        this.loadAnimation(Ressources.sheetHero, 1, 5, 3);
+        //super.setCenterY(super.getHeight() - 3);
     }
 
     public int getNiveau() {

@@ -231,6 +231,7 @@ public class Personnage {
         // --
         if( this.animation.size() > 0) {
             g.drawAnimation(this.animation.get(direction + (moving ? 4 : 0)), x - centerX, y - centerY);
+
         } else {
             // if there is no animation
             g.setColor(Color.black);
@@ -438,6 +439,14 @@ public class Personnage {
 
     public int getCenterY() {
         return centerY;
+    }
+
+    public void setCenterX(int center) {
+        this.centerX = center;
+    }
+
+    public void setCenterY(int center) {
+        this.centerY = center;
     }
 
     public void setX(float x) {

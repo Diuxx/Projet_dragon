@@ -48,7 +48,6 @@ public class Effet implements IDrawable {
             g.setColor(Color.black);
             g.fill(new Rectangle(this.position.getX(), this.position.getY(), this.taille.getLargeur(), this.taille.getHauteur()));
         }
-
     }
 
     @Override
@@ -68,6 +67,17 @@ public class Effet implements IDrawable {
         Animation animation = new Animation();
         for (int x = startX; x < endX; x++) {
             animation.addFrame(spriteSheet.getSprite(x, y), duration[x]);
+        }
+        this.animations.add(animation);
+    }
+
+    public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y, int h, int[] duration) {
+        Animation animation = new Animation();
+        for(int i=0; i<h; i++)
+        {
+            for (int x = startX; x < endX; x++) {
+                animation.addFrame(spriteSheet.getSprite(x, y + i), duration[i]);
+            }
         }
         this.animations.add(animation);
     }

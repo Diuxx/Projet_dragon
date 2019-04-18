@@ -3,7 +3,6 @@ package org.lpdql.dragon.bigBataille;
 
 import org.lpdql.dragon.effet.Effet;
 import org.lpdql.dragon.monde.Ressources;
-import org.lpdql.dragon.personnages.Ennemi;
 import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
@@ -32,19 +31,18 @@ public class HeroBataille {
     private long timerRetour;
     private int pas = 10;
 
+    private boolean defenceMode;
+
     private Image joueurImage;
 
     public static int ATK;
-
-    // --
-    private boolean def = false;
 
     /**
      * Class constructor
      */
     public HeroBataille(Hero e, GameContainer gc) {
         this.hero = e;
-        this.position = new Point(gc.getWidth() * 1 / 4, gc.getHeight() / 2);
+        this.position = new Point(gc.getWidth() * 1 / 4 , gc.getHeight() / 2);
         // this.image = Ressources.spriteSheet.getSubImage(6, 10);
 
         this.animations = new ArrayList<>();
@@ -53,13 +51,14 @@ public class HeroBataille {
         this.frames = 0;
 
         this.mouvement = new Point(0, 0);
+        this.defenceMode = false;
     }
 
     public Image getJoueurImage() {
-		return joueurImage;
-	}
+        return joueurImage;
+    }
 
-	public void attaque(EnnemiBataille e) {
+    public void attaque(EnnemiBataille e) {
         aAttaqueStart = true;
         this.timer = System.currentTimeMillis();
         this.timerRetour = System.currentTimeMillis();
@@ -72,6 +71,9 @@ public class HeroBataille {
         aDefenceStart = true;
         this.timer = System.currentTimeMillis();
         this.timerRetour = System.currentTimeMillis();
+
+        bloquerProchinEnnemiAtk(); // bloqueur 5% ~ 15% de la prochine ennemi attaque
+        augmenterProchineHeroAtk(); // augmenter la prochine hero attaque 25% ~ 75%
 
         if(pas > 0) pas *= -1;
     }
@@ -107,7 +109,6 @@ public class HeroBataille {
     // --
     public void attaqueAnimation(EnnemiBataille ennemi, List<Effet> effets) {
         if(System.currentTimeMillis() - this.timerRetour >= 500 && this.pas > 0) {
-
             this.damageTo(ennemi);
             this.pas *= -1;
         }
@@ -122,25 +123,22 @@ public class HeroBataille {
     }
 
     public void defeneAnimation(EnnemiBataille ennemi, List<Effet> effets) {
-        if (System.currentTimeMillis() - this.timerRetour >= 500 && this.pas > 0) {
-            this.pas *= -1;
-        }
-        if (System.currentTimeMillis() - this.timerRetour >= 1000 && this.pas < 0) {
+        if (System.currentTimeMillis() - this.timerRetour >= 250 && this.pas < 0) this.pas *= -1;
+        if (System.currentTimeMillis() - this.timerRetour >= 500 && this.pas > 0) this.pas *= -1;
+        if (System.currentTimeMillis() - this.timerRetour >= 750 && this.pas < 0) this.pas *= -1;
+
+        if (System.currentTimeMillis() - this.timerRetour >= 1000 && this.pas > 0) {
+
+            this.setDefenceMode(true);
             this.mouvement.setX(0);
+            this.mouvement.setY(0);
             aDefenceStart = false; // do damage here..
         }
-        if (System.currentTimeMillis() - this.timer > 50) {
+        if (System.currentTimeMillis() - this.timer > 100) {
             this.mouvement.setX(mouvement.getX() + this.pas);
+            // this.mouvement.setY(mouvement.getY() - this.pas);
             this.timer = System.currentTimeMillis();
         }
-    }
-
-    private Effet swingEffet(EnnemiBataille ennemi) {
-        Effet e = new Effet("swing", ennemi.getPosition(), new Taille(59, 68));
-        e.loadAnimation(Ressources.spriteSheet_swordHit, 0, 2, 0);
-        e.getAnimation().stopAt(2);
-        return e;
-        // for movible effet extend a new class MovibleEffet with Effet, and add depart position & endPosition..
     }
 
     public void damageTo(EnnemiBataille e) {
@@ -200,6 +198,14 @@ public class HeroBataille {
         this.timer = timer;
     }
 
+    public boolean isDefenceModeActivated() {
+        return defenceMode;
+    }
+
+    public void setDefenceMode(boolean defenceMode) {
+        this.defenceMode = defenceMode;
+    }
+
     public void loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
         Animation animation = new Animation();
         for (int x = startX; x < endX; x++) {
@@ -208,11 +214,42 @@ public class HeroBataille {
         this.animations.add(animation);
     }
 
-	public void printHeroAtkLog(int atk, int pv, int crt) {
-		System.out.println();
-		System.out.println("<Bataille> Hero turn");
-		System.out.println(
-				"Hero ATK power      ----> " + atk + " Critical + " + crt);
-		System.out.println("ennemi restant vie  ----> " + pv);
-	}
+    public void printHeroAtkLog(int atk, int pv, int crt) {
+        System.out.println();
+        System.out.println("<Bataille> Hero turn");
+        System.out.println(
+                "Hero ATK power      ----> " + atk + " Critical + " + crt);
+        System.out.println("ennemi restant vie  ----> " + pv);
+    }
+
+    private void bloquerProchinEnnemiAtk() {
+        int r = (int) (Math.random() * (10)) + 5;
+        System.out.print("Heros blocker " + r + "%");
+        EnnemiBataille.DEFANCE = (int) (this.getATK() * r / 100);
+        System.out.println(" (+" + EnnemiBataille.DEFANCE + " Points de vie)");
+    }
+
+    private void augmenterProchineHeroAtk() {
+        int s = (int) (Math.random() * (50)) + 25;
+        System.out.print("Prochine attaque augmenter " + s + "%");
+        HeroBataille.ATK = (int) (this.getATK() * s / 100);
+        System.out.println(" (+" + HeroBataille.ATK + " Critical)");
+        System.out.println();
+    }
+
+    public Effet swingEffet(EnnemiBataille ennemi) {
+        Effet e = new Effet("swing", ennemi.getPosition(), new Taille(59, 68));
+        e.loadAnimation(Ressources.spriteSheet_swordHit, 0, 2, 0, new int[] { 200, 200 });
+        e.getAnimation().stopAt(1);
+        return e;
+        // for movible effet extend a new class MovibleEffet with Effet, and add depart
+        // position & endPosition..
+    }
+
+    public Effet shiealdEffet() {
+        Effet e = new Effet("shield", new Point(this.getPosition().getX(), this.getPosition().getY() - 32), new Taille(128, 128));
+        e.loadAnimation(Ressources.spriteSheet_shield, 0, 3, 0, 3, new int[] { 100, 100, 100});
+        e.getAnimation().stopAt(8);
+        return e;
+    }
 }

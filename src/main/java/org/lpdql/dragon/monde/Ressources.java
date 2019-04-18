@@ -14,7 +14,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Ressources {
 
-    public static SpriteSheet spriteSheet, spriteSheet_hFight, spriteSheet_swordHit;
+    public static SpriteSheet spriteSheet, spriteSheet_hFight, spriteSheet_swordHit, spriteSheet_shield;
     public static SpriteSheet spriteSheet_goblin;
     public static SpriteSheet spriteSheet_Ennemis;
     public static SpriteSheet spriteSheet_PNJ;
@@ -37,7 +37,8 @@ public class Ressources {
     public static void charger() throws SlickException {
         if(!charger) {
             // chargement des textures
-            sheetHero = new SpriteSheet("data/sprites/sprite.png", 32, 50);
+            sheetHero = new SpriteSheet("data/sprites/sprite.png", 32, 40);
+            //sheetHero = new SpriteSheet("data/sprites/sprite.png", 18, 28);
 
             spriteSheet = new SpriteSheet("data/Tiny32.png", 32, 32);
             spriteSheet_goblin = new SpriteSheet("data/goblin.png", 64, 64);
@@ -57,6 +58,7 @@ public class Ressources {
             spriteSheet_hFight = new SpriteSheet("data/sprites/HeroFight.png", 95, 80);
             spriteSheet_swordHit = new SpriteSheet("data/bataille/swordHit.png", 59, 68);
 
+            spriteSheet_shield = new SpriteSheet("data/bataille/bouclier.png", 128, 128);
 
             charger = true;
 
@@ -82,6 +84,12 @@ public class Ressources {
         sounds.addSound(new JSound("attaque", "data/sound/swing.wav"));
         sounds.addSound(new JSound("victory", "data/sound/victory.ogg"));
         sounds.addSound(new JSound("beep", "data/sound/beep.wav"));
+        sounds.addSound(new JSound("armure", "data/sound/armure.ogg"));
+
+        sounds.addSound(new JSound("sword", "data/sound/sword.wav"));
+        sounds.addSound(new JSound("leave", "data/sound/leave.wav"));
+        sounds.addSound(new JSound("critical", "data/sound/critical.ogg"));
+        sounds.addSound(new JSound("critical2", "data/sound/critical2.ogg"));
 
         sounds.addSound(new JMusic("battle", "data/sound/battle.ogg"));
 
