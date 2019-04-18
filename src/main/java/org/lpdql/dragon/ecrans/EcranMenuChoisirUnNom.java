@@ -1,8 +1,10 @@
 package org.lpdql.dragon.ecrans;
 
+import org.lpdql.dragon.personnages.Hero;
 import org.lpdql.dragon.sauvegarde.Save;
 import org.lpdql.dragon.singleton.InterStateComm;
 import org.lpdql.dragon.ecrans.EcranJeu;
+import org.lpdql.dragon.system.Point;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -161,7 +163,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 		Save.deleteSave();
 		if(EcranJeu.init) {
 			EcranJeu.init = false;
-			// InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
+			InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
 		}
 		EcranJeu.fade = true;
 		this.stateBasedGame.enterState(NEXT_STATE_GAME);

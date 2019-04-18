@@ -81,7 +81,7 @@ public class EcranGameOver extends BasicGameState {
 		/*if(!sounds.playing("menu"))
 			sounds.loopZik("menu");*/
 
-		h = Save.detectSavedData().getSavedHero();
+		// h = Save.detectSavedData().getSavedHero();
 	}
 
 	@Override
