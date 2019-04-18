@@ -13,7 +13,6 @@ import org.lpdql.dragon.system.*;
 import org.newdawn.slick.SlickException;
 
 import static org.lpdql.dragon.monde.Ressources.*;
-import static org.lpdql.dragon.system.Taille.BASIC_SIZE;
 
 /**
  * class ScenarioEpee
@@ -21,6 +20,8 @@ import static org.lpdql.dragon.system.Taille.BASIC_SIZE;
  * @author: Diuxx
  */
 public class ScenarioEpee extends Scenario {
+
+    private final Taille BASIC_SIZE = new Taille(16, 16);
 
     /**
      * Class constructor
@@ -189,13 +190,6 @@ public class ScenarioEpee extends Scenario {
             Story.GAMESTART.done();
         }
         // --
-    }
-
-    /**
-     *
-     */
-    private void checkEvents() {
-
     }
 
     /**

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.lpdql.dragon.personnages.Hero;
-import org.lpdql.dragon.singleton.InterStateComm;
 
 public class LevelExperience {
 

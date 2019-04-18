@@ -19,7 +19,6 @@ public class Hud {
      *
      */
     private static final Color LIFE_COLOR = new Color(255, 0, 0);
-    private static final Color MANA_COLOR = new Color(0, 0, 255);
     private static final Color XP_COLOR_FOND = new Color(255, 255, 224); 
     private static final Color XP_COLOR = new Color(100, 149, 237);
 

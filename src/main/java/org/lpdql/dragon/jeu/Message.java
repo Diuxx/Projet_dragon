@@ -2,7 +2,6 @@ package org.lpdql.dragon.jeu;
 
 import org.lpdql.dragon.monde.Ressources;
 import org.lpdql.dragon.system.Camera;
-import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -61,7 +60,6 @@ public class Message {
      * @param text the text that needs to be added
      */
     public void add(String text) {
-        int ligne = 0;
         String[] listDeChaine = text.split("#");
         for(String chaine : listDeChaine)
         {
