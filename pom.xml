@@ -45,14 +45,6 @@
     <systemPath>${project.basedir}/lib/jnlp.jar</systemPath>
 </dependency>
 
-
-<dependency>
-    <groupId>org.sikuli</groupId>
-    <artifactId>sikuli-api</artifactId>
-    <version>1.2.0</version>
-</dependency>
-
-    
   </dependencies>
 
 
