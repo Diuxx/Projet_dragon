@@ -60,7 +60,7 @@ public class EcranLogoDev extends BasicGameState {
 	@Override
 	public void init(GameContainer game, StateBasedGame stateBasedGame) throws SlickException {
 		this.stateBasedGame = stateBasedGame;
-		font1 = new Font("Times New Roman", Font.PLAIN, 19);
+		font1 = new Font("Times New Roman", Font.PLAIN, 22);
 		font2 = new Font("Tribal Dragon", Font.BOLD, 55);
 		AffineTransform affinetransform = new AffineTransform();
 		trueTypeFont1 = new TrueTypeFont(font1, true);
