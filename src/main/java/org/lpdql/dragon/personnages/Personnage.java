@@ -129,7 +129,9 @@ public class Personnage {
     }
 
     public Personnage(String nom) {
-    	this.nom = nom;
+        this.pointDeVie = 100;
+        this.pointDeVieActuel = 100;
+        this.nom = nom;
     }
 
     /**

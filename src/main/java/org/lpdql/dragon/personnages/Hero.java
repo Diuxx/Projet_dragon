@@ -108,7 +108,7 @@ public class Hero extends Personnage {
     }
 
     public Hero(String nom) {
-    	super(nom);
+        super(nom,0,0, 0, 0, 100, 0.1f);
     	this.niveau = HEROLEVEL;
     }
 

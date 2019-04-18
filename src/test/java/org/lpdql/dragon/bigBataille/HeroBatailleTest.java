@@ -9,7 +9,7 @@ import org.lpdql.dragon.system.Point;
 
 import static org.junit.Assert.*;
 
-public class EnnemiBatailleTest {
+public class HeroBatailleTest {
 
     private EnnemiBataille ennemiBataille;
 
@@ -36,14 +36,17 @@ public class EnnemiBatailleTest {
 
     @Test
     public void damageToTest() {
-        this.ennemiBataille.damageTo(this.heroBataille);
-        assertEquals(80, this.heroBataille.getHero().getPointDeVieActuel(),  0.001);
-        assertEquals(0, this.ennemiBataille.getDefenseBonus());
     }
 
     @Test
     public void takeDamageTest() {
-        this.ennemiBataille.takeDamage(10);
-        assertEquals(1 * 30 + 150 - 10, this.ennemiBataille.getEnnemi().getPointDeVieActuel(),  0.001);
+    }
+
+    @Test
+    public void getATKTest() {
+    }
+
+    @Test
+    public void setHeroTest() {
     }
 }

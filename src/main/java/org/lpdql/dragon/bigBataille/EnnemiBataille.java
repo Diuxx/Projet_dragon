@@ -83,9 +83,6 @@ public class EnnemiBataille {
     }
 
     public void damageTo(HeroBataille e) {
-        /*e.takeDamage(this.getATK() - EnnemiBataille.DEFANCE);
-        printEnnemiAtkLog(this.getATK(), (int) (e.getHero().getPointDeVieActuel()), EnnemiBataille.DEFANCE);
-        EnnemiBataille.DEFANCE = 0;*/
         e.takeDamage(this.getATK() - this.getDefenseBonus());
         printEnnemiAtkLog(this.getATK(), (int) (e.getHero().getPointDeVieActuel()), this.getDefenseBonus());
         this.setDefenseBonus(0);
@@ -166,7 +163,6 @@ public class EnnemiBataille {
         System.out.println("<Bataille> Ennemi turn");
         System.out.println("Ennemi ATK power  ----> " + atk + " Defance - " + def);
         System.out.println("hero restant vie  ----> " + pv);
-
     }
 
     public Effet swingEffet(HeroBataille h) {
