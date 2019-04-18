@@ -28,7 +28,7 @@ public class EnnemiBataille {
     public boolean aAttaqueStart = false;
 
     public static int DEFANCE;
-    private int defense;
+    private int defenseBonus;
 
     /**
      * Class constructor
@@ -38,6 +38,15 @@ public class EnnemiBataille {
         this.position = new Point(gc.getWidth() * 3 / 4, gc.getHeight() / 2);
         this.image = e.getEnnemiImages();
         this.mouvement = new Point(0, 0);
+        this.defenseBonus = 0;
+    }
+
+    public EnnemiBataille(Ennemi e) {
+        this.ennemi = e;
+        this.position = new Point(0, 0);
+        this.image = null;
+        this.mouvement = new Point(0, 0);
+        this.defenseBonus = 0;
     }
 
     public void attaque(HeroBataille e) {
@@ -45,8 +54,7 @@ public class EnnemiBataille {
         this.timer = System.currentTimeMillis();
         this.timerRetour = System.currentTimeMillis();
 
-        if (pas > 0)
-            pas *= -1;
+        if (pas > 0) pas *= -1;
     }
 
     // --
@@ -75,9 +83,12 @@ public class EnnemiBataille {
     }
 
     public void damageTo(HeroBataille e) {
-        e.takeDamage(this.getATK() - EnnemiBataille.DEFANCE);
+        /*e.takeDamage(this.getATK() - EnnemiBataille.DEFANCE);
         printEnnemiAtkLog(this.getATK(), (int) (e.getHero().getPointDeVieActuel()), EnnemiBataille.DEFANCE);
-        EnnemiBataille.DEFANCE = 0;
+        EnnemiBataille.DEFANCE = 0;*/
+        e.takeDamage(this.getATK() - this.getDefenseBonus());
+        printEnnemiAtkLog(this.getATK(), (int) (e.getHero().getPointDeVieActuel()), this.getDefenseBonus());
+        this.setDefenseBonus(0);
     }
 
     public void takeDamage(int damage) {
@@ -134,12 +145,12 @@ public class EnnemiBataille {
         this.mouvement = mouvement;
     }
 
-    public int getDefense() {
-        return defense;
+    public int getDefenseBonus() {
+        return defenseBonus;
     }
 
-    public void setDefense(int defense) {
-        this.defense = defense;
+    public void setDefenseBonus(int defense) {
+        this.defenseBonus = defense;
     }
 
     public long getTimer() {

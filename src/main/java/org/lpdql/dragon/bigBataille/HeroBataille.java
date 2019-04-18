@@ -36,7 +36,10 @@ public class HeroBataille {
     private Image joueurImage;
 
     public static int ATK;
-    private int attaque;
+    private int attaqueBonus;
+
+    public boolean aAttaqueStart = false;
+    public boolean aDefenceStart = false;
 
     /**
      * Class constructor
@@ -53,6 +56,21 @@ public class HeroBataille {
 
         this.mouvement = new Point(0, 0);
         this.defenceMode = false;
+        this.attaqueBonus = 0;
+    }
+
+    public HeroBataille(Hero e) {
+        this.hero = e;
+        this.position = new Point(0, 0);
+        // this.image = Ressources.spriteSheet.getSubImage(6, 10);
+
+        this.animations = new ArrayList<>();
+        this.joueurImage = null;
+        this.frames = 0;
+
+        this.mouvement = new Point(0, 0);
+        this.defenceMode = false;
+        this.attaqueBonus = 0;
     }
 
     public Image getJoueurImage() {
@@ -64,8 +82,7 @@ public class HeroBataille {
         this.timer = System.currentTimeMillis();
         this.timerRetour = System.currentTimeMillis();
 
-        if(pas < 0)
-            pas *= -1;
+        if(pas < 0) pas *= -1;
     }
 
     public void defence(EnnemiBataille e) {
@@ -73,8 +90,8 @@ public class HeroBataille {
         this.timer = System.currentTimeMillis();
         this.timerRetour = System.currentTimeMillis();
 
-        bloquerProchinEnnemiAtk(); // bloqueur 5% ~ 15% de la prochine ennemi attaque
-        augmenterProchineHeroAtk(); // augmenter la prochine hero attaque 25% ~ 75%
+        // bloquerProchinEnnemiAtk(); // bloqueur 5% ~ 15% de la prochine ennemi attaque
+        // augmenterProchineHeroAtk(); // augmenter la prochine hero attaque 25% ~ 75%
 
         if(pas > 0) pas *= -1;
     }
@@ -102,10 +119,6 @@ public class HeroBataille {
         g.setColor(Color.white);
         g.drawString("" + (int) Math.max(0, (int) this.hero.getPointDeVieActuel()), position.getX() - 60 + (95/2) + 50, position.getY() - 29);
     }
-
-
-    public boolean aAttaqueStart = false;
-    public boolean aDefenceStart = false;
 
     // --
     public void attaqueAnimation(EnnemiBataille ennemi, List<Effet> effets) {
@@ -144,9 +157,12 @@ public class HeroBataille {
 
     public void damageTo(EnnemiBataille e) {
         // animate here
-        e.takeDamage(this.getATK() + HeroBataille.ATK);
+        /*e.takeDamage(this.getATK() + HeroBataille.ATK);
         printHeroAtkLog(this.getATK(), (int) e.getEnnemi().getPointDeVieActuel(), HeroBataille.ATK);
-        HeroBataille.ATK = 0;
+        HeroBataille.ATK = 0;*/
+        e.takeDamage(this.getATK() + this.getAttaqueBonus());
+        printHeroAtkLog(this.getATK(), (int) e.getEnnemi().getPointDeVieActuel(), this.getAttaqueBonus());
+        this.setAttaqueBonus(0);
     }
 
     public void takeDamage(int damage) {
@@ -199,12 +215,12 @@ public class HeroBataille {
         this.timer = timer;
     }
 
-    public int getAttaque() {
-        return attaque;
+    public int getAttaqueBonus() {
+        return attaqueBonus;
     }
 
-    public void setAttaque(int attaque) {
-        this.attaque = attaque;
+    public void setAttaqueBonus(int attaque) {
+        this.attaqueBonus = attaque;
     }
 
     public boolean isDefenceModeActivated() {
@@ -229,21 +245,6 @@ public class HeroBataille {
         System.out.println(
                 "Hero ATK power      ----> " + atk + " Critical + " + crt);
         System.out.println("ennemi restant vie  ----> " + pv);
-    }
-
-    private void bloquerProchinEnnemiAtk() {
-        int r = (int) (Math.random() * (10)) + 5;
-        System.out.print("Heros blocker " + r + "%");
-        EnnemiBataille.DEFANCE = (int) (this.getATK() * r / 100);
-        System.out.println(" (+" + EnnemiBataille.DEFANCE + " Points de vie)");
-    }
-
-    private void augmenterProchineHeroAtk() {
-        int s = (int) (Math.random() * (50)) + 25;
-        System.out.print("Prochine attaque augmenter " + s + "%");
-        HeroBataille.ATK = (int) (this.getATK() * s / 100);
-        System.out.println(" (+" + HeroBataille.ATK + " Critical)");
-        System.out.println();
     }
 
     public Effet swingEffet(EnnemiBataille ennemi) {

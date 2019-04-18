@@ -171,7 +171,11 @@ public class Bataille extends BasicGameState {
             Ressources.sounds.playZik("armure");
 
             this.heroBataille.defence(ennemiBataille);
-            this.addAttaqueAnimationSurHero("Defance " + EnnemiBataille.DEFANCE + "%");
+
+            bloquerProchinEnnemiAtk(); // bloqueur 5% ~ 15% de la prochine ennemi attaque
+            augmenterProchineHeroAtk(); // augmenter la prochine hero attaque 25% ~ 75%
+
+            this.addAttaqueAnimationSurHero("Defense " + ennemiBataille.getDefenseBonus() + "%");
 
             this.heroAttaque = true;
         }
@@ -181,8 +185,8 @@ public class Bataille extends BasicGameState {
         effetsCombats.add(this.heroBataille.swingEffet(ennemiBataille));
         this.heroBataille.attaque(ennemiBataille);
         this.addAttaqueAnimationSurEnnemi("- " + heroBataille.getATK());
-        if (HeroBataille.ATK > 0) {
-            this.addAttaqueAnimationSurEnnemi("Critical - " + HeroBataille.ATK);
+        if (/*HeroBataille.ATK*/this.heroBataille.getAttaqueBonus() > 0) {
+            this.addAttaqueAnimationSurEnnemi("Critical - " + this.heroBataille.getAttaqueBonus());
             Ressources.sounds.playZik("critical2");
         } else {
             Ressources.sounds.playZik("sword");
@@ -196,7 +200,7 @@ public class Bataille extends BasicGameState {
 
         this.ennemiBataille.attaque(this.heroBataille);
 
-        this.addAttaqueAnimationSurHero("- " + (ennemiBataille.getATK() - EnnemiBataille.DEFANCE));
+        this.addAttaqueAnimationSurHero("- " + (ennemiBataille.getATK() - /*EnnemiBataille.DEFANCE*/this.ennemiBataille.getDefenseBonus()));
         /*if (EnnemiBataille.DEFANCE > 0) {
             this.addAttaqueAnimationSurHero("Defance " + EnnemiBataille.DEFANCE + "%");
         }*/
@@ -276,15 +280,22 @@ public class Bataille extends BasicGameState {
     private void bloquerProchinEnnemiAtk() {
         int r = (int) (Math.random() * (10)) + 5;
         System.out.print("Heros blocker " + r + "%");
-        EnnemiBataille.DEFANCE = (int) (heroBataille.getATK() * r / 100);
-        System.out.println(" (+" + EnnemiBataille.DEFANCE + " Points de vie)");
+        this.ennemiBataille.setDefenseBonus(
+                (int)(this.heroBataille.getATK() * r / 100f)
+        );
+        // System.out.println("ahahahahaha -> " + (int)(this.heroBataille.getATK() * r / 100f));
+        // EnnemiBataille.DEFANCE = (int) (/*heroBataille.getATK()*/ this.heroBataille.getAttaqueBonus() * r / 100);
+        System.out.println(" (+" + /*EnnemiBataille.DEFANCE*/ this.ennemiBataille.getDefenseBonus() + " Points de vie)");
     }
 
     private void augmenterProchineHeroAtk() {
         int s = (int) (Math.random() * (50)) + 25;
         System.out.print("Prochine attaque augmenter " + s + "%");
-        HeroBataille.ATK = (int) (heroBataille.getATK() * s / 100);
-        System.out.println(" (+" + HeroBataille.ATK + " Critical)");
+        // HeroBataille.ATK = (int) (heroBataille.getATK() * s / 100);
+        this.heroBataille.setAttaqueBonus(
+                (int) (this.heroBataille.getATK() * s / 100)
+        );
+        System.out.println(" (+" + /*HeroBataille.ATK*/ this.heroBataille.getAttaqueBonus() + " Critical)");
         System.out.println();
     }
 }
