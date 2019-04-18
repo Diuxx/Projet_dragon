@@ -71,21 +71,21 @@ public class Hud {
 
         if(hero.isOwnBasicSword()) {
             g.setColor(Color.white);
-            g.fillRoundRect(346, 21, 28, 28, 30);
-            g.drawImage(this.epeeBasic, 352, 26);
+            g.fillRoundRect(205, 20, 28, 28, 30);
+            g.drawImage(this.epeeBasic, 210, 25);
         } else {
             g.setColor(Color.black);
-            g.fillRoundRect(346, 21, 28, 28, 30);
+            g.fillRoundRect(205, 20, 28, 28, 30);
         }
 
         //-- Arte de combat
         if(hero.getArtEpee()) {
         	g.setColor(Color.white);
-        	g.fillRoundRect(205, 20, 28, 28, 30);
-        	g.drawImage(this.epee, 210, 25);
+        	g.fillRoundRect(346, 21, 28, 28, 30);
+        	g.drawImage(this.epee, 352, 26);
         }else {
         	g.setColor(Color.black);
-        	g.fillRoundRect(205, 20, 28, 28, 30);
+        	g.fillRoundRect(346, 21, 28, 28, 30);
         }
         
         if(hero.getArtBouclier()) {
