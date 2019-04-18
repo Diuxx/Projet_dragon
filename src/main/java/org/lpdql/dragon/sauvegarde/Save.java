@@ -47,14 +47,26 @@ public class Save {
         this.defaultMapName = "data/" + savedMap + ".tmx";
     }
 
+    public static boolean isSaveExist() {
+        return (new File(Save.savedFileName)).exists();
+    }
+
+
     /**
      * Detect if a save file exist in current save dir.
      * @return en new instance of save with all data saved.
      */
     public static Save detectSavedData() {
         File file = new File(Save.savedFileName);
-        if(!file.exists())
+        if(!file.exists()) {
+            for(Story s : Story.values()) {
+                s.setState(false); // reset des elements de l'histoire
+                if(s.getSavedId().equals("test"))
+                    s.setState(true);
+            }
             return new Save();
+        }
+
 
         try {
             Gson gson = new Gson();

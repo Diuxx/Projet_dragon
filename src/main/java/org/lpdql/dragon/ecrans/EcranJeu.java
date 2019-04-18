@@ -97,10 +97,9 @@ public class EcranJeu extends BasicGameState {
 
 	// fade in effect
 	private long current = System.currentTimeMillis();
-	Image fadeImage;
+	private Image fadeImage;
 	public static boolean fade;
 	private float alpha = 1f;
-	//
 
 	/**
 	 *
@@ -141,7 +140,8 @@ public class EcranJeu extends BasicGameState {
 	private void init() throws SlickException {
 		System.out.println("init out");
 
-		// InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
+		if(InterStateComm.getLeHero() == null)
+			InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
 		savedData = Save.detectSavedData(); // Loading saved data
 		carte = new Carte(savedData.getCarteName()); // Map definition
 

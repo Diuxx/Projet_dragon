@@ -9,7 +9,8 @@ import org.lpdql.dragon.system.MyStdOut;
 public enum Story {
     TUTOPARLEROLDMAN("speak_to_old_man", "parler au vieux monsieur", "Un vieux monsieur a besoin de vous parler..", false),
     TUTOSPAWNENNEMI("tuto_spawn_ennemi", "Apparition du premier ennemi", "Un ennemi est apparu tu dois le tuer..", false),
-    TUTOFIRSTENNEMIWASKILLED("tuto_first_kill", "Le premier ennemi est mort", "Bien joué vous avez tué votre premier ennemi..", false),
+    TUTOFIRSTENNEMIWASKILLED("tuto_first_kill", "Le premier ennemi est mort", "Bien joué vous avez tué votre premier ennemi.. L'aventure peut commencer pour vous.\n" +
+            "Fais quand même attention les bois ne sont plus très sûr de nos jours..", false),
     TUTOEND("fin_tuto", "Fin du tuto jeu", "Le tuto doit être terminé pour poursuivre..", false),
     OWNBASICSWORD("ownbasicsword", "Gagner l'épée basique", "Vous n'avez pas encore gagné l'épée basique..", false),
 
@@ -18,7 +19,7 @@ public enum Story {
 
     LIRELETTRE("lire_lettre", "Lecture de la lettre", "Vous devez lire la lettre avant de sortir..", false),
     ACTIVATEEPEE("activation_monde_epe", "activation du monde de l'epée", "", false),
-    ACTIVATEBOUCLIER("activation_monde_bouclier", "activation du monde des bouclier", "Le scenario épe doit être terminé pour poursuivre..", false),
+    ACTIVATEBOUCLIER("activation_monde_bouclier", "activation du monde des bouclier", "Le scenario épée doit être terminé pour poursuivre..", false),
     ACTIVATEFEU("activation_monde_feu", "activation du monde de feu", "Le scenario bouclier doit être terminé pour poursuivre..", false),
     ACTIVATEPOUVOIR("activation_monde_pouvoir", "activation du monde des pouvoir", "Le scenario Feu doit être terminé pour poursuivre..", false),
     TESTSTORYELEMENT("test", "unit test on it", "", true),

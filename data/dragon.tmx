@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="87" height="71" tilewidth="16" tileheight="16" infinite="0" nextlayerid="50" nextobjectid="25">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="87" height="71" tilewidth="16" tileheight="16" infinite="0" nextlayerid="50" nextobjectid="28">
  <tileset firstgid="1" source="zelda01.tsx"/>
  <tileset firstgid="481" source="6483.tsx"/>
  <tileset firstgid="3820" source="post-242958-1246321970.tsx"/>
@@ -53,6 +53,9 @@
   <object id="19" name="Chauve" type="h" x="300" y="810" width="4" height="4"/>
   <object id="20" name="Goblin" type="v" x="124" y="950" width="4" height="4"/>
   <object id="21" name="Squelette" type="r" x="512" y="340" width="4" height="4"/>
+  <object id="25" name="DarkMaster" type="v" x="1180" y="310" width="4" height="4"/>
+  <object id="26" name="DarkMaster" type="h" x="829" y="1016" width="4" height="4"/>
+  <object id="27" name="Chauve" type="h" x="787" y="149" width="4" height="4"/>
  </objectgroup>
  <objectgroup id="48" name="pnjs" width="87" height="71">
   <object id="22" name="servante" x="871" y="400" width="32" height="32"/>

@@ -18,6 +18,8 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import static org.lpdql.dragon.monde.Ressources.sounds;
+
 /**
  * class StateGame
  *
@@ -74,14 +76,10 @@ public class EcranGameOver extends BasicGameState {
 		text3Y = text2Y + 90;
 	}
 
-	private Hero h = null;
-
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		/*if(!sounds.playing("menu"))
-			sounds.loopZik("menu");*/
-
-		// h = Save.detectSavedData().getSavedHero();
+		if(!sounds.playing("menu"))
+			sounds.loopZik("menu");
 	}
 
 	@Override
@@ -97,13 +95,8 @@ public class EcranGameOver extends BasicGameState {
 		graphics.setColor(color1);
 		graphics.drawString(this.text1, text1X, text1Y);
 
-		if(this.h == null) {
-			graphics.setColor(Color.red);
-		} else {
-			graphics.setColor(color2);
-		}
+		graphics.setColor(color2);
 		graphics.drawString(this.text2, text2X, text2Y);
-
 
 		graphics.setColor(color3);
 		graphics.drawString(this.text3, text3X, text3Y);
@@ -130,22 +123,19 @@ public class EcranGameOver extends BasicGameState {
 			color1 = Color.white;
 		}
 
-		if(this.h != null) {
-			if ((posX > text2X && posX < text2X + textwidth2)
-					&& (posY > (600 - text2Y - textheight2) && posY < (600 - text2Y))) {
-				if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-					// charger
-					if (Save.detectSavedData().getSavedHero() != null) {
-						EcranJeu.init = false;
-						// InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
-						InterStateComm.enleverUnEnnemi();
-						stateBasedGame.enterState(EcranJeu.ID);
-					}
+		if ((posX > text2X && posX < text2X + textwidth2)
+				&& (posY > (600 - text2Y - textheight2) && posY < (600 - text2Y))) {
+			if (Mouse.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+				// charger
+				if (Save.isSaveExist()) {
+					EcranJeu.init = false;// InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
+					InterStateComm.enleverUnEnnemi();
+					stateBasedGame.enterState(EcranJeu.ID);
 				}
-				color2 = Color.red;
-			} else {
-				color2 = Color.white;
 			}
+			color2 = Color.red;
+		} else {
+			color2 = Color.white;
 		}
 
 		if ((posX > text3X && posX < text3X + textwidth3)
@@ -163,5 +153,4 @@ public class EcranGameOver extends BasicGameState {
 	public int getID() {
 		return EcranGameOver.ID;
 	}
-
 }

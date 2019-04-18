@@ -111,8 +111,6 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 					Save.deleteSave();
 					InterStateComm.getLeHero().setNom(inputNom.getText());
 					inputNom.setFocus(false);
-
-					System.out.println("test");
 					nextStateGame();
 				}
 				color2 = Color.red;
@@ -160,10 +158,10 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 	public void nextStateGame() {
 		// début d'un nouveau jeu..
 		sounds.stopAll();
-		Save.deleteSave();
+		System.out.println("sauvegarde supprimé : " + !Save.deleteSave());
 		if(EcranJeu.init) {
+			InterStateComm.setLeHero(new Hero(inputNom.getText(), new Point(0, 0)));
 			EcranJeu.init = false;
-			InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
 		}
 		EcranJeu.fade = true;
 		this.stateBasedGame.enterState(NEXT_STATE_GAME);

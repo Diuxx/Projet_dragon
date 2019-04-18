@@ -21,6 +21,8 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.lpdql.dragon.monde.Ressources.spriteSheet_important;
+
 /**
  *
  */
@@ -185,6 +187,13 @@ public class Scenario {
         Point pOldWoman = findPnjPosition(map, "old_woman");
 
         PersonnageNonJoueur pnjOldWoman = new PersonnageNonJoueur("Old woman", pOldWoman, 32, 32);
+        Effet importantOldwoman = new Effet("iOldwoman", new Point((int)pnjOldWoman.getX() - 8, (int)pnjOldWoman.getY() - pnjOldWoman.getHeight() - 24), new Taille(16, 24));
+        importantOldwoman.loadAnimation(spriteSheet_important, 0, 4, 0);
+        this.getLesEffets().add(importantOldwoman);
+        pnjOldWoman.addDialogue(
+                "Humm... Humm...#Les rumeurs disent que apparemment le dragon aurait un fils !"
+        );
+
         pnjOldWoman.loadAnimation(org.lpdql.dragon.monde.Ressources.spriteSheet_PNJ, 11, 12,  5);
 
         getLesPnj().add(pnjOldWoman);

@@ -92,14 +92,15 @@ public class ScenarioEpee extends Scenario {
 
         pnjServante.addDialogue(
            "Tu devrais commencer par te rendre au pays de l'Epée.. Leur trésor te sera utile pour obtenir les 3 autres.\n" +
-                "#tu veux savoir ou trouver le pays de l'épé ?" +
-                "#c'est la porte qui se trouve le plus à l'est d'ici.."
+                "#tu veux savoir ou trouver le pays de l'épée ?" +
+                "#c'est la porte qui se trouve la plus à l'est d'ici. Mais fais attention, des monstres rôdes, d'après moi, une épée\n" +
+                "devrait suffire pour les terrasser. Bonne chance <3"
         );
         if(!Story.TUTOPARLEROLDMAN.getState()) {
 
             pnjServante.addDialogue(
                     "Bonjour " + InterStateComm.getLeHero().getNom() + ", Bienvenu chez toi. Il y a un vieil homme la bas... Il veut te parler !\n" +
-                    "Apparement c'est important.."
+                    "Apparemment c'est important.."
             );
         }
         Effet importantServante = new Effet("iservante", new Point((int)pnjServante.getX() - 8, (int)pnjServante.getY() - pnjServante.getHeight() - 24), new Taille(16, 24));
