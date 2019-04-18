@@ -3,6 +3,7 @@ package org.lpdql.dragon.personnages;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lpdql.dragon.interfaces.StoryElement;
 import org.lpdql.dragon.scenario.Story;
 import org.lpdql.dragon.system.Point;
 import org.lpdql.dragon.system.Taille;
@@ -44,4 +45,11 @@ public class EnnemiTest {
         anEnnemi.setStoryElement(Story.TESTSTORYELEMENT);
         assertTrue(anEnnemi.containStoryElement());
     }
+
+    @Test
+    public void isFriendlyTest() {
+        assertFalse(this.anEnnemi.isFriendly());
+    }
+
+
 }

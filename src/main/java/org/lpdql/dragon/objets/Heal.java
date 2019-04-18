@@ -28,6 +28,14 @@ public class Heal extends Objet {
         this.loadAnimation(Ressources.healSheet, 0, 2, 0);
     }
 
+    public Heal(Point position) {
+        super("Heal", position, Taille.BASIC_SIZE, 0);
+        this.disponible = true;
+        tempsDerniereAction = 0l;
+
+        // this.loadAnimation(Ressources.healSheet, 0, 2, 0);
+    }
+
     public boolean isDisponible() {
         return disponible;
     }
@@ -50,7 +58,6 @@ public class Heal extends Objet {
 
         setDisponible(false);
         tempsDerniereAction = System.currentTimeMillis();
-        System.err.println("Heal ramassé ! hid = " + this.getPositionSurMap());
     }
 
     @Override

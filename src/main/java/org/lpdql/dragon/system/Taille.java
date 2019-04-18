@@ -34,7 +34,7 @@ public class Taille {
         return hauteur;
     }
 
-    public void setLongeur(int longeur) {
+    public void setHauteur(int longeur) {
         longeur = longeur;
     }
 }

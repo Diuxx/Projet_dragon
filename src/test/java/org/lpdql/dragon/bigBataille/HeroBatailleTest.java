@@ -36,17 +36,19 @@ public class HeroBatailleTest {
 
     @Test
     public void damageToTest() {
+        this.heroBataille.damageTo(this.ennemiBataille);
+        assertEquals(140, this.ennemiBataille.getEnnemi().getPointDeVieActuel(),  0.001);
+        assertEquals(0, this.heroBataille.getAttaqueBonus());
     }
 
     @Test
     public void takeDamageTest() {
+        this.heroBataille.takeDamage(10);
+        assertEquals(90, this.heroBataille.getHero().getPointDeVieActuel(),  0.001);
     }
 
     @Test
     public void getATKTest() {
-    }
-
-    @Test
-    public void setHeroTest() {
+        assertEquals(40, this.heroBataille.getATK());
     }
 }

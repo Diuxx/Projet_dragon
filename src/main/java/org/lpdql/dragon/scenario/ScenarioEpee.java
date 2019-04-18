@@ -13,6 +13,7 @@ import org.lpdql.dragon.system.*;
 import org.newdawn.slick.SlickException;
 
 import static org.lpdql.dragon.monde.Ressources.*;
+import static org.lpdql.dragon.system.Taille.BASIC_SIZE;
 
 /**
  * class ScenarioEpee
@@ -20,10 +21,6 @@ import static org.lpdql.dragon.monde.Ressources.*;
  * @author: Diuxx
  */
 public class ScenarioEpee extends Scenario {
-
-    private final Taille BASIC_SIZE = new Taille(16, 16);
-    private final Taille LARGE_SIZE = new Taille(32, 32);
-    private final Taille BIG_SIZE = new Taille(64, 64);
 
     /**
      * Class constructor
