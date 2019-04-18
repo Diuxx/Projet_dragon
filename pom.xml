@@ -28,7 +28,7 @@
 <dependency>
     <groupId>org.slick2d</groupId>
     <artifactId>slick2d-core</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.0</version>
 </dependency>
 
     <dependency>
@@ -44,6 +44,14 @@
 		<scope>system</scope>
     <systemPath>${project.basedir}/lib/jnlp.jar</systemPath>
 </dependency>
+
+
+<dependency>
+    <groupId>org.sikuli</groupId>
+    <artifactId>sikuli-api</artifactId>
+    <version>1.2.0</version>
+</dependency>
+
     
   </dependencies>
 
