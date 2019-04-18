@@ -27,7 +27,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 
 	public static final int ID = 5;
 	private StateBasedGame stateBasedGame;
-	private static final int NEXT_STATE_GAME = EcranLogoDev.ID;
+	private static final int NEXT_STATE_GAME = EcranJeu.ID;
 	private static final int PREVIOUS_STATE_GAME = EcranMenuChoisirUnNiveau.ID;
 	Image backgroundImage;
 	Image flecheDeRetour;
@@ -163,6 +163,7 @@ public class EcranMenuChoisirUnNom extends BasicGameState {
 			EcranJeu.init = false;
 			// InterStateComm.setLeHero(new Hero("LPDQL", new Point(0, 0)));
 		}
+		EcranJeu.fade = true;
 		this.stateBasedGame.enterState(NEXT_STATE_GAME);
 	}
 
